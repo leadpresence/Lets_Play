@@ -17,6 +17,7 @@ dependencies:
   responsive_builder: ^0.4.1
   google_fonts: ^2.1.0
   flutter_svg: ^1.0.3
+  cache_image: ^1.0.5
 
 dev_dependencies:
   flutter_test:

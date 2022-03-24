@@ -1,17 +1,6 @@
 import 'package:get/get.dart';
 
-class EShopController extends GetxController {
-  Rx<int> number = 0.obs;
-  Rx<bool> isAMan = false.obs;
-
-  void increment() {
-    number.value++;
-  }
-
-  void decrement() {
-    number.value--;
-  }
-
+class AuthController extends GetxController {
   @override
   void onInit() {
     // TODO: implement onInit
