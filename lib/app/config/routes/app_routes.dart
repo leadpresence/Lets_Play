@@ -6,9 +6,12 @@ abstract class Routes {
 
   static const eShop = _Paths.eShop;
   static const auth = _Paths.auth;
+  static const splash = _Paths.splash;
+
 }
 
 abstract class _Paths {
+  static const splash = '/splash';
   static const eShop = '/eShop';
   static const auth = '/auth';
 }
