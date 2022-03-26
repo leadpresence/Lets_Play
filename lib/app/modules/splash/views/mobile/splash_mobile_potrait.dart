@@ -16,6 +16,10 @@ class _SplashMobilePotraitState extends State<SplashMobilePotrait> {
     final Widget svg = SvgPicture.asset(
       assetName,
     );
-    return Scaffold(body: Center(child: svg));
+    return Scaffold(body: 
+    ConstrainedBox(
+       constraints: const BoxConstraints.expand(),
+      child: Center(child: svg))
+    );
   }
 }

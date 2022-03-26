@@ -21,7 +21,8 @@ class _SplashMobileLandscapeState extends State<SplashMobileLandscape> {
     final Widget svg = SvgPicture.asset(
       assetName,
     );
-    return Scaffold(body: Center(child: svg));
+    return Scaffold(body: 
+    Center(child: svg));
     
   }
 }
