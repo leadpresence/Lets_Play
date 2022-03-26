@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 // ignore: slash_for_doc_comments
 /**
@@ -16,19 +17,11 @@ class SplashMobileLandscape extends StatefulWidget {
 class _SplashMobileLandscapeState extends State<SplashMobileLandscape> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Column(children: [
-      Container(
-          padding: const EdgeInsets.only(
-            left: 20,
-            right: 20,
-            top: 38,
-          ),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start, children: [
-
-                
-              ]))
-    ]));
+    const String assetName = 'assets/images/jekawin_logo.svg';
+    final Widget svg = SvgPicture.asset(
+      assetName,
+    );
+    return Scaffold(body: Center(child: svg));
+    
   }
 }
