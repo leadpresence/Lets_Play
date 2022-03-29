@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:jekawin_mobile_flutter/app/config/colors.dart';
 
 screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
 
-purpleLageButton(String text, Function onpreessed, BuildContext context) =>
+purpleLageButton(String text, Function onpressed, BuildContext context) =>
     SizedBox(
       width: (screenWidth(context) * 0.91),
       child: CupertinoButton(
@@ -11,13 +12,13 @@ purpleLageButton(String text, Function onpreessed, BuildContext context) =>
         pressedOpacity: 0.6,
         child: Text(
           text,
-          style: const TextStyle(color: purple),
+          style: const TextStyle(color: white),
         ),
-        onPressed: () => onpreessed,
+        onPressed: () => {onpressed},
       ),
     );
 
-orangeLageButton(String text, Function onpreessed, BuildContext context) =>
+orangeLageButton(String text, VoidCallback onpressed, BuildContext context) =>
     SizedBox(
       width: (screenWidth(context) * 0.91),
       child: CupertinoButton(
@@ -27,6 +28,18 @@ orangeLageButton(String text, Function onpreessed, BuildContext context) =>
           text,
           style: const TextStyle(color: white),
         ),
-        onPressed: () => onpreessed,
+        onPressed: () => onpressed,
+      ),
+    );
+
+borderLageButton(String text, Function onpressed, BuildContext context) =>
+    SizedBox(
+      width: (screenWidth(context) * 0.91),
+      child: OutlinedButton(
+        child: Text(
+          text,
+          style: const TextStyle(color: purple),
+        ),
+        onPressed: () => {onpressed},
       ),
     );

@@ -8,8 +8,11 @@ class EShopMobilePortrait extends GetView<EShopController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Scaffold(
+    // return Obx(
+    //   () =>
+    return    Scaffold(
+
+
         floatingActionButton: FloatingActionButton(
           onPressed: () => Get.toNamed(Routes.eShop),
           child: const Text('N'),
@@ -36,7 +39,7 @@ class EShopMobilePortrait extends GetView<EShopController> {
             ],
           ),
         ),
-      ),
+      // ),
     );
   }
 }

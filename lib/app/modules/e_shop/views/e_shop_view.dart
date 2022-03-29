@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jekawin_mobile_flutter/app/modules/e_shop/views/mobile/e_shop_mobile_landscape.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 import '../controllers/e_shop_controller.dart';
@@ -19,7 +20,7 @@ class EShopView extends GetView<EShopController> {
       mobile: (_) => OrientationLayoutBuilder(
         portrait: (_) => const EShopMobilePortrait(),
         landscape: (_) =>
-            const EShopMobilePortrait(), // replace with landscape view for mobile
+            const EShopMobileLandscape(), // replace with landscape view for mobile
       ),
       tablet: (_) => OrientationLayoutBuilder(
         portrait: (_) =>
