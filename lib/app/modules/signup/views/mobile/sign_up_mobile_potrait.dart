@@ -83,42 +83,45 @@ class SignupMobilePortrait extends GetView<SignUpController> {
         const Gap(20),
 
         const Padding(
-            padding: EdgeInsets.fromLTRB(10, 40, 10, 10),
+            padding: EdgeInsets.fromLTRB(24, 40, 24, 10),
             child: CustomTextField(
               hintText: "Phone number",
             )),
 
         const Padding(
-            padding: EdgeInsets.fromLTRB(10, 5, 10, 10),
+            padding: EdgeInsets.fromLTRB(24, 12, 24, 10),
             child: CustomTextField(
               hintText: "Password",
             )),
 
-        Row(
-          children: [
-            Material(
-              child: Checkbox(
-                value: agree,
-                onChanged: (value) {
-                  // setState(() {
-                  //   agree = value ?? false;
-                  // });
-                },
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Row(
+            children: [
+              Material(
+                child: Checkbox(
+                  value: agree,
+                  onChanged: (value) {
+                    // setState(() {
+                    //   agree = value ?? false;
+                    // });
+                  },
+                ),
               ),
-            ),
-            SizedBox(
-              width: (screenWidth(context) * 0.75),
-              child: const Text(
-                'I agree to the Jekawin Term of Service and \nPrivacy Policy',
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: agreementColor),
-              ),
-            )
-          ],
+              SizedBox(
+                width: (screenWidth(context) * 0.75),
+                child: const Text(
+                  'I agree to the Jekawin Term of Service and \nPrivacy Policy',
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: agreementColor),
+                ),
+              )
+            ],
+          ),
         ),
 
         Padding(
-          padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
+          padding: const EdgeInsets.fromLTRB(24, 48, 24, 10),
           child: CustomButton(
               buttonText: "Sign Up",
               onPressed: () => Get.to(() => const JekawinBottomTabs(
