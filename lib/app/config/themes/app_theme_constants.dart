@@ -164,8 +164,6 @@ class AppTheme {
     overline: fontFamily(
         textStyle: TextStyle(fontSize: 11, color: Color(0xff4a4c4f))),
   );
-
-
   //TODO :CHANGE TEXT THEME (DARK SCHEME)
   static final TextTheme darkTextTheme = TextTheme(
     headline1: fontFamily(
