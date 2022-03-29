@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:jekawin_mobile_flutter/app/widgets/custom_text_field.dart';
 
 import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../constants/asset_paths.dart';
@@ -66,34 +67,34 @@ class SignupMobilePortrait extends GetView<SignUpController> {
 
       ],),
 
-          Container(
-            margin:   const EdgeInsets.fromLTRB(24, 24, 24, 0),
-            child: TextFormField(
-              style: AppTheme.getTextStyle(
-                  themeData?.textTheme.bodyText1,
-                  letterSpacing: 0.1,
-                  color: themeData?.colorScheme.onBackground,
-                  fontWeight: 500),
-              decoration: InputDecoration(
-                  hintText: "Phone number",
-                  hintStyle: AppTheme.getTextStyle(
-                      themeData?.textTheme.subtitle2,
-                      letterSpacing: 0.1,
-                      color: themeData?.colorScheme.onBackground,
-                      fontWeight: 500),
-                  border:  OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: const BorderSide(color: Colors.grey, width: 1.5),
-                  ),
-                  // enabledBorder: allTFBorder,
-                  // focusedBorder: allTFBorder,
-                  isDense: true,
-                  contentPadding:const EdgeInsets.all(20.0)),
-              keyboardType: TextInputType.text,
-              // controller: phoneNumberController,
-              textCapitalization: TextCapitalization.sentences,
-            ),
-          ),
+          // Container(
+          //   margin:   const EdgeInsets.fromLTRB(24, 24, 24, 0),
+          //   child: TextFormField(
+          //     style: AppTheme.getTextStyle(
+          //         themeData?.textTheme.bodyText1,
+          //         letterSpacing: 0.1,
+          //         color: themeData?.colorScheme.onBackground,
+          //         fontWeight: 500),
+          //     decoration: InputDecoration(
+          //         hintText: "Phone number",
+          //         hintStyle: AppTheme.getTextStyle(
+          //             themeData?.textTheme.subtitle2,
+          //             letterSpacing: 0.1,
+          //             color: themeData?.colorScheme.onBackground,
+          //             fontWeight: 500),
+          //         border:  OutlineInputBorder(
+          //           borderRadius: BorderRadius.circular(30),
+          //           borderSide: const BorderSide(color: Colors.grey, width: 1.5),
+          //         ),
+          //         // enabledBorder: allTFBorder,
+          //         // focusedBorder: allTFBorder,
+          //         isDense: true,
+          //         contentPadding:const EdgeInsets.all(20.0)),
+          //     keyboardType: TextInputType.text,
+          //     // controller: phoneNumberController,
+          //     textCapitalization: TextCapitalization.sentences,
+          //   ),
+          // ),
 
     ])));
   }
