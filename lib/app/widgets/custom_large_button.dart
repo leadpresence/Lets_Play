@@ -46,12 +46,17 @@ borderLageButton(String text, Function onpressed, BuildContext context) =>
     );
 
 class CustomButton extends StatelessWidget {
-  final onPressed, hasIcon, buttonText;
+  final onPressed, hasIcon, buttonText, hasBorder;
+
+  final Color buttonColor, buttonTextColor;
   const CustomButton({
     Key? key,
     this.onPressed,
     this.hasIcon = false,
     this.buttonText = "Button Text",
+    this.hasBorder = false,
+    this.buttonColor = const Color(0xFFFE7A01),
+    this.buttonTextColor = const Color(0xffffffff),
   }) : super(key: key);
 
   @override
@@ -66,13 +71,16 @@ class CustomButton extends StatelessWidget {
         child: ElevatedButton(
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
-            primary: const Color(0xFFFE7A01),
+            primary: buttonColor,
             shadowColor: Colors.white,
             onPrimary: Colors.white,
             onSurface: Colors.white,
             elevation: 0,
             // splashFactory: NoSplash.splashFactory,
             shape: RoundedRectangleBorder(
+              side: hasBorder
+                  ? const BorderSide(color: Color(0xff543884), width: 1)
+                  : BorderSide.none,
               borderRadius: BorderRadius.circular(16),
             ),
           ),
@@ -81,19 +89,19 @@ class CustomButton extends StatelessWidget {
             children: [
               hasIcon
                   ? SvgPicture.asset(
-                'assets/svgs/clarity_shopping-cart-line.svg',
-                color: Colors.white,
-              )
+                      'assets/svgs/clarity_shopping-cart-line.svg',
+                      color: Colors.white,
+                    )
                   : const SizedBox(),
               hasIcon
                   ? const SizedBox(
-                width: 12,
-              )
+                      width: 12,
+                    )
                   : const SizedBox(),
               Text(
                 buttonText,
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: buttonTextColor,
                   fontWeight: FontWeight.bold,
                 ),
               )

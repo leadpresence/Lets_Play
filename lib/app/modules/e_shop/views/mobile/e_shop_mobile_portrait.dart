@@ -67,7 +67,7 @@ class EShopMobilePortrait extends GetView<EShopController> {
                           child: categoryCircleAvatar(context,
                               image:
                                   'https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/30/169556/1.jpg?6684',
-                              category: 'Popular'),
+                              category: 'Most Recent'),
                         ),
                         InkWell(
                           splashColor: Colors.transparent,
@@ -80,7 +80,7 @@ class EShopMobilePortrait extends GetView<EShopController> {
                           child: categoryCircleAvatar(context,
                               image:
                                   'https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/34/682796/1.jpg?1168',
-                              category: 'Popular'),
+                              category: 'Ladies'),
                         ),
                         InkWell(
                           splashColor: Colors.transparent,
@@ -93,7 +93,7 @@ class EShopMobilePortrait extends GetView<EShopController> {
                           child: categoryCircleAvatar(context,
                               image:
                                   'https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/96/161326/1.jpg?6433',
-                              category: 'Popular'),
+                              category: 'Babies'),
                         ),
                       ],
                     );

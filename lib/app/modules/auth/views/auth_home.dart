@@ -17,7 +17,7 @@ class AuthHomeView extends GetView<AuthHomeController> {
   Widget build(BuildContext context) {
     return  ScreenTypeLayout.builder(
         mobile: (_) => OrientationLayoutBuilder(
-      portrait: (_)=> const AuthHomeMobilePotriat(),
+      portrait: (_)=> const AuthHomeMobilePortrait(),
       landscape: (_)=>const AuthHomeMobileLandscape(),
     ),
     tablet: (_) => OrientationLayoutBuilder(
