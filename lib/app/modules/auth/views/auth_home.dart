@@ -6,6 +6,8 @@ import 'package:jekawin_mobile_flutter/app/modules/auth/views/tablet/auth_home_t
 import 'package:responsive_builder/responsive_builder.dart';
 
 import '../controllers/auth_controller.dart';
+import 'mobile/auth_home_mobile_landscape.dart';
+import 'mobile/auth_home_mobile_potrait.dart';
 
 
 class AuthHomeView extends GetView<AuthHomeController> {
