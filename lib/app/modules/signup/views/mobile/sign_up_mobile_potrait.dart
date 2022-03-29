@@ -2,7 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:jekawin_mobile_flutter/app/config/colors.dart';
+import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
 
 import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../constants/asset_paths.dart';
@@ -19,6 +22,7 @@ class SignupMobilePortrait extends GetView<SignUpController> {
 
     TextEditingController? phoneNumberController;
     TextEditingController? passwordController;
+    bool agree  = false;
 
     @override
     void initState() {
@@ -41,60 +45,73 @@ class SignupMobilePortrait extends GetView<SignUpController> {
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height * 0.150,
     );
-    return Scaffold(body: SingleChildScrollView(child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Gap(30),
+    screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
 
-          //Logo Row
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          logoSvg
-      ],),
-          const Gap(40),
+    return
+      // Obx(
+      // ()=>
+          Scaffold(body: SingleChildScrollView(child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Gap(30),
 
-          Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-         Text("Sign up", style: TextStyle(
-           fontWeight: FontWeight.w300, // light
-           fontStyle: FontStyle.normal,
-           color: Colors.black,
-           fontSize: 24// italic
-         ),)
+            //Logo Row
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            logoSvg
+        ],),
+            const Gap(40),
 
-      ],),
+            Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+           Text("Sign up", style: TextStyle(
+             fontWeight: FontWeight.w300, // light
+             fontStyle: FontStyle.normal,
+             color: Colors.black,
+             fontSize: 24// italic
+           ),)
 
-          Container(
-            margin:   const EdgeInsets.fromLTRB(24, 24, 24, 0),
-            child: TextFormField(
-              style: AppTheme.getTextStyle(
-                  themeData?.textTheme.bodyText1,
-                  letterSpacing: 0.1,
-                  color: themeData?.colorScheme.onBackground,
-                  fontWeight: 500),
-              decoration: InputDecoration(
-                  hintText: "Phone number",
-                  hintStyle: AppTheme.getTextStyle(
-                      themeData?.textTheme.subtitle2,
-                      letterSpacing: 0.1,
-                      color: themeData?.colorScheme.onBackground,
-                      fontWeight: 500),
-                  border:  OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: const BorderSide(color: Colors.grey, width: 1.5),
+        ],),
+            const Gap(40),
+
+            Row(
+              children:  [
+                Material(
+                  child: Checkbox(
+                    value: agree,
+                    onChanged: (value) {
+                      // setState(() {
+                      //   agree = value ?? false;
+                      // });
+                    },
+
                   ),
-                  // enabledBorder: allTFBorder,
-                  // focusedBorder: allTFBorder,
-                  isDense: true,
-                  contentPadding:const EdgeInsets.all(20.0)),
-              keyboardType: TextInputType.text,
-              // controller: phoneNumberController,
-              textCapitalization: TextCapitalization.sentences,
+                ),
+              SizedBox(
+                width: (screenWidth(context)*0.75),
+                child: const Text(
+                     'I agree to the Jekawin Term of Service and \nPrivacy Policy',
+                     overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: agreementColor),
+                   ),
+              )
+              ],
             ),
-          ),
 
-    ])));
+
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10,5,10,10),
+            child:CustomButton(buttonText: "Sign Up",onPressed: (){}) ,)
+
+      ]),
+    )
+      // )
+    );
+
   }
+
+  void submit(){}
+  void _doSomething(){}
 }
