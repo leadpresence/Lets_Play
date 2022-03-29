@@ -20,7 +20,7 @@ class EShopView extends GetView<EShopController> {
       mobile: (_) => OrientationLayoutBuilder(
         portrait: (_) => const EShopMobilePortrait(),
         landscape: (_) =>
-            const EShopMobileLandscape(), // replace with landscape view for mobile
+            const EShopMobilePortrait(), // replace with landscape view for mobile
       ),
       tablet: (_) => OrientationLayoutBuilder(
         portrait: (_) =>
