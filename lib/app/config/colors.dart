@@ -7,6 +7,7 @@ const green = Color(0xFF6AAA64);
 const greyButton = Color(0xFFD3D6DA);
 const grey = Color(0xFF787C7E);
 const blue = Color(0xFF85C0F9);
+const agreementColor = Color(0xFF414249);
 
 const white = Colors.white;
 const black = Colors.black;
