@@ -49,7 +49,7 @@ class _JekawinBottomTabsState extends State<JekawinBottomTabs> {
       key: _scaffoldKey,
       backgroundColor: const Color(0xFFFAFAFB),
       bottomNavigationBar: SizedBox(
-        height: 98,
+        height: 64,
         child: Theme(
           data: ThemeData(
             splashColor: Colors.transparent,

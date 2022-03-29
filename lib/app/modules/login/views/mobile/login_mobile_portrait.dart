@@ -90,34 +90,12 @@ class LoginMobilePortrait extends GetView<LoginController> {
                   child: CustomTextField(
                     hintText: "Password",
                   )),
-
-              Row(
-                children: [
-                  Material(
-                    child: Checkbox(
-                      value: agree,
-                      onChanged: (value) {
-                        // setState(() {
-                        //   agree = value ?? false;
-                        // });
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    width: (screenWidth(context) * 0.75),
-                    child: const Text(
-                      'I agree to the Jekawin Term of Service and \nPrivacy Policy',
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: agreementColor),
-                    ),
-                  )
-                ],
-              ),
+ 
 
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
                 child: CustomButton(
-                    buttonText: "Sign Up",
+                    buttonText: "Login",
                     onPressed: () => Get.to(() => const JekawinBottomTabs(
                       tabIndex: 0,
                     ))),

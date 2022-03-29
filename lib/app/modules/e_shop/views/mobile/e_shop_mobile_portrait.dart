@@ -12,7 +12,7 @@ class EShopMobilePortrait extends GetView<EShopController> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    final double itemHeight = (size.height - kToolbarHeight - 24) / 2.6;
+    final double itemHeight = (size.height - kToolbarHeight - 24) / 2.0;
     final double itemWidth = size.width / 2;
     return Scaffold(
       backgroundColor: Colors.white,
@@ -210,7 +210,7 @@ class EShopMobilePortrait extends GetView<EShopController> {
                 bottomRight: Radius.circular(52),
               ),
             ),
-            height: 108,
+            height: 88,
             width: Get.width,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

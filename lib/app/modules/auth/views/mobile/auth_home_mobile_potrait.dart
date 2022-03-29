@@ -26,8 +26,10 @@ class AuthHomeMobilePortrait extends GetView<AuthHomeController> {
     screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
 
     final Widget topSvg = SvgPicture.asset(
+
       assetName,
-      // width: MediaQuery.of(context).size.width,
+      // height: MediaQuery.of(context).size.height * 0.150,
+      width: MediaQuery.of(context).size.width,
     );
 
     final Widget logoSvg = SvgPicture.asset(
@@ -36,57 +38,60 @@ class AuthHomeMobilePortrait extends GetView<AuthHomeController> {
       height: MediaQuery.of(context).size.height * 0.150,
     );
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            children: [
-              topSvg,
-              const Gap(24),
-              logoSvg,
-              const Gap(60),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 32),
-                child: Column(
-                  children: [
-                    CustomButton(
-                      buttonColor: const Color(0xff543884),
-                      buttonText: 'Sign Up',
-                      hasIcon: false,
-                      onPressed: () {
-                        Get.to(() => const SignUpView());
-                      },
-                    ),
-                    const Gap(18),
-                    CustomButton(
-                      hasBorder: true,
-                      buttonColor: Colors.white,
-                      buttonText: 'Log In',
-                      buttonTextColor: const Color(0xff543884),
-                      hasIcon: false,
-                      onPressed: () {},
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Padding(
-              padding: const EdgeInsets.all(32.0),
-              child: CircleButton(
-                key: key,
-                onTap: () => Get.to(
-                  () => const JekawinBottomTabs(
-                    tabIndex: 0,
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              children: [
+                topSvg,
+               const Gap(10),
+                logoSvg,
+                const Gap(10),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 32),
+                  child: Column(
+                    children: [
+                      CustomButton(
+                        buttonColor: const Color(0xff543884),
+                        buttonText: 'Sign Up',
+                        hasIcon: false,
+                        onPressed: () {
+                          Get.to(() => const SignUpView());
+                        },
+                      ),
+                      const Gap(10),
+                      CustomButton(
+                        hasBorder: true,
+                        buttonColor: Colors.white,
+                        buttonText: 'Log In',
+                        buttonTextColor: const Color(0xff543884),
+                        hasIcon: false,
+                        onPressed: () {},
+                      ),
+                    ],
                   ),
                 ),
-                iconData: Icons.arrow_forward,
-              ),
+              ],
             ),
-          )
-        ],
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                padding: const EdgeInsets.all(32.0),
+                child: CircleButton(
+                  key: key,
+                  onTap: () => Get.to(
+                    () => const JekawinBottomTabs(
+                      tabIndex: 0,
+                    ),
+                  ),
+                  iconData: Icons.arrow_forward,
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

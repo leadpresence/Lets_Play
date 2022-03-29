@@ -17,13 +17,16 @@ import '../../../auth/controllers/auth_controller.dart';
 import '../../controllers/sign_up_controller.dart';
 
 class SignupMobilePortrait extends GetView<SignUpController> {
-  const SignupMobilePortrait({Key? key, this.themeData, this.customAppTheme})
+  @override
+  final SignUpController controller= Get.put(SignUpController());
+   SignupMobilePortrait({Key? key, this.themeData, this.customAppTheme})
       : super(key: key);
   final ThemeData? themeData;
   final CustomAppTheme? customAppTheme;
 
   @override
   Widget build(BuildContext context) {
+
     TextEditingController? phoneNumberController;
     TextEditingController? passwordController;
     bool agree = false;
@@ -100,11 +103,10 @@ class SignupMobilePortrait extends GetView<SignUpController> {
             children: [
               Material(
                 child: Checkbox(
-                  value: agree,
+                  value: controller.agreementCheck.value,
                   onChanged: (value) {
-                    // setState(() {
-                    //   agree = value ?? false;
-                    // });
+                    controller.agreementCheck.value =
+                        !controller.agreementCheck.value;
                   },
                 ),
               ),
@@ -124,9 +126,19 @@ class SignupMobilePortrait extends GetView<SignUpController> {
           padding: const EdgeInsets.fromLTRB(24, 48, 24, 10),
           child: CustomButton(
               buttonText: "Sign Up",
-              onPressed: () => Get.to(() => const JekawinBottomTabs(
+              onPressed: () {
+                //check if terms is agreed
+                if(controller.agreementCheck.value == true){
+                  Get.to(() =>
+                  const JekawinBottomTabs(
                     tabIndex: 0,
-                  ))),
+                  )
+                  );
+                }
+                //TODO show toast
+
+              }
+          ),
         )
       ]),
     )

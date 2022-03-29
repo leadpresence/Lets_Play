@@ -17,7 +17,7 @@ class SignUpView extends GetView<SignUpController> {
     return  ScreenTypeLayout.builder(
         mobile: (_) => OrientationLayoutBuilder(
 
-          portrait: (_)=> const SignupMobilePortrait(),
+          portrait: (_)=> SignupMobilePortrait(),
           landscape: (_)=>const SignupMobileLandscape(),
         ),
         tablet: (_) => OrientationLayoutBuilder(

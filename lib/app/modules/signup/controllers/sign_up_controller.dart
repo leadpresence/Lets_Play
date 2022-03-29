@@ -2,7 +2,9 @@ import 'package:get/get.dart';
 
 class SignUpController extends GetxController {
 
-  Rx<bool> agree = false as Rx<bool>;
+  var agreementCheck = false.obs;
+
+  Rx<bool> agree = false.obs;
   @override
   void onInit() {
     // TODO: implement onInit
