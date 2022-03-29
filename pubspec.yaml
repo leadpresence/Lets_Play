@@ -14,10 +14,17 @@ dependencies:
 
   cupertino_icons: ^1.0.2
   get: ^4.3.8
-  responsive_builder: ^0.4.1
+  responsive_builder: ^0.4.1 
+  shared_preferences: ^2.0.1
   google_fonts: ^2.1.0
+  #cahable network images
+  cached_network_image: ^3.2.0
+  #cache_image: ^1.0.5
+  logger: ^1.1.0
+  oktoast: ^3.1.5
+  gap: ^2.0.0
+  #svg images
   flutter_svg: ^1.0.3
-#  cache_image: ^1.0.5
 
 dev_dependencies:
   flutter_test:
@@ -30,8 +37,8 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/svgs/
-    - assets/jpgs/
+    - assets/images/
+  #   - images/a_dot_ham.jpeg
 
   # fonts:
   #   - family: Schyler

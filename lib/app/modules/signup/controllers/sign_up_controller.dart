@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-class AuthHomeController extends GetxController {
+class SignUpController extends GetxController {
   @override
   void onInit() {
     // TODO: implement onInit

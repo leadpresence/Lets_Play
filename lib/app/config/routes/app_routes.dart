@@ -4,13 +4,16 @@ part of 'app_pages.dart';
 abstract class Routes {
   Routes._();
 
-  static const jekawinBottomTabs = _Paths.bottomTabs;
   static const eShop = _Paths.eShop;
   static const auth = _Paths.auth;
+  static const signup = _Paths.signup;
+  static const splash = _Paths.splash;
+
 }
 
 abstract class _Paths {
-  static const bottomTabs = '/bottomTab';
+  static const splash = '/splash';
   static const eShop = '/eShop';
   static const auth = '/auth';
+  static const signup = '/signup';
 }

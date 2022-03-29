@@ -1,62 +1,45 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:jekawin_mobile_flutter/app/config/colors.dart';
 
-class CustomButton extends StatelessWidget {
-  final onPressed, hasIcon, buttonText;
-  const CustomButton({
-    Key? key,
-    this.onPressed,
-    this.hasIcon = false,
-    this.buttonText = "Button Text",
-  }) : super(key: key);
+screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
 
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 52,
-      child: Theme(
-        data: ThemeData(
-          splashColor: Colors.white,
-          highlightColor: Colors.white,
+purpleLageButton(String text, Function onpressed, BuildContext context) =>
+    SizedBox(
+      width: (screenWidth(context) * 0.91),
+      child: CupertinoButton(
+        color: purple,
+        pressedOpacity: 0.6,
+        child: Text(
+          text,
+          style: const TextStyle(color: white),
         ),
-        child: ElevatedButton(
-          onPressed: onPressed,
-          style: ElevatedButton.styleFrom(
-            primary: const Color(0xFFFE7A01),
-            shadowColor: Colors.white,
-            onPrimary: Colors.white,
-            onSurface: Colors.white,
-            elevation: 0,
-            // splashFactory: NoSplash.splashFactory,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              hasIcon
-                  ? SvgPicture.asset(
-                      'assets/svgs/clarity_shopping-cart-line.svg',
-                      color: Colors.white,
-                    )
-                  : const SizedBox(),
-              hasIcon
-                  ? const SizedBox(
-                      width: 12,
-                    )
-                  : const SizedBox(),
-              Text(
-                buttonText,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              )
-            ],
-          ),
-        ),
+        onPressed: () => {onpressed},
       ),
     );
-  }
-}
+
+orangeLageButton(String text, VoidCallback onpressed, BuildContext context) =>
+    SizedBox(
+      width: (screenWidth(context) * 0.91),
+      child: CupertinoButton(
+        color: orange,
+        pressedOpacity: 0.6,
+        child: Text(
+          text,
+          style: const TextStyle(color: white),
+        ),
+        onPressed: () => onpressed,
+      ),
+    );
+
+borderLageButton(String text, Function onpressed, BuildContext context) =>
+    SizedBox(
+      width: (screenWidth(context) * 0.91),
+      child: OutlinedButton(
+        child: Text(
+          text,
+          style: const TextStyle(color: purple),
+        ),
+        onPressed: () => {onpressed},
+      ),
+    );

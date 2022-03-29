@@ -1,6 +1,17 @@
 import 'package:get/get.dart';
 
-class AuthHomeController extends GetxController {
+class SplashController extends GetxController {
+  Rx<int> number = 0.obs;
+  Rx<bool> isAMan = false.obs;
+
+  void increment() {
+    number.value++;
+  }
+
+  void decrement() {
+    number.value--;
+  }
+
   @override
   void onInit() {
     // TODO: implement onInit
