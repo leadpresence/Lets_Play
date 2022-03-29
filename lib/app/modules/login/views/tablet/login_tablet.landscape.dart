@@ -5,8 +5,8 @@ import 'package:jekawin_mobile_flutter/app/config/colors.dart';
 
 import '../../../auth/controllers/auth_controller.dart';
 
-class LoginMobileLandscape extends GetView<AuthHomeController> {
-  const LoginMobileLandscape({Key? key}) : super(key: key);
+class LoginTabletLandscape extends GetView<AuthHomeController> {
+  const LoginTabletLandscape({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

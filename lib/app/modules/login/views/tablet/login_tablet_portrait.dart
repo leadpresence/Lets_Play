@@ -13,8 +13,8 @@ import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../constants/asset_paths.dart';
 import '../../../auth/controllers/auth_controller.dart';
 
-class LoginMobilePortrait extends GetView<LoginController> {
-  const LoginMobilePortrait({Key? key, this.themeData, this.customAppTheme})
+class LoginTabletPortrait extends GetView<LoginController> {
+  const LoginTabletPortrait({Key? key, this.themeData, this.customAppTheme})
       : super(key: key);
   final ThemeData? themeData;
   final CustomAppTheme? customAppTheme;

@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:jekawin_mobile_flutter/app/modules/auth/views/auth_home.dart';
 import 'package:jekawin_mobile_flutter/app/modules/e_shop/bindings/e_shop_binding.dart';
 import 'package:jekawin_mobile_flutter/app/modules/e_shop/views/e_shop_view.dart';
+import 'package:jekawin_mobile_flutter/app/modules/login/bindings/login_bindings.dart';
+import 'package:jekawin_mobile_flutter/app/modules/login/views/login.dart';
 import 'package:jekawin_mobile_flutter/app/modules/signup/bindings/sign_up_bindings.dart';
 import 'package:jekawin_mobile_flutter/app/modules/splash/views/splash_view.dart';
 
@@ -40,6 +42,12 @@ class AppPages {
       name: _Paths.signup,
       page: () => const SignUpView(),
       binding: SignUpBindings(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: _Paths.login,
+      page: () => const LoginView(),
+      binding: LoginBindings(),
       transition: Transition.fadeIn,
     ),
   ];
