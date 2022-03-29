@@ -38,6 +38,8 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/svgs/
+    - assets/jpgs/
   #   - images/a_dot_ham.jpeg
 
   # fonts:

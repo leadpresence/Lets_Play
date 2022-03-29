@@ -9,6 +9,7 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:jekawin_mobile_flutter/app/config/routes/app_pages.dart';
 import 'package:jekawin_mobile_flutter/app/modules/e_shop/views/e_shop_view.dart';
+import 'package:jekawin_mobile_flutter/app/modules/jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
 import 'package:jekawin_mobile_flutter/app/modules/signup/views/sign_up.dart';
 import 'package:jekawin_mobile_flutter/app/modules/splash/views/splash_view.dart';
 import '../../../../config/colors.dart';
@@ -16,8 +17,8 @@ import '../../../../constants/asset_paths.dart';
 import '../../../../widgets/custom_large_button.dart';
 import '../../controllers/auth_controller.dart';
 
-class AuthHomeMobilePotriat extends GetView<AuthHomeController> {
-  const AuthHomeMobilePotriat({Key? key}) : super(key: key);
+class AuthHomeMobilePortrait extends GetView<AuthHomeController> {
+  const AuthHomeMobilePortrait({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,49 +36,59 @@ class AuthHomeMobilePotriat extends GetView<AuthHomeController> {
       height: MediaQuery.of(context).size.height * 0.150,
     );
     return Scaffold(
-        body: SingleChildScrollView(
-            child: Column(children: [
-      topSvg,
-      const Gap(2),
-      logoSvg,
-      const Gap(40),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: Column(
-          children: [
-            CustomButton(
-              buttonText: 'Sign Up',
-              hasIcon: false,
-              onPressed: () {
-                Get.to(() => const SignUpView());
-              },
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            children: [
+              topSvg,
+              const Gap(24),
+              logoSvg,
+              const Gap(60),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 32),
+                child: Column(
+                  children: [
+                    CustomButton(
+                      buttonColor: const Color(0xff543884),
+                      buttonText: 'Sign Up',
+                      hasIcon: false,
+                      onPressed: () {
+                        Get.to(() => const SignUpView());
+                      },
+                    ),
+                    const Gap(18),
+                    CustomButton(
+                      hasBorder: true,
+                      buttonColor: Colors.white,
+                      buttonText: 'Log In',
+                      buttonTextColor: const Color(0xff543884),
+                      hasIcon: false,
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Padding(
+              padding: const EdgeInsets.all(32.0),
+              child: CircleButton(
+                key: key,
+                onTap: () => Get.to(
+                  () => const JekawinBottomTabs(
+                    tabIndex: 0,
+                  ),
+                ),
+                iconData: Icons.arrow_forward,
+              ),
             ),
-            const Gap(12),
-            CustomButton(
-              buttonText: 'Log In',
-              hasIcon: false,
-              onPressed: () {},
-            ),
-          ],
-        ),
+          )
+        ],
       ),
-      const Gap(16),
-      SizedBox(
-        width: (screenWidth(context) * 0.91),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            const Gap(5),
-            CircleButton(key: key, onTap: () {}, iconData: Icons.arrow_forward)
-          ],
-        ),
-      )
-    ]))
-
-        // ),//obx observable
-
-        );
+    );
   }
 }
 
@@ -95,6 +106,7 @@ class CircleButton extends StatelessWidget {
 
     return InkResponse(
       onTap: onTap,
+      radius: 5,
       child: Container(
         width: size,
         height: size,
