@@ -9,6 +9,8 @@ import 'package:jekawin_mobile_flutter/app/modules/splash/views/splash_view.dart
 
 import '../../modules/auth/bindings/auth_binding.dart';
 import '../../modules/signup/views/sign_up.dart';
+import '../../modules/signup_verification/bindings/singup_verification_bindings.dart';
+import '../../modules/signup_verification/views/otp_signup_verification.dart';
 import '../../modules/splash/bindings/splash_bindings.dart';
 
 part 'app_routes.dart';
@@ -42,6 +44,12 @@ class AppPages {
       name: _Paths.signup,
       page: () => const SignUpView(),
       binding: SignUpBindings(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: _Paths.signupVerification,
+      page: () => const OtpSignUpVerificationView(),
+      binding: SignupVerificationBindings(),
       transition: Transition.fadeIn,
     ),
     GetPage(

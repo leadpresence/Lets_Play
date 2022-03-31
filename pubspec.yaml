@@ -25,6 +25,7 @@ dependencies:
   gap: ^2.0.0
   #svg images
   flutter_svg: ^1.0.3
+  pinput: ^2.2.5
 
 dev_dependencies:
   flutter_test:
