@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-class ResetPasswordController extends GetxController {
+class UpdatePasswordController extends GetxController {
 
   var agreementCheck = false.obs;
 

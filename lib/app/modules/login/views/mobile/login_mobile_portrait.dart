@@ -6,12 +6,11 @@ import 'package:get/get.dart';
 import 'package:jekawin_mobile_flutter/app/config/colors.dart';
 import 'package:jekawin_mobile_flutter/app/modules/jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
 import 'package:jekawin_mobile_flutter/app/modules/login/controllers/login_controller.dart';
+import 'package:jekawin_mobile_flutter/app/modules/resetpassword/views/reset_password.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_text_field.dart';
-
 import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../constants/asset_paths.dart';
-import '../../../auth/controllers/auth_controller.dart';
 
 class LoginMobilePortrait extends GetView<LoginController> {
   const LoginMobilePortrait({Key? key, this.themeData, this.customAppTheme})
@@ -66,7 +65,7 @@ class LoginMobilePortrait extends GetView<LoginController> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
                   Text(
-                    "Sign up",
+                    "Login",
                     style: TextStyle(
                         fontWeight: FontWeight.w300, // light
                         fontStyle: FontStyle.normal,
@@ -89,8 +88,25 @@ class LoginMobilePortrait extends GetView<LoginController> {
                   padding: EdgeInsets.fromLTRB(10, 5, 10, 10),
                   child: CustomTextField(
                     hintText: "Password",
+                    isPasswordField: true,
+
                   )),
- 
+              Padding(
+                padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children:  [
+                  GestureDetector(
+                    onTap: ()=>Get.to(()=>ResetPasswordPhoneView(key: key,)),
+                    child: const Text(
+                      'Forgot password?',
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(color: agreementColor, fontSize: 10),
+                    ),
+                  ),
+                ],),
+              ),
+
 
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
@@ -105,8 +121,4 @@ class LoginMobilePortrait extends GetView<LoginController> {
         // )
       );
   }
-
-  void submit() {}
-
-  void _doSomething() {}
 }

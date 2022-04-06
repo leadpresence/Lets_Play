@@ -9,7 +9,10 @@ abstract class Routes {
   static const signup = _Paths.signup;
   static const signupVerification = _Paths.signupVerification;
   static const login = _Paths.login;
+  static const resetPassword = _Paths.resetPassword;
   static const splash = _Paths.splash;
+  static const response = _Paths.response;
+  static const updatePassword = _Paths.updatePassword;
 
 }
 
@@ -20,4 +23,7 @@ abstract class _Paths {
   static const signup = '/signup';
   static const signupVerification = '/signupVerification';
   static const login = '/login';
+  static const resetPassword = '/resetPassword';
+  static const response = '/response';
+  static const updatePassword = '/updatePassword';
 }

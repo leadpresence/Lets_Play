@@ -10,14 +10,15 @@ import 'package:responsive_builder/responsive_builder.dart';
  */
 
 class OtpSignUpVerificationView extends GetView {
-  const OtpSignUpVerificationView({Key? key}) : super(key: key);
+  final phoneNumber;
+  const OtpSignUpVerificationView({Key? key, this.phoneNumber}) : super(key: key);
 
 
   Widget build(BuildContext context) {
     return ScreenTypeLayout.builder(
         mobile: (_) => OrientationLayoutBuilder(
 
-          portrait: (_)=> SignupVerificationMP(),
+          portrait: (_)=>  SignupVerificationMP(key:key,phonenumber: phoneNumber,),
           landscape: (_)=>const SignupVerificationML(),
         ),
         tablet: (_) => OrientationLayoutBuilder(

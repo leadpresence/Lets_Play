@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:jekawin_mobile_flutter/app/modules/signup_verification/controllers/signup_verification_controller.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_otp_field.dart';
 
 import '../../../../config/colors.dart';
-import '../../../jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
-import '../verifiication_success_or_failure_mobile_view.dart';
+import '../../../messages/views/response_message.dart';
+import '../../../new_password/views/new_password.dart';
+import '../../controllers/otp_reset_password_controller.dart';
 
-class SignupVerificationMP extends GetView<SignUpVerificationController> {
+class OtpPasswordResetMP extends GetView<OtpResetPasswordController> {
   final phonenumber;
 
-    SignupVerificationMP({Key? key,  this.phonenumber}) : super(key: key);
+  OtpPasswordResetMP({Key? key,  this.phonenumber}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class SignupVerificationMP extends GetView<SignUpVerificationController> {
                 //todo show toast
                 onTap: (){},
                 child: Text(
-                  'Resend',
+                  'Resend code',
                   style: GoogleFonts.poppins(
                     fontSize: 16,
                     decoration: TextDecoration.underline,
@@ -55,8 +55,10 @@ class SignupVerificationMP extends GetView<SignUpVerificationController> {
                 padding: const EdgeInsets.all(2.0),
                 child: CustomButton(
                   hasIcon: false,
-                  buttonText: 'Continue',
-                  onPressed: () => Get.to(() => const VerificationSuccessOrFailureMobileView()),
+                  buttonText: 'Submit',
+                  //Todo @felix validate otp and on success anvigate them to update password view
+              onPressed: () =>Get.to(()=>const UpdatePasswordView( ))
+        ,
                 ),
               )
         ],
@@ -78,7 +80,7 @@ class OtpHeader extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
-          'Phone Verification',
+          'Password reset',
           style: GoogleFonts.poppins(
             fontSize: 24,
             fontWeight: FontWeight.w300,

@@ -21,7 +21,7 @@ class VerificationSuccessOrFailureMobileView extends StatelessWidget {
                 height: 24,
               ),
               const Text(
-                'Your verification was successful',
+                'Your password reset was successful',
                 style: TextStyle(
                   fontSize: 18,
                   color: Color(0xFF4E4B66),

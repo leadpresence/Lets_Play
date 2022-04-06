@@ -4,25 +4,21 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:jekawin_mobile_flutter/app/config/colors.dart';
 import 'package:jekawin_mobile_flutter/app/modules/otp_reset_password/views/otp_reset_password.dart';
-import 'package:jekawin_mobile_flutter/app/modules/signup_verification/views/mobile/signup_verification_mobile_portrait.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_text_field.dart';
-
 import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../constants/asset_paths.dart';
-import '../../../auth/controllers/auth_controller.dart';
-import '../../../new_password/views/new_password.dart';
-import '../../controllers/reset_password_controller.dart';
+import '../../../messages/views/response_message.dart';
+import '../controllers/update_password_controller.dart';
 
-class ResetPasswordMobilePortrait extends GetView<ResetPasswordController> {
+class UpdatePasswordMobilePortrait extends GetView<UpdatePasswordController> {
   @override
-  final ResetPasswordController controller = Get.put(ResetPasswordController());
+  final UpdatePasswordController controller = Get.put(UpdatePasswordController());
 
-  ResetPasswordMobilePortrait({Key? key, this.themeData, this.customAppTheme})
+  UpdatePasswordMobilePortrait({Key? key, this.themeData, this.customAppTheme})
       : super(key: key);
   final ThemeData? themeData;
   final CustomAppTheme? customAppTheme;
@@ -58,7 +54,7 @@ class ResetPasswordMobilePortrait extends GetView<ResetPasswordController> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
                 Text(
-                  "Reset your Password",
+                  "Update your Password",
                   style: TextStyle(
                       fontWeight: FontWeight.w300, // light
                       fontStyle: FontStyle.normal,
@@ -84,7 +80,7 @@ class ResetPasswordMobilePortrait extends GetView<ResetPasswordController> {
             const Padding(
                 padding: EdgeInsets.fromLTRB(24, 10, 24, 10),
                 child: CustomTextField(
-                  hintText: "Phone number",
+                  hintText: "New Password",
                   keyboardType: TextInputType.number,
                   errorText: "Phone number invalid",
                 )),
@@ -92,9 +88,8 @@ class ResetPasswordMobilePortrait extends GetView<ResetPasswordController> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(24, 4, 24, 10),
                   child: CustomButton(
-                      buttonText: "Send",
-                      onPressed: () =>Get.to(()=>const OtpResetPasswordView())
-                      // onPressed: () =>Get.to(()=>const UpdatePasswordView( ))
+                      buttonText: "Update password",
+                      onPressed: () =>Get.to(()=>  ResponseMessageView(status: true,))
                       ),
                 )
           ]),

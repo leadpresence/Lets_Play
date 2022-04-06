@@ -2,14 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class ResetPasswordTabletLandscape extends StatefulWidget {
-  const ResetPasswordTabletLandscape({Key? key}) : super(key: key);
+class UpdatePasswordTabletPortrait extends StatefulWidget {
+  const UpdatePasswordTabletPortrait({Key? key}) : super(key: key);
 
   @override
-  State<ResetPasswordTabletLandscape> createState() => _ResetPasswordLandscapeState();
+  State<UpdatePasswordTabletPortrait> createState() => _UpdatePasswordTabletPortrait();
 }
 
-class _ResetPasswordLandscapeState extends State<ResetPasswordTabletLandscape> {
+class _UpdatePasswordTabletPortrait extends State<UpdatePasswordTabletPortrait> {
   @override
   Widget build(BuildContext context) {
     const String assetName = 'assets/images/jekawin_logo.svg';

@@ -5,13 +5,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
-import 'package:jekawin_mobile_flutter/app/config/routes/app_pages.dart';
-import 'package:jekawin_mobile_flutter/app/modules/e_shop/views/e_shop_view.dart';
 import 'package:jekawin_mobile_flutter/app/modules/jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
+import 'package:jekawin_mobile_flutter/app/modules/login/views/login.dart';
 import 'package:jekawin_mobile_flutter/app/modules/signup/views/sign_up.dart';
-import 'package:jekawin_mobile_flutter/app/modules/splash/views/splash_view.dart';
 import '../../../../config/colors.dart';
 import '../../../../constants/asset_paths.dart';
 import '../../../../widgets/custom_large_button.dart';
@@ -68,7 +65,7 @@ class AuthHomeMobilePortrait extends GetView<AuthHomeController> {
                         buttonText: 'Log In',
                         buttonTextColor: const Color(0xff543884),
                         hasIcon: false,
-                        onPressed: () {},
+                        onPressed: () =>Get.to(()=>const LoginView()),
                       ),
                     ],
                   ),

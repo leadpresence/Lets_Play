@@ -28,24 +28,6 @@ class SignupMobilePortrait extends GetView<SignUpController> {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController? phoneNumberController;
-    TextEditingController? passwordController;
-
-    @override
-    void initState() {
-      // super.initState();
-      phoneNumberController = TextEditingController();
-      // emailTFController = TextEditingController();
-      passwordController = TextEditingController();
-    }
-
-    @override
-    void dispose() {
-      // phoneNumberController.dispose();
-      // passwordTFController.dispose();
-      // super.dispose();
-    }
-
     final Widget logoSvg = SvgPicture.asset(
       logoAsetName,
       width: MediaQuery.of(context).size.width,
@@ -57,88 +39,93 @@ class SignupMobilePortrait extends GetView<SignUpController> {
     return Obx(() => Scaffold(
             body: SingleChildScrollView(
           child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Form(
+                key: controller.signUpFormKey,
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             const Gap(30),
-
             //Logo Row
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [logoSvg],
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [logoSvg],
             ),
             const Gap(40),
 
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text(
-                  "Sign up",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w300, // light
-                      fontStyle: FontStyle.normal,
-                      color: Colors.black,
-                      fontSize: 24 // italic
-                      ),
-                )
-              ],
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Text(
+                    "Sign up",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w300, // light
+                        fontStyle: FontStyle.normal,
+                        color: Colors.black,
+                        fontSize: 24 // italic
+                        ),
+                  )
+                ],
             ),
 
             const Gap(20),
 
-            const Padding(
-                padding: EdgeInsets.fromLTRB(24, 40, 24, 10),
-                child: CustomTextField(
-                  hintText: "Phone number",
-                )),
+            Padding(
+                  padding: const EdgeInsets.fromLTRB(24, 40, 24, 10),
+                  child: CustomTextField(
+                    hintText: "Phone number",
+                    textController: controller.phoneNumberController,
 
-            const Padding(
-                padding: EdgeInsets.fromLTRB(24, 12, 24, 10),
-                child: CustomTextField(
-                  hintText: "Password",
-                )),
+                  )),
+
+            Padding(
+                  padding: const EdgeInsets.fromLTRB(24, 12, 24, 10),
+                  child: CustomTextField(
+                    hintText: "Password",
+                    textController: controller.passwordController,
+                  )),
             Gap(Get.height * 0.056),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                children: [
-                  Material(
-                    child: Checkbox(
-                      activeColor: orange,
-                      value: controller.agreementCheck.value,
-                      onChanged: (value) {
-                        controller.agreementCheck.value =
-                            !controller.agreementCheck.value;
-                      },
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  children: [
+                    Material(
+                      child: Checkbox(
+                        activeColor: orange,
+                        value: controller.agreementCheck.value,
+                        onChanged: (value) {
+                          controller.agreementCheck.value =
+                              !controller.agreementCheck.value;
+                        },
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    width: (screenWidth(context) * 0.75),
-                    child: const Text(
-                      'I agree to the Jekawin Term of Service and \nPrivacy Policy',
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: agreementColor, fontSize: 10),
-                    ),
-                  )
-                ],
-              ),
+                    SizedBox(
+                      width: (screenWidth(context) * 0.75),
+                      child: const Text(
+                        'I agree to the Jekawin Term of Service and \nPrivacy Policy',
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(color: agreementColor, fontSize: 10),
+                      ),
+                    )
+                  ],
+                ),
             ),
 
             Padding(
-              padding: const EdgeInsets.fromLTRB(24, 4, 24, 10),
-              child: CustomButton(
-                  buttonText: "Sign Up",
-                  onPressed: () {
-                    //check if terms is agreed
-                    if (controller.agreementCheck.value == true) {
-                      Get.to(() => const SignupVerificationMP());
-                    }
-                    //TODO show toast
-                  }),
+                padding: const EdgeInsets.fromLTRB(24, 4, 24, 10),
+                child: CustomButton(
+                    buttonText: "Sign Up",
+                    onPressed: () {
+                      //check if terms is agreed
+                      if (controller.agreementCheck.value == true) {
+                        Get.to(() => SignupVerificationMP(
+                              key: key,
+                              phonenumber: controller.phoneNumberController.text,
+                            ));
+                      }
+                    Get.snackbar("Terms & Conditions", "Agree to Jekawin terms and condition");
+                    }),
             )
           ]),
+              ),
         )));
   }
 
-  void submit() {}
-
-  void _doSomething() {}
 }
