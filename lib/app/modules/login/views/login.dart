@@ -8,24 +8,6 @@ import 'package:responsive_builder/responsive_builder.dart';
 import '../controllers/login_controller.dart';
 import 'mobile/login_mobile.landscape.dart';
 import 'mobile/login_mobile_portrait.dart';
-
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
-
-  @override
-  State<Login> createState() => _LoginState();
-}
-
-class _LoginState extends State<Login> {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
-
-
-
-
 class LoginView extends GetView<LoginController> {
   const LoginView({Key? key}) : super(key: key);
 

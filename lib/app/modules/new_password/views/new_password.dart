@@ -1,18 +1,36 @@
 import 'package:flutter/material.dart';
-/**
- * this class is used to update the  users new password
- */
+import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:jekawin_mobile_flutter/app/modules/new_password/views/tablet/update_password_tablet_landscape.dart';
+import 'package:jekawin_mobile_flutter/app/modules/new_password/views/tablet/update_password_tablet_potrait.dart';
+import 'package:jekawin_mobile_flutter/app/modules/resetpassword/views/mobile/reset_password_mobile_landscape.dart';
+import 'package:jekawin_mobile_flutter/app/modules/resetpassword/views/mobile/reset_password_mobile_potrait.dart';
+import 'package:jekawin_mobile_flutter/app/modules/resetpassword/views/tablet/reset_password_tablet_landscape.dart';
+import 'package:jekawin_mobile_flutter/app/modules/resetpassword/views/tablet/reset_password_tablet_potrait.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
-class UpdatePassword extends StatefulWidget {
-  const UpdatePassword({Key? key}) : super(key: key);
+import 'controllers/update_password_controller.dart';
+import 'mobile/update_password_mobile_landscape.dart';
+import 'mobile/update_password_mobile_potrait.dart';
 
-  @override
-  State<UpdatePassword> createState() => _UpdatePasswordState();
-}
 
-class _UpdatePasswordState extends State<UpdatePassword> {
+
+
+class UpdatePasswordView extends GetView<UpdatePasswordController> {
+  const UpdatePasswordView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return  ScreenTypeLayout.builder(
+        mobile: (_) => OrientationLayoutBuilder(
+
+          portrait: (_)=> UpdatePasswordMobilePortrait(),
+          landscape: (_)=>const UpdatePasswordMobileLandscape(),
+        ),
+        tablet: (_) => OrientationLayoutBuilder(
+          portrait: (_) => const   UpdatePasswordTabletPortrait(),
+          landscape: (_)=>
+          const UpdatePasswordTabletLandscape(     ),
+
+        ));
   }
 }

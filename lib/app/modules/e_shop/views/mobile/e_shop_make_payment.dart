@@ -81,7 +81,7 @@ class EShopMakePaymentMobileView extends GetView<EShopController> {
                       ],
                     )
                   ],
-                ),
+                ) ,
                 const SizedBox(
                   height: 32,
                 ),

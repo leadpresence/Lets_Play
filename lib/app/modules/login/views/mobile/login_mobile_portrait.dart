@@ -6,12 +6,11 @@ import 'package:get/get.dart';
 import 'package:jekawin_mobile_flutter/app/config/colors.dart';
 import 'package:jekawin_mobile_flutter/app/modules/jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
 import 'package:jekawin_mobile_flutter/app/modules/login/controllers/login_controller.dart';
+import 'package:jekawin_mobile_flutter/app/modules/resetpassword/views/reset_password.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_text_field.dart';
-
 import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../constants/asset_paths.dart';
-import '../../../auth/controllers/auth_controller.dart';
 
 class LoginMobilePortrait extends GetView<LoginController> {
   const LoginMobilePortrait({Key? key, this.themeData, this.customAppTheme})
@@ -66,7 +65,7 @@ class LoginMobilePortrait extends GetView<LoginController> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
                   Text(
-                    "Log In",
+                    "Login",
                     style: TextStyle(
                         fontWeight: FontWeight.w300, // light
                         fontStyle: FontStyle.normal,
@@ -80,45 +79,39 @@ class LoginMobilePortrait extends GetView<LoginController> {
               const Gap(20),
 
               const Padding(
-                  padding: EdgeInsets.fromLTRB(24, 40, 24, 10),
+                  padding: EdgeInsets.fromLTRB(10, 40, 10, 10),
                   child: CustomTextField(
                     hintText: "Phone number",
                   )),
 
               const Padding(
-                  padding: EdgeInsets.fromLTRB(24, 12, 24, 10),
+                  padding: EdgeInsets.fromLTRB(10, 5, 10, 10),
                   child: CustomTextField(
-                    isPasswordField: true,
                     hintText: "Password",
-                  )),
+                    isPasswordField: true,
 
-              // Row(
-              //   children: [
-              //     Material(
-              //       child: Checkbox(
-              //         value: agree,
-              //         onChanged: (value) {
-              //           // setState(() {
-              //           //   agree = value ?? false;
-              //           // });
-              //         },
-              //       ),
-              //     ),
-              //     SizedBox(
-              //       width: (screenWidth(context) * 0.75),
-              //       child: const Text(
-              //         'I agree to the Jekawin Term of Service and \nPrivacy Policy',
-              //         overflow: TextOverflow.ellipsis,
-              //         style: TextStyle(color: agreementColor),
-              //       ),
-              //     )
-              //   ],
-              // ),
+                  )),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children:  [
+                  GestureDetector(
+                    onTap: ()=>Get.to(()=>ResetPasswordPhoneView(key: key,)),
+                    child: const Text(
+                      'Forgot password?',
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(color: agreementColor, fontSize: 10),
+                    ),
+                  ),
+                ],),
+              ),
+
 
               Padding(
-                padding: const EdgeInsets.fromLTRB(24, 24, 24, 10),
+                padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
                 child: CustomButton(
-                    buttonText: "Log In",
+                    buttonText: "Login",
                     onPressed: () => Get.to(() => const JekawinBottomTabs(
                       tabIndex: 0,
                     ))),
@@ -128,8 +121,4 @@ class LoginMobilePortrait extends GetView<LoginController> {
         // )
       );
   }
-
-  void submit() {}
-
-  void _doSomething() {}
 }

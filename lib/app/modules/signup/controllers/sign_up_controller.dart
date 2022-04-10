@@ -1,8 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class SignUpController extends GetxController {
 
-  Rx<bool> agree = false as Rx<bool>;
+  var agreementCheck = false.obs;
+  final signUpFormKey = GlobalKey<FormState>();
+  final phoneNumberController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  Rx<bool> agree = false.obs;
   @override
   void onInit() {
     // TODO: implement onInit
@@ -17,7 +23,48 @@ class SignUpController extends GetxController {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    phoneNumberController.dispose();
+    passwordController.dispose();
     super.dispose();
+  }
+
+  @override
+  void onClose() {
+    phoneNumberController.dispose();
+    passwordController.dispose();
+    super.onClose();
+  }
+
+  String? validator(String value) {
+    if (value.isEmpty) {
+      return 'Please this field must be filled';
+    }else if( value.length<4){
+      return 'Input is toon short';
+    }
+    return null;
+  }
+
+
+  void signUp() {
+    if (signUpFormKey.currentState!.validate()) {
+    //  https://stackoverflow.com/questions/69547879/dart-the-method-validate-cant-be-unconditionally-invoked-because-the-receiver
+      signUpFormKey.currentState!.save();
+      checkUser(phoneNumberController.text, passwordController.text).then((auth) {
+        if (auth) {
+          Get.snackbar('Sign up', 'Sign up successfully');
+        } else {
+          Get.snackbar('Sign up', 'Invalid phone or password');
+        }
+        passwordController.clear();
+      });
+    }
+  }
+
+  // Api Simulation
+  Future<bool> checkUser(String user, String password) {
+    if (user == 'foo@foo.com' && password == '123') {
+      return Future.value(true);
+    }
+    return Future.value(false);
   }
 }

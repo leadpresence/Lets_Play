@@ -36,9 +36,9 @@ class AuthHomeMobileLandscape extends GetView<AuthHomeController> {
               child: Column(
                   children: [
             topSvg,
-            const Gap(60),
+            // const Gap(60),
             logoSvg,
-            const Gap(40),
+            // const Gap(40),
             orangeLageButton("Sign Up", ()=>Get.toNamed(Routes.eShop), context),
             const Gap(10),
             purpleLageButton("Sign Up",  ()=>Get.toNamed(Routes.eShop), context)
