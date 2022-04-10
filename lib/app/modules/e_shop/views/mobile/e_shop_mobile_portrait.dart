@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:jekawin_mobile_flutter/app/modules/e_shop/controllers/e_shop_controller.dart';
 import 'package:jekawin_mobile_flutter/app/modules/e_shop/views/mobile/e_shop_details_mobile_portrait.dart';
-
 import '../widgets/category_circle_avatar.dart';
 
 class EShopMobilePortrait extends GetView<EShopController> {
@@ -12,7 +11,7 @@ class EShopMobilePortrait extends GetView<EShopController> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    final double itemHeight = (size.height - kToolbarHeight - 24) / 2.6;
+    final double itemHeight = (size.height - kToolbarHeight - 24) / 2.3;
     final double itemWidth = size.width / 2;
     return Scaffold(
       backgroundColor: Colors.white,
@@ -25,7 +24,7 @@ class EShopMobilePortrait extends GetView<EShopController> {
             padding: EdgeInsets.zero,
             children: [
               const SizedBox(
-                height: 140.0,
+                height: 112.0,
               ),
               SizedBox(
                 height: 100,
@@ -200,29 +199,39 @@ class EShopMobilePortrait extends GetView<EShopController> {
           ),
           Container(
             padding: const EdgeInsets.symmetric(
-              horizontal: 24.0,
-              vertical: 28.0,
+              horizontal: 12.0,
+              vertical: 8.0,
             ),
             decoration: const BoxDecoration(
               color: Colors.orange,
               borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(52),
-                bottomRight: Radius.circular(52),
+                bottomLeft: Radius.circular(42),
+                bottomRight: Radius.circular(42),
               ),
             ),
-            height: 108,
+            height: 84,
             width: Get.width,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                SvgPicture.asset(
-                  'assets/svgs/bx_search-alt.svg',
-                  color: Colors.white,
+                IconButton(
+                  splashRadius: 24,
+                  padding: EdgeInsets.zero,
+                  icon: SvgPicture.asset(
+                    'assets/svgs/bx_search-alt.svg',
+                    color: Colors.white,
+                  ),
+                  onPressed: () {},
                 ),
-                SvgPicture.asset(
-                  'assets/svgs/clarity_shopping-cart-line.svg',
-                  color: Colors.white,
+                IconButton(
+                  splashRadius: 24,
+                  padding: EdgeInsets.zero,
+                  icon: SvgPicture.asset(
+                    'assets/svgs/clarity_shopping-cart-line.svg',
+                    color: Colors.white,
+                  ),
+                  onPressed: () {},
                 ),
               ],
             ),

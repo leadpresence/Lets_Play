@@ -36,10 +36,11 @@ class EShopMakePaymentMobileView extends GetView<EShopController> {
               },
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 32.0),
+              shrinkWrap: true,
+              // crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [

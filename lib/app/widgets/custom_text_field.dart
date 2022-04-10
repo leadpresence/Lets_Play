@@ -138,7 +138,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
               borderSide: BorderSide(
-                color: Colors.black26.withOpacity(.65),
+                color: Colors.black26.withOpacity(.3),
                 width: 1,
               ),
             ),
@@ -146,7 +146,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               borderRadius: BorderRadius.circular(16),
               borderSide: BorderSide(
                   color: widget.errorText == ''
-                      ? Colors.black26.withOpacity(.65)
+                      ? Colors.black26.withOpacity(.3)
                       : Colors.red,
                   width: 1),
             ),

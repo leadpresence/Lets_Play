@@ -37,31 +37,40 @@ class EShopDebitCardPaymentMobileView extends GetView<EShopController> {
               },
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.only(
-              left: 32.0,
-              right: 12.0,
-            ),
-            child: Text(
-              'Previously Used Cards',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.normal,
-                letterSpacing: .2,
-              ),
-            ),
-          ),
-          const SizedBox(height: 16),
-          debitCardCard(),
-          debitCardCard(
-            isNewCard: true,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(32.0),
-            child: CustomButton(
-              hasIcon: false,
-              buttonText: 'Continue',
-              onPressed: () => Get.to(() => const SuccessOrFailureMobileView()),
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(
+                    left: 32.0,
+                    right: 12.0,
+                  ),
+                  child: Text(
+                    'Previously Used Cards',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.normal,
+                      letterSpacing: .2,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                debitCardCard(),
+                debitCardCard(
+                  isNewCard: true,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(32.0),
+                  child: CustomButton(
+                    hasIcon: false,
+                    buttonText: 'Continue',
+                    onPressed: () =>
+                        Get.to(() => const SuccessOrFailureMobileView()),
+                  ),
+                ),
+              ],
             ),
           )
         ],

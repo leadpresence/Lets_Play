@@ -91,6 +91,7 @@ class SignupMobilePortrait extends GetView<SignUpController> {
         const Padding(
             padding: EdgeInsets.fromLTRB(24, 12, 24, 10),
             child: CustomTextField(
+              isPasswordField: true,
               hintText: "Password",
             )),
 

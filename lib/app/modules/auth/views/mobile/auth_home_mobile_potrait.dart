@@ -10,6 +10,7 @@ import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:jekawin_mobile_flutter/app/config/routes/app_pages.dart';
 import 'package:jekawin_mobile_flutter/app/modules/e_shop/views/e_shop_view.dart';
 import 'package:jekawin_mobile_flutter/app/modules/jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
+import 'package:jekawin_mobile_flutter/app/modules/login/views/login.dart';
 import 'package:jekawin_mobile_flutter/app/modules/signup/views/sign_up.dart';
 import 'package:jekawin_mobile_flutter/app/modules/splash/views/splash_view.dart';
 import '../../../../config/colors.dart';
@@ -27,9 +28,9 @@ class AuthHomeMobilePortrait extends GetView<AuthHomeController> {
 
     final Widget topSvg = SvgPicture.asset(
       assetName,
-      // width: MediaQuery.of(context).size.width,
+      width: MediaQuery.of(context).size.width,
+      fit: BoxFit.fitWidth,
     );
-
     final Widget logoSvg = SvgPicture.asset(
       logoAsetName,
       width: MediaQuery.of(context).size.width,
@@ -41,12 +42,15 @@ class AuthHomeMobilePortrait extends GetView<AuthHomeController> {
         children: [
           Column(
             children: [
-              topSvg,
-              const Gap(24),
+              SizedBox(
+                height: Get.height * .4,
+                child: topSvg,
+              ),
+              const Gap(16),
               logoSvg,
-              const Gap(60),
+              const Gap(32),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 32),
+                padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Column(
                   children: [
                     CustomButton(
@@ -64,7 +68,9 @@ class AuthHomeMobilePortrait extends GetView<AuthHomeController> {
                       buttonText: 'Log In',
                       buttonTextColor: const Color(0xff543884),
                       hasIcon: false,
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.to(() => const LoginView());
+                      },
                     ),
                   ],
                 ),
@@ -74,7 +80,10 @@ class AuthHomeMobilePortrait extends GetView<AuthHomeController> {
           Align(
             alignment: Alignment.bottomRight,
             child: Padding(
-              padding: const EdgeInsets.all(32.0),
+              padding: const EdgeInsets.only(
+                right: 32.0,
+                bottom: 24.0,
+              ),
               child: CircleButton(
                 key: key,
                 onTap: () => Get.to(
