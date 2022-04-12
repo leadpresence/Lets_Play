@@ -5,12 +5,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 class CustomOtpField extends StatefulWidget {
   final onComplete;
-  const CustomOtpField({Key? key,  this.onComplete
-  }) : super(key: key);
+  const CustomOtpField({Key? key, this.onComplete}) : super(key: key);
 
   @override
-  _CustomOtpFieldState createState() =>
-      _CustomOtpFieldState();
+  _CustomOtpFieldState createState() => _CustomOtpFieldState();
 
   @override
   String toStringShort() => 'Rounded With Cursor';
@@ -30,16 +28,15 @@ class _CustomOtpFieldState extends State<CustomOtpField> {
   @override
   Widget build(BuildContext context) {
     const focusedBorderColor = Color.fromRGBO(33, 22, 52, 1);
-    var fillColor =  Colors.grey.shade200;
+    var fillColor = Colors.grey.shade200;
     var borderColor = Colors.grey.withOpacity(.5);
-
 
     final defaultPinTheme = PinTheme(
       width: 56,
       height: 56,
       textStyle: GoogleFonts.poppins(
         fontSize: 22,
-        color:Colors.purple.shade900,
+        color: Colors.purple.shade900,
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(50),
@@ -70,7 +67,7 @@ class _CustomOtpFieldState extends State<CustomOtpField> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Container(
-            margin: EdgeInsets.only(bottom: 9),
+            margin: const EdgeInsets.only(bottom: 9),
             width: 22,
             height: 1,
             color: focusedBorderColor,
@@ -96,7 +93,3 @@ class _CustomOtpFieldState extends State<CustomOtpField> {
     );
   }
 }
-
-
-
-

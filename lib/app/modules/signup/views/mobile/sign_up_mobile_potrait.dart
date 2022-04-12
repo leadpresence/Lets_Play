@@ -38,19 +38,19 @@ class SignupMobilePortrait extends GetView<SignUpController> {
 
     return Obx(() => Scaffold(
             body: SingleChildScrollView(
-          child:
-              Form(
-                key: controller.signUpFormKey,
-                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Gap(30),
-            //Logo Row
-            Row(
+          child: Form(
+            key: controller.signUpFormKey,
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              const Gap(30),
+              //Logo Row
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [logoSvg],
-            ),
-            const Gap(40),
+              ),
+              const Gap(40),
 
-            Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
                   Text(
@@ -63,26 +63,25 @@ class SignupMobilePortrait extends GetView<SignUpController> {
                         ),
                   )
                 ],
-            ),
+              ),
 
-            const Gap(20),
+              const Gap(20),
 
-            Padding(
+              Padding(
                   padding: const EdgeInsets.fromLTRB(24, 40, 24, 10),
                   child: CustomTextField(
                     hintText: "Phone number",
                     textController: controller.phoneNumberController,
-
                   )),
 
-            Padding(
+              Padding(
                   padding: const EdgeInsets.fromLTRB(24, 12, 24, 10),
                   child: CustomTextField(
                     hintText: "Password",
                     textController: controller.passwordController,
                   )),
-            Gap(Get.height * 0.056),
-            Padding(
+              Gap(Get.height * 0.056),
+              Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Row(
                   children: [
@@ -106,9 +105,9 @@ class SignupMobilePortrait extends GetView<SignUpController> {
                     )
                   ],
                 ),
-            ),
+              ),
 
-            Padding(
+              Padding(
                 padding: const EdgeInsets.fromLTRB(24, 4, 24, 10),
                 child: CustomButton(
                     buttonText: "Sign Up",
@@ -117,15 +116,17 @@ class SignupMobilePortrait extends GetView<SignUpController> {
                       if (controller.agreementCheck.value == true) {
                         Get.to(() => SignupVerificationMP(
                               key: key,
-                              phonenumber: controller.phoneNumberController.text,
+                              phonenumber:
+                                  controller.phoneNumberController.text,
                             ));
+                      } else {
+                        Get.snackbar("Terms & Conditions",
+                            "Agree to Jekawin terms and condition");
                       }
-                    Get.snackbar("Terms & Conditions", "Agree to Jekawin terms and condition");
                     }),
-            )
-          ]),
-              ),
+              )
+            ]),
+          ),
         )));
   }
-
 }
