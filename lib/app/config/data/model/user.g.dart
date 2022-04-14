@@ -17,27 +17,33 @@ class UserAdapter extends TypeAdapter<User> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return User(
-      id: fields[0] as int,
+      id: fields[0] as String?,
+      avatar: fields[14] as String?,
       firstName: fields[1] as String?,
       lastName: fields[2] as String?,
-      phone: fields[3] as String?,
+      mobile: fields[3] as String?,
+      autoUsername: fields[10] as String?,
+      rewardPoints: fields[19] as int?,
       role: fields[5] as String?,
+      wins: fields[13] as int?,
+      country: fields[17] as String?,
+      inviteLink: fields[18] as String?,
       gender: fields[8] as String?,
       address: fields[9] as String?,
-      emailVerifiedAt: fields[10] as String?,
-      phoneVerified: fields[11] as String?,
+      emailVerified: fields[15] as bool?,
+      phoneVerified: fields[11] as bool?,
       status: fields[12] as String?,
-      createdAt: fields[13] as String?,
-      updatedAt: fields[14] as String?,
+      createdAt: fields[16] as DateTime?,
       token: fields[6] as String?,
-      password: fields[7] as String?,
-    )..email = fields[4] as String;
+    )
+      ..email = fields[4] as String
+      ..password = fields[7] as String?;
   }
 
   @override
   void write(BinaryWriter writer, User obj) {
     writer
-      ..writeByte(15)
+      ..writeByte(20)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -45,7 +51,7 @@ class UserAdapter extends TypeAdapter<User> {
       ..writeByte(2)
       ..write(obj.lastName)
       ..writeByte(3)
-      ..write(obj.phone)
+      ..write(obj.mobile)
       ..writeByte(4)
       ..write(obj.email)
       ..writeByte(5)
@@ -59,15 +65,25 @@ class UserAdapter extends TypeAdapter<User> {
       ..writeByte(9)
       ..write(obj.address)
       ..writeByte(10)
-      ..write(obj.emailVerifiedAt)
+      ..write(obj.autoUsername)
       ..writeByte(11)
       ..write(obj.phoneVerified)
       ..writeByte(12)
       ..write(obj.status)
-      ..writeByte(13)
-      ..write(obj.createdAt)
       ..writeByte(14)
-      ..write(obj.updatedAt);
+      ..write(obj.avatar)
+      ..writeByte(15)
+      ..write(obj.emailVerified)
+      ..writeByte(13)
+      ..write(obj.wins)
+      ..writeByte(16)
+      ..write(obj.createdAt)
+      ..writeByte(17)
+      ..write(obj.country)
+      ..writeByte(18)
+      ..write(obj.inviteLink)
+      ..writeByte(19)
+      ..write(obj.rewardPoints);
   }
 
   @override

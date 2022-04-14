@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+// mport 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -7,8 +7,6 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:jekawin_mobile_flutter/app/config/colors.dart';
-import 'package:jekawin_mobile_flutter/app/modules/jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
-import 'package:jekawin_mobile_flutter/app/modules/signup_verification/views/mobile/signup_verification_mobile_portrait.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_text_field.dart';
 
@@ -113,14 +111,8 @@ class SignupMobilePortrait extends GetView<SignUpController> {
                 child: CustomButton(
                     buttonText: "Sign Up",
                     onPressed: () {
-                      //check if terms is agreed
-                      if (controller.agreementCheck.value == true) {
-                        Get.to(() => SignupVerificationMP(
-                              key: key,
-                              phonenumber: controller.phoneNumberController.text,
-                            ));
-                      }
-                    Get.snackbar("Terms & Conditions", "Agree to Jekawin terms and condition");
+                      //validate form and submit
+                      controller.signUpFormValidator(key);
                     }),
             )
           ]),
