@@ -5,6 +5,8 @@ import 'package:jekawin_mobile_flutter/app/config/services/di/di_locator.dart';
 import 'package:jekawin_mobile_flutter/app/config/services/http/base_urls.dart';
 import 'package:jekawin_mobile_flutter/app/constants/app_error.dart';
 import 'package:jekawin_mobile_flutter/app/modules/signup/models/auth_response.dart';
+import 'package:jekawin_mobile_flutter/app/modules/signup/models/forget_password_response.dart';
+import 'package:jekawin_mobile_flutter/app/modules/signup/models/forgot_password_otp_res.dart';
 import 'package:jekawin_mobile_flutter/app/modules/signup/models/user_singed_up_response.dart';
 import '../../constants/network_exceptions.dart';
 import '../../modules/signup/models/resendotp_resonse_model.dart';
@@ -16,10 +18,17 @@ import 'http/http_services.dart';
 
 abstract class AuthServiceDataSource {
   Future<Either<AppError, String>> signup(UserSignUpModel body);
-  Future<Either<AppError, String>> login(String phoneNumber ,String password);
+
+  Future<Either<AppError, String>> login(String mobile, String password);
 
   Future<Either<AppError, String>> resendSignUpResetOtp(String phoneNumber);
 
+  Future<Either<AppError, String>> forgetPassword(String mobile);
+
+  Future<Either<AppError, String>> resetPasswordOtp(  String Otp);
+
+  Future<Either<AppError, String>> updatePassword(String password);
+  Future<Either<AppError, String>> signout( );
 }
 
 class AuthServiceImpl extends AuthServiceDataSource {
@@ -29,7 +38,6 @@ class AuthServiceImpl extends AuthServiceDataSource {
 
   AuthServiceImpl();
 
-
   @override
   Future<Either<AppError, String>> signup(UserSignUpModel body) async {
     Map<String, dynamic> payload = body.toJson();
@@ -37,7 +45,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
       var raw = await httpProvider.postHttp(
           '${JekawinBaseUrls.stagingBaseUrl}signup', payload);
       if (raw['success']) {
-        AuthResponseModel res =   AuthResponseModel.fromJson(raw);
+        AuthResponseModel res = AuthResponseModel.fromJson(raw);
         //save prospective id  so you use it to do other stuff if necessary
 
         prospectIsProvider.setProspectId(raw['prospectId']);
@@ -58,13 +66,10 @@ class AuthServiceImpl extends AuthServiceDataSource {
     }
   }
 
-
   Future<Either<AppError, String>> verifySignUpOtp(String otp) async {
-
-    String prospectId= prospectIsProvider.getProspectId();
-    Map<String, dynamic> payload = {"prospectId":prospectId,'otp': otp};
+    String prospectId = prospectIsProvider.getProspectId();
+    Map<String, dynamic> payload = {"prospectId": prospectId, 'otp': otp};
     try {
-
       var raw = await httpProvider.postHttp(
           '${JekawinBaseUrls.stagingBaseUrl}otp', payload);
       if (raw['success']) {
@@ -88,9 +93,9 @@ class AuthServiceImpl extends AuthServiceDataSource {
     }
   }
 
-
   @override
-  Future<Either<AppError, String>> resendSignUpResetOtp(String phoneNumber) async {
+  Future<Either<AppError, String>> resendSignUpResetOtp(
+      String phoneNumber) async {
     try {
       var raw = await httpProvider.postHttp(
           '${JekawinBaseUrls.stagingBaseUrl}resendOtp', phoneNumber);
@@ -98,12 +103,11 @@ class AuthServiceImpl extends AuthServiceDataSource {
       ResendOtpResponseModel res = ResendOtpResponseModel.fromJson(raw);
       if (raw['success']) {
         return Right(res.message);
-
       } else {
         return Left(
             AppError(errorType: AppErrorType.network, message: raw['message']));
       }
-    }on NetworkException catch (e) {
+    } on NetworkException catch (e) {
       return Left(
           AppError(errorType: AppErrorType.network, message: e.message));
     } on SocketException catch (e) {
@@ -116,22 +120,22 @@ class AuthServiceImpl extends AuthServiceDataSource {
   }
 
   @override
-  Future<Either<AppError, String>> login(String mobile, String password)async {
-    Map<String, dynamic> payload = {"mobile":mobile,'password': password};
+  Future<Either<AppError, String>> login(String mobile, String password) async {
+    Map<String, dynamic> payload = {"mobile": mobile, 'password': password};
 
     try {
       var raw = await httpProvider.postHttp(
           '${JekawinBaseUrls.stagingBaseUrl}signin', payload);
       UserSignupDetails res = UserSignupDetails.fromMap(raw);
       //todo @felix save login token to db here
+      localDbProvider.saveUser(res.data.user);
       if (raw['success']) {
-        return const Right("Login Successfull");
-
+        return const Right("Login Successful");
       } else {
         return Left(
             AppError(errorType: AppErrorType.network, message: raw['message']));
       }
-    }on NetworkException catch (e) {
+    } on NetworkException catch (e) {
       return Left(
           AppError(errorType: AppErrorType.network, message: e.message));
     } on SocketException catch (e) {
@@ -143,6 +147,93 @@ class AuthServiceImpl extends AuthServiceDataSource {
     }
   }
 
+  @override
+  Future<Either<AppError, String>> forgetPassword(String mobile) async {
+    Map<String, dynamic> payload = {"mobile": mobile};
 
+    try {
+      var raw = await httpProvider.postHttp(
+          '${JekawinBaseUrls.stagingBaseUrl}forgetpassword', payload);
+      //todo @felix get prospectId here
+      if (raw['success']) {
+        ForgetPasswordResponse res = ForgetPasswordResponse.fromMap(raw);
+        prospectIsProvider.setProspectId(raw['prospectId']);
 
+        return const Right("Otp sent Successful for password reset");
+      } else {
+        return Left(
+            AppError(errorType: AppErrorType.network, message: raw['message']));
+      }
+    } on NetworkException catch (e) {
+      return Left(
+          AppError(errorType: AppErrorType.network, message: e.message));
+    } on SocketException catch (e) {
+      return Left(
+          AppError(errorType: AppErrorType.network, message: e.message));
+    } on Exception {
+      return const Left(
+          AppError(errorType: AppErrorType.api, message: "An error occurred"));
+    }
+  }
+
+  @override
+  Future<Either<AppError, String>> resetPasswordOtp(String Otp) async {
+    String prospectId = prospectIsProvider.getProspectId();
+    Map<String, dynamic> payload = {"prospectId": prospectId, 'Otp': Otp};
+
+    try {
+      var raw = await httpProvider.postHttp(
+          '${JekawinBaseUrls.stagingBaseUrl}forgetpassword_otp', payload);
+      //todo @felix
+      if (raw['success']) {
+        ForgetPasswordOtpResponse res = ForgetPasswordOtpResponse.fromMap(raw);
+        return   Right(res.message);
+      } else {
+        return Left(
+            AppError(errorType: AppErrorType.network, message: raw['message']));
+      }
+    } on NetworkException catch (e) {
+      return Left(
+          AppError(errorType: AppErrorType.network, message: e.message));
+    } on SocketException catch (e) {
+      return Left(
+          AppError(errorType: AppErrorType.network, message: e.message));
+    } on Exception {
+      return const Left(
+          AppError(errorType: AppErrorType.api, message: "An error occurred"));
+    }
+  }
+
+  @override
+  Future<Either<AppError, String>> updatePassword(String password) async {
+    Map<String, dynamic> payload = {"password": password};
+
+    try {
+      var raw = await httpProvider.postHttp(
+          '${JekawinBaseUrls.stagingBaseUrl}createpassword', payload);
+      UserSignupDetails res = UserSignupDetails.fromMap(raw);
+      //todo @felix
+      if (raw['success']) {
+        return const Right("Login Successful");
+      } else {
+        return Left(
+            AppError(errorType: AppErrorType.network, message: raw['message']));
+      }
+    } on NetworkException catch (e) {
+      return Left(
+          AppError(errorType: AppErrorType.network, message: e.message));
+    } on SocketException catch (e) {
+      return Left(
+          AppError(errorType: AppErrorType.network, message: e.message));
+    } on Exception {
+      return const Left(
+          AppError(errorType: AppErrorType.api, message: "An error occurred"));
+    }
+  }
+
+  @override
+  Future<Either<AppError, String>> signout() {
+    // TODO: Felix implement signout
+    throw UnimplementedError();
+  }
 }

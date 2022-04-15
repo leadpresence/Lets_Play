@@ -23,19 +23,14 @@ void main() async {
       statusBarBrightness: Brightness.light,
       statusBarIconBrightness: Brightness.light));
   await dotenv.load(fileName: '.env');
-  await initHiveDb();
   //inject local user db
-  Get.lazyPut<UserLocalDataSourceInterface>(()=>UserLocalDataSourceImpl());
-  //inject remote service user db
-  Get.lazyPut<HttpService>(()=>HttpServiceImpl());
-  Get.lazyPut<AuthServiceDataSource>(()=>AuthServiceImpl());
-  Get.lazyPut<ProspectIdController>(()=>ProspectIdController());
-  runApp(const MyApp());
+  await initHiveDb();
+  await setDi();
+runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
