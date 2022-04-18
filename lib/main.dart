@@ -16,16 +16,15 @@ import 'init_db.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await setDi();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarBrightness: Brightness.light,
       statusBarIconBrightness: Brightness.light));
-  await dotenv.load(fileName: '.env');
+  // await dotenv.load(fileName: '.env');
   //inject local user db
-  await initHiveDb();
-  await setDi();
 runApp(const MyApp());
 }
 

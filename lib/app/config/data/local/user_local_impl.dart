@@ -6,26 +6,44 @@ import 'package:jekawin_mobile_flutter/app/config/data/model/hive_boxes.dart';
 import '../model/user.dart';
 
 class UserLocalDataSourceImpl extends UserLocalDataSourceInterface {
-  final Box userBox = Get.find<Box>(tag: HiveBox.USER_BOX);
+  User _user =User();
+
+  @override
+  User get user => _user;
+
+  final HiveInterface _hiveService  = Get.find();
+
+  bool get _isBoxOpen => _hiveService.isBoxOpen(HiveBox.USER_BOX);
+  Box<User> get _userBox => _hiveService.box<User>(HiveBox.USER_BOX);
 
   UserLocalDataSourceImpl();
 
   @override
   Future<void> cacheLoggedInUser(User userData) async {}
 
-  @override
-  void deleteUser(int userId) {
-    userBox.deleteAt(userId);
-  }
+
 
   @override
-  User getUserById(int userId) {
-    return userBox.getAt(userId);
+  Future<void> init() async{
+    _hiveService.registerAdapter(UserAdapter());
+
+    if (!_isBoxOpen) {
+      await _hiveService.openBox<User>(HiveBox.USER_BOX);
+    }
   }
+  @override
+  void deleteUser(int userId) {
+    _userBox.deleteAt(userId);
+  }
+
+  // @override
+  // User getUserById(int userId) {
+  //     _userBox.getAt(userId);
+  // }
 
   @override
   Future<void> saveUser(User userData) async {
-    userBox.put('user', userData);
+    _userBox.put('user', userData);
   }
 
   @override
@@ -33,7 +51,12 @@ class UserLocalDataSourceImpl extends UserLocalDataSourceInterface {
 
   @override
   void clearUserBox() {
-    userBox.clear();
+    _userBox.clear();
     // getUser();
+  }
+
+  @override
+  void getUser() {
+    _user = _userBox.get(0)!;
   }
 }

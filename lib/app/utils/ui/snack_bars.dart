@@ -1,10 +1,8 @@
-// @dart=2.9
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class JekawinSnackBars {
-  static errorSnackBar({String message, Widget icon}) {
+  static errorSnackBar({required String message,   Widget? icon}) {
     Get.rawSnackbar(
       snackStyle: SnackStyle.FLOATING,
       message: message,
@@ -37,7 +35,7 @@ class JekawinSnackBars {
     );
   }
 
-  static noInternet({String message, message2, Widget icon}) {
+  static noInternet({required String message, message2,   Widget? icon}) {
     Get.rawSnackbar(
       snackStyle: SnackStyle.GROUNDED,
       boxShadows: [
@@ -81,7 +79,7 @@ class JekawinSnackBars {
     );
   }
 
-  static successSnackBar({String message, Widget icon}) {
+  static successSnackBar({required String message, Widget? icon}) {
     return Get.rawSnackbar(
       snackStyle: SnackStyle.FLOATING,
       message: message,

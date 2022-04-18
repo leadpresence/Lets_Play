@@ -59,7 +59,8 @@ class SignUpController extends GetxController {
   }
 
   Future<void> signUp(Key? k) async {
-    CircularProgressIndicator();
+    // CircularProgressIndicator();
+    //todo @felix implement a  loading indicator here to shw progress
     var phoneNumber = phoneNumberController.value.text;
     var password = passwordController.value.text;
     var userAgreed = agreementCheck.value;

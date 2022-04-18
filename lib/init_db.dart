@@ -13,7 +13,9 @@ import 'package:path_provider/path_provider.dart' as path_provider;
 
 Future<void> initHiveDb() async {
   final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
-  Hive
+
+  final HiveInterface _hiveService  = Get.find();
+  _hiveService
     ..init(appDocumentDir.path)
     ..registerAdapter(UserAdapter());
 
@@ -25,9 +27,8 @@ Future<void> initHiveDb() async {
   final Box shopBox = await Hive.openBox(HiveBox.SHOP_BOX);
   final Box gamesBox = await Hive.openBox(HiveBox.GAMES_BOX);
 
-  //inject globally
-  Get.put<Box>(userBox, tag: HiveBox.USER_BOX);
-  //...inject other boxes
-  //...
-  //...
 }
+
+
+
+

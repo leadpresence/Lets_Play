@@ -1,32 +1,37 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:jekawin_mobile_flutter/app/config/data/local/user_local_impl.dart';
 import 'package:jekawin_mobile_flutter/app/utils/simple_log_printer.dart';
 
 // import 'package:logger/logger.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:dio/src/response.dart' as dio_response;
+import '../../../../init_db.dart';
 import '../../../utils/ui/snack_bars.dart';
 import '../../data/model/hive_boxes.dart';
 import '../../../constants/network_exceptions.dart';
+import '../../data/model/user.dart';
 import '../../exceptions/auth_exceptions.dart';
 import 'http_services.dart';
 import 'package:jekawin_mobile_flutter/app/utils/network_utils.dart'
     as network_utils;
 
 class HttpServiceImpl extends HttpService {
-  final _user = Get.find(tag: HiveBox.USER_BOX);
+  final _userService = Get.find<UserLocalDataSourceImpl>( );
+
   final _dio = Dio(BaseOptions(connectTimeout: 50000));
+  User get user => _userService.user;
 
   @override
   setHeader() {
-    _user.getUser();
+    _userService.getUser();
     Map<String, dynamic> header = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
     };
-    if (_user != null) {
-      header['Authorization'] = 'Bearer ${_user.token}';
+    if (user != null) {
+      header['Authorization'] = 'Bearer ${user.token}';
     }
     _dio.options.headers.addAll(header);
   }
@@ -180,7 +185,7 @@ class HttpServiceImpl extends HttpService {
           : e.message);
     }
 
-    network_utils.checkForNetworkExceptions(response!);
+    network_utils.checkForNetworkExceptions(response);
 
     return network_utils.decodeResponseBodyToJson(response.data);
   }
