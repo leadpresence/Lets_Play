@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 // mport 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
@@ -36,19 +37,19 @@ class SignupMobilePortrait extends GetView<SignUpController> {
 
     return Obx(() => Scaffold(
             body: SingleChildScrollView(
-          child:
-              Form(
-                key: controller.signUpFormKey,
-                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Gap(30),
-            //Logo Row
-            Row(
+          child: Form(
+            key: controller.signUpFormKey,
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              const Gap(30),
+              //Logo Row
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [logoSvg],
-            ),
-            const Gap(40),
+              ),
+              const Gap(40),
 
-            Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
                   Text(
@@ -61,52 +62,68 @@ class SignupMobilePortrait extends GetView<SignUpController> {
                         ),
                   )
                 ],
-            ),
+              ),
 
-            const Gap(20),
+              const Gap(20),
 
-            Padding(
+              Padding(
                   padding: const EdgeInsets.fromLTRB(24, 40, 24, 10),
                   child: CustomTextField(
-                    hintText: "Phone number",
-                    textController: controller.phoneNumberController,
-
+                    hintText: "what's your preferred first name",
+                    textController: controller.firstNameController,
                   )),
 
-            Padding(
+              Padding(
+                  padding: const EdgeInsets.fromLTRB(24, 12, 24, 10),
+                  child: CustomTextField(
+                    hintText: "Last name",
+                    textController: controller.lastNameController,
+                  )),
+              Padding(
+                  padding: const EdgeInsets.fromLTRB(24, 12, 24, 10),
+                  child: CustomTextField(
+                    hintText: "Phone number 23490112344",
+                    textController: controller.phoneNumberController,
+                  )),
+
+              Padding(
                   padding: const EdgeInsets.fromLTRB(24, 12, 24, 10),
                   child: CustomTextField(
                     hintText: "Password",
+                    isPasswordField: true,
                     textController: controller.passwordController,
                   )),
-            Gap(Get.height * 0.056),
-            Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Row(
-                  children: [
-                    Material(
-                      child: Checkbox(
-                        activeColor: orange,
-                        value: controller.agreementCheck.value,
-                        onChanged: (value) {
-                          controller.agreementCheck.value =
-                              !controller.agreementCheck.value;
-                        },
+              Gap(Get.height * 0.0056),
+              SizedBox(
+                width: screenWidth(context),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Row(
+                    children: [
+                      Material(
+                        child: Checkbox(
+                          activeColor: orange,
+                          value: controller.agreementCheck.value,
+                          onChanged: (value) {
+                            controller.agreementCheck.value =
+                                !controller.agreementCheck.value;
+                          },
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      width: (screenWidth(context) * 0.75),
-                      child: const Text(
-                        'I agree to the Jekawin Term of Service and \nPrivacy Policy',
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(color: agreementColor, fontSize: 10),
-                      ),
-                    )
-                  ],
+                      const Padding(
+                        padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+                        child: Text(
+                          'I agree to the Jekawin Term of Service and Privacy Policy',
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(color: agreementColor, fontSize: 13),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-            ),
+              ),
 
-            Padding(
+              Padding(
                 padding: const EdgeInsets.fromLTRB(24, 4, 24, 10),
                 child: CustomButton(
                     buttonText: "Sign Up",
@@ -114,10 +131,15 @@ class SignupMobilePortrait extends GetView<SignUpController> {
                       //validate form and submit
                       controller.signUpFormValidator(key);
                     }),
-            )
-          ]),
               ),
+              const Gap(10),
+              SizedBox(
+                child: controller.isLoading.value
+                    ? const Center(child:  CircularProgressIndicator(color: Colors.orange,))
+                    : Container(),
+              )
+            ]),
+          ),
         )));
   }
-
 }

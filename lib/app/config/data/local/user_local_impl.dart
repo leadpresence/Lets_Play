@@ -4,12 +4,13 @@ import 'package:hive/hive.dart';
 import 'package:jekawin_mobile_flutter/app/config/data/local/user_local_interface.dart';
 import 'package:jekawin_mobile_flutter/app/config/data/model/hive_boxes.dart';
 import '../model/user.dart';
+import '../../../utils/type_id.dart';
 
 class UserLocalDataSourceImpl extends UserLocalDataSourceInterface {
-  User _user =User();
+  User? _user =User();
 
   @override
-  User get user => _user;
+  User? get user => _user;
 
   final HiveInterface _hiveService  = Get.find();
 
@@ -22,11 +23,8 @@ class UserLocalDataSourceImpl extends UserLocalDataSourceInterface {
   Future<void> cacheLoggedInUser(User userData) async {}
 
 
-
   @override
   Future<void> init() async{
-    _hiveService.registerAdapter(UserAdapter());
-
     if (!_isBoxOpen) {
       await _hiveService.openBox<User>(HiveBox.USER_BOX);
     }
@@ -57,6 +55,7 @@ class UserLocalDataSourceImpl extends UserLocalDataSourceInterface {
 
   @override
   void getUser() {
-    _user = _userBox.get(0)!;
+    final defaultUser = User();
+    _user = _userBox.get(TypeId.user);
   }
 }

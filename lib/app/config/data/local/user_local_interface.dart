@@ -1,7 +1,7 @@
 import '../model/user.dart';
 
 abstract class UserLocalDataSourceInterface {
-  User user=User();
+  User? user=User();
   Future<void> init();
   void getUser();
   void deleteUser(int userId);

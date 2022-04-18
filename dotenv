@@ -1,0 +1,8 @@
+APP_NAME=Jekawin Mobile
+APP_DEBUG=true
+# APP_DEBUG=false
+
+APP_HOST=jekawin.com
+APP_URL=https://api.jekawin.com/v1/
+ANDROID_APP_ID =
+IOS_APP_ID=

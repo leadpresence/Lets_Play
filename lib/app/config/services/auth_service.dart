@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
@@ -11,9 +12,10 @@ import 'package:jekawin_mobile_flutter/app/modules/signup/models/user_singed_up_
 import '../../constants/network_exceptions.dart';
 import '../../modules/signup/models/resendotp_resonse_model.dart';
 import '../../modules/signup/models/user_sign_up_model.dart';
-import '../data/local/user_local_interface.dart';
+import '../data/local/user_local_impl.dart';
 import '../data/model/user.dart';
 import 'http/http_services.dart';
+
 //chibueze felix 3-2022
 
 abstract class AuthServiceDataSource {
@@ -34,16 +36,23 @@ abstract class AuthServiceDataSource {
 class AuthServiceImpl extends AuthServiceDataSource {
   final httpProvider = Get.find<HttpService>();
   final prospectIsProvider = Get.find<ProspectIdController>();
-  final localDbProvider = Get.find<UserLocalDataSourceInterface>();
+  final UserLocalDataSourceImpl _userLocalDataSource  = Get.find<UserLocalDataSourceImpl>();
+  User? get user => _userLocalDataSource.user;
 
   AuthServiceImpl();
 
   @override
   Future<Either<AppError, String>> signup(UserSignUpModel body) async {
-    Map<String, dynamic> payload = body.toJson();
+    Map<String, dynamic> payload = {
+      '"firstname"': '"${body.firstname}"',
+      '"lastname"': '"${body.lastname}"',
+      '"mobile"': '"${body.mobile}"',
+      '"password"': '"${body.password}"',
+      '"agreement"': body.agreement,
+    };
     try {
       var raw = await httpProvider.postHttp(
-          '${JekawinBaseUrls.stagingBaseUrl}signup', payload);
+          '${JekawinBaseUrls.authBaseUrl}signup',  payload);
       if (raw['success']) {
         AuthResponseModel res = AuthResponseModel.fromJson(raw);
         //save prospective id  so you use it to do other stuff if necessary
@@ -71,11 +80,11 @@ class AuthServiceImpl extends AuthServiceDataSource {
     Map<String, dynamic> payload = {"prospectId": prospectId, 'otp': otp};
     try {
       var raw = await httpProvider.postHttp(
-          '${JekawinBaseUrls.stagingBaseUrl}otp', payload);
+          '${JekawinBaseUrls.authBaseUrl}otp', payload);
       if (raw['success']) {
         UserSignupDetails res = UserSignupDetails.fromMap(raw);
         //todo @felix save returned user
-        localDbProvider.saveUser(res.data.user);
+        _userLocalDataSource.saveUser(res.data.user);
         return const Right("Sign up successful");
       } else {
         return Left(
@@ -98,7 +107,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
       String phoneNumber) async {
     try {
       var raw = await httpProvider.postHttp(
-          '${JekawinBaseUrls.stagingBaseUrl}resendOtp', phoneNumber);
+          '${JekawinBaseUrls.authBaseUrl}resendOtp', phoneNumber);
 
       ResendOtpResponseModel res = ResendOtpResponseModel.fromJson(raw);
       if (raw['success']) {
@@ -125,10 +134,10 @@ class AuthServiceImpl extends AuthServiceDataSource {
 
     try {
       var raw = await httpProvider.postHttp(
-          '${JekawinBaseUrls.stagingBaseUrl}signin', payload);
+          '${JekawinBaseUrls.authBaseUrl}signin', payload);
       UserSignupDetails res = UserSignupDetails.fromMap(raw);
       //todo @felix save login token to db here
-      localDbProvider.saveUser(res.data.user);
+      _userLocalDataSource.saveUser(res.data.user);
       if (raw['success']) {
         return const Right("Login Successful");
       } else {
@@ -153,7 +162,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
 
     try {
       var raw = await httpProvider.postHttp(
-          '${JekawinBaseUrls.stagingBaseUrl}forgetpassword', payload);
+          '${JekawinBaseUrls.authBaseUrl}forgetpassword', payload);
       //todo @felix get prospectId here
       if (raw['success']) {
         ForgetPasswordResponse res = ForgetPasswordResponse.fromMap(raw);
@@ -183,7 +192,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
 
     try {
       var raw = await httpProvider.postHttp(
-          '${JekawinBaseUrls.stagingBaseUrl}forgetpassword_otp', payload);
+          '${JekawinBaseUrls.authBaseUrl}forgetpassword_otp', payload);
       //todo @felix
       if (raw['success']) {
         ForgetPasswordOtpResponse res = ForgetPasswordOtpResponse.fromMap(raw);
@@ -210,7 +219,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
 
     try {
       var raw = await httpProvider.postHttp(
-          '${JekawinBaseUrls.stagingBaseUrl}createpassword', payload);
+          '${JekawinBaseUrls.authBaseUrl}createpassword', payload);
       UserSignupDetails res = UserSignupDetails.fromMap(raw);
       //todo @felix
       if (raw['success']) {

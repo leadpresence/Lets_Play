@@ -2,14 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:jekawin_mobile_flutter/app/config/data/local/user_local_impl.dart';
 import 'package:jekawin_mobile_flutter/app/utils/simple_log_printer.dart';
-
-// import 'package:logger/logger.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:dio/src/response.dart' as dio_response;
-import '../../../../init_db.dart';
 import '../../../utils/ui/snack_bars.dart';
-import '../../data/model/hive_boxes.dart';
 import '../../../constants/network_exceptions.dart';
 import '../../data/model/user.dart';
 import '../../exceptions/auth_exceptions.dart';
@@ -21,7 +17,7 @@ class HttpServiceImpl extends HttpService {
   final _userService = Get.find<UserLocalDataSourceImpl>( );
 
   final _dio = Dio(BaseOptions(connectTimeout: 50000));
-  User get user => _userService.user;
+  User? get user => _userService.user;
 
   @override
   setHeader() {
@@ -31,7 +27,7 @@ class HttpServiceImpl extends HttpService {
       'Accept': 'application/json',
     };
     if (user != null) {
-      header['Authorization'] = 'Bearer ${user.token}';
+      header['Authorization'] = 'Bearer ${user?.token}';
     }
     _dio.options.headers.addAll(header);
   }

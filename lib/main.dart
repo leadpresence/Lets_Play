@@ -23,8 +23,7 @@ void main() async {
       statusBarColor: Colors.transparent,
       statusBarBrightness: Brightness.light,
       statusBarIconBrightness: Brightness.light));
-  // await dotenv.load(fileName: '.env');
-  //inject local user db
+  await dotenv.load(fileName: 'dotenv');
 runApp(const MyApp());
 }
 

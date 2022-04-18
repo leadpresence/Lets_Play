@@ -21,11 +21,11 @@ Future<void> initHiveDb() async {
 
 // add any other adapters here e.g games adapter
 // open boxes
-  final Box userBox   = await Hive.openBox(HiveBox.USER_BOX);
-  final Box boolsBox = await Hive.openBox(HiveBox.BOOLS_BOX);
-  final Box stringBox = await Hive.openBox(HiveBox.STRING_BOX);
-  final Box shopBox = await Hive.openBox(HiveBox.SHOP_BOX);
-  final Box gamesBox = await Hive.openBox(HiveBox.GAMES_BOX);
+  final Box<User> userBox   = await _hiveService.openBox(HiveBox.USER_BOX);
+//   final Box boolsBox = await Hive.openBox(HiveBox.BOOLS_BOX);
+//   final Box stringBox = await Hive.openBox(HiveBox.STRING_BOX);
+//   final Box shopBox = await Hive.openBox(HiveBox.SHOP_BOX);
+//   final Box gamesBox = await Hive.openBox(HiveBox.GAMES_BOX);
 
 }
 

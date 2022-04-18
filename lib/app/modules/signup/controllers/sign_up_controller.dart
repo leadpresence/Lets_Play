@@ -10,22 +10,32 @@ class SignUpController extends GetxController {
   final  AuthServiceDataSource authService = Get.find<AuthServiceDataSource>();
   var agreementCheck = false.obs;
   final signUpFormKey = GlobalKey<FormState>();
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
   final phoneNumberController = TextEditingController();
   final passwordController = TextEditingController();
 
+  var isLoading = false.obs;
+  RxString errorFirstNameMessage = "".obs;
   RxString errorPhoneNumberMessage = "".obs;
   RxString errorPasswordMessage = "".obs;
 
   void clearErrorPhoneNumber() => errorPhoneNumberMessage.value = '';
-
+  void clearErrorFirstName() => errorPhoneNumberMessage.value = '';
   void clearErrorPassword() => errorPasswordMessage.value = '';
 
   signUpFormValidator(Key? k) {
     if ((GetUtils.isBlank(phoneNumberController.text)) == true) {
       return errorPhoneNumberMessage.value = 'Add Phone Number';
-    } else if ((GetUtils.isBlank(passwordController.text)) == true) {
+    } else if ((GetUtils.isBlank(firstNameController.text)) == true) {
+      return errorFirstNameMessage.value = "What can we call you?";
+    }else if ((GetUtils.isBlank(passwordController.text)) == true) {
       return errorPasswordMessage.value = "Add Password";
-    } else {
+    }else if(agreementCheck.value != true){
+      //check if terms is agreed
+      Get.snackbar("Terms & Conditions", "Agree to Jekawin terms and condition",overlayColor: Colors.yellow);
+    }
+    else {
       signUp(k);
     }
   }
@@ -61,11 +71,15 @@ class SignUpController extends GetxController {
   Future<void> signUp(Key? k) async {
     // CircularProgressIndicator();
     //todo @felix implement a  loading indicator here to shw progress
+    var firstName = firstNameController.value.text;
+    var lastName = lastNameController.value.text;
     var phoneNumber = phoneNumberController.value.text;
     var password = passwordController.value.text;
     var userAgreed = agreementCheck.value;
-    final userData =await authService.signup(UserSignUpModel(firstname: "", lastname: "", mobile: phoneNumber, password: password, agreement: userAgreed));
+    isLoading(true);
+    final userData = await authService.signup(UserSignUpModel(firstname: firstName, lastname: lastName, mobile: phoneNumber, password: password, agreement: userAgreed));
     userData.fold((l) {
+      isLoading(false);
       Get.snackbar("Signup Error", "An error occurred during signup",overlayColor: Colors.red);
     }, (r) {
       navigateToVerify(k);
@@ -73,14 +87,12 @@ class SignUpController extends GetxController {
   }
 
   navigateToVerify(Key? k){
-    //check if terms is agreed
-    if ( agreementCheck.value == true) {
+
       Get.to(() => SignupVerificationMP(
         key: k,
         phonenumber: phoneNumberController.text,
       ));
-    }
-    Get.snackbar("Terms & Conditions", "Agree to Jekawin terms and condition",overlayColor: Colors.yellow);
+
   }
 
 }
