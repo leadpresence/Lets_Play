@@ -5,7 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 class CustomOtpField extends StatefulWidget {
   final onComplete;
-  const CustomOtpField({Key? key,  this.onComplete
+  final pinController ;
+
+   CustomOtpField({Key? key,  this.onComplete, required this.pinController
   }) : super(key: key);
 
   @override
@@ -17,12 +19,11 @@ class CustomOtpField extends StatefulWidget {
 }
 
 class _CustomOtpFieldState extends State<CustomOtpField> {
-  final pinController = TextEditingController();
   final focusNode = FocusNode();
 
   @override
   void dispose() {
-    pinController.dispose();
+    widget.pinController.dispose();
     focusNode.dispose();
     super.dispose();
   }
@@ -48,7 +49,7 @@ class _CustomOtpFieldState extends State<CustomOtpField> {
     );
 
     return Pinput(
-      controller: pinController,
+      controller: widget.pinController,
       focusNode: focusNode,
       androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsRetrieverApi,
       defaultPinTheme: defaultPinTheme,
@@ -62,7 +63,7 @@ class _CustomOtpFieldState extends State<CustomOtpField> {
       },
       onClipboardFound: (value) {
         debugPrint('onClipboardFound: $value');
-        pinController.setText(value);
+        widget.pinController.setText(value);
       },
       hapticFeedbackType: HapticFeedbackType.lightImpact,
       onCompleted: debugPrint,

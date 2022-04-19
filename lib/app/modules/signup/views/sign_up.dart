@@ -16,13 +16,12 @@ class SignUpView extends GetView<SignUpController> {
   Widget build(BuildContext context) {
     return  ScreenTypeLayout.builder(
         mobile: (_) => OrientationLayoutBuilder(
-
           portrait: (_)=> SignupMobilePortrait(),
           landscape: (_)=>const SignupMobileLandscape(),
         ),
         tablet: (_) => OrientationLayoutBuilder(
           portrait: (_) => const   SignUpTabletPortrait(),
-          landscape: (_)=>
+          landscape: (_) =>
           const SignUpTabletLandscape(),
 
         ));

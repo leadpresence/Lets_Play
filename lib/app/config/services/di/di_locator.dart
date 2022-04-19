@@ -10,14 +10,20 @@ import '../http/http_services.dart';
 
 class ProspectIdController extends GetxController {
   RxString prospectId = "".obs;
+  RxString phoneNumber = "".obs;
 
   getProspectId() => prospectId.value;
 
+  getPhoneNumber() => phoneNumber.value;
+
   setProspectId(String prosId) {
-    prospectId = prosId as RxString;
+    prospectId .value= prosId;
+  }
+
+  setPhoneNumber(String mobile) {
+    phoneNumber.value = mobile;
   }
 }
-
 Future<void>  setDi()async {
   Get.lazyPut<HiveInterface>(()=>Hive);
   initHiveDb();

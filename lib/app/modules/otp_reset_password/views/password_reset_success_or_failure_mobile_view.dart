@@ -5,7 +5,8 @@ import 'package:jekawin_mobile_flutter/app/modules/jekawin_bottom_tabs/views/jak
 import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
 
 class VerificationSuccessOrFailureMobileView extends StatelessWidget {
-  const VerificationSuccessOrFailureMobileView({Key? key}) : super(key: key);
+  final String? message;
+  const VerificationSuccessOrFailureMobileView({Key? key,this.message}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +21,15 @@ class VerificationSuccessOrFailureMobileView extends StatelessWidget {
               const SizedBox(
                 height: 24,
               ),
+              message!=null ?  Text(
+                message!,
+                style: const TextStyle(
+                  fontSize: 18,
+                  color: Color(0xFF4E4B66),
+                ),
+              ):
               const Text(
-                'Your password reset was successful',
+                'Request was successful',
                 style: TextStyle(
                   fontSize: 18,
                   color: Color(0xFF4E4B66),

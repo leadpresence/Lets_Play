@@ -144,8 +144,8 @@ class HttpServiceImpl extends HttpService {
       getLogger().d('Received Response: $response');
     }
 
-    // return response?.data;
-    return network_utils.decodeResponseBodyToJson(response.data);
+    return response.data;
+    // return network_utils.decodeResponseBodyToJson(response.data);
   }
 
   @override

@@ -12,6 +12,7 @@ import 'package:jekawin_mobile_flutter/app/modules/signup/models/user_singed_up_
 import '../../constants/network_exceptions.dart';
 import '../../modules/signup/models/resendotp_resonse_model.dart';
 import '../../modules/signup/models/user_sign_up_model.dart';
+import '../../modules/signup_verification/views/mobile/signup_verification_mobile_portrait.dart';
 import '../data/local/user_local_impl.dart';
 import '../data/model/user.dart';
 import 'http/http_services.dart';
@@ -20,6 +21,7 @@ import 'http/http_services.dart';
 
 abstract class AuthServiceDataSource {
   Future<Either<AppError, String>> signup(UserSignUpModel body);
+  Future<Either<AppError, String>> verifySignUpOtp(String otp);
 
   Future<Either<AppError, String>> login(String mobile, String password);
 
@@ -44,11 +46,11 @@ class AuthServiceImpl extends AuthServiceDataSource {
   @override
   Future<Either<AppError, String>> signup(UserSignUpModel body) async {
     Map<String, dynamic> payload = {
-      '"firstname"': '"${body.firstname}"',
-      '"lastname"': '"${body.lastname}"',
-      '"mobile"': '"${body.mobile}"',
-      '"password"': '"${body.password}"',
-      '"agreement"': body.agreement,
+      'firstname': body.firstname,
+      'lastname': body.lastname,
+      'mobile': body.mobile,
+      'password': body.password,
+      'agreement': body.agreement,
     };
     try {
       var raw = await httpProvider.postHttp(
@@ -56,9 +58,9 @@ class AuthServiceImpl extends AuthServiceDataSource {
       if (raw['success']) {
         AuthResponseModel res = AuthResponseModel.fromJson(raw);
         //save prospective id  so you use it to do other stuff if necessary
-
-        prospectIsProvider.setProspectId(raw['prospectId']);
-        return Right(res.data.prospectId);
+        prospectIsProvider.setProspectId(res.data.prospectId);
+        prospectIsProvider.setPhoneNumber(body.mobile);
+        return Right(raw['message']);
       } else {
         return Left(
             AppError(errorType: AppErrorType.network, message: raw['message']));
@@ -74,10 +76,10 @@ class AuthServiceImpl extends AuthServiceDataSource {
           AppError(errorType: AppErrorType.api, message: "An error occurred"));
     }
   }
-
+  @override
   Future<Either<AppError, String>> verifySignUpOtp(String otp) async {
     String prospectId = prospectIsProvider.getProspectId();
-    Map<String, dynamic> payload = {"prospectId": prospectId, 'otp': otp};
+    Map<String, dynamic> payload = {'prospectId': prospectId, 'otp': otp};
     try {
       var raw = await httpProvider.postHttp(
           '${JekawinBaseUrls.authBaseUrl}otp', payload);

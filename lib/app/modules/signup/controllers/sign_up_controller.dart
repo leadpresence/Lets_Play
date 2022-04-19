@@ -44,7 +44,7 @@ class SignUpController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
+    isLoading.value =false;
     super.onInit();
   }
 
@@ -58,6 +58,7 @@ class SignUpController extends GetxController {
   void dispose() {
     phoneNumberController.dispose();
     passwordController.dispose();
+    isLoading.value =false;
     super.dispose();
   }
 
@@ -65,11 +66,11 @@ class SignUpController extends GetxController {
   void onClose() {
     phoneNumberController.dispose();
     passwordController.dispose();
+    isLoading.value = false;
     super.onClose();
   }
 
   Future<void> signUp(Key? k) async {
-    // CircularProgressIndicator();
     //todo @felix implement a  loading indicator here to shw progress
     var firstName = firstNameController.value.text;
     var lastName = lastNameController.value.text;
@@ -80,6 +81,7 @@ class SignUpController extends GetxController {
     final userData = await authService.signup(UserSignUpModel(firstname: firstName, lastname: lastName, mobile: phoneNumber, password: password, agreement: userAgreed));
     userData.fold((l) {
       isLoading(false);
+
       Get.snackbar("Signup Error", "An error occurred during signup",overlayColor: Colors.red);
     }, (r) {
       navigateToVerify(k);
@@ -87,7 +89,6 @@ class SignUpController extends GetxController {
   }
 
   navigateToVerify(Key? k){
-
       Get.to(() => SignupVerificationMP(
         key: k,
         phonenumber: phoneNumberController.text,
