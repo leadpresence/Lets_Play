@@ -103,12 +103,15 @@ class _CustomTextFieldState extends State<CustomTextField> {
             errorText: widget.errorText,
             suffixIcon: widget.suffixIcon == ''
                 ? null
-                : SvgPicture.asset(
-                    widget.suffixIcon,
-                    height: 14,
-                    width: 14,
-                    color: Colors.black26.withOpacity(.65),
-                  ),
+                : GestureDetector(
+              onTap: ()=>_toggle(),
+                  child: SvgPicture.asset(
+                      widget.suffixIcon,
+                      height: 14,
+                      width: 14,
+                      color: Colors.black26.withOpacity(.65),
+                    ),
+                ),
             contentPadding: const EdgeInsets.only(left: 18),
             hintText: widget.hintText,
             labelText: widget.labelText,

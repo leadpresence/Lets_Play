@@ -17,12 +17,14 @@ class SignUpController extends GetxController {
 
   var isLoading = false.obs;
   RxString errorFirstNameMessage = "".obs;
+  RxString errorLastNameMessage = "".obs;
   RxString errorPhoneNumberMessage = "".obs;
   RxString errorPasswordMessage = "".obs;
 
   void clearErrorPhoneNumber() => errorPhoneNumberMessage.value = '';
   void clearErrorFirstName() => errorPhoneNumberMessage.value = '';
   void clearErrorPassword() => errorPasswordMessage.value = '';
+  void clearErrorLastName() => errorPasswordMessage.value = '';
 
   signUpFormValidator(Key? k) {
     if ((GetUtils.isBlank(phoneNumberController.text)) == true) {
@@ -45,6 +47,10 @@ class SignUpController extends GetxController {
   @override
   void onInit() {
     isLoading.value =false;
+    clearErrorPhoneNumber();
+    clearErrorFirstName();
+    clearErrorPassword();
+    clearErrorLastName();
     super.onInit();
   }
 
@@ -71,7 +77,7 @@ class SignUpController extends GetxController {
   }
 
   Future<void> signUp(Key? k) async {
-    //todo @felix implement a  loading indicator here to shw progress
+
     var firstName = firstNameController.value.text;
     var lastName = lastNameController.value.text;
     var phoneNumber = phoneNumberController.value.text;

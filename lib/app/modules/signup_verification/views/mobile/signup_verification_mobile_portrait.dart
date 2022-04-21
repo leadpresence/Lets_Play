@@ -84,7 +84,6 @@ class SignupVerificationMP extends GetView<SignUpVerificationController> {
 
 class OtpHeader extends StatelessWidget {
   final phoneNumber;
-
   const OtpHeader({Key? key, required this.phoneNumber}) : super(key: key);
 
   @override

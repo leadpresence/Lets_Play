@@ -13,6 +13,9 @@ abstract class Routes {
   static const splash = _Paths.splash;
   static const response = _Paths.response;
   static const updatePassword = _Paths.updatePassword;
+  static const walletHome = _Paths.walletHome;
+  static const fundWallet = _Paths.fundWallet;
+  static const selectBank = _Paths.selectBank;
 
 }
 
@@ -26,4 +29,7 @@ abstract class _Paths {
   static const resetPassword = '/resetPassword';
   static const response = '/response';
   static const updatePassword = '/updatePassword';
+  static const walletHome = '/walletHome';
+  static const fundWallet = '/fundWallet';
+  static const selectBank = '/selectBank';
 }
