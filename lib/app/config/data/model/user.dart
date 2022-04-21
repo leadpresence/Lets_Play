@@ -1,6 +1,4 @@
-import 'dart:ffi';
-
-import 'package:equatable/equatable.dart';
+ import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 
 import '../../../utils/type_id.dart';

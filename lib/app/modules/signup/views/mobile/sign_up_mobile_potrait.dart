@@ -32,7 +32,9 @@ class SignupMobilePortrait extends GetView<SignUpController> {
 
     return Obx(() => Scaffold(
             body: SingleChildScrollView(
-          child: Form(
+          child:
+
+          Form(
             key: controller.signUpFormKey,
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

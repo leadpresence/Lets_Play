@@ -16,6 +16,9 @@ abstract class Routes {
   static const walletHome = _Paths.walletHome;
   static const fundWallet = _Paths.fundWallet;
   static const selectBank = _Paths.selectBank;
+  static const addBank = _Paths.addBank;
+  static const withdrawalAmount = _Paths.withdrawalAmount;
+  static const withdrawalConfirmation = _Paths.withdrawalConfirmation;
 
 }
 
@@ -32,4 +35,7 @@ abstract class _Paths {
   static const walletHome = '/walletHome';
   static const fundWallet = '/fundWallet';
   static const selectBank = '/selectBank';
+  static const addBank = '/addBank';
+  static const withdrawalAmount = '/withdrawalAmount';
+  static const withdrawalConfirmation = '/withdrawalConfirmation';
 }

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:jekawin_mobile_flutter/app/modules/add_bank_acccount/bindings/add_bank_binding.dart';
 import 'package:jekawin_mobile_flutter/app/modules/auth/views/auth_home.dart';
 import 'package:jekawin_mobile_flutter/app/modules/e_shop/bindings/e_shop_binding.dart';
 import 'package:jekawin_mobile_flutter/app/modules/e_shop/views/e_shop_view.dart';
@@ -13,7 +14,11 @@ import 'package:jekawin_mobile_flutter/app/modules/signup/bindings/sign_up_bindi
 import 'package:jekawin_mobile_flutter/app/modules/splash/views/splash_view.dart';
 import 'package:jekawin_mobile_flutter/app/modules/walllet_home/bindings/wallet_home_bindings.dart';
 import 'package:jekawin_mobile_flutter/app/modules/walllet_home/views/wallet_home_view.dart';
+import 'package:jekawin_mobile_flutter/app/modules/withdrawal_amount/bindings/withdrawal_amount_bindings.dart';
+import 'package:jekawin_mobile_flutter/app/modules/withdrawal_amount/views/withdrawal_amount_view.dart';
+import 'package:jekawin_mobile_flutter/app/modules/withdrawal_confirmation/bindings/withrawal_confirmation_bindings.dart';
 
+import '../../modules/add_bank_acccount/views/add_bank_view.dart';
 import '../../modules/auth/bindings/auth_binding.dart';
 import '../../modules/messages/bindings/messages_bindings.dart';
 import '../../modules/messages/views/response_message.dart';
@@ -23,13 +28,14 @@ import '../../modules/signup/views/sign_up.dart';
 import '../../modules/signup_verification/bindings/singup_verification_bindings.dart';
 import '../../modules/signup_verification/views/otp_signup_verification.dart';
 import '../../modules/splash/bindings/splash_bindings.dart';
+import '../../modules/withdrawal_confirmation/views/withrawal_confirmation_view.dart';
 
 part 'app_routes.dart';
 
 class AppPages {
   AppPages._();
 
-  static const initial = Routes.selectBank;
+  static const initial = Routes.splash;
 
   static final routes = [
     GetPage(
@@ -102,6 +108,24 @@ class AppPages {
       name: _Paths.selectBank,
       page: () => const SelectBankView(),
       binding: SelectBankBindings(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: _Paths.addBank,
+      page: () => const AddBankView(),
+      binding: AddBankBindings(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: _Paths.withdrawalAmount,
+      page: () => const WithdrawalAmountView(),
+      binding: WithdrawalAmountBindings(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: _Paths.withdrawalConfirmation,
+      page: () => const WithdrawalConfirmationView(),
+      binding: WithdrawalConfirmationBindings(),
       transition: Transition.fadeIn,
     ),
   ];

@@ -8,6 +8,7 @@ import 'package:jekawin_mobile_flutter/app/modules/fund_wallet/controllers/fund_
 import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../widgets/custom_large_button.dart';
 import '../../../../widgets/custom_text_field.dart';
+import '../../../otp_reset_password/views/password_reset_success_or_failure_mobile_view.dart';
 
 class FundWalletMobilePortrait extends GetView {
   @override
@@ -56,7 +57,6 @@ class FundWalletMobilePortrait extends GetView {
             children: [wallet],
           ),
           const Gap(40),
-
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
@@ -175,6 +175,8 @@ class FundWalletMobilePortrait extends GetView {
                 onPressed: () {
                   //validate form and submit
                   // controller.signUpFormValidator(key);
+                  Get.to(() => const VerificationSuccessOrFailureMobileView(message: "Wallet funded successfully",));
+
                 }),
           ),
         ])))

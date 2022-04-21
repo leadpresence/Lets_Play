@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:jekawin_mobile_flutter/app/modules/e_shop/views/e_shop_view.dart';
+import 'package:jekawin_mobile_flutter/app/modules/walllet_home/views/wallet_home_view.dart';
 
 class JekawinBottomTabs extends StatefulWidget {
   final int tabIndex;
@@ -29,7 +30,7 @@ class _JekawinBottomTabsState extends State<JekawinBottomTabs> {
     });
     _children.add({
       "title": "Wallet",
-      "widget": Container(),
+      "widget":const WalletHomeView(),
     });
     _children.add({
       "title": "E-shop",

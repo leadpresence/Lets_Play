@@ -10,9 +10,14 @@ import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_text_field.dart';
 import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../constants/asset_paths.dart';
+import '../../../jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
 
 class LoginMobilePortrait extends GetView<LoginController> {
-  const LoginMobilePortrait({Key? key, this.themeData, this.customAppTheme})
+
+  @override
+  final LoginController controller = Get.put(LoginController());
+
+    LoginMobilePortrait({Key? key, this.themeData, this.customAppTheme})
       : super(key: key);
   final ThemeData? themeData;
   final CustomAppTheme? customAppTheme;
@@ -35,7 +40,9 @@ class LoginMobilePortrait extends GetView<LoginController> {
     );
     screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
 
-    return Obx(() => Scaffold(
+    return
+      // Obx(() =>
+          Scaffold(
             body: SingleChildScrollView(
           child: Form(
             key: controller.loginFormKey,
@@ -104,11 +111,18 @@ class LoginMobilePortrait extends GetView<LoginController> {
                 padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
                 child: CustomButton(
                     buttonText: "Login",
-                    onPressed: () => controller.login(key)
+                    onPressed: () {
+
+                      // controller.login(key);
+                      Get.to(() => const JekawinBottomTabs(
+                        tabIndex: 0,
+                      ));
+                    }
                 ),
               )
             ]),
           ),
-        )));
+        // )
+          ));
   }
 }

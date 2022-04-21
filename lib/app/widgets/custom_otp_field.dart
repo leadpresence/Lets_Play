@@ -7,7 +7,7 @@ class CustomOtpField extends StatefulWidget {
   final onComplete;
   final pinController ;
 
-   CustomOtpField({Key? key,  this.onComplete, required this.pinController
+   const CustomOtpField({Key? key,  this.onComplete, required this.pinController
   }) : super(key: key);
 
   @override

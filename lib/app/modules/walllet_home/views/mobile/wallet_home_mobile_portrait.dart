@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:jekawin_mobile_flutter/app/modules/fund_wallet/views/fund_wallet_view.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_small_button.dart';
 
 import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../constants/asset_paths.dart';
+import '../../../select_account/views/select_bank_view.dart';
 import '../../controllers/wallet_home_controller.dart';
 
 class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
@@ -40,7 +42,7 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
       // Obx(() =>
       Scaffold(
           body: SingleChildScrollView(
-              physics: const ScrollPhysics(),
+              // physics: const ScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(16.0, 60, 16.0, 10.0),
                 child: Column(
@@ -99,12 +101,18 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                               MainAxisAlignment.spaceEvenly,
                               children: [
                                 CustomSmallButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Get.to(
+                                            () => const FundWalletView());
+                                  },
                                   buttonText: "Fund wallet",
                                 ),
                                 const Gap(20),
                                 CustomSmallButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Get.to(
+                                            () => const SelectBankView());
+                                  },
                                   buttonText: "Withdraw",
                                 )
                               ],

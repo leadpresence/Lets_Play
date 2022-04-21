@@ -21,7 +21,8 @@ class SignupVerificationMP extends GetView<SignUpVerificationController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return
+      Scaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(24, 64, 24, 24),
         child: Column(

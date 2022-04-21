@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:jekawin_mobile_flutter/app/modules/add_bank_acccount/views/add_bank_view.dart';
 import 'package:jekawin_mobile_flutter/app/modules/select_account/controller/select_bank_controller.dart';
 
 import '../../../../config/themes/app_theme_constants.dart';
@@ -53,19 +54,22 @@ class SelectBankMobilePortrait extends GetView {
           //  Add new bank account
           Padding(
               padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  addBankIcon,
-                  const Gap(15),
-                  SizedBox(
-                    child: Text(
-                      "Add new bank account",
-                      overflow: TextOverflow.ellipsis,
+              child: GestureDetector(
+                onTap: ()=>Get.to(()=>const AddBankView()),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    addBankIcon,
+                    const Gap(15),
+                    SizedBox(
+                      child: Text(
+                        "Add new bank account",
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      width: screenWidth(context) / 2,
                     ),
-                    width: screenWidth(context) / 2,
-                  ),
-                ],
+                  ],
+                ),
               )),
           const Gap(5),
           Padding(
@@ -90,7 +94,9 @@ class SelectBankMobilePortrait extends GetView {
                       shrinkWrap: true,
                       itemCount: 3,
                       itemBuilder: (BuildContext context, int position) {
-                        return BankItem();
+                        return BankItem(
+                          showBin: true,
+                        );
                       })))
         ],
       ),
@@ -98,11 +104,11 @@ class SelectBankMobilePortrait extends GetView {
   }
 }
 
-
-
 //Todo @felix create needed para meters for this class
 class BankItem extends StatelessWidget {
-  BankItem();
+  var showBin = false;
+
+  BankItem({required this.showBin});
 
   @override
   Widget build(BuildContext context) {
@@ -171,10 +177,12 @@ class BankItem extends StatelessWidget {
                       width: screenWidth(context) / 2,
                     ),
                     Gap(screenWidth(context) / 16),
-                    GestureDetector(
-                      child: binIcon,
-                      onTap: () {},
-                    )
+                    showBin
+                        ? GestureDetector(
+                            child: binIcon,
+                            onTap: () {},
+                          )
+                        : const SizedBox()
                   ])
             ],
           )

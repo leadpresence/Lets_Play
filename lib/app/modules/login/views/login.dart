@@ -16,7 +16,7 @@ class LoginView extends GetView<LoginController> {
     return  ScreenTypeLayout.builder(
         mobile: (_) => OrientationLayoutBuilder(
 
-          portrait: (_)=> const LoginMobilePortrait(),
+          portrait: (_)=>   LoginMobilePortrait(),
           landscape: (_)=>const LoginMobileLandscape(),
         ),
         tablet: (_) => OrientationLayoutBuilder(

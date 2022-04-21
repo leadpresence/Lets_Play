@@ -17,7 +17,6 @@ class LoginController extends GetxController {
 
   void clearErrorPassword() => errorPasswordMessage.value = '';
 
-  Rx<bool> agree = false as Rx<bool>;
 
   @override
   void onInit() {
