@@ -41,9 +41,9 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
     return
       // Obx(() =>
       Scaffold(
-          body: SingleChildScrollView(
-              // physics: const ScrollPhysics(),
-              child: Padding(
+          body:
+
+        Padding(
                 padding: const EdgeInsets.fromLTRB(16.0, 60, 16.0, 10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,10 +129,10 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                     const Text("Transactions",
                         style: TextStyle(
                             fontSize: 24, color: Color(0xff000000))),
-                    Container(
+                    Expanded(
                       child: ListView.builder(
                           shrinkWrap: true,
-                          itemCount: 33,
+                          itemCount: 13,
                           itemBuilder: (BuildContext context, int position) {
                             return TransactionItem(key: key,
                               onPresssed: () {},
@@ -144,7 +144,7 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                     )
                   ],
                 ),
-              )));
+          ));
   }
 
 }
