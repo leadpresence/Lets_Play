@@ -50,7 +50,7 @@ class WithdrawalConfirmationMobilePortrait
               ],
             ),
             const Gap(10),
-            withdrawalDetails(context, "2000", "Chi FelixChi ", "GTB"),
+            withdrawalDetails(context, "200000000000", "Chi FelixChi ", "GTB"),
             const Gap(40),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -131,85 +131,96 @@ class WithdrawalConfirmationMobilePortrait
     return Container(
       padding: const EdgeInsets.all(10),
       height: screenHeight(context) / 9,
-      margin: const EdgeInsets.fromLTRB(8, 9, 8, 8),
+      width: screenWidth(context),
+      // margin: const EdgeInsets.fromLTRB(8, 9, 8, 8),
       decoration: BoxDecoration(
         color: const Color(0xFFFE7A01).withOpacity(.1),
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Row(
+      child: Column(
         mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
+
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              //bank name
-              Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      child: const Text(
-                        "Withdrawal Amount",
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      width: screenWidth(context) / 3,
+          //bank name
+          Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  child: const Text(
+                    "Withdrawal Amount",
+                    style: TextStyle(fontSize: 12),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  width: screenWidth(context) / 3,
+                ),
+                const Gap(50),
+                Expanded(
+                  child: SizedBox(
+                    child: Text(
+                      amount ?? " 0.0",
+                      // style: TextStyle(fontSize: 12),
+
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    const Gap(57),
-                    SizedBox(
-                      child: Text(
-                        amount ?? " 0.0",
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      width: screenWidth(context) / 3,
+                    width: screenWidth(context) / 3,
+                  ),
+                ),
+              ]),
+          const Gap(8),
+          // account number
+          Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  child: const Text(
+                    "Bank Name",
+                    style: TextStyle(fontSize: 12),
+
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  width: screenWidth(context) / 3,
+                ),
+                const Gap(50),
+                Expanded(
+                  child: SizedBox(
+                    child: Text(
+                      bankName ?? " ",
+                      // style: TextStyle(fontSize: 12),
+
+                      overflow: TextOverflow.ellipsis,
                     ),
-                  ]),
-              const Gap(12),
-              //account number
-              Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      child: const Text(
-                        "Bank Name",
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      width: screenWidth(context) / 3,
-                    ),
-                    const Gap(57),
-                    SizedBox(
-                      child: Text(
-                        bankName ?? " ",
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      width: screenWidth(context) / 3,
-                    ),
-                  ]),
-              const Gap(12),
-              // Name
-              Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    SizedBox(
-                      child: const Text(
-                        "Account Name",
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      width: screenWidth(context) / 3,
-                    ),
-                    const Gap(57),
-                    SizedBox(
-                      child: Text(
-                        accountName ?? " ",
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      width: screenWidth(context) / 3,
-                    ),
-                  ])
-            ],
-          )
+                    width: screenWidth(context) / 3,
+                  ),
+                ),
+              ]),
+          const Gap(8),
+          // Name
+          Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SizedBox(
+                  child: const Text(
+                    "Account Name",
+                    style: TextStyle(fontSize: 12),
+
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  width: screenWidth(context) / 3,
+                ),
+                const Gap(50),
+                Expanded(child:SizedBox(
+                  child: Text(
+                    accountName ?? " ",
+                    // style: TextStyle(fontSize: 12),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  width: screenWidth(context) / 3,
+                )),
+              ])
         ],
       ),
     );
