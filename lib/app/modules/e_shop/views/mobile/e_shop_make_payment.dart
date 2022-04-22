@@ -36,57 +36,55 @@ class EShopMakePaymentMobileView extends GetView<EShopController> {
               },
             ),
           ),
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.symmetric(horizontal: 32.0),
-              shrinkWrap: true,
-              // crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      height: 62,
-                      width: 69,
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(8),
-                        ),
-                        image: DecorationImage(
-                          image: NetworkImage(image),
-                          fit: BoxFit.fill,
-                        ),
+          ListView(
+            padding: const EdgeInsets.symmetric(horizontal: 32.0),
+            shrinkWrap: true,
+            // crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    height: 62,
+                    width: 69,
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(8),
+                      ),
+                      image: DecorationImage(
+                        image: NetworkImage(image),
+                        fit: BoxFit.fill,
                       ),
                     ),
-                    const SizedBox(
-                      width: 18,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          itemName,
-                          style: const TextStyle(fontSize: 16),
+                  ),
+                  const SizedBox(
+                    width: 18,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        itemName,
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      Text(
+                        itemAmount,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0XFFFE7A01),
                         ),
-                        const SizedBox(
-                          height: 12,
-                        ),
-                        Text(
-                          itemAmount,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0XFFFE7A01),
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ) ,
-                const SizedBox(
-                  height: 32,
-                ),
-              ],
-            ),
+                      ),
+                    ],
+                  )
+                ],
+              ) ,
+              const SizedBox(
+                height: 32,
+              ),
+            ],
           ),
           Padding(
             padding: const EdgeInsets.only(

@@ -16,9 +16,9 @@ class SignUpController extends GetxController {
   void clearErrorPassword() => errorPasswordMessage.value = '';
 
   signUpFormValidator() {
-    if (GetUtils.isBlank(phoneNumberController.text)) {
+    if (GetUtils.isBlank(phoneNumberController.text) == true) {
       return errorPhoneNumberMessage.value = 'Add Phone Number';
-    } else if (GetUtils.isBlank(passwordController.text)) {
+    } else if (GetUtils.isBlank(passwordController.text) == true) {
       return errorPasswordMessage.value = "Add Password";
     }
   }

@@ -47,78 +47,79 @@ class LoginMobilePortrait extends GetView<LoginController> {
     screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
 
     return
-      // Obx(
-      // ()=>
-      Scaffold(
-          body: SingleChildScrollView(
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              const Gap(30),
+        // Obx(
+        // ()=>
+        Scaffold(
+            body: SingleChildScrollView(
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        const Gap(30),
 
-              //Logo Row
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [logoSvg],
-              ),
-              const Gap(40),
+        //Logo Row
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [logoSvg],
+        ),
+        const Gap(40),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Text(
-                    "Login",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w300, // light
-                        fontStyle: FontStyle.normal,
-                        color: Colors.black,
-                        fontSize: 24 // italic
-                    ),
-                  )
-                ],
-              ),
-
-              const Gap(20),
-
-              const Padding(
-                  padding: EdgeInsets.fromLTRB(10, 40, 10, 10),
-                  child: CustomTextField(
-                    hintText: "Phone number",
-                  )),
-
-              const Padding(
-                  padding: EdgeInsets.fromLTRB(10, 5, 10, 10),
-                  child: CustomTextField(
-                    hintText: "Password",
-                    isPasswordField: true,
-
-                  )),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children:  [
-                  GestureDetector(
-                    onTap: ()=>Get.to(()=>ResetPasswordPhoneView(key: key,)),
-                    child: const Text(
-                      'Forgot password?',
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: agreementColor, fontSize: 10),
-                    ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            Text(
+              "Login",
+              style: TextStyle(
+                  fontWeight: FontWeight.w300, // light
+                  fontStyle: FontStyle.normal,
+                  color: Colors.black,
+                  fontSize: 24 // italic
                   ),
-                ],),
+            )
+          ],
+        ),
+
+        const Gap(20),
+
+        const Padding(
+            padding: EdgeInsets.fromLTRB(24, 40, 24, 10),
+            child: CustomTextField(
+              hintText: "Phone number",
+            )),
+
+        const Padding(
+            padding: EdgeInsets.fromLTRB(25, 5, 24, 10),
+            child: CustomTextField(
+              hintText: "Password",
+              isPasswordField: true,
+            )),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(24, 5, 24, 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              GestureDetector(
+                onTap: () => Get.to(() => ResetPasswordPhoneView(
+                      key: key,
+                    )),
+                child: const Text(
+                  'Forgot password?',
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: agreementColor, fontSize: 12),
+                ),
               ),
+            ],
+          ),
+        ),
 
-
-              Padding(
-                padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
-                child: CustomButton(
-                    buttonText: "Login",
-                    onPressed: () => Get.to(() => const JekawinBottomTabs(
-                      tabIndex: 0,
-                    ))),
-              )
-            ]),
-          )
-        // )
-      );
+        Padding(
+          padding: const EdgeInsets.fromLTRB(24, 24, 24, 10),
+          child: CustomButton(
+              buttonText: "Login",
+              onPressed: () => Get.to(() => const JekawinBottomTabs(
+                    tabIndex: 0,
+                  ))),
+        )
+      ]),
+    )
+            // )
+            );
   }
 }

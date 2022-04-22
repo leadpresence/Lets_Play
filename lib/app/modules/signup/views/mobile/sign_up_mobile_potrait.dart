@@ -75,12 +75,12 @@ class SignupMobilePortrait extends GetView<SignUpController> {
                   )),
 
               Padding(
-                  padding: const EdgeInsets.fromLTRB(24, 12, 24, 10),
+                  padding: const EdgeInsets.fromLTRB(24, 12, 24, 12),
                   child: CustomTextField(
                     hintText: "Password",
                     textController: controller.passwordController,
                   )),
-              Gap(Get.height * 0.056),
+
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Row(
@@ -100,7 +100,7 @@ class SignupMobilePortrait extends GetView<SignUpController> {
                       child: const Text(
                         'I agree to the Jekawin Term of Service and \nPrivacy Policy',
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(color: agreementColor, fontSize: 10),
+                        style: TextStyle(color: agreementColor, fontSize: 12),
                       ),
                     )
                   ],
@@ -108,7 +108,7 @@ class SignupMobilePortrait extends GetView<SignUpController> {
               ),
 
               Padding(
-                padding: const EdgeInsets.fromLTRB(24, 4, 24, 10),
+                padding: const EdgeInsets.fromLTRB(24, 24, 24, 10),
                 child: CustomButton(
                     buttonText: "Sign Up",
                     onPressed: () {

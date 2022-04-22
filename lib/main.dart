@@ -12,20 +12,8 @@ import 'app/config/services/http/http_service_impl.dart';
 import 'app/config/services/http/http_services.dart';
 import 'init_db.dart';
 
+// This widget is the starting point.
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarBrightness: Brightness.light,
-      statusBarIconBrightness: Brightness.light));
-  await dotenv.load(fileName: '.env');
-  await initHiveDb();
-  //inject local user db
-  Get.lazyPut<UserLocalDataSourceInterface>(()=>UserLocalDataSourceImpl());
-  //inject remote service user db
-
   Get.lazyPut<HttpService>(()=>HttpServiceImpl());
   runApp(const MyApp());
 }

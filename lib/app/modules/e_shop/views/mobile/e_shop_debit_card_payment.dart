@@ -5,6 +5,7 @@ import 'package:jekawin_mobile_flutter/app/modules/e_shop/controllers/e_shop_con
 import 'package:jekawin_mobile_flutter/app/modules/e_shop/views/mobile/success_or_failure_mobile_view.dart';
 
 import '../../../../widgets/custom_large_button.dart';
+import '../../../jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
 
 class EShopDebitCardPaymentMobileView extends GetView<EShopController> {
   final String image, itemName, itemAmount;
@@ -66,8 +67,14 @@ class EShopDebitCardPaymentMobileView extends GetView<EShopController> {
                   child: CustomButton(
                     hasIcon: false,
                     buttonText: 'Continue',
-                    onPressed: () =>
-                        Get.to(() => const SuccessOrFailureMobileView()),
+                    onPressed: () => Get.to(
+                      () => const SuccessOrFailureMobileView(
+                        msg: 'Your order was successful',
+                        className: JekawinBottomTabs(
+                          tabIndex: 3,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ],

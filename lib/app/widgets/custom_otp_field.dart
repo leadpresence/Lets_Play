@@ -27,7 +27,7 @@ class _CustomOtpFieldState extends State<CustomOtpField> {
 
   @override
   Widget build(BuildContext context) {
-    const focusedBorderColor = Color.fromRGBO(33, 22, 52, 1);
+    const focusedBorderColor = Color(0xff414249);
     var fillColor = Colors.grey.shade200;
     var borderColor = Colors.grey.withOpacity(.5);
 
@@ -45,6 +45,7 @@ class _CustomOtpFieldState extends State<CustomOtpField> {
     );
 
     return Pinput(
+      showCursor: false,
       controller: pinController,
       focusNode: focusNode,
       androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsRetrieverApi,
@@ -57,10 +58,10 @@ class _CustomOtpFieldState extends State<CustomOtpField> {
         // return null;
         return value == '1234' ? null : 'Pin is incorrect';
       },
-      onClipboardFound: (value) {
-        debugPrint('onClipboardFound: $value');
-        pinController.setText(value);
-      },
+      // onClipboardFound: (value) {
+      //   debugPrint('onClipboardFound: $value');
+      //   pinController.setText(value);
+      // },
       hapticFeedbackType: HapticFeedbackType.lightImpact,
       onCompleted: debugPrint,
       cursor: Column(

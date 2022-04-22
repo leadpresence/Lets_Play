@@ -126,8 +126,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
                     _focusNode.hasFocus ? FontWeight.w600 : FontWeight.w600),
             hintStyle: TextStyle(
                 fontSize: 12,
-                color: Colors.black26.withOpacity(.65),
-                fontWeight: FontWeight.w600),
+                color: Colors.black26.withOpacity(.45),
+                fontWeight: FontWeight.w500),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
               borderSide: const BorderSide(

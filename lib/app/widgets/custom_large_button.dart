@@ -46,7 +46,7 @@ borderLageButton(String text, Function onpressed, BuildContext context) =>
     );
 
 class CustomButton extends StatelessWidget {
-  final onPressed, hasIcon, buttonText, hasBorder;
+  final onPressed, hasIcon, buttonText, hasBorder, height;
 
   final Color buttonColor, buttonTextColor;
   const CustomButton({
@@ -57,12 +57,13 @@ class CustomButton extends StatelessWidget {
     this.hasBorder = false,
     this.buttonColor = const Color(0xFFFE7A01),
     this.buttonTextColor = const Color(0xffffffff),
+    this.height,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 52,
+      height: height ?? 52,
       child: Theme(
         data: ThemeData(
           splashColor: Colors.white,
@@ -72,7 +73,7 @@ class CustomButton extends StatelessWidget {
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
             primary: buttonColor,
-            shadowColor: Colors.white,
+            shadowColor: Colors.transparent,
             onPrimary: Colors.white,
             onSurface: Colors.white,
             elevation: 0,
