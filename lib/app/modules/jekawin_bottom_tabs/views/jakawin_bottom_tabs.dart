@@ -6,6 +6,7 @@ import 'package:jekawin_mobile_flutter/app/modules/e_shop/views/e_shop_view.dart
 import '../../dashboard/views/mobile/dashboard_mobile_portrait.dart';
 import '../../menu/view/mobile/menu_mobile_portrait.dart';
 import '../../reward_points/views/mobile/reward_points_mobile_portrait.dart';
+import '../../wallet_home/views/wallet_home_view.dart';
 
 class JekawinBottomTabs extends StatefulWidget {
   final int tabIndex;

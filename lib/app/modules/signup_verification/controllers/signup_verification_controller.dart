@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 
 import '../../../config/services/auth_service.dart';
 import '../../../config/services/di/di_locator.dart';
-import '../../otp_reset_password/views/password_reset_success_or_failure_mobile_view.dart';
+import '../../e_shop/views/mobile/success_or_failure_mobile_view.dart';
+import '../../jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
 
 class SignUpVerificationController extends GetxController {
   final signUpOtpController = TextEditingController();
@@ -53,6 +54,16 @@ class SignUpVerificationController extends GetxController {
   }
 
   void navigateToSignUpSuccessful(Key? key) {
-    Get.to(() => const VerificationSuccessOrFailureMobileView(message: "Registration successful",));
+    Get.to(
+          () => const SuccessOrFailureMobileView(
+        msg: 'You have successfully shared 0 RPT',
+        className: JekawinBottomTabs(
+          tabIndex: 0,
+        ),
+      ),
+      transition: Transition.cupertino,
+    );
   }
 }
+
+

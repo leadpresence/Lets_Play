@@ -48,8 +48,7 @@ class DashboardMobilePortrait extends StatelessWidget {
                           width: 8,
                         ),
                         CustomSmallButton(
-                          onPressed: () =>
-                              Get.to(() => const LoginMobilePortrait()),
+                          onPressed: () => Get.to(() => LoginMobilePortrait()),
                           buttonColor: Colors.white,
                           hasBorder: true,
                           buttonText: 'Login',

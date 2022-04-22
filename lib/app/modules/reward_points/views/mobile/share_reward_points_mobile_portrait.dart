@@ -19,7 +19,7 @@ class ShareRewardPointsMobilePortrait extends StatelessWidget {
         leading: Padding(
           padding: const EdgeInsets.only(left: 16.0),
           child: IconButton(
-            splashRadius: 25,
+            splashRadius: 24,
             icon: SvgPicture.asset(
               'assets/svgs/chevronLeft.svg',
               color: const Color(0xff12121D),
@@ -32,7 +32,10 @@ class ShareRewardPointsMobilePortrait extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 24.0,
+            vertical: 12.0,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [

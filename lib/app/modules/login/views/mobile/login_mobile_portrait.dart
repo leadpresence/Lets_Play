@@ -12,51 +12,35 @@ import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../constants/asset_paths.dart';
 import '../../../jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
 
-class LoginMobilePortrait extends GetView<LoginController> {
-
+class LoginMobilePortrait extends StatelessWidget {
   @override
   final LoginController controller = Get.put(LoginController());
 
-    LoginMobilePortrait({Key? key, this.themeData, this.customAppTheme})
+  LoginMobilePortrait({Key? key, this.themeData, this.customAppTheme})
       : super(key: key);
   final ThemeData? themeData;
   final CustomAppTheme? customAppTheme;
 
   @override
   Widget build(BuildContext context) {
-
-    @override
-    void initState() {
-      // super.initState();
-    }
-
-    @override
-    void dispose() {}
-
     final Widget logoSvg = SvgPicture.asset(
       logoAsetName,
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height * 0.150,
     );
-    screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
-
-    return
-      // Obx(() =>
-          Scaffold(
-            body: SingleChildScrollView(
-          child: Form(
-            key: controller.loginFormKey,
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Form(
+          key: controller.loginFormKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               const Gap(30),
-
-              //Logo Row
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [logoSvg],
               ),
               const Gap(40),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
@@ -71,58 +55,63 @@ class LoginMobilePortrait extends GetView<LoginController> {
                   )
                 ],
               ),
-
               const Gap(20),
-
               Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 40, 10, 10),
-                  child: CustomTextField(
-                    hintText: "Phone number",
-                    textController: controller.phoneNumberController,
-                  )),
-
+                padding: const EdgeInsets.fromLTRB(24, 40, 24, 24),
+                child: CustomTextField(
+                  hintText: "Phone number",
+                  textController: controller.phoneNumberController,
+                ),
+              ),
               Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
-                  child: CustomTextField(
-                    hintText: "Password",
-                    isPasswordField: true,
-                    textController: controller.passwordController,
-                  )),
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 12),
+                child: CustomTextField(
+                  hintText: "Password",
+                  isPasswordField: true,
+                  textController: controller.passwordController,
+                ),
+              ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
+                padding: const EdgeInsets.fromLTRB(24, 5, 24, 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     GestureDetector(
-                      onTap: () => Get.to(() => ResetPasswordPhoneView(
-                            key: key,
-                          )),
+                      onTap: () => Get.to(
+                        () => ResetPasswordPhoneView(
+                          key: key,
+                        ),
+                      ),
                       child: const Text(
                         'Forgot password?',
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(color: agreementColor, fontSize: 10),
+                        style: TextStyle(
+                          color: agreementColor,
+                          fontSize: 12,
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
-
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
+                padding: const EdgeInsets.fromLTRB(24, 32, 24, 10),
                 child: CustomButton(
-                    buttonText: "Login",
-                    onPressed: () {
-
-                      // controller.login(key);
-                      Get.to(() => const JekawinBottomTabs(
+                  buttonText: "Login",
+                  onPressed: () {
+                    // controller.login(key);
+                    Get.to(
+                      () => const JekawinBottomTabs(
                         tabIndex: 0,
-                      ));
-                    }
+                      ),
+                    );
+                  },
                 ),
-              )
-            ]),
+              ),
+            ],
           ),
-        // )
-          ));
+        ),
+      ),
+    );
   }
 }

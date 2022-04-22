@@ -15,7 +15,7 @@ class RedeemPrizesMobilePortrait extends StatelessWidget {
         leading: Padding(
           padding: const EdgeInsets.only(left: 16.0),
           child: IconButton(
-            splashRadius: 25,
+            splashRadius: 24,
             icon: SvgPicture.asset(
               'assets/svgs/chevronLeft.svg',
               color: const Color(0xff12121D),

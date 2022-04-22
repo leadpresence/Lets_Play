@@ -12,8 +12,8 @@ import 'package:jekawin_mobile_flutter/app/modules/resetpassword/views/reset_pas
 import 'package:jekawin_mobile_flutter/app/modules/select_account/views/select_bank_view.dart';
 import 'package:jekawin_mobile_flutter/app/modules/signup/bindings/sign_up_bindings.dart';
 import 'package:jekawin_mobile_flutter/app/modules/splash/views/splash_view.dart';
-import 'package:jekawin_mobile_flutter/app/modules/walllet_home/bindings/wallet_home_bindings.dart';
-import 'package:jekawin_mobile_flutter/app/modules/walllet_home/views/wallet_home_view.dart';
+import 'package:jekawin_mobile_flutter/app/modules/wallet_home/bindings/wallet_home_bindings.dart';
+import 'package:jekawin_mobile_flutter/app/modules/wallet_home/views/wallet_home_view.dart';
 import 'package:jekawin_mobile_flutter/app/modules/withdrawal_amount/bindings/withdrawal_amount_bindings.dart';
 import 'package:jekawin_mobile_flutter/app/modules/withdrawal_amount/views/withdrawal_amount_view.dart';
 import 'package:jekawin_mobile_flutter/app/modules/withdrawal_confirmation/bindings/withrawal_confirmation_bindings.dart';

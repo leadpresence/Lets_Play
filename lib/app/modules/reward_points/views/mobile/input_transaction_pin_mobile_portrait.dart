@@ -100,7 +100,7 @@ class InputTransactionPinMobilePortrait extends StatelessWidget {
                   () => const SuccessOrFailureMobileView(
                     msg: 'You have successfully shared 0 RPT',
                     className: JekawinBottomTabs(
-                      tabIndex: 2,
+                      tabIndex: 4,
                     ),
                   ),
                   transition: Transition.cupertino,

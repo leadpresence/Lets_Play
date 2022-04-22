@@ -16,7 +16,6 @@ class EShopMobilePortrait extends GetView<EShopController> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
-        // mainAxisAlignment: MainAxisAlignment.start,
         children: [
           ListView(
             shrinkWrap: true,
@@ -266,21 +265,40 @@ class EShopMobilePortrait extends GetView<EShopController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              height: MediaQuery.of(context).size.height * .232,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                color: Colors.white12,
-                image: DecorationImage(
-                  image: NetworkImage(
-                    image,
+            Stack(
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height * .232,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    color: Colors.black.withOpacity(.08),
                   ),
-                  fit: BoxFit.cover,
-                  alignment: Alignment.center,
+                  child: const Center(
+                    child: SizedBox(
+                      child: CircularProgressIndicator(
+                        strokeWidth: 1,
+                        color: Colors.orange,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              // child: Image.asset(image),
+                Container(
+                  height: MediaQuery.of(context).size.height * .232,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    color: Colors.white12,
+                    image: DecorationImage(
+                      image: NetworkImage(
+                        image,
+                      ),
+                      fit: BoxFit.cover,
+                      alignment: Alignment.center,
+                    ),
+                  ),
+                ),
+              ],
             ),
             const SizedBox(
               height: 16,

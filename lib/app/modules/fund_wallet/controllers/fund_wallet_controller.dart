@@ -17,8 +17,6 @@ class FundWalletController extends GetxController {
       paystackSelected.value = !flutterWaveSelected.value;
     }
   }
-  @override
-  void onInit() {}
 
   @override
   void onReady() {

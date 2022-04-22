@@ -1,3 +1,5 @@
+import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -5,8 +7,12 @@ import 'package:jekawin_mobile_flutter/app/modules/e_shop/controllers/e_shop_con
 import 'package:jekawin_mobile_flutter/app/modules/e_shop/views/mobile/e_shop_make_payment.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
 
+import '../../controllers/e_shop_details_controller.dart';
+
 class EShopDetailsMobilePortrait extends GetView<EShopController> {
   final EShopController eShopController = Get.put(EShopController());
+  final EShopDetailsController eShopDetailsController =
+      Get.put(EShopDetailsController());
   final String image, itemAmount, itemName;
   // ignore: use_key_in_widget_constructors
   EShopDetailsMobilePortrait({
@@ -84,6 +90,7 @@ class EShopDetailsMobilePortrait extends GetView<EShopController> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 IconButton(
+                  splashRadius: 24,
                   icon: SvgPicture.asset(
                     'assets/svgs/chevronLeft.svg',
                     color: const Color(0xff12121D),
@@ -93,6 +100,7 @@ class EShopDetailsMobilePortrait extends GetView<EShopController> {
                   },
                 ),
                 IconButton(
+                  splashRadius: 24,
                   icon: SvgPicture.asset(
                     'assets/svgs/Group.svg',
                     color: const Color(0xff12121D),
@@ -113,74 +121,155 @@ class EShopDetailsMobilePortrait extends GetView<EShopController> {
                 ),
                 color: Colors.white,
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(32.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
+              child: ListView(
+                padding: EdgeInsets.zero,
+                physics: const BouncingScrollPhysics(),
+                shrinkWrap: true,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SvgPicture.asset('assets/svgs/star_.svg'),
+                        Row(
+                          children: [
+                            SvgPicture.asset('assets/svgs/star_.svg'),
+                            const SizedBox(
+                              width: 4,
+                            ),
+                            SvgPicture.asset('assets/svgs/star_.svg'),
+                            const SizedBox(
+                              width: 4,
+                            ),
+                            SvgPicture.asset('assets/svgs/star_.svg'),
+                            const SizedBox(
+                              width: 4,
+                            ),
+                            SvgPicture.asset('assets/svgs/star_.svg'),
+                            const SizedBox(
+                              width: 4,
+                            ),
+                            SvgPicture.asset(
+                              'assets/svgs/star_.svg',
+                              color: const Color(0xffDADEE3),
+                            ),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            const Text('4.0'),
+                          ],
+                        ),
                         const SizedBox(
-                          width: 4,
+                          height: 10,
                         ),
-                        SvgPicture.asset('assets/svgs/star_.svg'),
-                        const SizedBox(
-                          width: 4,
-                        ),
-                        SvgPicture.asset('assets/svgs/star_.svg'),
-                        const SizedBox(
-                          width: 4,
-                        ),
-                        SvgPicture.asset('assets/svgs/star_.svg'),
-                        const SizedBox(
-                          width: 4,
-                        ),
-                        SvgPicture.asset(
-                          'assets/svgs/star_.svg',
-                          color: const Color(0xffDADEE3),
+                        Text(
+                          itemName,
+                          style: const TextStyle(fontSize: 18),
                         ),
                         const SizedBox(
-                          width: 8,
+                          height: 16,
                         ),
-                        const Text('4.0'),
+                        Text(
+                          itemAmount,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0XFFFE7A01),
+                          ),
+                        ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      itemName,
-                      style: const TextStyle(fontSize: 18),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Text(
-                      itemAmount,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0XFFFE7A01),
+                  ),
+                  SizedBox(
+                    height: 48,
+                    child: GetBuilder<EShopDetailsController>(
+                      init: EShopDetailsController(),
+                      builder: (context) => ListView.builder(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        physics: const BouncingScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: eShopDetailsController.sizes.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: InkWell(
+                              onTap: () {
+                                eShopDetailsController.changeSize(
+                                    eShopDetailsController.sizes[index]);
+                                if (kDebugMode) {
+                                  print(
+                                      eShopDetailsController.currentSize.value);
+                                }
+                              },
+                              child: DottedBorder(
+                                color:
+                                    eShopDetailsController.currentSize.value ==
+                                            eShopDetailsController.sizes[index]
+                                        ? const Color(0XFFFE7A01)
+                                        : const Color(0xff747B84),
+                                borderType: BorderType.RRect,
+                                dashPattern:
+                                    eShopDetailsController.currentSize.value ==
+                                            eShopDetailsController.sizes[index]
+                                        ? const [500, 500]
+                                        : const [4, 4],
+                                radius: const Radius.circular(8),
+                                strokeWidth:
+                                    eShopDetailsController.currentSize.value ==
+                                            eShopDetailsController.sizes[index]
+                                        ? 1.5
+                                        : 1.2,
+                                child: SizedBox(
+                                  height: 44,
+                                  width: 64,
+                                  child: Center(
+                                    child: Text(
+                                      eShopDetailsController.sizes[index],
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: eShopDetailsController
+                                                    .currentSize.value ==
+                                                eShopDetailsController
+                                                    .sizes[index]
+                                            ? const Color(0XFFFE7A01)
+                                            : const Color(0xff747B84),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ),
-                    const SizedBox(
-                      height: 16,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 24.0,
+                      right: 24.0,
+                      top: 48.0,
                     ),
-                    Row(
-                      children: [],
+                    child: Column(
+                      children: [
+                        CustomButton(
+                          hasIcon: true,
+                          buttonText: 'Add to cart',
+                          onPressed: () => Get.to(
+                            () => EShopMakePaymentMobileView(
+                              image,
+                              itemName,
+                              itemAmount,
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    CustomButton(
-                      hasIcon: true,
-                      buttonText: 'Add to cart',
-                      onPressed: () => Get.to(() => EShopMakePaymentMobileView(
-                          image, itemName, itemAmount)),
-                    )
-                  ],
-                ),
+                  )
+                ],
               ),
             ),
           ),

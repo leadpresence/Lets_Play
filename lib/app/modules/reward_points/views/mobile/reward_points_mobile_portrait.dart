@@ -11,9 +11,30 @@ class RewardPointsMobilePortrait extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 16.0),
+          child: IconButton(
+            splashRadius: 25,
+            icon: SvgPicture.asset(
+              'assets/svgs/chevronLeft.svg',
+              color: const Color(0xff12121D),
+            ),
+            onPressed: () {
+              Get.back();
+            },
+          ),
+        ),
+      ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 24.0,
+            vertical: 12.0,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -46,7 +67,7 @@ class RewardPointsMobilePortrait extends StatelessWidget {
                     Row(
                       children: const [
                         Text(
-                          'Reward points : ',
+                          'Reward points: ',
                           style: TextStyle(
                             fontSize: 16,
                             color: Colors.white,
