@@ -24,7 +24,7 @@ class OtpPasswordResetMP extends GetView<OtpResetPasswordController> {
           child: Column(
             children: [
             OtpHeader(key: key,phoneNumber: phonenumber,),
-          CustomOtpField(key: key, onComplete: () {},),
+          CustomOtpField(key: key, pinController:controller.otpController ,onComplete: () {},),
           const Gap(24),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,

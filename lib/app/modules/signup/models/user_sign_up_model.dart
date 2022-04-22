@@ -14,11 +14,11 @@ class UserSignUpModel {
     required this.agreement,
   });
 
-  String firstname;
-  String lastname;
-  String mobile;
-  String password;
-  bool agreement;
+  String firstname="";
+  String lastname="";
+  String mobile="";
+  String password="";
+  bool agreement=false;
 
   factory UserSignUpModel.fromJson(Map<String, dynamic> json) => UserSignUpModel(
     firstname: json["firstname"],

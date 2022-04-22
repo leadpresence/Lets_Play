@@ -1,1 +1,10 @@
 const String logoAsetName = 'assets/images/jekawin_logo.svg';
+const String debitSvg = 'assets/images/debit.svg';
+const String creditSvg = 'assets/images/credit.svg';
+const String addBank = 'assets/images/Add_bank_Icon.svg';
+const String bank = 'assets/images/Bank_icon.svg';
+const String bin = 'assets/images/bin.svg';
+const String selected = 'assets/images/selected.svg';
+const String unselected = 'assets/images/unselected.svg';
+const String walletCard = 'assets/images/walletIcon.svg';
+const String password = 'assets/images/password.svg';

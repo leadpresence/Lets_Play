@@ -8,19 +8,27 @@ import 'package:google_fonts/google_fonts.dart';
 import 'app/config/data/local/user_local_impl.dart';
 import 'app/config/data/local/user_local_interface.dart';
 import 'app/config/routes/app_pages.dart';
+import 'app/config/services/auth_service.dart';
+import 'app/config/services/di/di_locator.dart';
 import 'app/config/services/http/http_service_impl.dart';
 import 'app/config/services/http/http_services.dart';
 import 'init_db.dart';
 
-// This widget is the starting point.
 void main() async {
-  Get.lazyPut<HttpService>(()=>HttpServiceImpl());
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  await setDi();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarBrightness: Brightness.light,
+      statusBarIconBrightness: Brightness.light));
+  await dotenv.load(fileName: 'dotenv');
+runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

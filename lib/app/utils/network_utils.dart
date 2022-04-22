@@ -4,13 +4,13 @@ import 'package:jekawin_mobile_flutter/app/utils/simple_log_printer.dart';
 import 'package:logger/logger.dart';
 import 'dart:convert' as convert;
 
-import '../config/exceptions/network_exceptions.dart';
+import '../constants/network_exceptions.dart';
 
 
 
 void checkForNetworkExceptions(Response response) {
   if (response.statusCode! < 200 || response.statusCode! >= 400) {
-    throw NetworkException('Failed to connect to internet');
+    throw const NetworkException('Failed to connect to internet');
   }
 }
 

@@ -1,6 +1,4 @@
-import 'dart:ffi';
-
-import 'package:equatable/equatable.dart';
+ import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 
 import '../../../utils/type_id.dart';
@@ -10,14 +8,13 @@ part 'user.g.dart';
 @HiveType(typeId: TypeId.user, adapterName: 'UserAdapter')
 class User extends Equatable {
   @HiveField(0)
-  int id = -1;
-  String? avatar = "";
+  String? id;
   @HiveField(1)
   String? firstName = "";
   @HiveField(2)
   String? lastName = "";
   @HiveField(3)
-  String? phone = "";
+  String? mobile = "";
   @HiveField(4)
   String email = "";
   @HiveField(5)
@@ -31,73 +28,83 @@ class User extends Equatable {
   @HiveField(9)
   String? address = "";
   @HiveField(10)
-  String? emailVerifiedAt = "";
+  String? autoUsername = "";
   @HiveField(11)
-  String? phoneVerified = "";
+  bool? phoneVerified = false;
   @HiveField(12)
   String? status = "";
-  @HiveField(13)
-  String? createdAt = "";
   @HiveField(14)
-  String? updatedAt = "";
-  bool emailVerified = false;
+  String? avatar = "";
+  @HiveField(15)
+  bool? emailVerified = false;
+  @HiveField(13)
+  int? wins = -1;
+  @HiveField(16)
+  DateTime? createdAt;
+  @HiveField(17)
+  String? country = "";
+  @HiveField(18)
+  String? inviteLink = "";
+  @HiveField(19)
+  int? rewardPoints = -1;
 
   User({
-     this.id=-1,
+    this.id,
     this.avatar,
     this.firstName,
     this.lastName,
-    this.phone,
+    this.mobile,
+    this.autoUsername,
+    this.rewardPoints,
     this.role,
+    this.wins,
+    this.country,
+    this.inviteLink,
     this.gender,
     this.address,
-    this.emailVerifiedAt,
-    this.emailVerified = false,
+    this.emailVerified,
     this.phoneVerified,
     this.status,
     this.createdAt,
-    this.updatedAt,
     this.token,
-    this.password,
   });
 
-  User.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    avatar = json['avatar'];
-    firstName = json['first_name'];
-    lastName = json['last_name'];
-    phone = json['phone'];
-    email = json['email'];
-    gender = json['gender'];
-    address = json['address'];
-    emailVerifiedAt = json['email_verified_at'];
-    emailVerified = json['email_verified'];
-    phoneVerified = json['phone_verified'];
-    status = json['status'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
+  User.fromMap(Map<String, dynamic> json) {
+    id = json["_id"];
+    avatar = json["avatar"];
+    firstName = json["firstname"];
+    firstName = json["lastName"];
+    mobile = json["mobile"];
+    autoUsername = json["autoUsername"];
+    rewardPoints = json["rewardPoints"];
+    role = json["role"];
+    wins = json["wins"];
+    country = json["country"];
+    inviteLink = json["inviteLink"];
+    inviteLink = json["gender"];
+    inviteLink = json["address"];
+    inviteLink = json["inviteLink"];
+    createdAt = DateTime.parse(json["createdAt"]);
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['id'] = id;
-    data['avatar'] = avatar;
-    data['first_name'] = firstName;
-    data['last_name'] = lastName;
-    data['phone'] = phone;
-    data['email'] = email;
-    data['gender'] = gender;
-    data['role'] = role;
-    data['address'] = address;
-    data['email_verified_at'] = emailVerifiedAt;
-    data['email_verified'] = emailVerified;
-    data['phone_verified'] = phoneVerified;
-    data['status'] = status;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
-    return data;
-  }
+  Map<String, dynamic> toMap() => {
+        "_id": id,
+        "firstname": firstName,
+        "lastName": lastName,
+        "avatar": avatar,
+        "mobile": mobile,
+        "autoUsername": autoUsername,
+        "rewardPoints": rewardPoints,
+        "wins": wins,
+        "country": country,
+        "inviteLink": inviteLink,
+        "createdAt": createdAt?.toIso8601String(),
+        "address": address,
+        "emailVerified": emailVerified,
+        "phoneVerified": phoneVerified,
+        "token": token,
+      };
 
   @override
-  List<Object> get props => [id, email];
+  List<Object?> get props => [id, email];
 }

@@ -13,8 +13,6 @@ import 'mobile/update_password_mobile_landscape.dart';
 import 'mobile/update_password_mobile_potrait.dart';
 
 
-
-
 class UpdatePasswordView extends GetView<UpdatePasswordController> {
   const UpdatePasswordView({Key? key}) : super(key: key);
 

@@ -33,7 +33,7 @@ class _JekawinBottomTabsState extends State<JekawinBottomTabs> {
     });
     _children.add({
       "title": "Wallet",
-      "widget": const RewardPointsMobilePortrait(),
+      "widget":const WalletHomeView(),
     });
     _children.add({
       "title": "E-shop",

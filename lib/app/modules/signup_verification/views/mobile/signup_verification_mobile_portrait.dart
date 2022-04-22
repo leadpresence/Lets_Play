@@ -7,27 +7,38 @@ import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_otp_field.dart';
 
 import '../../../../config/colors.dart';
+import '../../../../config/services/di/di_locator.dart';
+import '../../../jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
 import '../verifiication_success_or_failure_mobile_view.dart';
 
 class SignupVerificationMP extends GetView<SignUpVerificationController> {
+  @override
+  final SignUpVerificationController controller =
+      Get.put(SignUpVerificationController());
   final phonenumber;
 
   SignupVerificationMP({Key? key, this.phonenumber}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return
+      Scaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(24, 64, 24, 24),
         child: Column(
           children: [
-            OtpHeader(
-              key: key,
-              phoneNumber: phonenumber,
+            Obx(
+              () => OtpHeader(
+                key: key,
+                phoneNumber: controller.phoneNumber.value,
+              ),
             ),
             CustomOtpField(
+              pinController: controller.signUpOtpController,
               key: key,
-              onComplete: () {},
+              onComplete: () {
+                controller.setOtp(controller.signUpOtpController.text);
+              },
             ),
             const Gap(24),
             Row(
@@ -52,12 +63,19 @@ class SignupVerificationMP extends GetView<SignUpVerificationController> {
             Padding(
               padding: const EdgeInsets.all(2.0),
               child: CustomButton(
-                hasIcon: false,
-                buttonText: 'Continue',
-                onPressed: () => Get.to(
-                    () => const VerificationSuccessOrFailureMobileView()),
-              ),
-            )
+                  hasIcon: false,
+                  buttonText: 'Continue',
+                  onPressed: () => controller.completeSignUp(key)),
+            ),
+            const Gap(10),
+            Obx(() => SizedBox(
+                  child: controller.isLoading.value
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                          color: Colors.orange,
+                        ))
+                      : Container(),
+                ))
           ],
         ),
       ),
@@ -67,7 +85,6 @@ class SignupVerificationMP extends GetView<SignUpVerificationController> {
 
 class OtpHeader extends StatelessWidget {
   final phoneNumber;
-
   const OtpHeader({Key? key, required this.phoneNumber}) : super(key: key);
 
   @override
