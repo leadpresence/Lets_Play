@@ -5,7 +5,13 @@ import 'package:jekawin_mobile_flutter/app/modules/jekawin_bottom_tabs/views/jak
 import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
 
 class SuccessOrFailureMobileView extends StatelessWidget {
-  const SuccessOrFailureMobileView({Key? key}) : super(key: key);
+  final String msg;
+  final JekawinBottomTabs className;
+  const SuccessOrFailureMobileView({
+    Key? key,
+    this.msg = 'Success',
+    required this.className,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +26,9 @@ class SuccessOrFailureMobileView extends StatelessWidget {
               const SizedBox(
                 height: 24,
               ),
-              const Text(
-                'Your order was succesful',
-                style: TextStyle(
+              Text(
+                msg,
+                style: const TextStyle(
                   fontSize: 18,
                   color: Color(0xFF4E4B66),
                 ),
@@ -36,9 +42,7 @@ class SuccessOrFailureMobileView extends StatelessWidget {
                 ),
                 child: CustomButton(
                   onPressed: () => Get.to(
-                    () => const JekawinBottomTabs(
-                      tabIndex: 3,
-                    ),
+                    () => className,
                     transition: Transition.cupertino,
                   ),
                   buttonText: 'Done',

@@ -9,19 +9,14 @@ class FundWalletView extends GetView<FundWalletController> {
 
   @override
   Widget build(BuildContext context) {
-    return  ScreenTypeLayout.builder(
-
-      mobile: (_) => OrientationLayoutBuilder(
-
-        portrait: (_)=>  FundWalletMobilePortrait(),
-        landscape: (_)=>  FundWalletMobilePortrait(),
-        ),
-
+    return ScreenTypeLayout.builder(
+        mobile: (_) => OrientationLayoutBuilder(
+              portrait: (_) => FundWalletMobilePortrait(),
+              landscape: (_) => FundWalletMobilePortrait(),
+            ),
         tablet: (_) => OrientationLayoutBuilder(
-
-        portrait: (_) =>  FundWalletMobilePortrait(),
-        landscape: (_)=> FundWalletMobilePortrait(),
-
-        ));
+              portrait: (_) => FundWalletMobilePortrait(),
+              landscape: (_) => FundWalletMobilePortrait(),
+            ));
   }
 }

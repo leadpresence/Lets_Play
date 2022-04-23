@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:jekawin_mobile_flutter/app/modules/e_shop/controllers/e_shop_controller.dart';
 import 'package:jekawin_mobile_flutter/app/modules/e_shop/views/mobile/success_or_failure_mobile_view.dart';
 
 import '../../../../widgets/custom_large_button.dart';
+import '../../../fund_wallet/controllers/fund_wallet_controller.dart';
+import '../../../jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
 
-class EShopDebitCardPaymentMobileView extends GetView<EShopController> {
+class EShopDebitCardPaymentMobileView extends StatelessWidget {
   final String image, itemName, itemAmount;
-  const EShopDebitCardPaymentMobileView(
-      this.image, this.itemName, this.itemAmount,
+  EShopDebitCardPaymentMobileView(this.image, this.itemName, this.itemAmount,
       {Key? key})
       : super(key: key);
+
+  final FundWalletController controller = Get.put(FundWalletController());
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +28,8 @@ class EShopDebitCardPaymentMobileView extends GetView<EShopController> {
               top: 28.0,
             ),
             height: 108,
-            // width: Get.width,
             child: IconButton(
+              splashRadius: 24,
               icon: SvgPicture.asset(
                 'assets/svgs/chevronLeft.svg',
                 color: const Color(0xff12121D),
@@ -37,31 +39,131 @@ class EShopDebitCardPaymentMobileView extends GetView<EShopController> {
               },
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.only(
-              left: 32.0,
-              right: 12.0,
-            ),
-            child: Text(
-              'Previously Used Cards',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.normal,
-                letterSpacing: .2,
-              ),
-            ),
-          ),
-          const SizedBox(height: 16),
-          debitCardCard(),
-          debitCardCard(
-            isNewCard: true,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(32.0),
-            child: CustomButton(
-              hasIcon: false,
-              buttonText: 'Continue',
-              onPressed: () => Get.to(() => const SuccessOrFailureMobileView()),
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(
+                    left: 24.0,
+                    right: 12.0,
+                    bottom: 12.0,
+                  ),
+                  child: Text(
+                    'Pay With',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.normal,
+                      letterSpacing: .2,
+                    ),
+                  ),
+                ),
+                Obx(
+                  () => GestureDetector(
+                    onTap: () => controller.toggle(),
+                    child: Container(
+                      margin: const EdgeInsets.only(
+                        left: 24,
+                        top: 14,
+                        right: 24,
+                        bottom: 4,
+                      ),
+                      padding: const EdgeInsets.all(12),
+                      width: Get.width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white,
+                        border: Border.all(
+                          color: Colors.black12.withOpacity(0.3),
+                          width: .5,
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "Paystack",
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                          controller.paystackSelected.value
+                              ? const Icon(
+                                  Icons.check_circle,
+                                  color: Colors.green,
+                                )
+                              : const Icon(
+                                  Icons.check_circle,
+                                  color: Colors.grey,
+                                )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Obx(
+                  () => GestureDetector(
+                    onTap: () => controller.toggleF(),
+                    child: Container(
+                      margin: const EdgeInsets.only(
+                        left: 24,
+                        top: 14,
+                        right: 24,
+                        bottom: 4,
+                      ),
+                      padding: const EdgeInsets.all(12),
+                      width: Get.width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white,
+                        border: Border.all(
+                          color: Colors.black12.withOpacity(0.3),
+                          width: .5,
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "Flutter Wave",
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          controller.flutterWaveSelected.value
+                              ? const Icon(
+                                  Icons.check_circle,
+                                  color: Colors.green,
+                                )
+                              : const Icon(
+                                  Icons.check_circle,
+                                  color: Colors.grey,
+                                )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24.0,
+                    vertical: 32.0,
+                  ),
+                  child: CustomButton(
+                    hasIcon: false,
+                    buttonText: 'Continue',
+                    onPressed: () => Get.to(
+                      () => const SuccessOrFailureMobileView(
+                        msg: 'Your order was successful',
+                        className: JekawinBottomTabs(
+                          tabIndex: 3,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           )
         ],

@@ -9,23 +9,20 @@ import '../controllers/auth_controller.dart';
 import 'mobile/auth_home_mobile_landscape.dart';
 import 'mobile/auth_home_mobile_potrait.dart';
 
-
 class AuthHomeView extends GetView<AuthHomeController> {
   const AuthHomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return  ScreenTypeLayout.builder(
-        mobile: (_) => OrientationLayoutBuilder(
-      portrait: (_)=> const AuthHomeMobilePortrait(),
-      landscape: (_)=>const AuthHomeMobileLandscape(),
-    ),
-    tablet: (_) => OrientationLayoutBuilder(
-    portrait: (_) => const AuthHomeTabletPortrait(),
-    landscape: (_)=>
-    const AuthHomeTabletLandscape(),
-
-    ));
+    return ScreenTypeLayout.builder(
+      mobile: (_) => OrientationLayoutBuilder(
+        portrait: (_) => const AuthHomeMobilePortrait(),
+        landscape: (_) => const AuthHomeMobileLandscape(),
+      ),
+      tablet: (_) => OrientationLayoutBuilder(
+        portrait: (_) => const AuthHomeTabletPortrait(),
+        landscape: (_) => const AuthHomeTabletLandscape(),
+      ),
+    );
   }
 }
-

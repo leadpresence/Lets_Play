@@ -13,9 +13,8 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
-#  get: ^4.3.8
   get: ^4.6.1
-  responsive_builder: ^0.4.1 
+  responsive_builder: ^0.4.1
   shared_preferences: ^2.0.1
   google_fonts: ^2.1.0
   #cahable network images
@@ -31,8 +30,8 @@ dependencies:
   dartz: ^0.10.1
   #Http client for Dart
   dio: ^4.0.6
-  #dottedn lines
-  fdottedline: ^1.0.1
+  #dotted lines
+  dotted_border: ^2.0.0+2
   #hide files forn producttion
   flutter_dotenv: ^5.0.2
   #localization
@@ -47,6 +46,7 @@ dependencies:
   image_picker: null
   equatable: ^2.0.3
   path_provider: ^2.0.9
+  custom_check_box: ^0.0.4
 
 
 dev_dependencies:

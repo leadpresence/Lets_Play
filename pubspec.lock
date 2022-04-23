@@ -183,6 +183,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
+  custom_check_box:
+    dependency: "direct main"
+    description:
+      name: custom_check_box
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4"
   dart_style:
     dependency: transitive
     description:
@@ -204,6 +211,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.6"
+  dotted_border:
+    dependency: "direct main"
+    description:
+      name: dotted_border
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0+2"
   equatable:
     dependency: "direct main"
     description:
@@ -218,13 +232,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
-  fdottedline:
-    dependency: "direct main"
-    description:
-      name: fdottedline
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1"
   ffi:
     dependency: transitive
     description:

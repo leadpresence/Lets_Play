@@ -129,8 +129,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
                     _focusNode.hasFocus ? FontWeight.w600 : FontWeight.w600),
             hintStyle: TextStyle(
                 fontSize: 12,
-                color: Colors.black26.withOpacity(.65),
-                fontWeight: FontWeight.w600),
+                color: Colors.black26.withOpacity(.45),
+                fontWeight: FontWeight.w500),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
               borderSide: const BorderSide(
@@ -141,7 +141,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
               borderSide: BorderSide(
-                color: Colors.black26.withOpacity(.65),
+                color: Colors.black26.withOpacity(.3),
                 width: 1,
               ),
             ),
@@ -149,7 +149,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               borderRadius: BorderRadius.circular(16),
               borderSide: BorderSide(
                   color: widget.errorText == ''
-                      ? Colors.black26.withOpacity(.65)
+                      ? Colors.black26.withOpacity(.3)
                       : Colors.red,
                   width: 1),
             ),

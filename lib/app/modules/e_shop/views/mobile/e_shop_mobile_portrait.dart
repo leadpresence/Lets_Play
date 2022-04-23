@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:jekawin_mobile_flutter/app/modules/e_shop/controllers/e_shop_controller.dart';
 import 'package:jekawin_mobile_flutter/app/modules/e_shop/views/mobile/e_shop_details_mobile_portrait.dart';
-
 import '../widgets/category_circle_avatar.dart';
 
 class EShopMobilePortrait extends GetView<EShopController> {
@@ -12,12 +11,11 @@ class EShopMobilePortrait extends GetView<EShopController> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    final double itemHeight = (size.height - kToolbarHeight - 24) / 2.0;
+    final double itemHeight = (size.height - kToolbarHeight - 24) / 2.6;
     final double itemWidth = size.width / 2;
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
-        // mainAxisAlignment: MainAxisAlignment.start,
         children: [
           ListView(
             shrinkWrap: true,
@@ -25,7 +23,7 @@ class EShopMobilePortrait extends GetView<EShopController> {
             padding: EdgeInsets.zero,
             children: [
               const SizedBox(
-                height: 140.0,
+                height: 124.0,
               ),
               SizedBox(
                 height: 100,
@@ -200,29 +198,39 @@ class EShopMobilePortrait extends GetView<EShopController> {
           ),
           Container(
             padding: const EdgeInsets.symmetric(
-              horizontal: 24.0,
-              vertical: 28.0,
+              horizontal: 12.0,
+              vertical: 8.0,
             ),
             decoration: const BoxDecoration(
               color: Colors.orange,
               borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(52),
-                bottomRight: Radius.circular(52),
+                bottomLeft: Radius.circular(42),
+                bottomRight: Radius.circular(42),
               ),
             ),
-            height: 88,
+            height: 98,
             width: Get.width,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                SvgPicture.asset(
-                  'assets/svgs/bx_search-alt.svg',
-                  color: Colors.white,
+                IconButton(
+                  splashRadius: 24,
+                  padding: EdgeInsets.zero,
+                  icon: SvgPicture.asset(
+                    'assets/svgs/bx_search-alt.svg',
+                    color: Colors.white,
+                  ),
+                  onPressed: () {},
                 ),
-                SvgPicture.asset(
-                  'assets/svgs/clarity_shopping-cart-line.svg',
-                  color: Colors.white,
+                IconButton(
+                  splashRadius: 24,
+                  padding: EdgeInsets.zero,
+                  icon: SvgPicture.asset(
+                    'assets/svgs/clarity_shopping-cart-line.svg',
+                    color: Colors.white,
+                  ),
+                  onPressed: () {},
                 ),
               ],
             ),
@@ -257,21 +265,40 @@ class EShopMobilePortrait extends GetView<EShopController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              height: MediaQuery.of(context).size.height * .232,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                color: Colors.white12,
-                image: DecorationImage(
-                  image: NetworkImage(
-                    image,
+            Stack(
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height * .232,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    color: Colors.black.withOpacity(.08),
                   ),
-                  fit: BoxFit.cover,
-                  alignment: Alignment.center,
+                  child: const Center(
+                    child: SizedBox(
+                      child: CircularProgressIndicator(
+                        strokeWidth: 1,
+                        color: Colors.orange,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              // child: Image.asset(image),
+                Container(
+                  height: MediaQuery.of(context).size.height * .232,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    color: Colors.white12,
+                    image: DecorationImage(
+                      image: NetworkImage(
+                        image,
+                      ),
+                      fit: BoxFit.cover,
+                      alignment: Alignment.center,
+                    ),
+                  ),
+                ),
+              ],
             ),
             const SizedBox(
               height: 16,

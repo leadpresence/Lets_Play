@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_svg/svg.dart';
 
 class CustomSmallButton extends StatelessWidget {
@@ -12,17 +12,15 @@ class CustomSmallButton extends StatelessWidget {
     this.hasIcon = false,
     this.buttonText = "Button Text",
     this.hasBorder = false,
-    this.buttonColor = const Color(0xffffffff),
-    this.buttonTextColor = const Color(0xff414249),
+    this.buttonColor = const Color(0xFFFE7A01),
+    this.buttonTextColor = const Color(0xffffffff),
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
-
     return SizedBox(
-      width: screenWidth(context)/2.6,
-      height: 48,
+      height: 34,
+      width: Get.width * .22,
       child: Theme(
         data: ThemeData(
           splashColor: Colors.white,
@@ -39,9 +37,9 @@ class CustomSmallButton extends StatelessWidget {
             // splashFactory: NoSplash.splashFactory,
             shape: RoundedRectangleBorder(
               side: hasBorder
-                  ? const BorderSide(color: Color(0xff543884), width: 1)
+                  ? const BorderSide(color: Color(0xFFFE7A01), width: 1)
                   : BorderSide.none,
-              borderRadius: BorderRadius.circular(24),
+              borderRadius: BorderRadius.circular(8),
             ),
           ),
           child: Row(
@@ -49,20 +47,21 @@ class CustomSmallButton extends StatelessWidget {
             children: [
               hasIcon
                   ? SvgPicture.asset(
-                'assets/svgs/clarity_shopping-cart-line.svg',
-                color: Colors.white,
-              )
+                      'assets/svgs/clarity_shopping-cart-line.svg',
+                      color: Colors.white,
+                    )
                   : const SizedBox(),
               hasIcon
                   ? const SizedBox(
-                width: 12,
-              )
+                      width: 12,
+                    )
                   : const SizedBox(),
               Text(
                 buttonText,
                 style: TextStyle(
                   color: buttonTextColor,
                   fontWeight: FontWeight.bold,
+                  fontSize: 11,
                 ),
               )
             ],

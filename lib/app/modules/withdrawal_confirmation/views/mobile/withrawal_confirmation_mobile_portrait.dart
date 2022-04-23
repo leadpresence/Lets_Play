@@ -6,14 +6,15 @@ import 'package:jekawin_mobile_flutter/app/modules/withdrawal_confirmation/contr
 import 'package:jekawin_mobile_flutter/app/widgets/custom_otp_field.dart';
 import '../../../../constants/asset_paths.dart';
 import '../../../../widgets/custom_large_button.dart';
-import '../../../otp_reset_password/views/password_reset_success_or_failure_mobile_view.dart';
+import '../../../e_shop/views/mobile/success_or_failure_mobile_view.dart';
+import '../../../jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
 
 class WithdrawalConfirmationMobilePortrait
     extends GetView<WithdrawalConfirmationController> {
-
   @override
-  final WithdrawalConfirmationController controller = Get.put(WithdrawalConfirmationController());
-    WithdrawalConfirmationMobilePortrait({Key? key}) : super(key: key);
+  final WithdrawalConfirmationController controller =
+      Get.put(WithdrawalConfirmationController());
+  WithdrawalConfirmationMobilePortrait({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -93,12 +94,21 @@ class WithdrawalConfirmationMobilePortrait
             Padding(
               padding: const EdgeInsets.all(2.0),
               child: CustomButton(
-                  hasIcon: false,
-                  buttonText: 'Confirm withdrawal',
-                  onPressed: () {
-                    Get.to(() => const VerificationSuccessOrFailureMobileView(message: "Thanks for using this service\nWithdrawal request is been processed",));
-
-                  }),
+                hasIcon: false,
+                buttonText: 'Confirm withdrawal',
+                onPressed: () {
+                  Get.to(
+                    () => const SuccessOrFailureMobileView(
+                      msg:
+                          "Thanks for using this service\nWithdrawal request is been processed",
+                      className: JekawinBottomTabs(
+                        tabIndex: 2,
+                      ),
+                    ),
+                    transition: Transition.cupertino,
+                  );
+                },
+              ),
             ),
             const Gap(10),
             Obx(() => SizedBox(
@@ -139,7 +149,6 @@ class WithdrawalConfirmationMobilePortrait
       ),
       child: Column(
         mainAxisSize: MainAxisSize.max,
-
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //bank name
@@ -178,7 +187,6 @@ class WithdrawalConfirmationMobilePortrait
                   child: const Text(
                     "Bank Name",
                     style: TextStyle(fontSize: 12),
-
                     overflow: TextOverflow.ellipsis,
                   ),
                   width: screenWidth(context) / 3,
@@ -206,13 +214,13 @@ class WithdrawalConfirmationMobilePortrait
                   child: const Text(
                     "Account Name",
                     style: TextStyle(fontSize: 12),
-
                     overflow: TextOverflow.ellipsis,
                   ),
                   width: screenWidth(context) / 3,
                 ),
                 const Gap(50),
-                Expanded(child:SizedBox(
+                Expanded(
+                    child: SizedBox(
                   child: Text(
                     accountName ?? " ",
                     // style: TextStyle(fontSize: 12),
