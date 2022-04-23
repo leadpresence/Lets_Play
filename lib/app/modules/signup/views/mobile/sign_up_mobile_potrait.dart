@@ -68,6 +68,8 @@ class SignupMobilePortrait extends GetView<SignUpController> {
                   child: CustomTextField(
                     hintText: "First name",
                     textController: controller.firstNameController,
+                      keyboardType: TextInputType.text,
+
                       onChanged: (v){
                         if(v.isNotEmpty){
                           controller.clearErrorFirstName();
@@ -83,7 +85,9 @@ class SignupMobilePortrait extends GetView<SignUpController> {
                   padding: const EdgeInsets.fromLTRB(24, 12, 24, 10),
                   child: CustomTextField(
                     hintText: "Last name",
-                    textController: controller.lastNameController,
+                      keyboardType: TextInputType.text,
+
+                      textController: controller.lastNameController,
                       onChanged: (v){
                         if(v.isNotEmpty){
                          controller.clearErrorLastName();
@@ -98,7 +102,8 @@ class SignupMobilePortrait extends GetView<SignUpController> {
                   Padding(
                   padding: const EdgeInsets.fromLTRB(24, 12, 24, 10),
                   child: CustomTextField(
-                    hintText: "Phone number 23490112344",
+                    hintText: "Phone number 08122******",
+                    keyboardType: TextInputType.number,
                     textController: controller.phoneNumberController,
                       onChanged: (v){
                         if(v.isNotEmpty){

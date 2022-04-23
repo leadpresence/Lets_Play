@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:jekawin_mobile_flutter/app/config/services/auth_service.dart';
 import 'package:jekawin_mobile_flutter/app/modules/signup/models/user_sign_up_model.dart';
 
+import '../../../utils/helpers/text_helper.dart';
 import '../../signup_verification/views/mobile/signup_verification_mobile_portrait.dart';
 
 class SignUpController extends GetxController {
@@ -80,7 +81,7 @@ class SignUpController extends GetxController {
 
     var firstName = firstNameController.value.text;
     var lastName = lastNameController.value.text;
-    var phoneNumber = phoneNumberController.value.text;
+    var phoneNumber = TextUtils().stripFirstZeroAddCountryCode(number:phoneNumberController.value.text);
     var password = passwordController.value.text;
     var userAgreed = agreementCheck.value;
     isLoading(true);

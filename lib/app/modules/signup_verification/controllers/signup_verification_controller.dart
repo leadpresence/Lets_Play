@@ -11,7 +11,8 @@ class SignUpVerificationController extends GetxController {
   final signUpOtpController = TextEditingController();
 
   final ProspectIdController prospectIdController = Get.find();
-  final AuthServiceDataSource authService = Get.find<AuthServiceDataSource>();
+  final  AuthServiceImpl authService = Get.find<AuthServiceImpl>();
+
 
   var isLoading = false.obs;
   var prospectId = "".obs;
