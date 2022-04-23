@@ -25,13 +25,8 @@ class LoginMobilePortrait extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
 
-    @override
-    void initState() {
-      // super.initState();
-    }
+    const TextStyle errorTextStyle =TextStyle(fontSize: 10,color: Colors.deepOrange);
 
-    @override
-    void dispose() {}
 
     final Widget logoSvg = SvgPicture.asset(
       logoAsetName,
@@ -41,7 +36,7 @@ class LoginMobilePortrait extends GetView<LoginController> {
     screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
 
     return
-      // Obx(() =>
+      Obx(() =>
           Scaffold(
             body: SingleChildScrollView(
           child: Form(
@@ -75,21 +70,41 @@ class LoginMobilePortrait extends GetView<LoginController> {
               const Gap(20),
 
               Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 40, 10, 10),
+                  padding: const EdgeInsets.fromLTRB(24, 20, 24, 0),
                   child: CustomTextField(
                     hintText: "Phone number",
+                    keyboardType: TextInputType.number,
                     textController: controller.phoneNumberController,
-                  )),
+                    onChanged: (v) {
+                      if (v.isNotEmpty) controller.clearErrorPhoneNumber();
+                    })),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(24, 10, 24, 0),
+                    child: Row(mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(controller.errorPhoneNumberMessage.value,style: errorTextStyle,),
+                      ],
+                    ),
+                  ),
 
               Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
+                  padding: const EdgeInsets.fromLTRB(24, 10, 24, 0),
                   child: CustomTextField(
                     hintText: "Password",
                     isPasswordField: true,
                     textController: controller.passwordController,
                   )),
+
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(24, 10, 24, 0),
+                    child: Row(mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(controller.errorPasswordMessage.value,style: errorTextStyle,),
+                      ],
+                    ),
+                  ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
+                padding: const EdgeInsets.fromLTRB(24, 20, 24, 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -100,7 +115,7 @@ class LoginMobilePortrait extends GetView<LoginController> {
                       child: const Text(
                         'Forgot password?',
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(color: agreementColor, fontSize: 10),
+                        style: TextStyle(color: agreementColor, fontSize: 14),
                       ),
                     ),
                   ],
@@ -108,21 +123,19 @@ class LoginMobilePortrait extends GetView<LoginController> {
               ),
 
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 20),
                 child: CustomButton(
                     buttonText: "Login",
                     onPressed: () {
 
-                      // controller.login(key);
-                      Get.to(() => const JekawinBottomTabs(
-                        tabIndex: 0,
-                      ));
+                      controller.loginFormValidator(key);
+
                     }
                 ),
               )
             ]),
           ),
-        // )
+        )
           ));
   }
 }

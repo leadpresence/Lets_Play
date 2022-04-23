@@ -92,7 +92,6 @@ class SignupMobilePortrait extends GetView<SignUpController> {
                   )),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-
                     child: Text(controller.errorLastNameMessage.value,style: errorTextStyle,),
                   ),
 
@@ -109,7 +108,6 @@ class SignupMobilePortrait extends GetView<SignUpController> {
                   )),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-
                     child: Text(controller.errorPhoneNumberMessage.value,style: errorTextStyle,),
                   ),
 

@@ -7,7 +7,7 @@ import 'package:jekawin_mobile_flutter/app/modules/signup/models/user_sign_up_mo
 import '../../signup_verification/views/mobile/signup_verification_mobile_portrait.dart';
 
 class SignUpController extends GetxController {
-  final  AuthServiceDataSource authService = Get.find<AuthServiceDataSource>();
+  final  AuthServiceImpl authService = Get.find<AuthServiceImpl>();
   var agreementCheck = false.obs;
   final signUpFormKey = GlobalKey<FormState>();
   final firstNameController = TextEditingController();

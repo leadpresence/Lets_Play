@@ -41,7 +41,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
   final UserLocalDataSourceImpl _userLocalDataSource  = Get.find<UserLocalDataSourceImpl>();
   User? get user => _userLocalDataSource.user;
 
-  AuthServiceImpl();
+  // AuthServiceImpl();
 
   @override
   Future<Either<AppError, String>> signup(UserSignUpModel body) async {
@@ -132,7 +132,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
 
   @override
   Future<Either<AppError, String>> login(String mobile, String password) async {
-    Map<String, dynamic> payload = {"mobile": mobile, 'password': password};
+    Map<String, dynamic> payload = {'mobile': mobile, 'password': password};
 
     try {
       var raw = await httpProvider.postHttp(
