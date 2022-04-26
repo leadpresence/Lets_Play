@@ -5,13 +5,16 @@ import 'package:jekawin_mobile_flutter/app/modules/e_shop/views/e_shop_view.dart
 
 import '../../dashboard/views/mobile/dashboard_mobile_portrait.dart';
 import '../../menu/view/mobile/menu_mobile_portrait.dart';
-import '../../reward_points/views/mobile/reward_points_mobile_portrait.dart';
 import '../../wallet_home/views/wallet_home_view.dart';
 
 class JekawinBottomTabs extends StatefulWidget {
   final int tabIndex;
-
-  const JekawinBottomTabs({Key? key, this.tabIndex = 0}) : super(key: key);
+  final bool isGuestUser;
+  const JekawinBottomTabs({
+    Key? key,
+    this.tabIndex = 0,
+    this.isGuestUser = false,
+  }) : super(key: key);
   @override
   _JekawinBottomTabsState createState() => _JekawinBottomTabsState();
 }
@@ -26,7 +29,9 @@ class _JekawinBottomTabsState extends State<JekawinBottomTabs> {
   void initState() {
     _children.add({
       "title": "Home",
-      "widget": const DashboardMobilePortrait(),
+      "widget": DashboardMobilePortrait(
+        isGuestUser: widget.isGuestUser,
+      ),
     });
     _children.add({
       "title": "Leaderboard",
@@ -34,7 +39,7 @@ class _JekawinBottomTabsState extends State<JekawinBottomTabs> {
     });
     _children.add({
       "title": "Wallet",
-      "widget":const WalletHomeView(),
+      "widget": const WalletHomeView(),
     });
     _children.add({
       "title": "E-shop",

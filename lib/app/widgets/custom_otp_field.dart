@@ -59,7 +59,7 @@ class _CustomOtpFieldState extends State<CustomOtpField> {
       validator: (value) {
         //Todo @felix implement validation if necessary
         // return null;
-        return value == '1234' ? null : 'Pin is incorrect';
+        // return value == '1234' ? null : 'Pin is incorrect';
       },
       onClipboardFound: (value) {
         debugPrint('onClipboardFound: $value');
@@ -71,7 +71,7 @@ class _CustomOtpFieldState extends State<CustomOtpField> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Container(
-            margin: EdgeInsets.only(bottom: 9),
+            margin: const EdgeInsets.only(bottom: 9),
             width: 22,
             height: 1,
             color: focusedBorderColor,

@@ -111,14 +111,17 @@ class WithdrawalConfirmationMobilePortrait
               ),
             ),
             const Gap(10),
-            Obx(() => SizedBox(
-                  child: controller.isLoading.value
-                      ? const Center(
-                          child: CircularProgressIndicator(
+            Obx(
+              () => SizedBox(
+                child: controller.isLoading.value
+                    ? const Center(
+                        child: CircularProgressIndicator(
                           color: Colors.orange,
-                        ))
-                      : Container(),
-                ))
+                        ),
+                      )
+                    : Container(),
+              ),
+            )
           ],
         ),
       ),
@@ -140,7 +143,6 @@ class WithdrawalConfirmationMobilePortrait
     );
     return Container(
       padding: const EdgeInsets.all(10),
-      height: screenHeight(context) / 9,
       width: screenWidth(context),
       // margin: const EdgeInsets.fromLTRB(8, 9, 8, 8),
       decoration: BoxDecoration(

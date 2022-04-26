@@ -21,7 +21,8 @@ class SignupMobilePortrait extends GetView<SignUpController> {
 
   @override
   Widget build(BuildContext context) {
-    const TextStyle errorTextStyle =TextStyle(fontSize: 8,color: Colors.deepOrange);
+    const TextStyle errorTextStyle =
+        TextStyle(fontSize: 8, color: Colors.deepOrange);
     final Widget logoSvg = SvgPicture.asset(
       logoAsetName,
       width: MediaQuery.of(context).size.width,
@@ -32,9 +33,7 @@ class SignupMobilePortrait extends GetView<SignUpController> {
 
     return Obx(() => Scaffold(
             body: SingleChildScrollView(
-          child:
-
-          Form(
+          child: Form(
             key: controller.signUpFormKey,
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -66,55 +65,61 @@ class SignupMobilePortrait extends GetView<SignUpController> {
               Padding(
                   padding: const EdgeInsets.fromLTRB(24, 40, 24, 10),
                   child: CustomTextField(
-                    hintText: "First name",
-                    textController: controller.firstNameController,
+                      hintText: "First name",
+                      textCapitalization: TextCapitalization.words,
+                      textController: controller.firstNameController,
                       keyboardType: TextInputType.text,
-
-                      onChanged: (v){
-                        if(v.isNotEmpty){
+                      onChanged: (v) {
+                        if (v.isNotEmpty) {
                           controller.clearErrorFirstName();
                         }
-                      }
-                  )),
+                      })),
               Padding(
                 padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-                child: Text(controller.errorFirstNameMessage.value,style: errorTextStyle,),
+                child: Text(
+                  controller.errorFirstNameMessage.value,
+                  style: errorTextStyle,
+                ),
               ),
 
               Padding(
                   padding: const EdgeInsets.fromLTRB(24, 12, 24, 10),
                   child: CustomTextField(
-                    hintText: "Last name",
+                      hintText: "Last name",
+                      textCapitalization: TextCapitalization.words,
                       keyboardType: TextInputType.text,
-
                       textController: controller.lastNameController,
-                      onChanged: (v){
-                        if(v.isNotEmpty){
-                         controller.clearErrorLastName();
+                      onChanged: (v) {
+                        if (v.isNotEmpty) {
+                          controller.clearErrorLastName();
                         }
-                      }
-                  )),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-                    child: Text(controller.errorLastNameMessage.value,style: errorTextStyle,),
-                  ),
+                      })),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+                child: Text(
+                  controller.errorLastNameMessage.value,
+                  style: errorTextStyle,
+                ),
+              ),
 
-                  Padding(
+              Padding(
                   padding: const EdgeInsets.fromLTRB(24, 12, 24, 10),
                   child: CustomTextField(
-                    hintText: "Phone number 08122******",
-                    keyboardType: TextInputType.number,
-                    textController: controller.phoneNumberController,
-                      onChanged: (v){
-                        if(v.isNotEmpty){
+                      hintText: "Phone number",
+                      keyboardType: TextInputType.number,
+                      textController: controller.phoneNumberController,
+                      onChanged: (v) {
+                        if (v.isNotEmpty) {
                           controller.clearErrorPhoneNumber();
                         }
-                      }
-                  )),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-                    child: Text(controller.errorPhoneNumberMessage.value,style: errorTextStyle,),
-                  ),
+                      })),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+                child: Text(
+                  controller.errorPhoneNumberMessage.value,
+                  style: errorTextStyle,
+                ),
+              ),
 
               Padding(
                   padding: const EdgeInsets.fromLTRB(24, 12, 24, 10),
@@ -123,21 +128,24 @@ class SignupMobilePortrait extends GetView<SignUpController> {
                     isPasswordField: true,
                     textController: controller.passwordController,
                     // suffixIcon:   unselected,
-                    onChanged: (v){
-                      if(v.isNotEmpty){
+                    onChanged: (v) {
+                      if (v.isNotEmpty) {
                         controller.clearErrorPassword();
                       }
                     },
                   )),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+                child: Text(
+                  controller.errorPasswordMessage.value,
+                  style: errorTextStyle,
+                ),
+              ),
 
-                    child: Text(controller.errorPasswordMessage.value,style: errorTextStyle,),
-                  ),
-
-                  Gap(Get.height * 0.0056),
+              Gap(Get.height * 0.0056),
               ConstrainedBox(
-                constraints: BoxConstraints.expand(width: screenWidth(context),height: 40),
+                constraints: BoxConstraints.expand(
+                    width: screenWidth(context), height: 40),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Row(
@@ -152,20 +160,20 @@ class SignupMobilePortrait extends GetView<SignUpController> {
                           },
                         ),
                       ),
-                       // Padding(
-                       //  padding:const EdgeInsets.fromLTRB(0, 8, 4, 8),
-                       //  child:
-                        SizedBox(
-                          width: screenWidth(context)/2 +100,
-                          child: const Text(
-                            'By signing up you agree to Jekawin Term of Service and \nPrivacy Policy',
+                      // Padding(
+                      //  padding:const EdgeInsets.fromLTRB(0, 8, 4, 8),
+                      //  child:
+                      SizedBox(
+                        width: screenWidth(context) / 2 + 100,
+                        child: const Text(
+                          'By signing up you agree to Jekawin Term of Service and \nPrivacy Policy',
                           textAlign: TextAlign.left,
-                            maxLines: 2,
-                            softWrap: true,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(color: agreementColor, fontSize: 13),
-                          ),
+                          maxLines: 2,
+                          softWrap: true,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(color: agreementColor, fontSize: 13),
                         ),
+                      ),
                       // )
                     ],
                   ),
@@ -173,7 +181,7 @@ class SignupMobilePortrait extends GetView<SignUpController> {
               ),
 
               Padding(
-                padding: const EdgeInsets.fromLTRB(24, 4, 24, 10),
+                padding: const EdgeInsets.fromLTRB(24, 24, 24, 10),
                 child: CustomButton(
                     buttonText: "Sign Up",
                     onPressed: () {
@@ -184,7 +192,10 @@ class SignupMobilePortrait extends GetView<SignUpController> {
               const Gap(10),
               SizedBox(
                 child: controller.isLoading.value
-                    ? const Center(child:  CircularProgressIndicator(color: Colors.orange,))
+                    ? const Center(
+                        child: CircularProgressIndicator(
+                        color: Colors.orange,
+                      ))
                     : Container(),
               )
             ]),

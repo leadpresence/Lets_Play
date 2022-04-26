@@ -131,8 +131,8 @@ class BankItem extends StatelessWidget {
       height: 30,
     );
     return Container(
-      padding: const EdgeInsets.all(10),
-      height: screenHeight(context) / 9,
+      padding: const EdgeInsets.all(12),
+      // height: screenHeight(context) / 9,
       margin: const EdgeInsets.fromLTRB(8, 9, 8, 8),
       decoration: BoxDecoration(
         color: const Color(0xFFFE7A01).withOpacity(.1),

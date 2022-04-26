@@ -73,7 +73,7 @@ class User extends Equatable {
     id = json["_id"];
     avatar = json["avatar"];
     firstName = json["firstname"];
-    firstName = json["lastName"];
+    lastName = json["lastName"];
     mobile = json["mobile"];
     autoUsername = json["autoUsername"];
     rewardPoints = json["rewardPoints"];

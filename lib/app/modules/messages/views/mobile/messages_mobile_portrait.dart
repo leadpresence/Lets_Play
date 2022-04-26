@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:jekawin_mobile_flutter/app/modules/login/views/login.dart';
 
 import '../../../../widgets/custom_large_button.dart';
 import '../../../jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
@@ -11,11 +12,8 @@ class MessagesMobilePortrait extends StatelessWidget {
   final nextRoute, messageString;
   final bool status;
 
-    MessagesMobilePortrait(
-      {Key? key,
-        this.nextRoute,
-        this.messageString,
-        required this.status})
+  MessagesMobilePortrait(
+      {Key? key, this.nextRoute, this.messageString, required this.status})
       : super(key: key);
 
   @override
@@ -62,9 +60,7 @@ class MessagesMobilePortrait extends StatelessWidget {
                   onPressed: () =>
                       nextRoute ??
                       Get.to(
-                        () => const JekawinBottomTabs(
-                          tabIndex: 3,
-                        ),
+                        () => const LoginView(),
                         transition: Transition.cupertino,
                       ),
                   buttonText: 'Done',

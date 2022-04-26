@@ -11,8 +11,7 @@ class SignUpVerificationController extends GetxController {
   final signUpOtpController = TextEditingController();
 
   final ProspectIdController prospectIdController = Get.find();
-  final  AuthServiceImpl authService = Get.find<AuthServiceImpl>();
-
+  final AuthServiceImpl authService = Get.find<AuthServiceImpl>();
 
   var isLoading = false.obs;
   var prospectId = "".obs;
@@ -48,7 +47,7 @@ class SignUpVerificationController extends GetxController {
     final userData = await authService.verifySignUpOtp(otp);
     userData.fold((l) {
       isLoading(false);
-      Get.snackbar("Signup Error", l.message, overlayColor: Colors.red);
+      Get.snackbar("OTP verification", l.message, overlayColor: Colors.red);
     }, (r) {
       navigateToSignUpSuccessful(key);
     });
@@ -56,15 +55,14 @@ class SignUpVerificationController extends GetxController {
 
   void navigateToSignUpSuccessful(Key? key) {
     Get.to(
-          () => const SuccessOrFailureMobileView(
+      () => const SuccessOrFailureMobileView(
         msg: 'You have successfully shared 0 RPT',
         className: JekawinBottomTabs(
           tabIndex: 0,
+          isGuestUser: true,
         ),
       ),
       transition: Transition.cupertino,
     );
   }
 }
-
-

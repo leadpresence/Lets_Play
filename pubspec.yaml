@@ -17,6 +17,7 @@ dependencies:
   responsive_builder: ^0.4.1
   shared_preferences: ^2.0.1
   google_fonts: ^2.1.0
+  get_storage: ^2.0.3
   #cahable network images
   cached_network_image: ^3.2.0
   #cache_image: ^1.0.5

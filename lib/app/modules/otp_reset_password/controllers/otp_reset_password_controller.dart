@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 
 class OtpResetPasswordController extends GetxController {
   final otpController = TextEditingController();
-
   var agreementCheck = false.obs;
 
   Rx<bool> agree = false.obs;

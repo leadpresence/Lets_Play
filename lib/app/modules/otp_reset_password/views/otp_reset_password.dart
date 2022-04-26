@@ -6,26 +6,30 @@ import 'package:jekawin_mobile_flutter/app/modules/otp_reset_password/views/tabl
 import 'package:responsive_builder/responsive_builder.dart';
 import 'mobile/otp_password_reset_mobile_landscape.dart';
 
-
-
 class OtpResetPasswordView extends GetView {
-  final phoneNumber;
-  const OtpResetPasswordView({Key? key, this.phoneNumber}) : super(key: key);
+  final String phoneNumber;
+  const OtpResetPasswordView({Key? key, required this.phoneNumber})
+      : super(key: key);
 
-
+  @override
   Widget build(BuildContext context) {
     return ScreenTypeLayout.builder(
         mobile: (_) => OrientationLayoutBuilder(
-
-          portrait: (_)=>  OtpPasswordResetMP(key:key,phonenumber: phoneNumber,),
-          landscape: (_)=> OtpPasswordResetML(key:key, ),
-        ),
+              portrait: (_) => OtpPasswordResetMP(
+                key: key,
+                phoneNumber: phoneNumber,
+              ),
+              landscape: (_) => OtpPasswordResetML(
+                key: key,
+              ),
+            ),
         tablet: (_) => OrientationLayoutBuilder(
-          portrait: (_) =>    OtpResetPasswordTP(key:key,),
-          landscape: (_)=>
-              OtpResetPasswordTL(key:key, ),
-
-        ));
+              portrait: (_) => OtpResetPasswordTP(
+                key: key,
+              ),
+              landscape: (_) => OtpResetPasswordTL(
+                key: key,
+              ),
+            ));
   }
 }
-

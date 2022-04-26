@@ -1,8 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ResetPasswordController extends GetxController {
-
   var agreementCheck = false.obs;
+  final TextEditingController phoneNumberController = TextEditingController();
 
   Rx<bool> agree = false.obs;
   @override

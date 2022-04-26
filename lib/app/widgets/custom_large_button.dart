@@ -73,11 +73,11 @@ class CustomButton extends StatelessWidget {
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
             primary: buttonColor,
-            shadowColor: Colors.transparent,
+            shadowColor: Colors.white,
             onPrimary: Colors.white,
             onSurface: Colors.white,
             elevation: 0,
-            // splashFactory: NoSplash.splashFactory,
+            splashFactory: NoSplash.splashFactory,
             shape: RoundedRectangleBorder(
               side: hasBorder
                   ? const BorderSide(color: Color(0xff543884), width: 1)

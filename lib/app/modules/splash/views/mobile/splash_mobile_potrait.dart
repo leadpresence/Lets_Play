@@ -14,6 +14,12 @@ class _SplashMobilePotraitState extends State<SplashMobilePotrait> {
   final SplashController controller = SplashController();
   @override
   Widget build(BuildContext context) {
+    const String topImage = 'assets/images/jekawin_auth_home.svg';
+
+    final Widget topSvg = SvgPicture.asset(
+      topImage,
+      width: MediaQuery.of(context).size.width,
+    );
     const String assetName = 'assets/images/jekawin_logo.svg';
     final Widget svg = SvgPicture.asset(
       assetName,

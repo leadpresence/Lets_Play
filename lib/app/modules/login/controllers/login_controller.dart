@@ -6,9 +6,9 @@ import '../../../config/services/auth_service.dart';
 import '../../jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
 
 class LoginController extends GetxController {
-  final  AuthServiceImpl authService = Get.find<AuthServiceImpl>();
+  final AuthServiceImpl authService = Get.find<AuthServiceImpl>();
 
-  RxString numberOberserver=''.obs;
+  RxString numberOberserver = ''.obs;
 
   final loginFormKey = GlobalKey<FormState>();
   final phoneNumberController = TextEditingController();
@@ -20,24 +20,21 @@ class LoginController extends GetxController {
 
   void clearErrorPassword() => errorPasswordMessage.value = '';
 
-  bool observePhoneNumber(String str){
+  bool observePhoneNumber(String str) {
     numberOberserver.value = str;
-    if(!numberOberserver.value.startsWith('0')){
+    if (!numberOberserver.value.startsWith('0')) {
       return false;
     }
     return true;
-
   }
-  bool
-  lengthObservePhoneNumber(String str){
+
+  bool lengthObservePhoneNumber(String str) {
     numberOberserver.value = str;
-    if(numberOberserver.value.length!=11){
+    if (numberOberserver.value.length != 11) {
       return false;
     }
     return true;
-
   }
-
 
   @override
   void onInit() {
@@ -61,27 +58,27 @@ class LoginController extends GetxController {
   loginFormValidator(Key? k) {
     if ((GetUtils.isBlank(phoneNumberController.text)) == true) {
       return errorPhoneNumberMessage.value = 'Add Phone Number';
-    }else if(!phoneNumberController.text.startsWith('0')){
-      errorPhoneNumberMessage.value ="Phone number must start with zero";
-    }else if(phoneNumberController.text.length!=11){
-      errorPhoneNumberMessage.value ="Phone number must be 11 digits";
+    } else if (!phoneNumberController.text.startsWith('0')) {
+      errorPhoneNumberMessage.value = "Phone number must start with zero";
+    } else if (phoneNumberController.text.length != 11) {
+      errorPhoneNumberMessage.value = "Phone number must be 11 digits";
     } else if ((GetUtils.isBlank(passwordController.text)) == true) {
       return errorPasswordMessage.value = "Add Password";
-    }else if(passwordController.text.length<=4){
-      errorPasswordMessage.value ="Password is too short";
-    }
-
-    else {
+    } else if (passwordController.text.length <= 4) {
+      errorPasswordMessage.value = "Password is too short";
+    } else {
       login(k);
     }
   }
 
   Future<void> login(Key? k) async {
-    var phoneNumber =TextUtils().stripFirstZeroAddCountryCode(number:  phoneNumberController.value.text);
+    var phoneNumber = TextUtils()
+        .stripFirstZeroAddCountryCode(number: phoneNumberController.value.text);
     var password = passwordController.value.text;
     final userData = await authService.login(phoneNumber, password);
+
     userData.fold((l) {
-      Get.snackbar("Signing in Error", "An error occurred during sign-in",
+      Get.snackbar("Signing in Error", l.message,
           overlayColor: Colors.red);
     }, (r) {
       navigatetoHomeScreen(k);
@@ -89,8 +86,12 @@ class LoginController extends GetxController {
   }
 
   navigatetoHomeScreen(Key? k) {
-    Get.to(() => const JekawinBottomTabs(
-      tabIndex: 0,
-    ));
+    Get.to(
+      () => const JekawinBottomTabs(
+        tabIndex: 0,
+        isGuestUser: true,
+      ),
+      transition: Transition.cupertino,
+    );
   }
 }

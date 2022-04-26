@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:jekawin_mobile_flutter/app/config/services/di/di_locator.dart';
 import 'package:jekawin_mobile_flutter/app/config/services/http/base_urls.dart';
 import 'package:jekawin_mobile_flutter/app/constants/app_error.dart';
@@ -29,16 +31,17 @@ abstract class AuthServiceDataSource {
 
   Future<Either<AppError, String>> forgetPassword(String mobile);
 
-  Future<Either<AppError, String>> resetPasswordOtp(  String Otp);
+  Future<Either<AppError, String>> resetPasswordOtp(String Otp);
 
   Future<Either<AppError, String>> updatePassword(String password);
-  Future<Either<AppError, String>> signout( );
+  Future<Either<AppError, String>> signout();
 }
 
 class AuthServiceImpl extends AuthServiceDataSource {
   final httpProvider = Get.find<HttpService>();
   final prospectIsProvider = Get.find<ProspectIdController>();
-  final UserLocalDataSourceImpl _userLocalDataSource  = Get.find<UserLocalDataSourceImpl>();
+  final UserLocalDataSourceImpl _userLocalDataSource =
+      Get.find<UserLocalDataSourceImpl>();
   User? get user => _userLocalDataSource.user;
 
   // AuthServiceImpl();
@@ -54,7 +57,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
     };
     try {
       var raw = await httpProvider.postHttp(
-          '${JekawinBaseUrls.authBaseUrl}signup',  payload);
+          '${JekawinBaseUrls.authBaseUrl}signup', payload);
       if (raw['success']) {
         AuthResponseModel res = AuthResponseModel.fromJson(raw);
         //save prospective id  so you use it to do other stuff if necessary
@@ -76,6 +79,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
           AppError(errorType: AppErrorType.api, message: "An error occurred"));
     }
   }
+
   @override
   Future<Either<AppError, String>> verifySignUpOtp(String otp) async {
     String prospectId = prospectIsProvider.getProspectId();
@@ -140,6 +144,9 @@ class AuthServiceImpl extends AuthServiceDataSource {
       UserSignupDetails res = UserSignupDetails.fromMap(raw);
       //todo @felix save login token to db here
       _userLocalDataSource.saveUser(res.data.user);
+      if (kDebugMode) {
+        print("USER ===========> \n ${res.data.user}");
+      }
       if (raw['success']) {
         return const Right("Login Successful");
       } else {
@@ -198,7 +205,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
       //todo @felix
       if (raw['success']) {
         ForgetPasswordOtpResponse res = ForgetPasswordOtpResponse.fromMap(raw);
-        return   Right(res.message);
+        return Right(res.message);
       } else {
         return Left(
             AppError(errorType: AppErrorType.network, message: raw['message']));

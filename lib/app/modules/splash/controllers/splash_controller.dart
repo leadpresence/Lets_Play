@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:jekawin_mobile_flutter/app/config/routes/app_pages.dart';
+import 'package:jekawin_mobile_flutter/app/modules/dashboard/views/mobile/dashboard_mobile_portrait.dart';
 
 import '../../auth/views/mobile/auth_home_mobile_potrait.dart';
 
@@ -10,8 +11,8 @@ class SplashController extends GetxController {
     Future.delayed(
       const Duration(seconds: 3),
       () => Get.to(
-        () => const AuthHomeMobilePortrait(),
-        transition: Transition.fade,
+        () =>  DashboardMobilePortrait(),
+        transition: Transition.fadeIn,
       ),
     );
     super.onInit();

@@ -16,7 +16,8 @@ import '../controllers/update_password_controller.dart';
 
 class UpdatePasswordMobilePortrait extends GetView<UpdatePasswordController> {
   @override
-  final UpdatePasswordController controller = Get.put(UpdatePasswordController());
+  final UpdatePasswordController controller =
+      Get.put(UpdatePasswordController());
 
   UpdatePasswordMobilePortrait({Key? key, this.themeData, this.customAppTheme})
       : super(key: key);
@@ -33,7 +34,6 @@ class UpdatePasswordMobilePortrait extends GetView<UpdatePasswordController> {
       phoneNumberController = TextEditingController();
     }
 
-
     final Widget logoSvg = SvgPicture.asset(
       logoAsetName,
       width: MediaQuery.of(context).size.width,
@@ -43,59 +43,62 @@ class UpdatePasswordMobilePortrait extends GetView<UpdatePasswordController> {
     screenHeight(BuildContext context) => MediaQuery.of(context).size.height;
 
     // return Obx(() =>
-       return Scaffold(
-
-            body: SingleChildScrollView(
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Gap(60),
-
-            Row(
+    return Scaffold(
+        body: SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Gap(60),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Text(
+                "Update your Password",
+                style: TextStyle(
+                    fontWeight: FontWeight.w300, // light
+                    fontStyle: FontStyle.normal,
+                    color: Colors.black,
+                    fontSize: 24 // italic
+                    ),
+              )
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
                 Text(
-                  "Update your Password",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w300, // light
-                      fontStyle: FontStyle.normal,
-                      color: Colors.black,
-                      fontSize: 24 // italic
-                      ),
-                )
+                  'Please Input your phone number to receive OTP',
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: agreementColor, fontSize: 10),
+                ),
               ],
             ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children:  const[
-                        Text(
-                          'Please Input your phone number to receive OTP',
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(color: agreementColor, fontSize: 10),
-                        ),
-                    ],),
+          ),
+          const Padding(
+            padding: EdgeInsets.fromLTRB(24, 24, 24, 24),
+            child: CustomTextField(
+              hintText: "New Password",
+              keyboardType: TextInputType.number,
+              // errorText: "Phone number invalid",
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
+            child: CustomButton(
+              buttonText: "Update password",
+              onPressed: () => Get.to(
+                () => ResponseMessageView(
+                  status: true,
                 ),
-
-            const Padding(
-                padding: EdgeInsets.fromLTRB(24, 10, 24, 10),
-                child: CustomTextField(
-                  hintText: "New Password",
-                  keyboardType: TextInputType.number,
-                  errorText: "Phone number invalid",
-                )),
-
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(24, 4, 24, 10),
-                  child: CustomButton(
-                      buttonText: "Update password",
-                      onPressed: () =>Get.to(()=>  ResponseMessageView(status: true,))
-                      ),
-                )
-          ]),
-        )
+              ),
+            ),
+          )
+        ],
+      ),
+    )
         // )
-    );
+        );
   }
-
 }

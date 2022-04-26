@@ -19,6 +19,7 @@ class AuthHomeMobilePortrait extends GetView<AuthHomeController> {
 
   @override
   Widget build(BuildContext context) {
+
     const String assetName = 'assets/images/jekawin_auth_home.svg';
     final Widget topSvg = SvgPicture.asset(
       assetName,
@@ -78,7 +79,9 @@ class AuthHomeMobilePortrait extends GetView<AuthHomeController> {
                     onTap: () => Get.to(
                       () => const JekawinBottomTabs(
                         tabIndex: 0,
+                        isGuestUser: false,
                       ),
+                      transition: Transition.cupertino,
                     ),
                     iconData: Icons.arrow_forward,
                   ),
