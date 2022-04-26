@@ -12,35 +12,46 @@ import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../constants/asset_paths.dart';
 import '../../../jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
 
-class LoginMobilePortrait extends StatelessWidget {
+class LoginMobilePortrait extends GetView<LoginController> {
+
   @override
   final LoginController controller = Get.put(LoginController());
 
-  LoginMobilePortrait({Key? key, this.themeData, this.customAppTheme})
+    LoginMobilePortrait({Key? key, this.themeData, this.customAppTheme})
       : super(key: key);
   final ThemeData? themeData;
   final CustomAppTheme? customAppTheme;
 
   @override
   Widget build(BuildContext context) {
+
+    const TextStyle errorTextStyle =TextStyle(fontSize: 10,color: Colors.deepOrange);
+
+
     final Widget logoSvg = SvgPicture.asset(
       logoAsetName,
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height * 0.150,
     );
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Form(
-          key: controller.loginFormKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+    screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
+
+    return
+      Obx(() =>
+          Scaffold(
+            body: SingleChildScrollView(
+          child: Form(
+            key: controller.loginFormKey,
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               const Gap(30),
+
+              //Logo Row
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [logoSvg],
               ),
               const Gap(40),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
@@ -55,63 +66,76 @@ class LoginMobilePortrait extends StatelessWidget {
                   )
                 ],
               ),
+
               const Gap(20),
+
               Padding(
-                padding: const EdgeInsets.fromLTRB(24, 40, 24, 24),
-                child: CustomTextField(
-                  hintText: "Phone number",
-                  textController: controller.phoneNumberController,
-                ),
-              ),
+                  padding: const EdgeInsets.fromLTRB(24, 20, 24, 0),
+                  child: CustomTextField(
+                    hintText: "Phone number",
+                    keyboardType: TextInputType.number,
+                    textController: controller.phoneNumberController,
+                    onChanged: (v) {
+                      if (v.isNotEmpty) controller.clearErrorPhoneNumber();
+                    })),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(24, 10, 24, 0),
+                    child: Row(mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(controller.errorPhoneNumberMessage.value,style: errorTextStyle,),
+                      ],
+                    ),
+                  ),
+
               Padding(
-                padding: const EdgeInsets.fromLTRB(24, 0, 24, 12),
-                child: CustomTextField(
-                  hintText: "Password",
-                  isPasswordField: true,
-                  textController: controller.passwordController,
-                ),
-              ),
+                  padding: const EdgeInsets.fromLTRB(24, 10, 24, 0),
+                  child: CustomTextField(
+                    hintText: "Password",
+                    isPasswordField: true,
+                    textController: controller.passwordController,
+                  )),
+
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(24, 10, 24, 0),
+                    child: Row(mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(controller.errorPasswordMessage.value,style: errorTextStyle,),
+                      ],
+                    ),
+                  ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(24, 5, 24, 10),
+                padding: const EdgeInsets.fromLTRB(24, 20, 24, 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     GestureDetector(
-                      onTap: () => Get.to(
-                        () => ResetPasswordPhoneView(
-                          key: key,
-                        ),
-                      ),
+                      onTap: () => Get.to(() => ResetPasswordPhoneView(
+                            key: key,
+                          )),
                       child: const Text(
                         'Forgot password?',
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: agreementColor,
-                          fontSize: 12,
-                        ),
+                        style: TextStyle(color: agreementColor, fontSize: 14),
                       ),
                     ),
                   ],
                 ),
               ),
+
               Padding(
-                padding: const EdgeInsets.fromLTRB(24, 32, 24, 10),
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 20),
                 child: CustomButton(
-                  buttonText: "Login",
-                  onPressed: () {
-                    // controller.login(key);
-                    Get.to(
-                      () => const JekawinBottomTabs(
-                        tabIndex: 0,
-                      ),
-                    );
-                  },
+                    buttonText: "Login",
+                    onPressed: () {
+
+                      controller.loginFormValidator(key);
+
+                    }
                 ),
-              ),
-            ],
+              )
+            ]),
           ),
-        ),
-      ),
-    );
+        )
+          ));
   }
 }

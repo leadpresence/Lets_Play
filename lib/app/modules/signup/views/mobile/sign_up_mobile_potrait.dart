@@ -21,10 +21,7 @@ class SignupMobilePortrait extends GetView<SignUpController> {
 
   @override
   Widget build(BuildContext context) {
-    const TextStyle errorTextStyle = TextStyle(
-      fontSize: 8,
-      color: Colors.deepOrange,
-    );
+    const TextStyle errorTextStyle =TextStyle(fontSize: 8,color: Colors.deepOrange);
     final Widget logoSvg = SvgPicture.asset(
       logoAsetName,
       width: MediaQuery.of(context).size.width,
@@ -33,169 +30,165 @@ class SignupMobilePortrait extends GetView<SignUpController> {
     screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
     screenHeight(BuildContext context) => MediaQuery.of(context).size.height;
 
-    return Obx(
-      () => Scaffold(
-        body: SingleChildScrollView(
-          child: Form(
+    return Obx(() => Scaffold(
+            body: SingleChildScrollView(
+          child:
+
+          Form(
             key: controller.signUpFormKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Gap(30),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [logoSvg],
-                ),
-                const Gap(40),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Text(
-                      "Sign up",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w300, // light
-                          fontStyle: FontStyle.normal,
-                          color: Colors.black,
-                          fontSize: 24 // italic
-                          ),
-                    )
-                  ],
-                ),
-                const Gap(20),
-                Padding(
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              const Gap(30),
+              //Logo Row
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [logoSvg],
+              ),
+              const Gap(40),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Text(
+                    "Sign up",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w300, // light
+                        fontStyle: FontStyle.normal,
+                        color: Colors.black,
+                        fontSize: 24 // italic
+                        ),
+                  )
+                ],
+              ),
+
+              const Gap(20),
+
+              Padding(
                   padding: const EdgeInsets.fromLTRB(24, 40, 24, 10),
                   child: CustomTextField(
                     hintText: "First name",
                     textController: controller.firstNameController,
-                    onChanged: (v) {
-                      if (v.isNotEmpty) {
-                        controller.clearErrorFirstName();
+                      keyboardType: TextInputType.text,
+
+                      onChanged: (v){
+                        if(v.isNotEmpty){
+                          controller.clearErrorFirstName();
+                        }
                       }
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-                  child: Text(
-                    controller.errorFirstNameMessage.value,
-                    style: errorTextStyle,
-                  ),
-                ),
-                Padding(
+                  )),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+                child: Text(controller.errorFirstNameMessage.value,style: errorTextStyle,),
+              ),
+
+              Padding(
                   padding: const EdgeInsets.fromLTRB(24, 12, 24, 10),
                   child: CustomTextField(
                     hintText: "Last name",
-                    textController: controller.lastNameController,
-                    onChanged: (v) {
-                      if (v.isNotEmpty) {
-                        controller.clearErrorLastName();
+                      keyboardType: TextInputType.text,
+
+                      textController: controller.lastNameController,
+                      onChanged: (v){
+                        if(v.isNotEmpty){
+                         controller.clearErrorLastName();
+                        }
                       }
-                    },
+                  )),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+                    child: Text(controller.errorLastNameMessage.value,style: errorTextStyle,),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-                  child: Text(
-                    controller.errorLastNameMessage.value,
-                    style: errorTextStyle,
-                  ),
-                ),
-                Padding(
+
+                  Padding(
                   padding: const EdgeInsets.fromLTRB(24, 12, 24, 10),
                   child: CustomTextField(
-                    hintText: "Phone number ",
+                    hintText: "Phone number 08122******",
+                    keyboardType: TextInputType.number,
                     textController: controller.phoneNumberController,
-                    onChanged: (v) {
-                      if (v.isNotEmpty) {
-                        controller.clearErrorPhoneNumber();
+                      onChanged: (v){
+                        if(v.isNotEmpty){
+                          controller.clearErrorPhoneNumber();
+                        }
                       }
-                    },
+                  )),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+                    child: Text(controller.errorPhoneNumberMessage.value,style: errorTextStyle,),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-                  child: Text(
-                    controller.errorPhoneNumberMessage.value,
-                    style: errorTextStyle,
-                  ),
-                ),
-                Padding(
+
+              Padding(
                   padding: const EdgeInsets.fromLTRB(24, 12, 24, 10),
                   child: CustomTextField(
                     hintText: "Password",
                     isPasswordField: true,
                     textController: controller.passwordController,
-                    onChanged: (v) {
-                      if (v.isNotEmpty) {
+                    // suffixIcon:   unselected,
+                    onChanged: (v){
+                      if(v.isNotEmpty){
                         controller.clearErrorPassword();
                       }
                     },
+                  )),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+
+                    child: Text(controller.errorPasswordMessage.value,style: errorTextStyle,),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-                  child: Text(
-                    controller.errorPasswordMessage.value,
-                    style: errorTextStyle,
-                  ),
-                ),
-                ConstrainedBox(
-                  constraints: BoxConstraints.expand(
-                      width: screenWidth(context), height: 40),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Row(
-                      children: [
-                        Material(
-                          child: Checkbox(
-                            activeColor: orange,
-                            value: controller.agreementCheck.value,
-                            onChanged: (value) {
-                              controller.agreementCheck.value =
-                                  !controller.agreementCheck.value;
-                            },
-                          ),
+
+                  Gap(Get.height * 0.0056),
+              ConstrainedBox(
+                constraints: BoxConstraints.expand(width: screenWidth(context),height: 40),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Row(
+                    children: [
+                      Material(
+                        child: Checkbox(
+                          activeColor: orange,
+                          value: controller.agreementCheck.value,
+                          onChanged: (value) {
+                            controller.agreementCheck.value =
+                                !controller.agreementCheck.value;
+                          },
                         ),
+                      ),
+                       // Padding(
+                       //  padding:const EdgeInsets.fromLTRB(0, 8, 4, 8),
+                       //  child:
                         SizedBox(
-                          width: screenWidth(context) / 2 + 100,
+                          width: screenWidth(context)/2 +100,
                           child: const Text(
                             'By signing up you agree to Jekawin Term of Service and \nPrivacy Policy',
-                            textAlign: TextAlign.left,
+                          textAlign: TextAlign.left,
                             maxLines: 2,
                             softWrap: true,
                             overflow: TextOverflow.ellipsis,
-                            style:
-                                TextStyle(color: agreementColor, fontSize: 13),
+                            style: TextStyle(color: agreementColor, fontSize: 13),
                           ),
                         ),
-                      ],
-                    ),
+                      // )
+                    ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(24, 32, 24, 10),
-                  child: CustomButton(
+              ),
+
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 4, 24, 10),
+                child: CustomButton(
                     buttonText: "Sign Up",
                     onPressed: () {
                       //validate form and submit
                       controller.signUpFormValidator(key);
-                    },
-                  ),
-                ),
-                const Gap(10),
-                SizedBox(
-                  child: controller.isLoading.value
-                      ? const Center(
-                          child: CircularProgressIndicator(
-                          color: Colors.orange,
-                        ))
-                      : Container(),
-                ),
-              ],
-            ),
+                    }),
+              ),
+              const Gap(10),
+              SizedBox(
+                child: controller.isLoading.value
+                    ? const Center(child:  CircularProgressIndicator(color: Colors.orange,))
+                    : Container(),
+              )
+            ]),
           ),
-        ),
-      ),
-    );
+        )));
   }
 }

@@ -9,6 +9,7 @@ import '../http/http_service_impl.dart';
 import '../http/http_services.dart';
 
 class ProspectIdController extends GetxController {
+  ProspectIdController();
   RxString prospectId = "".obs;
   RxString phoneNumber = "".obs;
 
@@ -24,14 +25,13 @@ class ProspectIdController extends GetxController {
     phoneNumber.value = mobile;
   }
 }
+//order matters here
 Future<void>  setDi()async {
   Get.lazyPut<HiveInterface>(()=>Hive);
   initHiveDb();
   Get.put(UserLocalDataSourceImpl());
-  Get.lazyPut<UserLocalDataSourceInterface>(()=>UserLocalDataSourceImpl());
-  // inject remote service user db
   Get.lazyPut<HttpService>(()=>HttpServiceImpl());
-  Get.lazyPut<AuthServiceDataSource>(()=>AuthServiceImpl());
-  Get.lazyPut<ProspectIdController>(()=>ProspectIdController());
-
+  Get.lazyPut<ProspectIdController> (()=>ProspectIdController());
+  // Get.lazyPut<AuthServiceDataSource>(()=>AuthServiceImpl());
+  Get.put (AuthServiceImpl());
 }
