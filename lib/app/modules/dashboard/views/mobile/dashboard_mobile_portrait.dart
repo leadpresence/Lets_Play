@@ -133,327 +133,622 @@ class DashboardMobilePortrait extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: SizedBox(
+                  width: Get.width,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text(
+                        'Instant Wins',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff414249),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 12,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 280,
+                child: ListView(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
                   children: [
-                    const Text(
-                      'Instant Wins',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xff414249),
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 4),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 24,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: const Color(0xff262254),
+                      ),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  alignment: Alignment.center,
+                                  width: 94,
+                                  height: 34,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: const Color(0xff9A77CF),
+                                  ),
+                                  child: const Text(
+                                    'Spin & Win',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 8,
+                                ),
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                        'assets/svgs/akar_icon_coin.svg'),
+                                    const Text(
+                                      ' 50',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xFFFE7A01),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          Image.asset('assets/svgs/roll_dice.png'),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          CustomButton(
+                            height: 48.0,
+                            onPressed: () {},
+                            buttonText: 'Play Now',
+                            buttonColor: const Color(0xFFFE7A01),
+                          )
+                        ],
                       ),
                     ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 24,
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: const Color(0xff262254),
-                          ),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                      alignment: Alignment.center,
-                                      width: 94,
-                                      height: 34,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        color: const Color(0xff9A77CF),
-                                      ),
-                                      child: const Text(
-                                        'Spin & Win',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 4),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 24,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: const Color(0xff262254),
+                      ),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  alignment: Alignment.center,
+                                  width: 94,
+                                  height: 34,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: const Color(0xff9A77CF),
+                                  ),
+                                  child: const Text(
+                                    'Spin & Win',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
                                     ),
-                                    const SizedBox(
-                                      width: 8,
-                                    ),
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                            'assets/svgs/akar_icon_coin.svg'),
-                                        const Text(
-                                          ' 50',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                            color: Color(0xFFFE7A01),
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
+                                    textAlign: TextAlign.center,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 12,
-                              ),
-                              Image.asset('assets/svgs/roll_dice.png'),
-                              const SizedBox(
-                                height: 12,
-                              ),
-                              CustomButton(
-                                height: 48.0,
-                                onPressed: () {},
-                                buttonText: 'Play Now',
-                                buttonColor: const Color(0xFFFE7A01),
-                              )
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 12,
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 24,
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: const Color(0xff262254),
-                          ),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                      alignment: Alignment.center,
-                                      width: 94,
-                                      height: 34,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        color: const Color(0xff9A77CF),
-                                      ),
-                                      child: const Text(
-                                        'Spin & Win',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 8,
-                                    ),
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                            'assets/svgs/akar_icon_coin.svg'),
-                                        const Text(
-                                          ' 50',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                            color: Color(0xFFFE7A01),
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
+                                const SizedBox(
+                                  width: 8,
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 12,
-                              ),
-                              Image.asset('assets/svgs/roll_dice.png'),
-                              const SizedBox(
-                                height: 12,
-                              ),
-                              CustomButton(
-                                height: 48.0,
-                                onPressed: () {},
-                                buttonText: 'Play Now',
-                                buttonColor: const Color(0xFFFE7A01),
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 24,
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: const Color(0xff262254),
-                          ),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                Row(
                                   children: [
-                                    Container(
-                                      alignment: Alignment.center,
-                                      width: 94,
-                                      height: 34,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        color: const Color(0xff9A77CF),
-                                      ),
-                                      child: const Text(
-                                        'Spin & Win',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        ),
-                                        textAlign: TextAlign.center,
+                                    SvgPicture.asset(
+                                        'assets/svgs/akar_icon_coin.svg'),
+                                    const Text(
+                                      ' 50',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xFFFE7A01),
                                       ),
                                     ),
-                                    const SizedBox(
-                                      width: 8,
-                                    ),
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                            'assets/svgs/akar_icon_coin.svg'),
-                                        const Text(
-                                          ' 50',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                            color: Color(0xFFFE7A01),
-                                          ),
-                                        ),
-                                      ],
-                                    )
                                   ],
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 12,
-                              ),
-                              Image.asset('assets/svgs/roll_dice.png'),
-                              const SizedBox(
-                                height: 12,
-                              ),
-                              CustomButton(
-                                height: 48.0,
-                                onPressed: () {},
-                                buttonText: 'Play Now',
-                                buttonColor: const Color(0xFFFE7A01),
-                              )
-                            ],
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                        const SizedBox(
-                          width: 12,
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 24,
+                          const SizedBox(
+                            height: 12,
                           ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: const Color(0xff262254),
+                          Image.asset('assets/svgs/roll_dice.png'),
+                          const SizedBox(
+                            height: 12,
                           ),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                      alignment: Alignment.center,
-                                      width: 94,
-                                      height: 34,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        color: const Color(0xff9A77CF),
-                                      ),
-                                      child: const Text(
-                                        'Spin & Win',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 8,
-                                    ),
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                            'assets/svgs/akar_icon_coin.svg'),
-                                        const Text(
-                                          ' 50',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                            color: Color(0xFFFE7A01),
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 12,
-                              ),
-                              Image.asset('assets/svgs/roll_dice.png'),
-                              const SizedBox(
-                                height: 12,
-                              ),
-                              CustomButton(
-                                height: 48.0,
-                                onPressed: () {},
-                                buttonText: 'Play Now',
-                                buttonColor: const Color(0xFFFE7A01),
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
+                          CustomButton(
+                            height: 48.0,
+                            onPressed: () {},
+                            buttonText: 'Play Now',
+                            buttonColor: const Color(0xFFFE7A01),
+                          )
+                        ],
+                      ),
                     ),
-                    const SizedBox(
-                      height: 24,
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 4),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 24,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: const Color(0xff262254),
+                      ),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  alignment: Alignment.center,
+                                  width: 94,
+                                  height: 34,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: const Color(0xff9A77CF),
+                                  ),
+                                  child: const Text(
+                                    'Spin & Win',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 8,
+                                ),
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                        'assets/svgs/akar_icon_coin.svg'),
+                                    const Text(
+                                      ' 50',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xFFFE7A01),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          Image.asset('assets/svgs/roll_dice.png'),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          CustomButton(
+                            height: 48.0,
+                            onPressed: () {},
+                            buttonText: 'Play Now',
+                            buttonColor: const Color(0xFFFE7A01),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 4),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 24,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: const Color(0xff262254),
+                      ),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  alignment: Alignment.center,
+                                  width: 94,
+                                  height: 34,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: const Color(0xff9A77CF),
+                                  ),
+                                  child: const Text(
+                                    'Spin & Win',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 8,
+                                ),
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                        'assets/svgs/akar_icon_coin.svg'),
+                                    const Text(
+                                      ' 50',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xFFFE7A01),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          Image.asset('assets/svgs/roll_dice.png'),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          CustomButton(
+                            height: 48.0,
+                            onPressed: () {},
+                            buttonText: 'Play Now',
+                            buttonColor: const Color(0xFFFE7A01),
+                          )
+                        ],
+                      ),
                     ),
                   ],
                 ),
-              )
+              ),
+              const SizedBox(
+                height: 12,
+              ),
+              SizedBox(
+                height: 280,
+                child: ListView(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 4),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 24,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: const Color(0xff262254),
+                      ),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  alignment: Alignment.center,
+                                  width: 94,
+                                  height: 34,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: const Color(0xff9A77CF),
+                                  ),
+                                  child: const Text(
+                                    'Spin & Win',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 8,
+                                ),
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                        'assets/svgs/akar_icon_coin.svg'),
+                                    const Text(
+                                      ' 50',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xFFFE7A01),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          Image.asset('assets/svgs/roll_dice.png'),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          CustomButton(
+                            height: 48.0,
+                            onPressed: () {},
+                            buttonText: 'Play Now',
+                            buttonColor: const Color(0xFFFE7A01),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 4),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 24,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: const Color(0xff262254),
+                      ),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  alignment: Alignment.center,
+                                  width: 94,
+                                  height: 34,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: const Color(0xff9A77CF),
+                                  ),
+                                  child: const Text(
+                                    'Spin & Win',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 8,
+                                ),
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                        'assets/svgs/akar_icon_coin.svg'),
+                                    const Text(
+                                      ' 50',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xFFFE7A01),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          Image.asset('assets/svgs/roll_dice.png'),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          CustomButton(
+                            height: 48.0,
+                            onPressed: () {},
+                            buttonText: 'Play Now',
+                            buttonColor: const Color(0xFFFE7A01),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 4),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 24,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: const Color(0xff262254),
+                      ),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  alignment: Alignment.center,
+                                  width: 94,
+                                  height: 34,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: const Color(0xff9A77CF),
+                                  ),
+                                  child: const Text(
+                                    'Spin & Win',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 8,
+                                ),
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                        'assets/svgs/akar_icon_coin.svg'),
+                                    const Text(
+                                      ' 50',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xFFFE7A01),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          Image.asset('assets/svgs/roll_dice.png'),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          CustomButton(
+                            height: 48.0,
+                            onPressed: () {},
+                            buttonText: 'Play Now',
+                            buttonColor: const Color(0xFFFE7A01),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 4),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 24,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: const Color(0xff262254),
+                      ),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  alignment: Alignment.center,
+                                  width: 94,
+                                  height: 34,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: const Color(0xff9A77CF),
+                                  ),
+                                  child: const Text(
+                                    'Spin & Win',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 8,
+                                ),
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                        'assets/svgs/akar_icon_coin.svg'),
+                                    const Text(
+                                      ' 50',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xFFFE7A01),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          Image.asset('assets/svgs/roll_dice.png'),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          CustomButton(
+                            height: 48.0,
+                            onPressed: () {},
+                            buttonText: 'Play Now',
+                            buttonColor: const Color(0xFFFE7A01),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 12,
+              ),
             ],
           ),
         ),
