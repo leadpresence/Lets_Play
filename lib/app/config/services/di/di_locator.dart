@@ -12,13 +12,18 @@ class ProspectIdController extends GetxController {
   ProspectIdController();
   RxString prospectId = "".obs;
   RxString phoneNumber = "".obs;
+  RxString forgotPasswordToken = "".obs;
 
   getProspectId() => prospectId.value;
+  getForgotPasswordToken() => forgotPasswordToken.value;
 
   getPhoneNumber() => phoneNumber.value;
 
   setProspectId(String prosId) {
     prospectId .value= prosId;
+  }
+  setForgotPasswordToken(String token) {
+    forgotPasswordToken .value= token;
   }
 
   setPhoneNumber(String mobile) {

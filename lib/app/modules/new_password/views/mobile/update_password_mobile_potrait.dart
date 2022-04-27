@@ -43,7 +43,8 @@ class UpdatePasswordMobilePortrait extends GetView<UpdatePasswordController> {
     screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
     screenHeight(BuildContext context) => MediaQuery.of(context).size.height;
 
-    return Scaffold(
+    return
+      Obx(()=>Scaffold(
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.white,
@@ -100,11 +101,12 @@ class UpdatePasswordMobilePortrait extends GetView<UpdatePasswordController> {
                     ],
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(24, 24, 24, 24),
+                  Padding(
+                  padding:const EdgeInsets.fromLTRB(24, 24, 24, 24),
                   child: CustomTextField(
                     isPasswordField: true,
                     hintText: "Password",
+                    textController: controller.newPasswordController,
                     keyboardType: TextInputType.visiblePassword,
                     // errorText: "Phone number invalid",
                   ),
@@ -113,17 +115,20 @@ class UpdatePasswordMobilePortrait extends GetView<UpdatePasswordController> {
                   padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
                   child: CustomButton(
                     buttonText: "Update password",
-                    onPressed: () => Get.to(
-                      () => ResponseMessageView(
-                        messageString: 'Password updated successful',
-                        status: true,
-                      ),
-                    ),
+                    onPressed: (){
+                      controller.updatePassword(key);
+                      // Get.to(
+                      //       () => ResponseMessageView(
+                      //     messageString: 'Password updated successful',
+                      //     status: true,
+                      //   ),
+                      // );
+                    },
                   ),
                 )
               ],
             ),
           ),
-        ));
+        )));
   }
 }

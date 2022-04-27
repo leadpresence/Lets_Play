@@ -11,11 +11,12 @@ import '../../../messages/views/response_message.dart';
 import '../../../new_password/views/new_password.dart';
 import '../../controllers/otp_reset_password_controller.dart';
 
-class OtpPasswordResetMP extends StatelessWidget {
+class OtpPasswordResetMP extends GetView<OtpResetPasswordController> {
   final String phoneNumber;
 
   OtpPasswordResetMP({Key? key, required this.phoneNumber}) : super(key: key);
 
+  @override
   final OtpResetPasswordController controller =
       Get.put(OtpResetPasswordController());
 
@@ -51,7 +52,9 @@ class OtpPasswordResetMP extends StatelessWidget {
               CustomOtpField(
                 key: key,
                 pinController: controller.otpController,
-                onComplete: () {},
+                onComplete: () {
+                  controller.setOtp(controller.otpController.text);
+                },
               ),
               const Gap(4),
               Align(
@@ -60,12 +63,15 @@ class OtpPasswordResetMP extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 16.0),
                   child: TextButton(
                     onPressed: () {},
-                    child: Text(
-                      'Resend Code',
-                      style: GoogleFonts.mulish(
-                        fontSize: 12,
-                        decoration: TextDecoration.underline,
-                        color: purpleDark,
+                    child: InkWell(
+                      splashColor: Colors.blueGrey,
+                      child: Text(
+                        'Resend Code',
+                        style: GoogleFonts.mulish(
+                          fontSize: 12,
+                          decoration: TextDecoration.underline,
+                          color: purpleDark,
+                        ),
                       ),
                     ),
                   ),
@@ -77,7 +83,10 @@ class OtpPasswordResetMP extends StatelessWidget {
                 child: CustomButton(
                   hasIcon: false,
                   buttonText: 'Submit',
-                  onPressed: () => Get.to(() => const UpdatePasswordView()),
+                  onPressed: ()  {
+                    controller.verifyResetPasswordOtp(key);
+
+                    },
                 ),
               )
             ],

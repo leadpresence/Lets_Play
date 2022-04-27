@@ -10,7 +10,7 @@ import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../constants/asset_paths.dart';
 import '../../controllers/reset_password_controller.dart';
 
-class ResetPasswordMobilePortrait extends StatelessWidget {
+class ResetPasswordMobilePortrait extends GetView<ResetPasswordController> {
   @override
   ResetPasswordMobilePortrait({Key? key, this.themeData, this.customAppTheme})
       : super(key: key);
@@ -98,11 +98,7 @@ class ResetPasswordMobilePortrait extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
                 child: CustomButton(
                   buttonText: "Send",
-                  onPressed: () => Get.to(
-                    () => const OtpResetPasswordView(
-                      phoneNumber: '',
-                    ),
-                  ),
+                  onPressed: () => controller.requestForgotPasswordOtp(key)
                 ),
               )
             ],

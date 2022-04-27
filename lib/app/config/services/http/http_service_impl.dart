@@ -73,7 +73,6 @@ class HttpServiceImpl extends HttpService {
       }
 
       if (e.response?.statusCode == 401) {
-        //todo felix navigate to response screen with status false
         // _navigationService.clearStackAndShow(Routes.authenticate);
         // return AuthException('Invalid token and credentials');
       }
