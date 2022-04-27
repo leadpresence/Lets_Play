@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:jekawin_mobile_flutter/app/config/colors.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:jekawin_mobile_flutter/app/modules/otp_reset_password/views/otp_reset_password.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_text_field.dart';
@@ -29,62 +29,84 @@ class ResetPasswordMobilePortrait extends StatelessWidget {
     );
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Gap(60),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text(
-                  "Reset your Password",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w300, // light
-                      fontStyle: FontStyle.normal,
-                      color: Colors.black,
-                      fontSize: 24 // italic
-                      ),
-                )
-              ],
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 16.0),
+          child: IconButton(
+            splashRadius: 25,
+            icon: SvgPicture.asset(
+              'assets/svgs/chevronLeft.svg',
+              color: const Color(0xff12121D),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
-              child: Row(
+            onPressed: () {
+              Get.back();
+            },
+          ),
+        ),
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Gap(24),
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Text(
-                    'Please Input your phone number to receive OTP',
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: agreementColor,
-                      fontSize: 10,
-                    ),
-                  ),
+                    "Reset your Password",
+                    style: GoogleFonts.mulish(
+                        fontWeight: FontWeight.normal, // light
+                        fontStyle: FontStyle.normal,
+                        color: Colors.black,
+                        fontSize: 24 // italic
+                        ),
+                  )
                 ],
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
-              child: CustomTextField(
-                hintText: "Phone number",
-                keyboardType: TextInputType.number,
-                textController: controller.phoneNumberController,
-                // errorText: "Phone number invalid",
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
-              child: CustomButton(
-                buttonText: "Send",
-                onPressed: () => Get.to(
-                  () => const OtpResetPasswordView(
-                    phoneNumber: '',
-                  ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Please Input your phone number to receive OTP',
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.mulish(
+                        fontSize: 12,
+                        fontWeight: FontWeight.normal,
+                        height: 1.6,
+                        color: const Color(0xff12121D).withOpacity(.6),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            )
-          ],
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
+                child: CustomTextField(
+                  hintText: "Phone number",
+                  keyboardType: TextInputType.number,
+                  textController: controller.phoneNumberController,
+                  // errorText: "Phone number invalid",
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+                child: CustomButton(
+                  buttonText: "Send",
+                  onPressed: () => Get.to(
+                    () => const OtpResetPasswordView(
+                      phoneNumber: '',
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

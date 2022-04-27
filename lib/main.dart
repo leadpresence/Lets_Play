@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -17,7 +18,7 @@ void main() async {
       statusBarBrightness: Brightness.light,
       statusBarIconBrightness: Brightness.light));
   await dotenv.load(fileName: 'dotenv');
-runApp(const MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
+      builder: BotToastInit(),
       title: "Jekawin Mobile App",
       initialRoute: AppPages.initial,
       getPages: AppPages.routes,

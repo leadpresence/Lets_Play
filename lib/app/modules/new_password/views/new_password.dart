@@ -12,23 +12,20 @@ import 'controllers/update_password_controller.dart';
 import 'mobile/update_password_mobile_landscape.dart';
 import 'mobile/update_password_mobile_potrait.dart';
 
-
 class UpdatePasswordView extends GetView<UpdatePasswordController> {
   const UpdatePasswordView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return  ScreenTypeLayout.builder(
-        mobile: (_) => OrientationLayoutBuilder(
-
-          portrait: (_)=> UpdatePasswordMobilePortrait(),
-          landscape: (_)=>const UpdatePasswordMobileLandscape(),
-        ),
-        tablet: (_) => OrientationLayoutBuilder(
-          portrait: (_) => const   UpdatePasswordTabletPortrait(),
-          landscape: (_)=>
-          const UpdatePasswordTabletLandscape(     ),
-
-        ));
+    return ScreenTypeLayout.builder(
+      mobile: (_) => OrientationLayoutBuilder(
+        portrait: (_) => UpdatePasswordMobilePortrait(),
+        landscape: (_) => const UpdatePasswordMobileLandscape(),
+      ),
+      tablet: (_) => OrientationLayoutBuilder(
+        portrait: (_) => const UpdatePasswordTabletPortrait(),
+        landscape: (_) => const UpdatePasswordTabletLandscape(),
+      ),
+    );
   }
 }

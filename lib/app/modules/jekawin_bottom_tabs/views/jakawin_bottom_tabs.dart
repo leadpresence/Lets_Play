@@ -29,9 +29,7 @@ class _JekawinBottomTabsState extends State<JekawinBottomTabs> {
   void initState() {
     _children.add({
       "title": "Home",
-      "widget": DashboardMobilePortrait(
-        isGuestUser: widget.isGuestUser,
-      ),
+      "widget": DashboardMobilePortrait(),
     });
     _children.add({
       "title": "Leaderboard",

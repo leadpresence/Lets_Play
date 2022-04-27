@@ -18,7 +18,7 @@ class OtpSignUpVerificationView extends GetView {
     return ScreenTypeLayout.builder(
         mobile: (_) => OrientationLayoutBuilder(
 
-          portrait: (_)=>  SignupVerificationMP(key:key,phonenumber: phoneNumber,),
+          portrait: (_)=>  SignupVerificationMP(key:key,phoneNumber: phoneNumber,),
           landscape: (_)=>const SignupVerificationML(),
         ),
         tablet: (_) => OrientationLayoutBuilder(

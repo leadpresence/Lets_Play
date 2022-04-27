@@ -8,22 +8,21 @@ import 'package:responsive_builder/responsive_builder.dart';
 import '../controllers/login_controller.dart';
 import 'mobile/login_mobile.landscape.dart';
 import 'mobile/login_mobile_portrait.dart';
+
 class LoginView extends GetView<LoginController> {
   const LoginView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return  ScreenTypeLayout.builder(
-        mobile: (_) => OrientationLayoutBuilder(
-
-          portrait: (_)=>   LoginMobilePortrait(),
-          landscape: (_)=>const LoginMobileLandscape(),
-        ),
-        tablet: (_) => OrientationLayoutBuilder(
-          portrait: (_) => const   LoginTabletPortrait(),
-          landscape: (_)=>
-          const LoginTabletLandscape(),
-
-        ));
+    return ScreenTypeLayout.builder(
+      mobile: (_) => OrientationLayoutBuilder(
+        portrait: (_) => LoginMobilePortrait(),
+        landscape: (_) => const LoginMobileLandscape(),
+      ),
+      tablet: (_) => OrientationLayoutBuilder(
+        portrait: (_) => const LoginTabletPortrait(),
+        landscape: (_) => const LoginTabletLandscape(),
+      ),
+    );
   }
 }

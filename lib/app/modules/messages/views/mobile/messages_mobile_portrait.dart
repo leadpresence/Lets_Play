@@ -9,12 +9,16 @@ import '../../../../widgets/custom_large_button.dart';
 import '../../../jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
 
 class MessagesMobilePortrait extends StatelessWidget {
-  final nextRoute, messageString;
+  final nextRoute;
+  final String messageString;
   final bool status;
 
-  MessagesMobilePortrait(
-      {Key? key, this.nextRoute, this.messageString, required this.status})
-      : super(key: key);
+  MessagesMobilePortrait({
+    Key? key,
+    this.nextRoute,
+    required this.messageString,
+    required this.status,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,51 +26,53 @@ class MessagesMobilePortrait extends StatelessWidget {
       body: SizedBox(
         width: Get.width,
         child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              status
-                  ? SvgPicture.asset('assets/svgs/success_check.svg')
-                  : SvgPicture.asset('assets/svgs/message_error.svg'),
-              const SizedBox(
-                height: 24,
-              ),
-              status
-                  ?
-                  //successful
-                  Text(messageString ?? 'Your request was successful',
-                      style: const TextStyle(
-                        fontSize: 18,
-                        color: Color(0xFF4E4B66),
-                      ))
-                  :
-                  //failed
-                  Text(
-                      messageString ??
-                          'Something went wrong ,\nplease try again.',
-                      style: const TextStyle(
-                        fontSize: 18,
-                        color: Color(0xFF4E4B66),
-                      ),
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            status
+                ? SvgPicture.asset('assets/svgs/success_check.svg')
+                : SvgPicture.asset('assets/svgs/message_error.svg'),
+            const SizedBox(
+              height: 24,
+            ),
+            status
+                ?
+                //successful
+                Text(
+                    messageString,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      color: Color(0xFF4E4B66),
                     ),
-              const SizedBox(
-                height: 32,
+                  )
+                :
+                //failed
+                Text(
+                    messageString,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      color: Color(0xFF4E4B66),
+                    ),
+                  ),
+            const SizedBox(
+              height: 32,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 32.0,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 32.0,
-                ),
-                child: CustomButton(
-                  onPressed: () =>
-                      nextRoute ??
-                      Get.to(
-                        () => const LoginView(),
-                        transition: Transition.cupertino,
-                      ),
-                  buttonText: 'Done',
-                ),
-              )
-            ]),
+              child: CustomButton(
+                onPressed: () =>
+                    nextRoute ??
+                    Get.offAll(
+                      () => const LoginView(),
+                      transition: Transition.cupertino,
+                    ),
+                buttonText: 'Done',
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

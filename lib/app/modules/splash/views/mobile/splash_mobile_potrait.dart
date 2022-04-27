@@ -2,35 +2,49 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:jekawin_mobile_flutter/app/modules/splash/controllers/splash_controller.dart';
+import 'package:jekawin_mobile_flutter/app/widgets/fade_in_animations.dart';
 
-class SplashMobilePotrait extends StatefulWidget {
-  const SplashMobilePotrait({Key? key}) : super(key: key);
+class SplashMobilePortrait extends StatefulWidget {
+  const SplashMobilePortrait({Key? key}) : super(key: key);
 
   @override
-  State<SplashMobilePotrait> createState() => _SplashMobilePotraitState();
+  State<SplashMobilePortrait> createState() => _SplashMobilePortraitState();
 }
 
-class _SplashMobilePotraitState extends State<SplashMobilePotrait> {
+class _SplashMobilePortraitState extends State<SplashMobilePortrait> {
   final SplashController controller = SplashController();
+  final String assetName = 'assets/images/jekawin_logo.svg',
+      splashBottomImage = 'assets/images/splash_bottom.png',
+      splashTopImage = 'assets/images/splash_top.png';
   @override
   Widget build(BuildContext context) {
-    const String topImage = 'assets/images/jekawin_auth_home.svg';
-
-    final Widget topSvg = SvgPicture.asset(
-      topImage,
-      width: MediaQuery.of(context).size.width,
-    );
-    const String assetName = 'assets/images/jekawin_logo.svg';
-    final Widget svg = SvgPicture.asset(
-      assetName,
-    );
     return GetBuilder<SplashController>(
       init: SplashController(),
       builder: (context) {
         return Scaffold(
           body: ConstrainedBox(
             constraints: const BoxConstraints.expand(),
-            child: Center(child: svg),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                FadeIn(
+                    delay: const Duration(seconds: 1),
+                    duration: const Duration(seconds: 1),
+                    child: Image.asset(splashTopImage)),
+                FadeIn(
+                  delay: const Duration(seconds: 1),
+                  duration: const Duration(seconds: 1),
+                  child: SvgPicture.asset(
+                    assetName,
+                  ),
+                ),
+                const SizedBox(height: 24),
+                FadeIn(
+                    delay: const Duration(seconds: 1),
+                    duration: const Duration(seconds: 1),
+                    child: Image.asset(splashBottomImage)),
+              ],
+            ),
           ),
         );
       },

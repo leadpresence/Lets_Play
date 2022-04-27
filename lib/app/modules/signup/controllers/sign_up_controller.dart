@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,22 +25,23 @@ class SignUpController extends GetxController {
   RxString errorPasswordMessage = "".obs;
 
   void clearErrorPhoneNumber() => errorPhoneNumberMessage.value = '';
-  void clearErrorFirstName() => errorPhoneNumberMessage.value = '';
+  void clearErrorFirstName() => errorFirstNameMessage.value = '';
   void clearErrorPassword() => errorPasswordMessage.value = '';
-  void clearErrorLastName() => errorPasswordMessage.value = '';
+  void clearErrorLastName() => errorLastNameMessage.value = '';
 
   signUpFormValidator(Key? k) {
-    if ((GetUtils.isBlank(phoneNumberController.text)) == true) {
-      return errorPhoneNumberMessage.value = 'Add Phone Number';
-    } else if ((GetUtils.isBlank(firstNameController.text)) == true) {
+    if ((GetUtils.isBlank(firstNameController.text)) == true) {
       GetStorage().write("firstname", firstNameController.text);
-      return errorFirstNameMessage.value = "What can we call you?";
+      return errorFirstNameMessage.value =
+          "      First name field cannot be blank.";
+    } else if ((GetUtils.isBlank(phoneNumberController.text)) == true) {
+      return errorPhoneNumberMessage.value =
+          "      Phone number field cannot be blank.";
     } else if ((GetUtils.isBlank(passwordController.text)) == true) {
-      return errorPasswordMessage.value = "Add Password";
+      return errorPasswordMessage.value =
+          "      Password field cannot be blank.";
     } else if (agreementCheck.value != true) {
-      //check if terms is agreed
-      Get.snackbar("Terms & Conditions", "Agree to Jekawin terms and condition",
-          overlayColor: Colors.yellow);
+      BotToast.showText(text: "Agree to Jekawin Terms & Conditions");
     } else {
       signUp(k);
     }
@@ -55,12 +57,6 @@ class SignUpController extends GetxController {
     clearErrorPassword();
     clearErrorLastName();
     super.onInit();
-  }
-
-  @override
-  void onReady() {
-    // TODO: implement onReady
-    super.onReady();
   }
 
   @override
@@ -96,18 +92,19 @@ class SignUpController extends GetxController {
     ));
     userData.fold((l) {
       isLoading(false);
-
-      Get.snackbar("Signup Error", l.message,
-          overlayColor: Colors.red);
+      BotToast.showText(text: l.message);
     }, (r) {
       navigateToVerify(k);
+      isLoading(false);
     });
   }
 
   navigateToVerify(Key? k) {
-    Get.to(() => SignupVerificationMP(
-          key: k,
-          phonenumber: phoneNumberController.text,
-        ));
+    Get.to(
+      () => SignupVerificationMP(
+        key: k,
+        phoneNumber: phoneNumberController.text,
+      ),
+    );
   }
 }

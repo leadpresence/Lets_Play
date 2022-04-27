@@ -48,7 +48,8 @@ dependencies:
   equatable: ^2.0.3
   path_provider: ^2.0.9
   custom_check_box: ^0.0.4
-
+  bot_toast: ^4.0.1
+  font_awesome_flutter: ^10.1.0
 
 dev_dependencies:
   flutter_test:

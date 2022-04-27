@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:jekawin_mobile_flutter/app/config/colors.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -46,7 +47,7 @@ borderLageButton(String text, Function onpressed, BuildContext context) =>
     );
 
 class CustomButton extends StatelessWidget {
-  final onPressed, hasIcon, buttonText, hasBorder, height;
+  final onPressed, hasIcon, buttonText, hasBorder, height, isLoading;
 
   final Color buttonColor, buttonTextColor;
   const CustomButton({
@@ -58,12 +59,13 @@ class CustomButton extends StatelessWidget {
     this.buttonColor = const Color(0xFFFE7A01),
     this.buttonTextColor = const Color(0xffffffff),
     this.height,
+    this.isLoading = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: height ?? 52,
+      height: height ?? 48,
       child: Theme(
         data: ThemeData(
           splashColor: Colors.white,
@@ -99,13 +101,22 @@ class CustomButton extends StatelessWidget {
                       width: 12,
                     )
                   : const SizedBox(),
-              Text(
-                buttonText,
-                style: TextStyle(
-                  color: buttonTextColor,
-                  fontWeight: FontWeight.bold,
-                ),
-              )
+              isLoading
+                  ? const SizedBox(
+                      height: 16,
+                      width: 16,
+                      child: CircularProgressIndicator(
+                        color: white,
+                        strokeWidth: 1.5,
+                      ),
+                    )
+                  : Text(
+                      buttonText,
+                      style: GoogleFonts.mulish(
+                        color: buttonTextColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
             ],
           ),
         ),

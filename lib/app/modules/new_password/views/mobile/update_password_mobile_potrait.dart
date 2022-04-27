@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:jekawin_mobile_flutter/app/config/colors.dart';
 import 'package:jekawin_mobile_flutter/app/modules/otp_reset_password/views/otp_reset_password.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
@@ -42,63 +43,87 @@ class UpdatePasswordMobilePortrait extends GetView<UpdatePasswordController> {
     screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
     screenHeight(BuildContext context) => MediaQuery.of(context).size.height;
 
-    // return Obx(() =>
     return Scaffold(
-        body: SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Gap(60),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Text(
-                "Update your Password",
-                style: TextStyle(
-                    fontWeight: FontWeight.w300, // light
-                    fontStyle: FontStyle.normal,
-                    color: Colors.black,
-                    fontSize: 24 // italic
-                    ),
-              )
-            ],
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.white,
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 16.0),
+            child: IconButton(
+              splashRadius: 25,
+              icon: SvgPicture.asset(
+                'assets/svgs/chevronLeft.svg',
+                color: const Color(0xff12121D),
+              ),
+              onPressed: () {
+                Get.back();
+              },
+            ),
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text(
-                  'Please Input your phone number to receive OTP',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: agreementColor, fontSize: 10),
+        ),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Gap(24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Update your Password",
+                      style: GoogleFonts.mulish(
+                          fontWeight: FontWeight.normal, // light
+                          fontStyle: FontStyle.normal,
+                          color: Colors.black,
+                          fontSize: 24 // italic
+                          ),
+                    )
+                  ],
                 ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 24.0, vertical: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Input new password',
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.mulish(
+                          fontSize: 12,
+                          fontWeight: FontWeight.normal,
+                          height: 1.6,
+                          color: const Color(0xff12121D).withOpacity(.6),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(24, 24, 24, 24),
+                  child: CustomTextField(
+                    isPasswordField: true,
+                    hintText: "Password",
+                    keyboardType: TextInputType.visiblePassword,
+                    // errorText: "Phone number invalid",
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+                  child: CustomButton(
+                    buttonText: "Update password",
+                    onPressed: () => Get.to(
+                      () => ResponseMessageView(
+                        messageString: 'Password updated successful',
+                        status: true,
+                      ),
+                    ),
+                  ),
+                )
               ],
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.fromLTRB(24, 24, 24, 24),
-            child: CustomTextField(
-              hintText: "New Password",
-              keyboardType: TextInputType.number,
-              // errorText: "Phone number invalid",
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
-            child: CustomButton(
-              buttonText: "Update password",
-              onPressed: () => Get.to(
-                () => ResponseMessageView(
-                  status: true,
-                ),
-              ),
-            ),
-          )
-        ],
-      ),
-    )
-        // )
-        );
+        ));
   }
 }

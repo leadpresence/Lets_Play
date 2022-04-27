@@ -24,15 +24,10 @@ import 'http/http_services.dart';
 abstract class AuthServiceDataSource {
   Future<Either<AppError, String>> signup(UserSignUpModel body);
   Future<Either<AppError, String>> verifySignUpOtp(String otp);
-
   Future<Either<AppError, String>> login(String mobile, String password);
-
   Future<Either<AppError, String>> resendSignUpResetOtp(String phoneNumber);
-
   Future<Either<AppError, String>> forgetPassword(String mobile);
-
   Future<Either<AppError, String>> resetPasswordOtp(String Otp);
-
   Future<Either<AppError, String>> updatePassword(String password);
   Future<Either<AppError, String>> signout();
 }
@@ -43,8 +38,6 @@ class AuthServiceImpl extends AuthServiceDataSource {
   final UserLocalDataSourceImpl _userLocalDataSource =
       Get.find<UserLocalDataSourceImpl>();
   User? get user => _userLocalDataSource.user;
-
-  // AuthServiceImpl();
 
   @override
   Future<Either<AppError, String>> signup(UserSignUpModel body) async {
@@ -60,7 +53,6 @@ class AuthServiceImpl extends AuthServiceDataSource {
           '${JekawinBaseUrls.authBaseUrl}signup', payload);
       if (raw['success']) {
         AuthResponseModel res = AuthResponseModel.fromJson(raw);
-        //save prospective id  so you use it to do other stuff if necessary
         prospectIsProvider.setProspectId(res.data.prospectId);
         prospectIsProvider.setPhoneNumber(body.mobile);
         return Right(raw['message']);
@@ -89,7 +81,6 @@ class AuthServiceImpl extends AuthServiceDataSource {
           '${JekawinBaseUrls.authBaseUrl}otp', payload);
       if (raw['success']) {
         UserSignupDetails res = UserSignupDetails.fromMap(raw);
-        //todo @felix save returned user
         _userLocalDataSource.saveUser(res.data.user);
         return const Right("Sign up successful");
       } else {
@@ -137,16 +128,12 @@ class AuthServiceImpl extends AuthServiceDataSource {
   @override
   Future<Either<AppError, String>> login(String mobile, String password) async {
     Map<String, dynamic> payload = {'mobile': mobile, 'password': password};
-
     try {
       var raw = await httpProvider.postHttp(
           '${JekawinBaseUrls.authBaseUrl}signin', payload);
       UserSignupDetails res = UserSignupDetails.fromMap(raw);
-      //todo @felix save login token to db here
       _userLocalDataSource.saveUser(res.data.user);
-      if (kDebugMode) {
-        print("USER ===========> \n ${res.data.user}");
-      }
+      GetStorage().write('firstName', res.data.user.firstName);
       if (raw['success']) {
         return const Right("Login Successful");
       } else {

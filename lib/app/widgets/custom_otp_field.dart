@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:pinput/pinput.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CustomOtpField extends StatefulWidget {
   final onComplete;
-  final pinController ;
+  final pinController;
 
-   const CustomOtpField({Key? key,  this.onComplete, required this.pinController
-  }) : super(key: key);
+  const CustomOtpField({Key? key, this.onComplete, required this.pinController})
+      : super(key: key);
 
   @override
-  _CustomOtpFieldState createState() =>
-      _CustomOtpFieldState();
+  _CustomOtpFieldState createState() => _CustomOtpFieldState();
 
   @override
   String toStringShort() => 'Rounded With Cursor';
@@ -31,16 +29,15 @@ class _CustomOtpFieldState extends State<CustomOtpField> {
   @override
   Widget build(BuildContext context) {
     const focusedBorderColor = Color.fromRGBO(33, 22, 52, 1);
-    var fillColor =  Colors.grey.shade200;
+    var fillColor = const Color(0XFF12121D).withOpacity(.1);
     var borderColor = Colors.grey.withOpacity(.5);
-
 
     final defaultPinTheme = PinTheme(
       width: 56,
       height: 56,
       textStyle: GoogleFonts.poppins(
         fontSize: 22,
-        color:Colors.purple.shade900,
+        color: Colors.purple.shade900,
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(50),
@@ -51,20 +48,14 @@ class _CustomOtpFieldState extends State<CustomOtpField> {
     return Pinput(
       controller: widget.pinController,
       focusNode: focusNode,
+      showCursor: false,
       androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsRetrieverApi,
       defaultPinTheme: defaultPinTheme,
-      // inputFormatters: [
-      // FilteringTextInputFormatter.digitsOnly
-      // ], // Only numbers can be entered,
-      validator: (value) {
-        //Todo @felix implement validation if necessary
-        // return null;
-        // return value == '1234' ? null : 'Pin is incorrect';
-      },
-      onClipboardFound: (value) {
-        debugPrint('onClipboardFound: $value');
-        widget.pinController.setText(value);
-      },
+      validator: (value) {},
+      // onClipboardFound: (value) {
+      //   debugPrint('onClipboardFound: $value');
+      //   widget.pinController.setText(value);
+      // },
       hapticFeedbackType: HapticFeedbackType.lightImpact,
       onCompleted: debugPrint,
       cursor: Column(
@@ -97,7 +88,3 @@ class _CustomOtpFieldState extends State<CustomOtpField> {
     );
   }
 }
-
-
-
-

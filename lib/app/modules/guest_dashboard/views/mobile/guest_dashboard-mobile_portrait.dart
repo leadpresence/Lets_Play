@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+
 import 'package:google_fonts/google_fonts.dart';
+import 'package:jekawin_mobile_flutter/app/modules/login/views/mobile/login_mobile_portrait.dart';
+import 'package:jekawin_mobile_flutter/app/modules/signup/views/mobile/sign_up_mobile_potrait.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
+import 'package:jekawin_mobile_flutter/app/widgets/custom_small_button.dart';
 
-import '../../../../config/data/local/user_local_impl.dart';
 import '../../../../widgets/custom_medium_button.dart';
-import '../../../signup/controllers/sign_up_controller.dart';
 
-class DashboardMobilePortrait extends StatelessWidget {
-  DashboardMobilePortrait({
+class GuestDashboardMobilePortrait extends StatelessWidget {
+  const GuestDashboardMobilePortrait({
     Key? key,
   }) : super(key: key);
 
-  final SignUpController signUpController = Get.put(SignUpController());
-  var firstName = GetStorage().read("firstName");
-  final UserLocalDataSourceImpl user = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,13 +43,32 @@ class DashboardMobilePortrait extends StatelessWidget {
                           const SizedBox(
                             width: 6,
                           ),
-                          Text(
-                              "Hi $firstName"),
+                          const Text(
+                            "Guest User",
+                          ),
                         ],
                       ),
-                      SvgPicture.asset(
-                        'assets/svgs/clarity_notification-outline-badged.svg',
-                      )
+                      Row(
+                        children: [
+                          CustomSmallButton(
+                            onPressed: () =>
+                                Get.to(() => SignupMobilePortrait()),
+                            buttonText: 'Sign up',
+                            buttonColor: const Color(0xFFFE7A01),
+                          ),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          CustomSmallButton(
+                            onPressed: () =>
+                                Get.to(() => LoginMobilePortrait()),
+                            buttonColor: Colors.white,
+                            hasBorder: true,
+                            buttonText: 'Login',
+                            buttonTextColor: const Color(0xFFFE7A01),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),

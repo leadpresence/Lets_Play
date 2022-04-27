@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,55 +22,66 @@ class OtpPasswordResetMP extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(24, 64, 24, 24),
-        child: Column(
-          children: [
-            OtpHeader(
-              key: key,
-              phoneNumber: phoneNumber,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 16.0),
+          child: IconButton(
+            splashRadius: 25,
+            icon: SvgPicture.asset(
+              'assets/svgs/chevronLeft.svg',
+              color: const Color(0xff12121D),
             ),
-            CustomOtpField(
-              key: key,
-              pinController: controller.otpController,
-              onComplete: () {},
-            ),
-            const Gap(24),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                GestureDetector(
-                  //Todo @felix call the resend otp end point and
-                  //todo show toast
-                  onTap: () {},
-                  child: Text(
-                    'Resend code',
-                    style: GoogleFonts.poppins(
-                      fontSize: 16,
-                      decoration: TextDecoration.underline,
-                      color: purpleDark,
+            onPressed: () {
+              Get.back();
+            },
+          ),
+        ),
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
+          child: Column(
+            children: [
+              OtpHeader(
+                key: key,
+                phoneNumber: phoneNumber,
+              ),
+              CustomOtpField(
+                key: key,
+                pinController: controller.otpController,
+                onComplete: () {},
+              ),
+              const Gap(4),
+              Align(
+                alignment: Alignment.centerRight,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 16.0),
+                  child: TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      'Resend Code',
+                      style: GoogleFonts.mulish(
+                        fontSize: 12,
+                        decoration: TextDecoration.underline,
+                        color: purpleDark,
+                      ),
                     ),
                   ),
                 ),
-              ],
-            ),
-            const Gap(25),
-            // CustomButton(key: key, onPressed: () =>
-            //     Get.to(() =>
-            //     const JekawinBottomTabs(
-            //       tabIndex: 0,
-            //     )), buttonText: "Submit",)
-
-            Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: CustomButton(
-                hasIcon: false,
-                buttonText: 'Submit',
-                //Todo @felix validate otp and on success anvigate them to update password view
-                onPressed: () => Get.to(() => const UpdatePasswordView()),
               ),
-            )
-          ],
+              const Gap(24),
+              Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: CustomButton(
+                  hasIcon: false,
+                  buttonText: 'Submit',
+                  onPressed: () => Get.to(() => const UpdatePasswordView()),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -77,8 +89,7 @@ class OtpPasswordResetMP extends StatelessWidget {
 }
 
 class OtpHeader extends StatelessWidget {
-  final phoneNumber;
-
+  final String phoneNumber;
   const OtpHeader({Key? key, required this.phoneNumber}) : super(key: key);
 
   @override
@@ -88,35 +99,42 @@ class OtpHeader extends StatelessWidget {
       children: [
         Text(
           'Password reset',
-          style: GoogleFonts.poppins(
-            fontSize: 24,
-            fontWeight: FontWeight.w300,
-            color: Colors.black,
-          ),
-        ),
-        Text(
-          'Please enter the 4-digit code sent to you at',
-          style: GoogleFonts.poppins(
-            fontSize: 12,
-            color: const Color.fromRGBO(133, 153, 170, 1),
-          ),
-        ),
-        const Gap(8),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              phoneNumber ?? '09087564312',
-              textAlign: TextAlign.left,
-              style: GoogleFonts.poppins(
-                fontSize: 12,
-                color: Colors.deepOrange,
+          style: GoogleFonts.mulish(
+              fontWeight: FontWeight.normal, // light
+              fontStyle: FontStyle.normal,
+              color: Colors.black,
+              fontSize: 24 // italic
               ),
-            ),
-          ],
         ),
-        const SizedBox(height: 64)
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
+          width: Get.width,
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              Text(
+                'Please enter the 4-digit code sent to you at ',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.mulish(
+                  fontSize: 12,
+                  fontWeight: FontWeight.normal,
+                  height: 1.6,
+                  color: const Color(0xff12121D).withOpacity(.6),
+                ),
+              ),
+              Text(
+                phoneNumber,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.mulish(
+                  fontSize: 12,
+                  height: 1.6,
+                  color: Colors.deepOrange,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const Gap(32),
       ],
     );
   }

@@ -16,7 +16,7 @@ class SplashView extends GetView<SplashController>{
     return ScreenTypeLayout.builder(
       mobile: (_) => OrientationLayoutBuilder(
         
-        portrait: (_)=> const SplashMobilePotrait(),
+        portrait: (_)=> const SplashMobilePortrait(),
         landscape: (_)=>const SplashMobileLandscape(), 
         ),
         tablet: (_) => OrientationLayoutBuilder(

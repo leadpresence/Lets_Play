@@ -1,32 +1,17 @@
 import 'package:get/get.dart';
-import 'package:jekawin_mobile_flutter/app/config/routes/app_pages.dart';
-import 'package:jekawin_mobile_flutter/app/modules/dashboard/views/mobile/dashboard_mobile_portrait.dart';
-
-import '../../auth/views/mobile/auth_home_mobile_potrait.dart';
+import '../../guest_dashboard/views/mobile/guest_dashboard-mobile_portrait.dart';
 
 class SplashController extends GetxController {
   @override
   void onInit() {
     // TODO: implement onInit
     Future.delayed(
-      const Duration(seconds: 3),
-      () => Get.to(
-        () =>  DashboardMobilePortrait(),
-        transition: Transition.fadeIn,
+      const Duration(seconds: 4),
+      () => Get.off(
+        () => const GuestDashboardMobilePortrait(),
+        transition: Transition.cupertino,
       ),
     );
     super.onInit();
-  }
-
-  @override
-  void onReady() {
-    // TODO: implement onReady
-    super.onReady();
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
   }
 }

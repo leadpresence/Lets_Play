@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,6 +23,32 @@ class SignUpVerificationController extends GetxController {
     pin.value = otpPin;
   }
 
+  Future<void> completeSignUp(Key? key) async {
+    isLoading.value = true;
+    var otp = signUpOtpController.text;
+    final userData = await authService.verifySignUpOtp(otp);
+    userData.fold((l) {
+      isLoading.value = false;
+      BotToast.showText(text: l.message);
+    }, (r) {
+      navigateToSignUpSuccessful(key);
+      isLoading.value = false;
+    });
+  }
+
+  void navigateToSignUpSuccessful(Key? key) {
+    Get.to(
+      () => const SuccessOrFailureMobileView(
+        msg: 'Registration successful',
+        className: JekawinBottomTabs(
+          tabIndex: 0,
+          isGuestUser: true,
+        ),
+      ),
+      transition: Transition.cupertino,
+    );
+  }
+
   @override
   void onInit() {
     phoneNumber.value = prospectIdController.getPhoneNumber();
@@ -40,29 +67,5 @@ class SignUpVerificationController extends GetxController {
   void dispose() {
     signUpOtpController.dispose();
     super.dispose();
-  }
-
-  Future<void> completeSignUp(Key? key) async {
-    var otp = signUpOtpController.text;
-    final userData = await authService.verifySignUpOtp(otp);
-    userData.fold((l) {
-      isLoading(false);
-      Get.snackbar("OTP verification", l.message, overlayColor: Colors.red);
-    }, (r) {
-      navigateToSignUpSuccessful(key);
-    });
-  }
-
-  void navigateToSignUpSuccessful(Key? key) {
-    Get.to(
-      () => const SuccessOrFailureMobileView(
-        msg: 'You have successfully shared 0 RPT',
-        className: JekawinBottomTabs(
-          tabIndex: 0,
-          isGuestUser: true,
-        ),
-      ),
-      transition: Transition.cupertino,
-    );
   }
 }
