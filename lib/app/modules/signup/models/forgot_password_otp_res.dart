@@ -5,7 +5,8 @@ ForgetPasswordOtpResponse forgetPasswordOtpResponseFromMap(String str) => Forget
 
 String forgetPasswordOtpResponseToMap(ForgetPasswordOtpResponse data) => json.encode(data.toMap());
 
-class ForgetPasswordOtpResponse {
+class
+ForgetPasswordOtpResponse {
   ForgetPasswordOtpResponse({
    required this.success,
    required this.token,

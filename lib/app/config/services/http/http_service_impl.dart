@@ -191,14 +191,16 @@ class HttpServiceImpl extends HttpService {
     try {
 
       setHeader();
-      response = await _dio.delete(route,
-          queryParameters: params,
-          options: Options(
-              contentType: 'application/json',
-              headers:
-                  token != null ? {'authorization': 'Bearer $token'} : null));
+      response = await _dio.delete(
+        route,
+        queryParameters: params,
+        options: Options(
+          contentType: 'application/json',
+        ),
+      );
     } on DioError catch (e) {
       if (e.response?.statusCode == 401) {
+        // _navigationService.clearStackAndShow(Routes.signinViewRoute);
         throw const AuthException('Invalid token and credentials');
       }
       getLogger().e(

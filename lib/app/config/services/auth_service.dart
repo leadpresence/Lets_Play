@@ -22,7 +22,7 @@ abstract class AuthServiceDataSource {
   Future<Either<AppError, String>> login(String mobile, String password);
   Future<Either<AppError, String>> resendSignUpResetOtp(String phoneNumber);
   Future<Either<AppError, String>> forgetPassword(String mobile);
-  Future<Either<AppError, String>> resetPasswordOtp(String Otp);
+  Future<Either<AppError, String>> verifyResetPasswordOtp(String Otp);
   Future<Either<AppError, String>> updatePassword(String password);
   Future<Either<AppError, String>> signout();
 }
@@ -158,7 +158,8 @@ class AuthServiceImpl extends AuthServiceDataSource {
           '${JekawinBaseUrls.authBaseUrl}forgetpassword', payload);
       if (raw['success']) {
         ForgetPasswordResponse res = ForgetPasswordResponse.fromMap(raw);
-        prospectIsProvider.setProspectId(raw['prospectId']);
+        prospectIsProvider.setProspectId(res.data.prospectId);
+        prospectIsProvider.setPhoneNumber(mobile);
 
         return const Right("Otp sent Successful for password reset");
       } else {
@@ -178,8 +179,9 @@ class AuthServiceImpl extends AuthServiceDataSource {
   }
 
   @override
-  Future<Either<AppError, String>> resetPasswordOtp(String Otp) async {
+  Future<Either<AppError, String>> verifyResetPasswordOtp(String Otp) async {
     String prospectId = prospectIsProvider.getProspectId();
+    String token = prospectIsProvider.getForgotPasswordToken();
     Map<String, dynamic> payload = {"prospectId": prospectId, 'Otp': Otp};
 
     try {
@@ -187,6 +189,8 @@ class AuthServiceImpl extends AuthServiceDataSource {
           '${JekawinBaseUrls.authBaseUrl}forgetpassword_otp', payload);
       if (raw['success']) {
         ForgetPasswordOtpResponse res = ForgetPasswordOtpResponse.fromMap(raw);
+        prospectIsProvider.setForgotPasswordToken(res.token);
+
         return Right(res.message);
       } else {
         return Left(
@@ -207,12 +211,15 @@ class AuthServiceImpl extends AuthServiceDataSource {
   @override
   Future<Either<AppError, String>> updatePassword(String password) async {
     Map<String, dynamic> payload = {"password": password};
+    String tokenProvider = prospectIsProvider.getForgotPasswordToken();
+    Map<String, dynamic> token = {"token": tokenProvider,};
+
     try {
       var raw = await httpProvider.postHttp(
-          '${JekawinBaseUrls.authBaseUrl}createpassword', payload);
+          '${JekawinBaseUrls.authBaseUrl}updatepassword', payload,params: token);
       UserSignupDetails res = UserSignupDetails.fromMap(raw);
       if (raw['success']) {
-        return const Right("update Successful");
+        return const Right("Password reset successful");
       } else {
         return Left(
             AppError(errorType: AppErrorType.network, message: raw['message']));
