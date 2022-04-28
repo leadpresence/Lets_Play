@@ -185,13 +185,11 @@ class AuthServiceImpl extends AuthServiceDataSource {
   @override
   Future<Either<AppError, String>> verifyResetPasswordOtp(String Otp) async {
     String prospectId = prospectIsProvider.getProspectId();
-    String token = prospectIsProvider.getForgotPasswordToken();
-    Map<String, dynamic> payload = {"prospectId": prospectId, 'Otp': Otp};
+    Map<String, dynamic> payload = {"prospectId": prospectId, 'otp': Otp};
 
     try {
       var raw = await httpProvider.postHttp(
           '${JekawinBaseUrls.authBaseUrl}forgetpassword_otp', payload);
-      //todo @felix
       if (raw['success']) {
         ForgetPasswordOtpResponse res = ForgetPasswordOtpResponse.fromMap(raw);
         prospectIsProvider.setForgotPasswordToken(res.token);
