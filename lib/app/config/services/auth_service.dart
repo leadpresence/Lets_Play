@@ -211,12 +211,12 @@ class AuthServiceImpl extends AuthServiceDataSource {
   Future<Either<AppError, String>> updatePassword(String password) async {
     Map<String, dynamic> payload = {"password": password};
     String tokenProvider = prospectIsProvider.getForgotPasswordToken();
-    Map<String, dynamic> token = {"token": tokenProvider,};
+    Map<String, dynamic> token = {"": tokenProvider,};
 
     try {
       var raw = await httpProvider.postHttp(
-          '${JekawinBaseUrls.authBaseUrl}resetpassword', payload,params: token);
-      UserSignupDetails res = UserSignupDetails.fromMap(raw);
+          '${JekawinBaseUrls.authBaseUrl}resetpassword/$tokenProvider', payload,params: token);
+      // UserSignupDetails res = UserSignupDetails.fromMap(raw);
       if (raw['success']) {
         return const Right("Password reset successful");
       } else {
