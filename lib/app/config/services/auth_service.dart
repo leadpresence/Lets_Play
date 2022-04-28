@@ -1,7 +1,5 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:dartz/dartz.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:jekawin_mobile_flutter/app/config/services/di/di_locator.dart';
@@ -14,12 +12,9 @@ import 'package:jekawin_mobile_flutter/app/modules/signup/models/user_singed_up_
 import '../../constants/network_exceptions.dart';
 import '../../modules/signup/models/resendotp_resonse_model.dart';
 import '../../modules/signup/models/user_sign_up_model.dart';
-import '../../modules/signup_verification/views/mobile/signup_verification_mobile_portrait.dart';
 import '../data/local/user_local_impl.dart';
 import '../data/model/user.dart';
 import 'http/http_services.dart';
-
-//chibueze felix 3-2022
 
 abstract class AuthServiceDataSource {
   Future<Either<AppError, String>> signup(UserSignUpModel body);
@@ -134,6 +129,9 @@ class AuthServiceImpl extends AuthServiceDataSource {
       UserSignupDetails res = UserSignupDetails.fromMap(raw);
       _userLocalDataSource.saveUser(res.data.user);
       GetStorage().write('firstName', res.data.user.firstName);
+      GetStorage().write('lastName', res.data.user.lastName);
+      GetStorage().write('phoneNumber', res.data.user.mobile);
+      GetStorage().write('token', res.data.user.token);
       if (raw['success']) {
         return const Right("Login Successful");
       } else {
@@ -155,11 +153,9 @@ class AuthServiceImpl extends AuthServiceDataSource {
   @override
   Future<Either<AppError, String>> forgetPassword(String mobile) async {
     Map<String, dynamic> payload = {"mobile": mobile};
-
     try {
       var raw = await httpProvider.postHttp(
           '${JekawinBaseUrls.authBaseUrl}forgetpassword', payload);
-      //todo @felix get prospectId here
       if (raw['success']) {
         ForgetPasswordResponse res = ForgetPasswordResponse.fromMap(raw);
         prospectIsProvider.setProspectId(raw['prospectId']);
@@ -189,7 +185,6 @@ class AuthServiceImpl extends AuthServiceDataSource {
     try {
       var raw = await httpProvider.postHttp(
           '${JekawinBaseUrls.authBaseUrl}forgetpassword_otp', payload);
-      //todo @felix
       if (raw['success']) {
         ForgetPasswordOtpResponse res = ForgetPasswordOtpResponse.fromMap(raw);
         return Right(res.message);
@@ -212,14 +207,12 @@ class AuthServiceImpl extends AuthServiceDataSource {
   @override
   Future<Either<AppError, String>> updatePassword(String password) async {
     Map<String, dynamic> payload = {"password": password};
-
     try {
       var raw = await httpProvider.postHttp(
           '${JekawinBaseUrls.authBaseUrl}createpassword', payload);
       UserSignupDetails res = UserSignupDetails.fromMap(raw);
-      //todo @felix
       if (raw['success']) {
-        return const Right("Login Successful");
+        return const Right("update Successful");
       } else {
         return Left(
             AppError(errorType: AppErrorType.network, message: raw['message']));
@@ -237,8 +230,26 @@ class AuthServiceImpl extends AuthServiceDataSource {
   }
 
   @override
-  Future<Either<AppError, String>> signout() {
-    // TODO: Felix implement signout
-    throw UnimplementedError();
+  Future<Either<AppError, String>> signout() async {
+    var token = GetStorage().read("token");
+    try {
+      var raw = await httpProvider
+          .deleteHttp('${JekawinBaseUrls.authBaseUrl}signout', );
+      if (raw['success']) {
+        return const Right("Logout Successful");
+      } else {
+        return Left(
+            AppError(errorType: AppErrorType.network, message: raw['message']));
+      }
+    } on NetworkException catch (e) {
+      return Left(
+          AppError(errorType: AppErrorType.network, message: e.message));
+    } on SocketException catch (e) {
+      return Left(
+          AppError(errorType: AppErrorType.network, message: e.message));
+    } on Exception {
+      return const Left(
+          AppError(errorType: AppErrorType.api, message: "An error occurred"));
+    }
   }
 }

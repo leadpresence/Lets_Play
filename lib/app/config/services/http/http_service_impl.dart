@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:jekawin_mobile_flutter/app/config/data/local/user_local_impl.dart';
 import 'package:jekawin_mobile_flutter/app/utils/simple_log_printer.dart';
 import 'package:flutter/foundation.dart';
@@ -14,7 +15,7 @@ import 'package:jekawin_mobile_flutter/app/utils/network_utils.dart'
     as network_utils;
 
 class HttpServiceImpl extends HttpService {
-  final _userService = Get.find<UserLocalDataSourceImpl>( );
+  final _userService = Get.find<UserLocalDataSourceImpl>();
 
   final _dio = Dio(BaseOptions(connectTimeout: 50000));
   User? get user => _userService.user;
@@ -72,14 +73,9 @@ class HttpServiceImpl extends HttpService {
         debugPrint('Http response data is: ${e.response?.data}');
       }
 
-      if (e.response?.statusCode == 401) {
-        //todo felix navigate to response screen with status false
-        // _navigationService.clearStackAndShow(Routes.authenticate);
-        // return AuthException('Invalid token and credentials');
-      }
+      if (e.response?.statusCode == 401) {}
 
-      throw NetworkException(e
-          .message); //e.response?.data != null ? e.response.data['message'] ?? e.message : e.message
+      throw NetworkException(e.message);
     }
 
     if (dotenv.get('APP_DEBUG') == 'true') {
@@ -119,9 +115,6 @@ class HttpServiceImpl extends HttpService {
       );
     } on DioError catch (e) {
       if (e.response?.statusCode == 401) {
-
-        //todo @felix set a route that show errors
-        // _navigationService.clearStackAndShow(Routes.authenticate);
         throw const AuthException('Invalid token and credentials');
       }
       if (dotenv.get('APP_DEBUG') == 'true') {
@@ -188,7 +181,7 @@ class HttpServiceImpl extends HttpService {
 
   @override
   Future deleteHttp(String route,
-      {Map<String, dynamic>? params, refreshed: false}) async {
+      {Map<String, dynamic>? params, refreshed = false, token}) async {
     dio_response.Response response;
 
     params?.removeWhere((key, value) => value == null);
@@ -196,23 +189,24 @@ class HttpServiceImpl extends HttpService {
     getLogger().d('[DELETE] Sending $params to $route');
 
     try {
+
       setHeader();
-      response = await _dio.delete(
-        route,
-        queryParameters: params,
-        options: Options(
-          contentType: 'application/json',
-        ),
-      );
+      response = await _dio.delete(route,
+          queryParameters: params,
+          options: Options(
+              contentType: 'application/json',
+              headers:
+                  token != null ? {'authorization': 'Bearer $token'} : null));
     } on DioError catch (e) {
       if (e.response?.statusCode == 401) {
-        // _navigationService.clearStackAndShow(Routes.signinViewRoute);
         throw const AuthException('Invalid token and credentials');
       }
       getLogger().e(
           'HttpService: Failed to DELETE $route: Error message: ${e.message}');
       debugPrint('Http response data is: ${e.response?.data}');
-      throw NetworkException(e.response?.data != null ? e.response?.data['message'] ?? e.message : e.message);
+      throw NetworkException(e.response?.data != null
+          ? e.response?.data['message'] ?? e.message
+          : e.message);
     }
 
     network_utils.checkForNetworkExceptions(response);

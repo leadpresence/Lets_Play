@@ -7,6 +7,7 @@ import 'package:jekawin_mobile_flutter/app/config/colors.dart';
 import 'package:jekawin_mobile_flutter/app/modules/login/views/login.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_text_field.dart';
+import 'package:jekawin_mobile_flutter/app/widgets/slide_in_animation.dart';
 import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../constants/asset_paths.dart';
 import '../../controllers/sign_up_controller.dart';
@@ -49,13 +50,19 @@ class SignupMobilePortrait extends GetView<SignUpController> {
                   const Gap(24),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [logoSvg],
+                    children: [
+                      SlideInAnimation(
+                        duration: const Duration(milliseconds: 600),
+                        child: logoSvg,
+                      )
+                    ],
                   ),
                   const Gap(48),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
+                  SlideInAnimation(
+                    duration: const Duration(milliseconds: 625),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
                         "Sign up",
                         style: GoogleFonts.mulish(
                             fontWeight: FontWeight.normal, // light
@@ -64,21 +71,24 @@ class SignupMobilePortrait extends GetView<SignUpController> {
                             fontSize: 24 // italic
                             ),
                       ),
-                    ],
+                    ),
                   ),
                   const Gap(20),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(24, 40, 24, 4),
-                    child: CustomTextField(
-                      hintText: "First name",
-                      textCapitalization: TextCapitalization.words,
-                      textController: controller.firstNameController,
-                      keyboardType: TextInputType.text,
-                      onChanged: (v) {
-                        if (v.isNotEmpty) {
-                          controller.clearErrorFirstName();
-                        }
-                      },
+                    child: SlideInAnimation(
+                      duration: const Duration(milliseconds: 650),
+                      child: CustomTextField(
+                        hintText: "First name",
+                        textCapitalization: TextCapitalization.words,
+                        textController: controller.firstNameController,
+                        keyboardType: TextInputType.text,
+                        onChanged: (v) {
+                          if (v.isNotEmpty) {
+                            controller.clearErrorFirstName();
+                          }
+                        },
+                      ),
                     ),
                   ),
                   Padding(
@@ -90,16 +100,19 @@ class SignupMobilePortrait extends GetView<SignUpController> {
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(24, 8, 24, 4),
-                    child: CustomTextField(
-                      hintText: "Last name",
-                      textCapitalization: TextCapitalization.words,
-                      keyboardType: TextInputType.text,
-                      textController: controller.lastNameController,
-                      onChanged: (v) {
-                        if (v.isNotEmpty) {
-                          controller.clearErrorLastName();
-                        }
-                      },
+                    child: SlideInAnimation(
+                      duration: const Duration(milliseconds: 675),
+                      child: CustomTextField(
+                        hintText: "Last name",
+                        textCapitalization: TextCapitalization.words,
+                        keyboardType: TextInputType.text,
+                        textController: controller.lastNameController,
+                        onChanged: (v) {
+                          if (v.isNotEmpty) {
+                            controller.clearErrorLastName();
+                          }
+                        },
+                      ),
                     ),
                   ),
                   Padding(
@@ -111,15 +124,18 @@ class SignupMobilePortrait extends GetView<SignUpController> {
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(24, 8, 24, 4),
-                    child: CustomTextField(
-                      hintText: "Phone number",
-                      keyboardType: TextInputType.number,
-                      textController: controller.phoneNumberController,
-                      onChanged: (v) {
-                        if (v.isNotEmpty) {
-                          controller.clearErrorPhoneNumber();
-                        }
-                      },
+                    child: SlideInAnimation(
+                      duration: const Duration(milliseconds: 700),
+                      child: CustomTextField(
+                        hintText: "Phone number",
+                        keyboardType: TextInputType.number,
+                        textController: controller.phoneNumberController,
+                        onChanged: (v) {
+                          if (v.isNotEmpty) {
+                            controller.clearErrorPhoneNumber();
+                          }
+                        },
+                      ),
                     ),
                   ),
                   Padding(
@@ -131,16 +147,19 @@ class SignupMobilePortrait extends GetView<SignUpController> {
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(24, 8, 24, 4),
-                    child: CustomTextField(
-                      hintText: "Password",
-                      isPasswordField: true,
-                      textController: controller.passwordController,
-                      // suffixIcon:   unselected,
-                      onChanged: (v) {
-                        if (v.isNotEmpty) {
-                          controller.clearErrorPassword();
-                        }
-                      },
+                    child: SlideInAnimation(
+                      duration: const Duration(milliseconds: 725),
+                      child: CustomTextField(
+                        hintText: "Password",
+                        isPasswordField: true,
+                        textController: controller.passwordController,
+                        // suffixIcon:   unselected,
+                        onChanged: (v) {
+                          if (v.isNotEmpty) {
+                            controller.clearErrorPassword();
+                          }
+                        },
+                      ),
                     ),
                   ),
                   Padding(
@@ -151,51 +170,58 @@ class SignupMobilePortrait extends GetView<SignUpController> {
                     ),
                   ),
                   Gap(Get.height * 0.0056),
-                  ConstrainedBox(
-                    constraints: BoxConstraints.expand(
-                        width: screenWidth(context), height: 40),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Material(
-                            child: Checkbox(
-                              activeColor: orange,
-                              value: controller.agreementCheck.value,
-                              onChanged: (value) {
-                                controller.agreementCheck.value =
-                                    !controller.agreementCheck.value;
-                              },
+                  SlideInAnimation(
+                    duration: const Duration(milliseconds: 750),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints.expand(
+                          width: screenWidth(context), height: 48),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Material(
+                              child: Checkbox(
+                                activeColor: orange,
+                                value: controller.agreementCheck.value,
+                                onChanged: (value) {
+                                  controller.agreementCheck.value =
+                                      !controller.agreementCheck.value;
+                                },
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            width: screenWidth(context) / 2 + 100,
-                            child: const Text(
-                              'By signing up you agree to Jekawin Term of Service and Privacy Policy',
-                              textAlign: TextAlign.left,
-                              maxLines: 2,
-                              softWrap: true,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
+                            Container(
+                              margin: const EdgeInsets.only(top: 4),
+                              width: screenWidth(context) / 2 + 100,
+                              child: const Text(
+                                'By signing up you agree to Jekawin Term of Service and Privacy Policy',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
                                   height: 1.6,
                                   color: agreementColor,
-                                  fontSize: 13),
+                                  fontSize: 13,
+                                ),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
+                  const SizedBox(height: 16),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(24, 32, 24, 0),
-                    child: CustomButton(
-                      isLoading: controller.isLoading.value,
-                      buttonText: "Sign Up",
-                      onPressed: () {
-                        //validate form and submit
-                        controller.signUpFormValidator(key);
-                      },
+                    padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
+                    child: SlideInAnimation(
+                      duration: const Duration(milliseconds: 775),
+                      child: CustomButton(
+                        isLoading: controller.isLoading.value,
+                        buttonText: "Sign Up",
+                        onPressed: () {
+                          //validate form and submit
+                          controller.signUpFormValidator(key);
+                        },
+                      ),
                     ),
                   ),
                   const Gap(8),
@@ -203,34 +229,37 @@ class SignupMobilePortrait extends GetView<SignUpController> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 24.0, vertical: 8.0),
                     width: Get.width,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Have an account?',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.mulish(
-                            fontSize: 12,
-                            color: const Color(0xff12121D).withOpacity(.6),
+                    child: SlideInAnimation(
+                      duration: const Duration(milliseconds: 800),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Have an account?',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.mulish(
+                              fontSize: 12,
+                              color: const Color(0xff12121D).withOpacity(.6),
+                            ),
                           ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Get.off(() => const LoginView());
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: Text(
-                              'Login',
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.mulish(
-                                fontSize: 12,
-                                color: const Color(0xff262254),
+                          GestureDetector(
+                            onTap: () {
+                              Get.off(() => const LoginView());
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Text(
+                                'Login',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.mulish(
+                                  fontSize: 12,
+                                  color: const Color(0xff262254),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   const Gap(12),

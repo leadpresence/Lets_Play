@@ -49,6 +49,17 @@ class SignUpVerificationController extends GetxController {
     );
   }
 
+  // void startTimer() {
+  //   setState(() {
+  //     animationController = AnimationController(
+  //         vsync: this,
+  //         duration: Duration(
+  //           minutes: 1,
+  //         ));
+  //     animationController.forward();
+  //   });
+  // }
+
   @override
   void onInit() {
     phoneNumber.value = prospectIdController.getPhoneNumber();

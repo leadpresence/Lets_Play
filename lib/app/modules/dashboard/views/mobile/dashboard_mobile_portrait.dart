@@ -8,6 +8,7 @@ import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
 import '../../../../config/data/local/user_local_impl.dart';
 import '../../../../widgets/custom_medium_button.dart';
 import '../../../signup/controllers/sign_up_controller.dart';
+import '../../../user_profile/views/mobile/user_profile_mobile_portrait.dart';
 
 class DashboardMobilePortrait extends StatelessWidget {
   DashboardMobilePortrait({
@@ -39,15 +40,19 @@ class DashboardMobilePortrait extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          SvgPicture.asset('assets/svgs/user_icon.svg'),
-                          const SizedBox(
-                            width: 6,
-                          ),
-                          Text(
-                              "Hi $firstName"),
-                        ],
+                      GestureDetector(
+                        onTap: () {
+                          Get.to(() => UserProfileMobilePortrait());
+                        },
+                        child: Row(
+                          children: [
+                            SvgPicture.asset('assets/svgs/user_icon.svg'),
+                            const SizedBox(
+                              width: 6,
+                            ),
+                            Text("Hi $firstName"),
+                          ],
+                        ),
                       ),
                       SvgPicture.asset(
                         'assets/svgs/clarity_notification-outline-badged.svg',

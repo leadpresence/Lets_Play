@@ -9,6 +9,7 @@ import 'package:jekawin_mobile_flutter/app/modules/resetpassword/views/reset_pas
 import 'package:jekawin_mobile_flutter/app/modules/signup/views/sign_up.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_text_field.dart';
+import 'package:jekawin_mobile_flutter/app/widgets/slide_in_animation.dart';
 import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../constants/asset_paths.dart';
 
@@ -49,13 +50,19 @@ class LoginMobilePortrait extends GetView<LoginController> {
                   const Gap(24),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [logoSvg],
+                    children: [
+                      SlideInAnimation(
+                        duration: const Duration(milliseconds: 600),
+                        child: logoSvg,
+                      ),
+                    ],
                   ),
                   const Gap(48),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
+                  SlideInAnimation(
+                    duration: const Duration(milliseconds: 625),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
                         "Login",
                         style: GoogleFonts.mulish(
                             fontWeight: FontWeight.normal, // light
@@ -63,19 +70,22 @@ class LoginMobilePortrait extends GetView<LoginController> {
                             color: Colors.black,
                             fontSize: 24 // italic
                             ),
-                      )
-                    ],
+                      ),
+                    ),
                   ),
                   const Gap(20),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(24, 40, 24, 4),
-                    child: CustomTextField(
-                      hintText: "Phone number",
-                      keyboardType: TextInputType.number,
-                      textController: controller.phoneNumberController,
-                      onChanged: (v) {
-                        if (v.isNotEmpty) controller.clearErrorPhoneNumber();
-                      },
+                    child: SlideInAnimation(
+                      duration: const Duration(milliseconds: 650),
+                      child: CustomTextField(
+                        hintText: "Phone number",
+                        keyboardType: TextInputType.number,
+                        textController: controller.phoneNumberController,
+                        onChanged: (v) {
+                          if (v.isNotEmpty) controller.clearErrorPhoneNumber();
+                        },
+                      ),
                     ),
                   ),
                   Padding(
@@ -92,10 +102,13 @@ class LoginMobilePortrait extends GetView<LoginController> {
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(24, 8, 24, 4),
-                    child: CustomTextField(
-                      hintText: "Password",
-                      isPasswordField: true,
-                      textController: controller.passwordController,
+                    child: SlideInAnimation(
+                      duration: const Duration(milliseconds: 675),
+                      child: CustomTextField(
+                        hintText: "Password",
+                        isPasswordField: true,
+                        textController: controller.passwordController,
+                      ),
                     ),
                   ),
                   Padding(
@@ -115,15 +128,20 @@ class LoginMobilePortrait extends GetView<LoginController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        GestureDetector(
-                          onTap: () => Get.to(() => ResetPasswordPhoneView(
+                        SlideInAnimation(
+                          duration: const Duration(milliseconds: 700),
+                          child: GestureDetector(
+                            onTap: () => Get.to(
+                              () => ResetPasswordPhoneView(
                                 key: key,
-                              )),
-                          child: const Text(
-                            'Forgot password?',
-                            overflow: TextOverflow.ellipsis,
-                            style:
-                                TextStyle(color: agreementColor, fontSize: 14),
+                              ),
+                            ),
+                            child: const Text(
+                              'Forgot password?',
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  color: agreementColor, fontSize: 14),
+                            ),
                           ),
                         ),
                       ],
@@ -131,12 +149,15 @@ class LoginMobilePortrait extends GetView<LoginController> {
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-                    child: CustomButton(
-                      isLoading: controller.isLoading.value,
-                      buttonText: "Login",
-                      onPressed: () {
-                        controller.loginFormValidator(key);
-                      },
+                    child: SlideInAnimation(
+                      duration: const Duration(milliseconds: 725),
+                      child: CustomButton(
+                        isLoading: controller.isLoading.value,
+                        buttonText: "Login",
+                        onPressed: () {
+                          controller.loginFormValidator(key);
+                        },
+                      ),
                     ),
                   ),
                   const Gap(8),
@@ -144,36 +165,39 @@ class LoginMobilePortrait extends GetView<LoginController> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 24.0, vertical: 8.0),
                     width: Get.width,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Don’t have an account?',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.mulish(
-                            fontSize: 12,
-                            fontWeight: FontWeight.normal,
-                            color: const Color(0xff12121D).withOpacity(.6),
+                    child: SlideInAnimation(
+                      duration: const Duration(milliseconds: 750),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Don’t have an account?',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.mulish(
+                              fontSize: 12,
+                              fontWeight: FontWeight.normal,
+                              color: const Color(0xff12121D).withOpacity(.6),
+                            ),
                           ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Get.off(() => const SignUpView());
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: Text(
-                              'Sign Up',
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.mulish(
-                                fontSize: 12,
-                                fontWeight: FontWeight.normal,
-                                color: const Color(0xff262254),
+                          GestureDetector(
+                            onTap: () {
+                              Get.off(() => const SignUpView());
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Text(
+                                'Sign Up',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.mulish(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.normal,
+                                  color: const Color(0xff262254),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   const Gap(12),
