@@ -16,46 +16,27 @@ class ResetPasswordController extends GetxController {
   Rx<bool> agree = false.obs;
   RxString userPhoneNumber = "".obs;
 
-
-  @override
-  void onInit() {
-    // TODO: implement onInit
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    // TODO: implement onReady
-    super.onReady();
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
-
   Future<void> requestForgotPasswordOtp(Key? k) async {
     var phoneNumber = TextUtils()
         .stripFirstZeroAddCountryCode(number: phoneNumberController.text);
     final response = await authService.forgetPassword(phoneNumber);
     response.fold((l) {
       BotToast.showText(text: l.message);
-    }, (r)  {
+    }, (r) {
       var mobile = prospectIsProvider.getPhoneNumber();
-      userPhoneNumber.value =  mobile;
-      navigateToResetPassword(k);});
+      userPhoneNumber.value = mobile;
+      navigateToResetPassword(k);
+    });
   }
 
   Future<void> updateForgotPassword(Key? k) async {}
 
   navigateToResetPassword(Key? k) {
     Get.to(
-          () => OtpResetPasswordView(key: k,
-        phoneNumber:  userPhoneNumber.value.toString(),
+      () => OtpResetPasswordView(
+        key: k,
+        phoneNumber: userPhoneNumber.value.toString(),
       ),
     );
   }
-  }
-
-
+}
