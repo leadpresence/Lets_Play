@@ -16,6 +16,7 @@ class ResetPasswordMobilePortrait extends GetView<ResetPasswordController> {
       : super(key: key);
   final ThemeData? themeData;
   final CustomAppTheme? customAppTheme;
+  @override
   final ResetPasswordController controller = Get.put(ResetPasswordController());
 
   @override

@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:flutter_svg/svg.dart';
 
 class CustomMediumButton extends StatelessWidget {
-  final onPressed, hasIcon, buttonText, hasBorder, width, fontSize;
+  final onPressed, hasIcon, buttonText, hasBorder, width, fontSize, icon;
 
-  final Color buttonColor, buttonTextColor;
+  final Color buttonColor, buttonTextColor,borderColor,iconColor;
   const CustomMediumButton({
     Key? key,
     this.onPressed,
@@ -13,8 +13,11 @@ class CustomMediumButton extends StatelessWidget {
     this.buttonText = "Button Text",
     this.hasBorder = false,
     this.buttonColor = const Color(0xFFFE7A01),
+    this.iconColor = const Color(0xffff543884),
     this.buttonTextColor = const Color(0xffffffff),
     this.width,
+    this.icon,
+    this.borderColor = const Color(0xffffffff),
     this.fontSize,
   }) : super(key: key);
 
@@ -39,7 +42,7 @@ class CustomMediumButton extends StatelessWidget {
             // splashFactory: NoSplash.splashFactory,
             shape: RoundedRectangleBorder(
               side: hasBorder
-                  ? const BorderSide(color: Color(0xFFFE7A01), width: 1)
+                  ?   BorderSide(color: borderColor, width: 1)
                   : BorderSide.none,
               borderRadius: BorderRadius.circular(36),
             ),
@@ -49,8 +52,8 @@ class CustomMediumButton extends StatelessWidget {
             children: [
               hasIcon
                   ? SvgPicture.asset(
-                      'assets/svgs/clarity_shopping-cart-line.svg',
-                      color: Colors.white,
+                     icon?? 'assets/svgs/clarity_shopping-cart-line.svg',
+                      color: iconColor ,
                     )
                   : const SizedBox(),
               hasIcon
@@ -64,6 +67,7 @@ class CustomMediumButton extends StatelessWidget {
                   color: buttonTextColor,
                   fontWeight: FontWeight.normal,
                   fontSize: fontSize ?? 14,
+                  overflow: TextOverflow.fade
                 ),
               )
             ],

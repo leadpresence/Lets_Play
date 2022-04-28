@@ -8,6 +8,8 @@ import 'package:jekawin_mobile_flutter/app/modules/fund_wallet/views/fund_wallet
 import 'package:jekawin_mobile_flutter/app/modules/login/bindings/login_bindings.dart';
 import 'package:jekawin_mobile_flutter/app/modules/login/views/login.dart';
 import 'package:jekawin_mobile_flutter/app/modules/new_password/views/new_password.dart';
+import 'package:jekawin_mobile_flutter/app/modules/referral/bindings/referral_bindings.dart';
+import 'package:jekawin_mobile_flutter/app/modules/referral/views/referral_view.dart';
 import 'package:jekawin_mobile_flutter/app/modules/resetpassword/views/reset_password.dart';
 import 'package:jekawin_mobile_flutter/app/modules/select_account/views/select_bank_view.dart';
 import 'package:jekawin_mobile_flutter/app/modules/signup/bindings/sign_up_bindings.dart';
@@ -35,7 +37,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const initial = Routes.splash;
+  static const initial = Routes.referral;
 
   static final routes = [
     GetPage(
@@ -126,6 +128,12 @@ class AppPages {
       name: _Paths.withdrawalConfirmation,
       page: () => const WithdrawalConfirmationView(),
       binding: WithdrawalConfirmationBindings(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: _Paths.referral,
+      page: () => const ReferralView(),
+      binding: ReferralBindings(),
       transition: Transition.fadeIn,
     ),
   ];
