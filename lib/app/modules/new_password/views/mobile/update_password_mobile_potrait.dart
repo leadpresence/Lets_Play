@@ -43,92 +43,92 @@ class UpdatePasswordMobilePortrait extends GetView<UpdatePasswordController> {
     screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
     screenHeight(BuildContext context) => MediaQuery.of(context).size.height;
 
-    return
-      Obx(()=>Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.white,
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 16.0),
-            child: IconButton(
-              splashRadius: 25,
-              icon: SvgPicture.asset(
-                'assets/svgs/chevronLeft.svg',
-                color: const Color(0xff12121D),
-              ),
-              onPressed: () {
-                Get.back();
-              },
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 16.0),
+          child: IconButton(
+            splashRadius: 25,
+            icon: SvgPicture.asset(
+              'assets/svgs/chevronLeft.svg',
+              color: const Color(0xff12121D),
             ),
+            onPressed: () {
+              Get.back();
+            },
           ),
         ),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Gap(24),
-                Row(
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Gap(24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Update your Password",
+                    style: GoogleFonts.mulish(
+                        fontWeight: FontWeight.normal, // light
+                        fontStyle: FontStyle.normal,
+                        color: Colors.black,
+                        fontSize: 24 // italic
+                        ),
+                  )
+                ],
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Update your Password",
+                      'Input new password',
+                      overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.mulish(
-                          fontWeight: FontWeight.normal, // light
-                          fontStyle: FontStyle.normal,
-                          color: Colors.black,
-                          fontSize: 24 // italic
-                          ),
-                    )
+                        fontSize: 12,
+                        fontWeight: FontWeight.normal,
+                        height: 1.6,
+                        color: const Color(0xff12121D).withOpacity(.6),
+                      ),
+                    ),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 24.0, vertical: 8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Input new password',
-                        overflow: TextOverflow.ellipsis,
-                        style: GoogleFonts.mulish(
-                          fontSize: 12,
-                          fontWeight: FontWeight.normal,
-                          height: 1.6,
-                          color: const Color(0xff12121D).withOpacity(.6),
-                        ),
-                      ),
-                    ],
-                  ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
+                child: CustomTextField(
+                  isPasswordField: true,
+                  hintText: "Password",
+                  textController: controller.newPasswordController,
+                  keyboardType: TextInputType.visiblePassword,
+                  // errorText: "Phone number invalid",
                 ),
-                  Padding(
-                  padding:const EdgeInsets.fromLTRB(24, 24, 24, 24),
-                  child: CustomTextField(
-                    isPasswordField: true,
-                    hintText: "Password",
-                    textController: controller.newPasswordController,
-                    keyboardType: TextInputType.visiblePassword,
-                    // errorText: "Phone number invalid",
-                  ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+                child: CustomButton(
+                  buttonText: "Update password",
+                  onPressed: () {
+                    controller.updatePassword(key);
+                    // Get.to(
+                    //       () => ResponseMessageView(
+                    //     messageString: 'Password updated successful',
+                    //     status: true,
+                    //   ),
+                    // );
+                  },
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
-                  child: CustomButton(
-                    buttonText: "Update password",
-                    onPressed: (){
-                      controller.updatePassword(key);
-                      // Get.to(
-                      //       () => ResponseMessageView(
-                      //     messageString: 'Password updated successful',
-                      //     status: true,
-                      //   ),
-                      // );
-                    },
-                  ),
-                )
-              ],
-            ),
+              )
+            ],
           ),
-        )));
+        ),
+      ),
+    );
   }
 }
