@@ -220,7 +220,6 @@ class AuthServiceImpl extends AuthServiceDataSource {
     Map<String, dynamic> token = {
       "token": tokenProvider,
     };
-
     try {
       var raw = await httpProvider.postHttp(
           '${JekawinBaseUrls.authBaseUrl}resetpassword', payload,

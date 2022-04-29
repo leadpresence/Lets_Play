@@ -55,7 +55,7 @@ class SignUpVerificationController extends GetxController
     animationController.value = AnimationController(
         vsync: this,
         duration: const Duration(
-          minutes: 30,
+          minutes: 2,
         ));
     animationController.value.forward();
   }

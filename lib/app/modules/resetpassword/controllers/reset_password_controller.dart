@@ -22,7 +22,6 @@ class ResetPasswordController extends GetxController {
   void clearErrorPhoneNumber() => errorPhoneNumberMessage.value = '';
 
   resetPasswordFormValidator(Key? k) {
-
     if ((GetUtils.isBlank(phoneNumberController.text)) == true) {
       return errorPhoneNumberMessage.value =
           '      Phone number field cannot be blank.';

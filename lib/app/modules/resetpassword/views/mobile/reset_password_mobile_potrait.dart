@@ -3,11 +3,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:jekawin_mobile_flutter/app/modules/otp_reset_password/views/otp_reset_password.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_text_field.dart';
 import '../../../../config/themes/app_theme_constants.dart';
-import '../../../../constants/asset_paths.dart';
 import '../../controllers/reset_password_controller.dart';
 
 class ResetPasswordMobilePortrait extends GetView<ResetPasswordController> {
@@ -22,8 +20,6 @@ class ResetPasswordMobilePortrait extends GetView<ResetPasswordController> {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController? phoneNumberController;
-
     const TextStyle errorTextStyle = TextStyle(
       fontSize: 10,
       color: Colors.deepOrange,
@@ -116,10 +112,10 @@ class ResetPasswordMobilePortrait extends GetView<ResetPasswordController> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(24, 16, 24, 24),
                   child: CustomButton(
-                      isLoading: controller.isLoading.value,
-                      buttonText: "Send",
-                      onPressed: () =>
-                          controller.resetPasswordFormValidator(key)),
+                    isLoading: controller.isLoading.value,
+                    buttonText: "Send",
+                    onPressed: () => controller.resetPasswordFormValidator(key),
+                  ),
                 )
               ],
             ),

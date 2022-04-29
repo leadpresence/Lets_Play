@@ -80,7 +80,7 @@ class OtpPasswordResetMP extends GetView<OtpResetPasswordController> {
                     controller.startTimer(),
                   },
                   animation: StepTween(
-                    begin: 1800,
+                    begin: 120,
                     end: 0,
                   ).animate(controller.animationController.value),
                 ),
