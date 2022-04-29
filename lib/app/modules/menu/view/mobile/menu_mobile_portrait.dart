@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:jekawin_mobile_flutter/app/modules/referral/views/referral_view.dart';
 import 'package:jekawin_mobile_flutter/app/modules/reward_points/views/mobile/reward_points_mobile_portrait.dart';
 
 import '../../../redeem_prizes/views/mobile/redeem_prizes_mobile_portrait.dart';
@@ -45,6 +46,14 @@ class MenuMobilePortrait extends StatelessWidget {
                     ),
                     icon: 'assets/svgs/gift.svg',
                     tileText: 'Redeem Prizes',
+                  ),
+                  menuListTile(
+                    onTap: () => Get.to(
+                      () => const ReferralView(),
+                      transition: Transition.cupertino,
+                    ),
+                    icon: 'assets/svgs/share_referral.svg',
+                    tileText: 'Referral',
                   )
                 ],
               )
