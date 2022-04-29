@@ -130,7 +130,8 @@ class BankItem extends StatelessWidget {
       width: 30,
       height: 30,
     );
-    return Container(
+    return
+      Container(
       padding: const EdgeInsets.all(12),
       // height: screenHeight(context) / 9,
       margin: const EdgeInsets.fromLTRB(8, 9, 8, 8),

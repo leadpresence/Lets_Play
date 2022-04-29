@@ -137,6 +137,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
       GetStorage().write('lastName', res.data.user.lastName);
       GetStorage().write('profileImage', res.data.user.avatar);
       GetStorage().write('phoneNumber', res.data.user.mobile);
+      GetStorage().write('token', res.data.user.token);
       if (raw['success']) {
         return const Right("Login Successful");
       } else {

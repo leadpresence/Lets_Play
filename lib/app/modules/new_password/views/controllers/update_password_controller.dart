@@ -33,6 +33,7 @@ class UpdatePasswordController extends GetxController {
       BotToast.showText(text: l.message);
       isLoading = false.obs;
     }, (r) {
+      BotToast.showText(text:"Password reset successful");
       navigateToLoginView(k);
       isLoading = false.obs;
     });
