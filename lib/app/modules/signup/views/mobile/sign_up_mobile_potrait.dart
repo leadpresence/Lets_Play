@@ -172,9 +172,8 @@ class SignupMobilePortrait extends GetView<SignUpController> {
                   Gap(Get.height * 0.0056),
                   SlideInAnimation(
                     duration: const Duration(milliseconds: 750),
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints.expand(
-                          width: screenWidth(context), height: 48),
+                    child: SizedBox(
+                        width: screenWidth(context),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Row(
@@ -192,10 +191,10 @@ class SignupMobilePortrait extends GetView<SignUpController> {
                               ),
                             ),
                             Container(
-                              margin: const EdgeInsets.only(top: 4),
+                              margin: const EdgeInsets.only(top: 8),
                               width: screenWidth(context) / 2 + 100,
                               child: const Text(
-                                'By signing up you agree to Jekawin Term of Service and Privacy Policy',
+                                'By signing up you agree to Jekawin\'s Term of Service and Privacy Policy',
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                   height: 1.6,

@@ -6,12 +6,14 @@ import '../../../config/services/auth_service.dart';
 import '../../../config/services/di/di_locator.dart';
 import '../../new_password/views/new_password.dart';
 
-class OtpResetPasswordController extends GetxController {
+class OtpResetPasswordController extends GetxController
+    with SingleGetTickerProviderMixin {
   final AuthServiceImpl authService = Get.find<AuthServiceImpl>();
   final ProspectIdController prospectIsProvider =
       Get.find<ProspectIdController>();
   final otpController = TextEditingController();
-
+  late Rx<AnimationController> animationController =
+      AnimationController(vsync: this).obs;
   var otp = "".obs;
 
   setOtp(String otpString) {
@@ -22,20 +24,23 @@ class OtpResetPasswordController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
+    startTimer();
     super.onInit();
   }
 
   @override
-  void onReady() {
-    // TODO: implement onReady
-    super.onReady();
+  void dispose() {
+    animationController.value.dispose();
+    super.dispose();
   }
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
+  void startTimer() {
+    animationController.value = AnimationController(
+        vsync: this,
+        duration: const Duration(
+          minutes: 30,
+        ));
+    animationController.value.forward();
   }
 
   Future<void> verifyResetPasswordOtp(Key? k) async {

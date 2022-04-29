@@ -11,31 +11,30 @@ class UpdatePasswordController extends GetxController {
   final AuthServiceImpl authService = Get.find<AuthServiceImpl>();
   final newPasswordController = TextEditingController();
 
-  @override
-  void onInit() {
-    // TODO: implement onInit
-    super.onInit();
-  }
+  RxString errorNewPasswordMessage = "".obs;
+  var isLoading = false.obs;
 
-  @override
-  void onReady() {
-    // TODO: implement onReady
-    super.onReady();
-  }
+  void clearErrorNewPassword() => errorNewPasswordMessage.value = '';
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
+  updatePasswordFormValidator(Key? k) {
+    if ((GetUtils.isBlank(newPasswordController.text)) == true) {
+      return errorNewPasswordMessage.value =
+          "      Password field cannot be blank.";
+    } else {
+      updatePassword(k);
+    }
   }
 
   Future<void> updatePassword(Key? k) async {
+    isLoading = true.obs;
     final response =
         await authService.updatePassword(newPasswordController.text);
     response.fold((l) {
       BotToast.showText(text: l.message);
+      isLoading = false.obs;
     }, (r) {
       navigateToLoginView(k);
+      isLoading = false.obs;
     });
   }
 

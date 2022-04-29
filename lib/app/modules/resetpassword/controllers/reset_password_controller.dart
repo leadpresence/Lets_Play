@@ -16,7 +16,42 @@ class ResetPasswordController extends GetxController {
   Rx<bool> agree = false.obs;
   RxString userPhoneNumber = "".obs;
 
+  RxString errorPhoneNumberMessage = "".obs;
+  var isLoading = false.obs;
+
+  void clearErrorPhoneNumber() => errorPhoneNumberMessage.value = '';
+
+  resetPasswordFormValidator(Key? k) {
+
+    if ((GetUtils.isBlank(phoneNumberController.text)) == true) {
+      return errorPhoneNumberMessage.value =
+          '      Phone number field cannot be blank.';
+    } else if (!phoneNumberController.text.startsWith('0')) {
+      errorPhoneNumberMessage.value = "      Phone number must start with zero";
+    } else if (phoneNumberController.text.length != 11) {
+      errorPhoneNumberMessage.value = "      Phone number must be 11 digits";
+    } else {
+      requestForgotPasswordOtp(k);
+    }
+  }
+
   Future<void> requestForgotPasswordOtp(Key? k) async {
+    isLoading.value = true;
+    var phoneNumber = TextUtils()
+        .stripFirstZeroAddCountryCode(number: phoneNumberController.text);
+    final response = await authService.forgetPassword(phoneNumber);
+    response.fold((l) {
+      BotToast.showText(text: l.message);
+      isLoading.value = false;
+    }, (r) {
+      var mobile = prospectIsProvider.getPhoneNumber();
+      userPhoneNumber.value = mobile;
+      navigateToResetPassword(k);
+      isLoading.value = false;
+    });
+  }
+
+  Future<void> resendRequestForgotPasswordOtp(Key? k) async {
     var phoneNumber = TextUtils()
         .stripFirstZeroAddCountryCode(number: phoneNumberController.text);
     final response = await authService.forgetPassword(phoneNumber);
@@ -25,7 +60,6 @@ class ResetPasswordController extends GetxController {
     }, (r) {
       var mobile = prospectIsProvider.getPhoneNumber();
       userPhoneNumber.value = mobile;
-      navigateToResetPassword(k);
     });
   }
 

@@ -3,16 +3,18 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:jekawin_mobile_flutter/app/modules/signup/controllers/sign_up_controller.dart';
 import 'package:jekawin_mobile_flutter/app/modules/signup_verification/controllers/signup_verification_controller.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_otp_field.dart';
-
-import '../../../../config/colors.dart';
+import 'package:jekawin_mobile_flutter/app/widgets/slide_in_animation.dart';
+import '../../../../widgets/count_down.dart';
 
 class SignupVerificationMP extends GetView<SignUpVerificationController> {
   @override
   final SignUpVerificationController controller =
       Get.put(SignUpVerificationController());
+  final SignUpController signUpController = Get.put(SignUpController());
   final String phoneNumber;
 
   SignupVerificationMP({
@@ -57,25 +59,7 @@ class SignupVerificationMP extends GetView<SignUpVerificationController> {
                     controller.setOtp(controller.signUpOtpController.text);
                   },
                 ),
-                const Gap(4),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 16.0),
-                    child: TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Resend Code',
-                        style: GoogleFonts.mulish(
-                          fontSize: 12,
-                          decoration: TextDecoration.underline,
-                          color: purpleDark,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const Gap(24),
+                const Gap(48),
                 Padding(
                   padding: const EdgeInsets.all(2.0),
                   child: CustomButton(
@@ -88,28 +72,19 @@ class SignupVerificationMP extends GetView<SignUpVerificationController> {
                 const Gap(16),
                 Container(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 24.0, vertical: 8.0),
+                    horizontal: 24.0,
+                    vertical: 8.0,
+                  ),
                   width: Get.width,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Resend OTP in  ',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.mulish(
-                          fontSize: 12,
-                          color: const Color(0xff12121D).withOpacity(.6),
-                        ),
-                      ),
-                      Text(
-                        '1:00',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.mulish(
-                          fontSize: 12,
-                          color: Colors.deepOrange,
-                        ),
-                      ),
-                    ],
+                  child: Countdown(
+                    onPressed: () => {
+                      signUpController.resendSignUp(key),
+                      controller.startTimer(),
+                    },
+                    animation: StepTween(
+                      begin: 1800,
+                      end: 0,
+                    ).animate(controller.animationController.value),
                   ),
                 ),
                 const Gap(12),
@@ -143,30 +118,68 @@ class OtpHeader extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
           width: Get.width,
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              Text(
-                'Please enter the 4-digit code sent to you at ',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.mulish(
-                  fontSize: 12,
-                  height: 1.6,
-                  fontWeight: FontWeight.normal,
-                  color: const Color(0xff12121D).withOpacity(.6),
+          child: Align(
+            alignment: Alignment.center,
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                Text(
+                  'Please enter ',
+                  style: GoogleFonts.mulish(
+                    fontSize: 12,
+                    height: 1.6,
+                    fontWeight: FontWeight.normal,
+                    color: const Color(0xff12121D).withOpacity(.6),
+                  ),
                 ),
-              ),
-              Text(
-                phoneNumber,
-                textAlign: TextAlign.center,
-                style: GoogleFonts.mulish(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  height: 1.6,
-                  color: Colors.deepOrange,
+                Text(
+                  'the 4-digit ',
+                  style: GoogleFonts.mulish(
+                    fontSize: 12,
+                    height: 1.6,
+                    fontWeight: FontWeight.normal,
+                    color: const Color(0xff12121D).withOpacity(.6),
+                  ),
                 ),
-              ),
-            ],
+                Text(
+                  'code sent to ',
+                  style: GoogleFonts.mulish(
+                    fontSize: 12,
+                    height: 1.6,
+                    fontWeight: FontWeight.normal,
+                    color: const Color(0xff12121D).withOpacity(.6),
+                  ),
+                ),
+                Text(
+                  'you ',
+                  style: GoogleFonts.mulish(
+                    fontSize: 12,
+                    height: 1.6,
+                    fontWeight: FontWeight.normal,
+                    color: const Color(0xff12121D).withOpacity(.6),
+                  ),
+                ),
+                Text(
+                  'at ',
+                  style: GoogleFonts.mulish(
+                    fontSize: 12,
+                    height: 1.6,
+                    fontWeight: FontWeight.normal,
+                    color: const Color(0xff12121D).withOpacity(.6),
+                  ),
+                ),
+                Text(
+                  phoneNumber,
+                  style: GoogleFonts.mulish(
+                    fontSize: 12,
+                    // fontWeight: FontWeight.bold,
+                    height: 1.6,
+                    color: Colors.deepOrange,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         const Gap(32),

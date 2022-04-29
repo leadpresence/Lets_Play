@@ -8,7 +8,7 @@ import '../model/user.dart';
 import '../../../utils/type_id.dart';
 
 class UserLocalDataSourceImpl extends UserLocalDataSourceInterface {
-  User? _user =User();
+  User? _user = User();
 
   @override
   User? get user => _user;

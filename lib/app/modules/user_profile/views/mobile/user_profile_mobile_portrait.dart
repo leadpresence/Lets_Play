@@ -16,6 +16,7 @@ class UserProfileMobilePortrait extends StatelessWidget {
     var firstName = GetStorage().read("firstName");
     var lastName = GetStorage().read("lastName");
     var phoneNumber = GetStorage().read("phoneNumber");
+    var imageAvatar = GetStorage().read("profileImage");
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -65,15 +66,33 @@ class UserProfileMobilePortrait extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            const CircleAvatar(
+                            CircleAvatar(
                               radius: 36,
+                              child: Container(
+                                height: Get.height / 5,
+                                width: Get.width,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    colorFilter: const ColorFilter.mode(
+                                      Colors.black45,
+                                      BlendMode.dstIn,
+                                    ),
+                                    onError: (__, ___) {},
+                                    image: NetworkImage(
+                                      imageAvatar,
+                                    ),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
                             ),
                             const Gap(12),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  lastName == null
+                                  lastName == ''
                                       ? firstName
                                       : '$firstName $lastName',
                                   style: const TextStyle(

@@ -1,4 +1,4 @@
- import 'package:equatable/equatable.dart';
+import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 
 import '../../../utils/type_id.dart';
@@ -73,7 +73,7 @@ class User extends Equatable {
     id = json["_id"];
     avatar = json["avatar"];
     firstName = json["firstname"];
-    lastName = json["lastName"];
+    lastName = json["lastname"];
     mobile = json["mobile"];
     autoUsername = json["autoUsername"];
     rewardPoints = json["rewardPoints"];
@@ -90,7 +90,7 @@ class User extends Equatable {
   Map<String, dynamic> toMap() => {
         "_id": id,
         "firstname": firstName,
-        "lastName": lastName,
+        "lastname": lastName,
         "avatar": avatar,
         "mobile": mobile,
         "autoUsername": autoUsername,

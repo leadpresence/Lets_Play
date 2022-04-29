@@ -77,6 +77,11 @@ class AuthServiceImpl extends AuthServiceDataSource {
       if (raw['success']) {
         UserSignupDetails res = UserSignupDetails.fromMap(raw);
         _userLocalDataSource.saveUser(res.data.user);
+        GetStorage().write('firstName', res.data.user.firstName);
+        GetStorage().write('lastName', res.data.user.lastName);
+        GetStorage().write('phoneNumber', res.data.user.mobile);
+        GetStorage().write('profileImage', res.data.user.avatar);
+        // GetStorage().write('token', res.data.user.token);
         return const Right("Sign up successful");
       } else {
         return Left(
@@ -130,8 +135,8 @@ class AuthServiceImpl extends AuthServiceDataSource {
       _userLocalDataSource.saveUser(res.data.user);
       GetStorage().write('firstName', res.data.user.firstName);
       GetStorage().write('lastName', res.data.user.lastName);
+      GetStorage().write('profileImage', res.data.user.avatar);
       GetStorage().write('phoneNumber', res.data.user.mobile);
-      GetStorage().write('token', res.data.user.token);
       if (raw['success']) {
         return const Right("Login Successful");
       } else {
@@ -211,11 +216,14 @@ class AuthServiceImpl extends AuthServiceDataSource {
   Future<Either<AppError, String>> updatePassword(String password) async {
     Map<String, dynamic> payload = {"password": password};
     String tokenProvider = prospectIsProvider.getForgotPasswordToken();
-    Map<String, dynamic> token = {"token": tokenProvider,};
+    Map<String, dynamic> token = {
+      "token": tokenProvider,
+    };
 
     try {
       var raw = await httpProvider.postHttp(
-          '${JekawinBaseUrls.authBaseUrl}resetpassword', payload,params: token);
+          '${JekawinBaseUrls.authBaseUrl}resetpassword', payload,
+          params: token);
       UserSignupDetails res = UserSignupDetails.fromMap(raw);
       if (raw['success']) {
         return const Right("Password reset successful");
@@ -239,8 +247,9 @@ class AuthServiceImpl extends AuthServiceDataSource {
   Future<Either<AppError, String>> signout() async {
     var token = GetStorage().read("token");
     try {
-      var raw = await httpProvider
-          .deleteHttp('${JekawinBaseUrls.authBaseUrl}signout', );
+      var raw = await httpProvider.deleteHttp(
+        '${JekawinBaseUrls.authBaseUrl}signout',
+      );
       if (raw['success']) {
         return const Right("Logout Successful");
       } else {
