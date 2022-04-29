@@ -225,6 +225,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
           '${JekawinBaseUrls.authBaseUrl}resetpassword', payload,
           params: token);
       UserSignupDetails res = UserSignupDetails.fromMap(raw);
+          '${JekawinBaseUrls.authBaseUrl}resetpassword/$tokenProvider', payload,params: token);
       if (raw['success']) {
         return const Right("Password reset successful");
       } else {
