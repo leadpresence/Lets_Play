@@ -74,14 +74,13 @@ class LoginController extends GetxController {
       },
       (r) {
         navigateToHomeScreen(k);
-        phoneNumberController.text = '';
-        passwordController.text = '';
-        isLoading.value = false;
       },
     );
   }
 
   navigateToHomeScreen(Key? k) {
+    phoneNumberController.text = '';
+    passwordController.text = '';
     Get.offAll(
       () => const JekawinBottomTabs(
         tabIndex: 0,
@@ -89,5 +88,6 @@ class LoginController extends GetxController {
       ),
       transition: Transition.cupertino,
     );
+    isLoading.value = false;
   }
 }

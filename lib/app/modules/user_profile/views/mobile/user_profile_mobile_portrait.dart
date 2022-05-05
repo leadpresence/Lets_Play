@@ -17,7 +17,6 @@ class UserProfileMobilePortrait extends StatelessWidget {
     var lastName = GetStorage().read("lastName");
     var phoneNumber = GetStorage().read("phoneNumber");
     var imageAvatar = GetStorage().read("profileImage");
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

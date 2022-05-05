@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:jekawin_mobile_flutter/app/config/services/di/di_locator.dart';
@@ -74,14 +75,17 @@ class AuthServiceImpl extends AuthServiceDataSource {
     try {
       var raw = await httpProvider.postHttp(
           '${JekawinBaseUrls.authBaseUrl}otp', payload);
+      UserSignupDetails res = UserSignupDetails.fromMap(raw);
+      _userLocalDataSource.saveUser(res.data.user);
+      GetStorage().write('firstName', res.data.user.firstName);
+      GetStorage().write('lastName', res.data.user.lastName);
+      GetStorage().write('phoneNumber', res.data.user.mobile);
+      GetStorage().write('profileImage', res.data.user.avatar);
       if (raw['success']) {
-        UserSignupDetails res = UserSignupDetails.fromMap(raw);
-        _userLocalDataSource.saveUser(res.data.user);
-        GetStorage().write('firstName', res.data.user.firstName);
-        GetStorage().write('lastName', res.data.user.lastName);
-        GetStorage().write('phoneNumber', res.data.user.mobile);
-        GetStorage().write('profileImage', res.data.user.avatar);
-        // GetStorage().write('token', res.data.user.token);
+        if (kDebugMode) {
+          print(
+              '----> ${res.data.user.firstName}, ${res.data.user.lastName}, ${res.data.user.mobile}, ${res.data.user.avatar}, ');
+        }
         return const Right("Sign up successful");
       } else {
         return Left(
@@ -137,7 +141,6 @@ class AuthServiceImpl extends AuthServiceDataSource {
       GetStorage().write('lastName', res.data.user.lastName);
       GetStorage().write('profileImage', res.data.user.avatar);
       GetStorage().write('phoneNumber', res.data.user.mobile);
-      GetStorage().write('token', res.data.user.token);
       if (raw['success']) {
         return const Right("Login Successful");
       } else {
@@ -222,10 +225,8 @@ class AuthServiceImpl extends AuthServiceDataSource {
     };
     try {
       var raw = await httpProvider.postHttp(
-          '${JekawinBaseUrls.authBaseUrl}resetpassword', payload,
+          '${JekawinBaseUrls.authBaseUrl}resetpassword/$tokenProvider', payload,
           params: token);
-      UserSignupDetails res = UserSignupDetails.fromMap(raw);
-          '${JekawinBaseUrls.authBaseUrl}resetpassword/$tokenProvider', payload,params: token);
       if (raw['success']) {
         return const Right("Password reset successful");
       } else {

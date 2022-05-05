@@ -33,13 +33,19 @@ class UpdatePasswordController extends GetxController {
       BotToast.showText(text: l.message);
       isLoading = false.obs;
     }, (r) {
-      BotToast.showText(text:"Password reset successful");
+      BotToast.showText(text: "Password reset successful");
       navigateToLoginView(k);
       isLoading = false.obs;
     });
   }
 
   void navigateToLoginView(Key? k) {
-    Get.to(() => const LoginView());
+    Get.to(
+      () => const SuccessOrFailureMobileView(
+        msg: "Password update successful",
+        className: LoginView(),
+      ),
+      transition: Transition.cupertino,
+    );
   }
 }

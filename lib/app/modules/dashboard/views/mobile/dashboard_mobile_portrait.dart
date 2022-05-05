@@ -42,7 +42,10 @@ class DashboardMobilePortrait extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Get.to(() => UserProfileMobilePortrait());
+                          Get.to(
+                            () => UserProfileMobilePortrait(),
+                            transition: Transition.cupertino,
+                          );
                         },
                         child: Row(
                           children: [
