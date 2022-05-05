@@ -1,6 +1,4 @@
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:hive/hive.dart';
 import 'package:jekawin_mobile_flutter/app/config/data/local/user_local_interface.dart';
 import 'package:jekawin_mobile_flutter/app/config/data/model/hive_boxes.dart';
@@ -56,8 +54,6 @@ class UserLocalDataSourceImpl extends UserLocalDataSourceInterface {
 
   @override
   void getUser() {
-    final defaultUser = User();
-
     // GetStorage().read('firstName', user?.firstName ?? '')
     _user = _userBox.get(TypeId.user);
   }
