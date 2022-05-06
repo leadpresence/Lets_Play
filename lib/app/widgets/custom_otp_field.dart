@@ -6,8 +6,11 @@ class CustomOtpField extends StatefulWidget {
   final onComplete;
   final pinController;
 
-  const CustomOtpField({Key? key, this.onComplete, required this.pinController})
-      : super(key: key);
+  const CustomOtpField({
+    Key? key,
+    this.onComplete,
+    required this.pinController,
+  }) : super(key: key);
 
   @override
   _CustomOtpFieldState createState() => _CustomOtpFieldState();
@@ -51,7 +54,9 @@ class _CustomOtpFieldState extends State<CustomOtpField> {
       showCursor: false,
       androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsRetrieverApi,
       defaultPinTheme: defaultPinTheme,
-      validator: (value) {},
+      validator: (value) {
+        return null;
+      },
       // onClipboardFound: (value) {
       //   debugPrint('onClipboardFound: $value');
       //   widget.pinController.setText(value);

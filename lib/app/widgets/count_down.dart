@@ -5,7 +5,7 @@ import 'package:jekawin_mobile_flutter/app/widgets/slide_in_animation.dart';
 import '../config/colors.dart';
 
 class Countdown extends AnimatedWidget {
-  const Countdown({
+  Countdown({
     required this.animation,
     required this.onPressed,
   }) : super(

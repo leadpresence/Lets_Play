@@ -65,7 +65,7 @@ class CustomMediumButton extends StatelessWidget {
                 buttonText,
                 style: TextStyle(
                   color: buttonTextColor,
-                  fontWeight: FontWeight.normal,
+                  fontWeight: FontWeight.bold,
                   fontSize: fontSize ?? 14,
                   overflow: TextOverflow.fade
                 ),

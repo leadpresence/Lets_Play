@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:jekawin_mobile_flutter/app/config/data/local/user_local_impl.dart';
 import 'package:jekawin_mobile_flutter/app/utils/simple_log_printer.dart';
 import 'package:flutter/foundation.dart';
@@ -49,7 +48,7 @@ class HttpServiceImpl extends HttpService {
       {Map<String, dynamic>? params, bool refreshed: false}) async {
     dio_response.Response response;
     params?.removeWhere((key, value) => value == null);
-    final fullRoute = '${dotenv.get('API')}$route';
+    final fullRoute = route;
     if (dotenv.get('APP_DEBUG') == 'true') {
       getLogger().d('[GET] Sending $params to $fullRoute');
     }
@@ -84,8 +83,8 @@ class HttpServiceImpl extends HttpService {
 
     network_utils.checkForNetworkExceptions(response);
 
-    // return response.data;
-    return network_utils.decodeResponseBodyToJson(response.data);
+    return response.data;
+    // return network_utils.decodeResponseBodyToJson(response.data);
   }
 
   @override
@@ -189,7 +188,6 @@ class HttpServiceImpl extends HttpService {
     getLogger().d('[DELETE] Sending $params to $route');
 
     try {
-
       setHeader();
       response = await _dio.delete(
         route,

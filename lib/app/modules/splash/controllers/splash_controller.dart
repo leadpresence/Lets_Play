@@ -8,7 +8,7 @@ class SplashController extends GetxController {
     Future.delayed(
       const Duration(seconds: 4),
       () => Get.off(
-        () => const GuestDashboardMobilePortrait(),
+        () => GuestDashboardMobilePortrait(),
         transition: Transition.cupertino,
       ),
     );

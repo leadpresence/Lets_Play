@@ -65,7 +65,7 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: height ?? 48,
+      height: height ?? 52,
       child: Theme(
         data: ThemeData(
           splashColor: Colors.white,

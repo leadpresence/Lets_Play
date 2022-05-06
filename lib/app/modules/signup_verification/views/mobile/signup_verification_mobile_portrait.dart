@@ -84,7 +84,9 @@ class SignupVerificationMP extends GetView<SignUpVerificationController> {
                     animation: StepTween(
                       begin: 120,
                       end: 0,
-                    ).animate(controller.animationController.value),
+                    ).animate(
+                      controller.animationController.value,
+                    ),
                   ),
                 ),
                 const Gap(12),
