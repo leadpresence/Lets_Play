@@ -12,6 +12,7 @@ import 'package:jekawin_mobile_flutter/app/modules/signup/models/user_singed_up_
 import '../../constants/network_exceptions.dart';
 import '../../modules/signup/models/resendotp_resonse_model.dart';
 import '../../modules/signup/models/user_sign_up_model.dart';
+import '../../utils/simple_log_printer.dart';
 import '../data/local/user_local_impl.dart';
 import '../data/model/user.dart';
 import 'http/http_services.dart';
@@ -29,7 +30,7 @@ abstract class AuthServiceDataSource {
 
 class AuthServiceImpl extends AuthServiceDataSource {
   final httpProvider = Get.find<HttpService>();
-  final prospectIsProvider = Get.find<ProspectIdController>();
+  final prospectIsProvider = Get.find<UtilsController>();
   final UserLocalDataSourceImpl _userLocalDataSource =
       Get.find<UserLocalDataSourceImpl>();
   User? get user => _userLocalDataSource.user;
@@ -126,14 +127,19 @@ class AuthServiceImpl extends AuthServiceDataSource {
     try {
       var raw = await httpProvider.postHttp(
           '${JekawinBaseUrls.authBaseUrl}signin', payload);
-      UserSignupDetails res = UserSignupDetails.fromMap(raw);
-      _userLocalDataSource.saveUser(res.data.user);
-      GetStorage().write('firstName', res.data.user.firstName);
-      GetStorage().write('lastName', res.data.user.lastName);
-      GetStorage().write('phoneNumber', res.data.user.mobile);
-      GetStorage().write('token', res.data.user.token);
+      getLogger().d('Data Service Response: $raw["success"]');
+
       if (raw['success']) {
-        return const Right("Login Successful");
+
+   UserSignupDetails res = UserSignupDetails.fromMap(raw);
+   _userLocalDataSource.saveUser(res.data.user);
+   GetStorage().write('firstName', res.data.user.firstName);
+   GetStorage().write('lastName', res.data.user.lastName);
+   GetStorage().write('phoneNumber', res.data.user.mobile);
+   GetStorage().write('token', raw['token']);
+   GetStorage().write('referralCode', res.data.user.inviteLink);
+
+   return const Right("Login Successful");
       } else {
         return Left(
             AppError(errorType: AppErrorType.network, message: raw['message']));

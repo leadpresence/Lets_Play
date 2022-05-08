@@ -8,7 +8,7 @@ import '../model/user.dart';
 import '../../../utils/type_id.dart';
 
 class UserLocalDataSourceImpl extends UserLocalDataSourceInterface {
-  User? _user =User();
+  User? _user = User();
 
   @override
   User? get user => _user;
@@ -18,12 +18,10 @@ class UserLocalDataSourceImpl extends UserLocalDataSourceInterface {
   bool get _isBoxOpen => _hiveService.isBoxOpen(HiveBox.USER_BOX);
   Box<User> get _userBox => _hiveService.box<User>(HiveBox.USER_BOX);
 
-  UserLocalDataSourceImpl();
+  UserLocalDataSourceImpl(){/**init();*/}
 
   @override
   Future<void> cacheLoggedInUser(User userData) async {}
-
-
   @override
   Future<void> init() async{
     if (!_isBoxOpen) {
@@ -57,8 +55,6 @@ class UserLocalDataSourceImpl extends UserLocalDataSourceInterface {
   @override
   void getUser() {
     final defaultUser = User();
-
-    // GetStorage().read('firstName', user?.firstName ?? '')
-    _user = _userBox.get(TypeId.user);
+    _user = _userBox.get('user',defaultValue: defaultUser);
   }
 }

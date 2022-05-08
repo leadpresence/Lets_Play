@@ -9,8 +9,8 @@ import '../../otp_reset_password/views/otp_reset_password.dart';
 
 class ResetPasswordController extends GetxController {
   final AuthServiceImpl authService = Get.find<AuthServiceImpl>();
-  final ProspectIdController prospectIsProvider =
-      Get.find<ProspectIdController>();
+  final UtilsController prospectIsProvider =
+      Get.find<UtilsController>();
   final TextEditingController phoneNumberController = TextEditingController();
 
   Rx<bool> agree = false.obs;

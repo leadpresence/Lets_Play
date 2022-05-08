@@ -8,8 +8,8 @@ import '../../new_password/views/new_password.dart';
 
 class OtpResetPasswordController extends GetxController {
   final AuthServiceImpl authService = Get.find<AuthServiceImpl>();
-  final ProspectIdController prospectIsProvider =
-      Get.find<ProspectIdController>();
+  final UtilsController prospectIsProvider =
+      Get.find<UtilsController>();
   final otpController = TextEditingController();
 
   var otp = "".obs;

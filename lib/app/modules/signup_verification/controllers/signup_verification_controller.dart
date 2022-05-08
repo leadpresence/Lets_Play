@@ -11,7 +11,7 @@ import '../../jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
 class SignUpVerificationController extends GetxController {
   final signUpOtpController = TextEditingController();
 
-  final ProspectIdController prospectIdController = Get.find();
+  final UtilsController prospectIdController = Get.find();
   final AuthServiceImpl authService = Get.find<AuthServiceImpl>();
 
   var isLoading = false.obs;
