@@ -11,7 +11,7 @@ import '../../jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
 class SignUpVerificationController extends GetxController
     with SingleGetTickerProviderMixin {
   final signUpOtpController = TextEditingController();
-  final ProspectIdController prospectIdController = Get.find();
+  final UtilsController utilsController  = Get.find();
   final AuthServiceImpl authService = Get.find<AuthServiceImpl>();
   late Rx<AnimationController> animationController =
       AnimationController(vsync: this).obs;
@@ -63,15 +63,15 @@ class SignUpVerificationController extends GetxController
   @override
   void onInit() {
     startTimer();
-    phoneNumber.value = prospectIdController.getPhoneNumber();
-    prospectId.value = prospectIdController.getProspectId();
+    phoneNumber.value = utilsController .getPhoneNumber();
+    prospectId.value = utilsController .getProspectId();
     super.onInit();
   }
 
   @override
   void onReady() {
-    phoneNumber.value = prospectIdController.getPhoneNumber();
-    prospectId.value = prospectIdController.getProspectId();
+    phoneNumber.value = utilsController .getPhoneNumber();
+    prospectId.value = utilsController .getProspectId();
     super.onReady();
   }
 

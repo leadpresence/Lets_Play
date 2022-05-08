@@ -14,7 +14,7 @@ abstract class GamesServiceDataSource {
 
 class GamesServiceImpl extends GamesServiceDataSource {
   final httpProvider = Get.find<HttpService>();
-  final prospectIsProvider = Get.find<ProspectIdController>();
+  final prospectIsProvider = Get.find<UtilsController>();
   late JackpotGameModel jackpotGameRetrievedRes;
 
   @override
