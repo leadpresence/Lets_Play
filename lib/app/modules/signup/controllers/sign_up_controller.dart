@@ -37,6 +37,10 @@ class SignUpController extends GetxController {
     } else if ((GetUtils.isBlank(phoneNumberController.text)) == true) {
       return errorPhoneNumberMessage.value =
           "      Phone number field cannot be blank.";
+    } else if (!phoneNumberController.text.startsWith('0')) {
+      errorPhoneNumberMessage.value = "      Phone number must start with zero";
+    } else if (phoneNumberController.text.length != 11) {
+      errorPhoneNumberMessage.value = "      Phone number must be 11 digits";
     } else if ((GetUtils.isBlank(passwordController.text)) == true) {
       return errorPasswordMessage.value =
           "      Password field cannot be blank.";
@@ -96,6 +100,30 @@ class SignUpController extends GetxController {
     }, (r) {
       navigateToVerify(k);
       isLoading(false);
+    });
+  }
+
+  Future<void> resendSignUp(Key? k) async {
+    var firstName = firstNameController.value.text;
+    var lastName = lastNameController.value.text;
+    var phoneNumber = TextUtils()
+        .stripFirstZeroAddCountryCode(number: phoneNumberController.value.text);
+    var password = passwordController.value.text;
+    var userAgreed = agreementCheck.value;
+    isLoading(true);
+    final userData = await authService.signup(UserSignUpModel(
+      firstname: firstName,
+      lastname: lastName,
+      mobile: phoneNumber,
+      password: password,
+      agreement: userAgreed,
+    ));
+    userData.fold((l) {
+      // isLoading(false);
+      BotToast.showText(text: l.message);
+    }, (r) {
+      // navigateToVerify(k);
+      // isLoading(false);
     });
   }
 

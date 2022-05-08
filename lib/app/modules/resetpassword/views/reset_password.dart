@@ -7,25 +7,19 @@ import 'package:jekawin_mobile_flutter/app/modules/resetpassword/views/tablet/re
 import 'package:responsive_builder/responsive_builder.dart';
 import '../controllers/reset_password_controller.dart';
 
-
-
-
 class ResetPasswordPhoneView extends GetView<ResetPasswordController> {
   const ResetPasswordPhoneView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return  ScreenTypeLayout.builder(
+    return ScreenTypeLayout.builder(
         mobile: (_) => OrientationLayoutBuilder(
-
-          portrait: (_)=> ResetPasswordMobilePortrait(),
-          landscape: (_)=>const ResetPasswordMobileLandscape(),
-        ),
+              portrait: (_) => ResetPasswordMobilePortrait(),
+              landscape: (_) => const ResetPasswordMobileLandscape(),
+            ),
         tablet: (_) => OrientationLayoutBuilder(
-          portrait: (_) => const   ResetPasswordTabletPortrait(),
-          landscape: (_)=>
-          const ResetPasswordTabletLandscape(     ),
-
-        ));
+              portrait: (_) => const ResetPasswordTabletPortrait(),
+              landscape: (_) => const ResetPasswordTabletLandscape(),
+            ));
   }
 }

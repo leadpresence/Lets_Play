@@ -8,11 +8,13 @@ import '../../../config/services/di/di_locator.dart';
 import '../../e_shop/views/mobile/success_or_failure_mobile_view.dart';
 import '../../jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
 
-class SignUpVerificationController extends GetxController {
+class SignUpVerificationController extends GetxController
+    with SingleGetTickerProviderMixin {
   final signUpOtpController = TextEditingController();
-
-  final UtilsController prospectIdController = Get.find();
+  final ProspectIdController prospectIdController = Get.find();
   final AuthServiceImpl authService = Get.find<AuthServiceImpl>();
+  late Rx<AnimationController> animationController =
+      AnimationController(vsync: this).obs;
 
   var isLoading = false.obs;
   var prospectId = "".obs;
@@ -49,19 +51,18 @@ class SignUpVerificationController extends GetxController {
     );
   }
 
-  // void startTimer() {
-  //   setState(() {
-  //     animationController = AnimationController(
-  //         vsync: this,
-  //         duration: Duration(
-  //           minutes: 1,
-  //         ));
-  //     animationController.forward();
-  //   });
-  // }
+  void startTimer() {
+    animationController.value = AnimationController(
+        vsync: this,
+        duration: const Duration(
+          minutes: 2,
+        ));
+    animationController.value.forward();
+  }
 
   @override
   void onInit() {
+    startTimer();
     phoneNumber.value = prospectIdController.getPhoneNumber();
     prospectId.value = prospectIdController.getProspectId();
     super.onInit();
@@ -77,6 +78,7 @@ class SignUpVerificationController extends GetxController {
   @override
   void dispose() {
     signUpOtpController.dispose();
+    animationController.value.dispose();
     super.dispose();
   }
 }

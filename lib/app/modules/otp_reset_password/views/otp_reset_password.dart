@@ -14,22 +14,23 @@ class OtpResetPasswordView extends GetView {
   @override
   Widget build(BuildContext context) {
     return ScreenTypeLayout.builder(
-        mobile: (_) => OrientationLayoutBuilder(
-              portrait: (_) => OtpPasswordResetMP(
-                key: key,
-                phoneNumber: phoneNumber,
-              ),
-              landscape: (_) => OtpPasswordResetML(
-                key: key,
-              ),
-            ),
-        tablet: (_) => OrientationLayoutBuilder(
-              portrait: (_) => OtpResetPasswordTP(
-                key: key,
-              ),
-              landscape: (_) => OtpResetPasswordTL(
-                key: key,
-              ),
-            ));
+      mobile: (_) => OrientationLayoutBuilder(
+        portrait: (_) => OtpPasswordResetMP(
+          key: key,
+          phoneNumber: phoneNumber,
+        ),
+        landscape: (_) => OtpPasswordResetML(
+          key: key,
+        ),
+      ),
+      tablet: (_) => OrientationLayoutBuilder(
+        portrait: (_) => OtpResetPasswordTP(
+          key: key,
+        ),
+        landscape: (_) => OtpResetPasswordTL(
+          key: key,
+        ),
+      ),
+    );
   }
 }

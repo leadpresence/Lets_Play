@@ -5,10 +5,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_otp_field.dart';
-
-import '../../../../config/colors.dart';
-import '../../../messages/views/response_message.dart';
-import '../../../new_password/views/new_password.dart';
+import '../../../../widgets/count_down.dart';
+import '../../../resetpassword/controllers/reset_password_controller.dart';
 import '../../controllers/otp_reset_password_controller.dart';
 
 class OtpPasswordResetMP extends GetView<OtpResetPasswordController> {
@@ -19,6 +17,8 @@ class OtpPasswordResetMP extends GetView<OtpResetPasswordController> {
   @override
   final OtpResetPasswordController controller =
       Get.put(OtpResetPasswordController());
+  final ResetPasswordController resetPasswordController =
+      Get.put(ResetPasswordController());
 
   @override
   Widget build(BuildContext context) {
@@ -56,39 +56,36 @@ class OtpPasswordResetMP extends GetView<OtpResetPasswordController> {
                   controller.setOtp(controller.otpController.text);
                 },
               ),
-              const Gap(4),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 16.0),
-                  child: TextButton(
-                    onPressed: () {},
-                    child: InkWell(
-                      splashColor: Colors.blueGrey,
-                      child: Text(
-                        'Resend Code',
-                        style: GoogleFonts.mulish(
-                          fontSize: 12,
-                          decoration: TextDecoration.underline,
-                          color: purpleDark,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              const Gap(24),
+              const Gap(48),
               Padding(
                 padding: const EdgeInsets.all(2.0),
                 child: CustomButton(
                   hasIcon: false,
                   buttonText: 'Submit',
-                  onPressed: ()  {
+                  onPressed: () {
                     controller.verifyResetPasswordOtp(key);
-
-                    },
+                  },
                 ),
-              )
+              ),
+              const Gap(16),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24.0,
+                  vertical: 8.0,
+                ),
+                width: Get.width,
+                child: Countdown(
+                  onPressed: () => {
+                    resetPasswordController.resendRequestForgotPasswordOtp(key),
+                    controller.startTimer(),
+                  },
+                  animation: StepTween(
+                    begin: 120,
+                    end: 0,
+                  ).animate(controller.animationController.value),
+                ),
+              ),
+              const Gap(12),
             ],
           ),
         ),
@@ -118,29 +115,68 @@ class OtpHeader extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
           width: Get.width,
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              Text(
-                'Please enter the 4-digit code sent to you at ',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.mulish(
-                  fontSize: 12,
-                  fontWeight: FontWeight.normal,
-                  height: 1.6,
-                  color: const Color(0xff12121D).withOpacity(.6),
+          child: Align(
+            alignment: Alignment.center,
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                Text(
+                  'Please enter ',
+                  style: GoogleFonts.mulish(
+                    fontSize: 12,
+                    height: 1.6,
+                    fontWeight: FontWeight.normal,
+                    color: const Color(0xff12121D).withOpacity(.6),
+                  ),
                 ),
-              ),
-              Text(
-                phoneNumber,
-                textAlign: TextAlign.center,
-                style: GoogleFonts.mulish(
-                  fontSize: 12,
-                  height: 1.6,
-                  color: Colors.deepOrange,
+                Text(
+                  'the 4-digit ',
+                  style: GoogleFonts.mulish(
+                    fontSize: 12,
+                    height: 1.6,
+                    fontWeight: FontWeight.normal,
+                    color: const Color(0xff12121D).withOpacity(.6),
+                  ),
                 ),
-              ),
-            ],
+                Text(
+                  'code sent to ',
+                  style: GoogleFonts.mulish(
+                    fontSize: 12,
+                    height: 1.6,
+                    fontWeight: FontWeight.normal,
+                    color: const Color(0xff12121D).withOpacity(.6),
+                  ),
+                ),
+                Text(
+                  'you ',
+                  style: GoogleFonts.mulish(
+                    fontSize: 12,
+                    height: 1.6,
+                    fontWeight: FontWeight.normal,
+                    color: const Color(0xff12121D).withOpacity(.6),
+                  ),
+                ),
+                Text(
+                  'at ',
+                  style: GoogleFonts.mulish(
+                    fontSize: 12,
+                    height: 1.6,
+                    fontWeight: FontWeight.normal,
+                    color: const Color(0xff12121D).withOpacity(.6),
+                  ),
+                ),
+                Text(
+                  phoneNumber,
+                  style: GoogleFonts.mulish(
+                    fontSize: 12,
+                    // fontWeight: FontWeight.bold,
+                    height: 1.6,
+                    color: Colors.deepOrange,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         const Gap(32),

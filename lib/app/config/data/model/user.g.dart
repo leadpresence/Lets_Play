@@ -2,10 +2,6 @@
 
 part of 'user.dart';
 
-// **************************************************************************
-// TypeAdapterGenerator
-// **************************************************************************
-
 class UserAdapter extends TypeAdapter<User> {
   @override
   final int typeId = 0;

@@ -6,7 +6,7 @@ import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
 
 class SuccessOrFailureMobileView extends StatelessWidget {
   final String msg;
-  final JekawinBottomTabs className;
+  final Widget className;
   const SuccessOrFailureMobileView({
     Key? key,
     this.msg = 'Success',
@@ -19,36 +19,37 @@ class SuccessOrFailureMobileView extends StatelessWidget {
       body: SizedBox(
         width: Get.width,
         child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SvgPicture.asset('assets/svgs/success_check.svg'),
-              const SizedBox(
-                height: 24,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SvgPicture.asset('assets/svgs/success_check.svg'),
+            const SizedBox(
+              height: 24,
+            ),
+            Text(
+              msg,
+              style: const TextStyle(
+                fontSize: 18,
+                color: Color(0xFF4E4B66),
               ),
-              Text(
-                msg,
-                style: const TextStyle(
-                  fontSize: 18,
-                  color: Color(0xFF4E4B66),
-                ),
+            ),
+            const SizedBox(
+              height: 32,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 32.0,
               ),
-              const SizedBox(
-                height: 32,
+              child: CustomButton(
+                onPressed: () => Get.offAll(
+                  () => className,
+                  transition: Transition.cupertino,
+                ),
+                buttonText: 'Done',
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 32.0,
-                ),
-                child: CustomButton(
-                  onPressed: () => Get.to(
-                    () => className,
-                    transition: Transition.cupertino,
-                  ),
-                  buttonText: 'Done',
-                ),
-              )
-            ]),
+            )
+          ],
+        ),
       ),
     );
   }

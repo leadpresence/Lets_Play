@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-const orange = Color(0xFFFFE7A01);
-const purple = Color(0xFF5543884);
-const purpleDark = Color(0xfff543884);
+const orange = Color(0xFFFE7A01);
+const purple = Color(0xFF543884);
+const purpleDark = Color(0xff543884);
 const lightGreen = Color(0xFFC9B458);
 const green = Color(0xFF6AAA64);
 const greyButton = Color(0xFFD3D6DA);

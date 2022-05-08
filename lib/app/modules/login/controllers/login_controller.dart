@@ -67,22 +67,27 @@ class LoginController extends GetxController {
         .stripFirstZeroAddCountryCode(number: phoneNumberController.value.text);
     var password = passwordController.value.text;
     final userData = await authService.login(phoneNumber, password);
-    userData.fold((l) {
-      BotToast.showText(text: l.message);
-      isLoading.value = false;
-    }, (r) {
-      navigateToHomeScreen(k);
-      isLoading.value = false;
-    },);
+    userData.fold(
+      (l) {
+        BotToast.showText(text: l.message);
+        isLoading.value = false;
+      },
+      (r) {
+        navigateToHomeScreen(k);
+      },
+    );
   }
 
   navigateToHomeScreen(Key? k) {
-    Get.to(
+    phoneNumberController.text = '';
+    passwordController.text = '';
+    Get.offAll(
       () => const JekawinBottomTabs(
         tabIndex: 0,
         isGuestUser: true,
       ),
       transition: Transition.cupertino,
     );
+    isLoading.value = false;
   }
 }

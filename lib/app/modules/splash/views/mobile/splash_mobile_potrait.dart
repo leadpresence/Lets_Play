@@ -28,11 +28,11 @@ class _SplashMobilePortraitState extends State<SplashMobilePortrait> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 FadeIn(
-                    delay: const Duration(seconds: 1),
+                    delay: const Duration(seconds: 2),
                     duration: const Duration(seconds: 1),
                     child: Image.asset(splashTopImage)),
                 FadeIn(
-                  delay: const Duration(seconds: 1),
+                  delay: const Duration(seconds: 2),
                   duration: const Duration(seconds: 1),
                   child: SvgPicture.asset(
                     assetName,
@@ -40,7 +40,7 @@ class _SplashMobilePortraitState extends State<SplashMobilePortrait> {
                 ),
                 const SizedBox(height: 24),
                 FadeIn(
-                    delay: const Duration(seconds: 1),
+                    delay: const Duration(seconds: 2),
                     duration: const Duration(seconds: 1),
                     child: Image.asset(splashBottomImage)),
               ],

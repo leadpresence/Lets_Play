@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:jekawin_mobile_flutter/app/config/services/di/di_locator.dart';
@@ -12,7 +13,6 @@ import 'package:jekawin_mobile_flutter/app/modules/signup/models/user_singed_up_
 import '../../constants/network_exceptions.dart';
 import '../../modules/signup/models/resendotp_resonse_model.dart';
 import '../../modules/signup/models/user_sign_up_model.dart';
-import '../../utils/simple_log_printer.dart';
 import '../data/local/user_local_impl.dart';
 import '../data/model/user.dart';
 import 'http/http_services.dart';
@@ -30,7 +30,7 @@ abstract class AuthServiceDataSource {
 
 class AuthServiceImpl extends AuthServiceDataSource {
   final httpProvider = Get.find<HttpService>();
-  final prospectIsProvider = Get.find<UtilsController>();
+  final prospectIsProvider = Get.find<ProspectIdController>();
   final UserLocalDataSourceImpl _userLocalDataSource =
       Get.find<UserLocalDataSourceImpl>();
   User? get user => _userLocalDataSource.user;
@@ -75,9 +75,17 @@ class AuthServiceImpl extends AuthServiceDataSource {
     try {
       var raw = await httpProvider.postHttp(
           '${JekawinBaseUrls.authBaseUrl}otp', payload);
+      UserSignupDetails res = UserSignupDetails.fromMap(raw);
+      _userLocalDataSource.saveUser(res.data.user);
+      GetStorage().write('firstName', res.data.user.firstName);
+      GetStorage().write('lastName', res.data.user.lastName);
+      GetStorage().write('phoneNumber', res.data.user.mobile);
+      GetStorage().write('profileImage', res.data.user.avatar);
       if (raw['success']) {
-        UserSignupDetails res = UserSignupDetails.fromMap(raw);
-        _userLocalDataSource.saveUser(res.data.user);
+        if (kDebugMode) {
+          print(
+              '----> ${res.data.user.firstName}, ${res.data.user.lastName}, ${res.data.user.mobile}, ${res.data.user.avatar}, ');
+        }
         return const Right("Sign up successful");
       } else {
         return Left(
@@ -127,19 +135,14 @@ class AuthServiceImpl extends AuthServiceDataSource {
     try {
       var raw = await httpProvider.postHttp(
           '${JekawinBaseUrls.authBaseUrl}signin', payload);
-      getLogger().d('Data Service Response: $raw["success"]');
-
+      UserSignupDetails res = UserSignupDetails.fromMap(raw);
+      _userLocalDataSource.saveUser(res.data.user);
+      GetStorage().write('firstName', res.data.user.firstName);
+      GetStorage().write('lastName', res.data.user.lastName);
+      GetStorage().write('profileImage', res.data.user.avatar);
+      GetStorage().write('phoneNumber', res.data.user.mobile);
       if (raw['success']) {
-
-   UserSignupDetails res = UserSignupDetails.fromMap(raw);
-   _userLocalDataSource.saveUser(res.data.user);
-   GetStorage().write('firstName', res.data.user.firstName);
-   GetStorage().write('lastName', res.data.user.lastName);
-   GetStorage().write('phoneNumber', res.data.user.mobile);
-   GetStorage().write('token', raw['token']);
-   GetStorage().write('referralCode', res.data.user.inviteLink);
-
-   return const Right("Login Successful");
+        return const Right("Login Successful");
       } else {
         return Left(
             AppError(errorType: AppErrorType.network, message: raw['message']));
@@ -217,11 +220,13 @@ class AuthServiceImpl extends AuthServiceDataSource {
   Future<Either<AppError, String>> updatePassword(String password) async {
     Map<String, dynamic> payload = {"password": password};
     String tokenProvider = prospectIsProvider.getForgotPasswordToken();
-    Map<String, dynamic> token = {"": tokenProvider,};
-
+    Map<String, dynamic> token = {
+      "token": tokenProvider,
+    };
     try {
       var raw = await httpProvider.postHttp(
-          '${JekawinBaseUrls.authBaseUrl}resetpassword/$tokenProvider', payload,params: token);
+          '${JekawinBaseUrls.authBaseUrl}resetpassword/$tokenProvider', payload,
+          params: token);
       if (raw['success']) {
         return const Right("Password reset successful");
       } else {
@@ -244,8 +249,9 @@ class AuthServiceImpl extends AuthServiceDataSource {
   Future<Either<AppError, String>> signout() async {
     var token = GetStorage().read("token");
     try {
-      var raw = await httpProvider
-          .deleteHttp('${JekawinBaseUrls.authBaseUrl}signout', );
+      var raw = await httpProvider.deleteHttp(
+        '${JekawinBaseUrls.authBaseUrl}signout',
+      );
       if (raw['success']) {
         return const Right("Logout Successful");
       } else {
