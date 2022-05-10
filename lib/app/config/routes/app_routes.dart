@@ -20,6 +20,7 @@ abstract class Routes {
   static const withdrawalAmount = _Paths.withdrawalAmount;
   static const withdrawalConfirmation = _Paths.withdrawalConfirmation;
   static const referral = _Paths.referral;
+  static const editProfile = _Paths.editProfile;
 }
 
 abstract class _Paths {
@@ -39,4 +40,5 @@ abstract class _Paths {
   static const withdrawalAmount = '/withdrawalAmount';
   static const withdrawalConfirmation = '/withdrawalConfirmation';
   static const referral = '/referral';
+  static const editProfile = '/editProfile';
 }
