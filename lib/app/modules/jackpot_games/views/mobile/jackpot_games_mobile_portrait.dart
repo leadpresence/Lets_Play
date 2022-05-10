@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:jekawin_mobile_flutter/app/modules/jackpot_games/controllers/jackpot_games_controller.dart';
 import 'package:pinput/pinput.dart';
 import '../../../../widgets/custom_large_button.dart';
 import 'jackpot_games_details_mobile_portrait.dart';
 
 class JackpotGamesMobilePortrait extends StatelessWidget {
-  const JackpotGamesMobilePortrait({Key? key}) : super(key: key);
+  JackpotGamesMobilePortrait({Key? key}) : super(key: key);
+
+  final JackpotGamesController controller = Get.put(JackpotGamesController());
 
   @override
   Widget build(BuildContext context) {
@@ -159,6 +162,8 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
                                 Pinput(
                                   length: 5,
                                   key: key,
+                                  keyboardType: TextInputType.number,
+                                  controller: controller.singleTicketNumber,
                                   defaultPinTheme: PinTheme(
                                     width: 56,
                                     height: 56,
@@ -198,7 +203,7 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
                                 CustomButton(
                                   buttonText: "Confirm",
                                   onPressed: () => Get.to(
-                                    () => const JackpotGamesDetailsMobilePortrait(),
+                                    () => JackpotGamesDetailsMobilePortrait(),
                                     transition: Transition.cupertino,
                                   ),
                                 ),
@@ -246,6 +251,178 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
                                       ),
                                     ),
                                   ],
+                                ),
+                                const SizedBox(height: 24),
+                                Pinput(
+                                  length: 5,
+                                  key: key,
+                                  keyboardType: TextInputType.number,
+                                  controller: controller.multipleTicketNumber1,
+                                  defaultPinTheme: PinTheme(
+                                    width: 56,
+                                    height: 56,
+                                    textStyle: GoogleFonts.poppins(
+                                      fontSize: 16,
+                                      color: const Color(0XFF414249),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      border: Border.all(
+                                        color: const Color(0XFFDADEE3),
+                                        width: 3,
+                                      ),
+                                    ),
+                                  ),
+                                  focusedPinTheme: PinTheme(
+                                    width: 56,
+                                    height: 56,
+                                    textStyle: GoogleFonts.poppins(
+                                      fontSize: 16,
+                                      color: const Color(0XFF414249),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      border: Border.all(
+                                        color: const Color(0XFFFE7A01),
+                                        width: 3,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                                Pinput(
+                                  length: 5,
+                                  key: key,
+                                  keyboardType: TextInputType.number,
+                                  controller: controller.multipleTicketNumber2,
+                                  defaultPinTheme: PinTheme(
+                                    width: 56,
+                                    height: 56,
+                                    textStyle: GoogleFonts.poppins(
+                                      fontSize: 16,
+                                      color: const Color(0XFF414249),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      border: Border.all(
+                                        color: const Color(0XFFDADEE3),
+                                        width: 3,
+                                      ),
+                                    ),
+                                  ),
+                                  focusedPinTheme: PinTheme(
+                                    width: 56,
+                                    height: 56,
+                                    textStyle: GoogleFonts.poppins(
+                                      fontSize: 16,
+                                      color: const Color(0XFF414249),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      border: Border.all(
+                                        color: const Color(0XFFFE7A01),
+                                        width: 3,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                                Pinput(
+                                  length: 5,
+                                  key: key,
+                                  keyboardType: TextInputType.number,
+                                  controller: controller.multipleTicketNumber3,
+                                  defaultPinTheme: PinTheme(
+                                    width: 56,
+                                    height: 56,
+                                    textStyle: GoogleFonts.poppins(
+                                      fontSize: 16,
+                                      color: const Color(0XFF414249),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      border: Border.all(
+                                        color: const Color(0XFFDADEE3),
+                                        width: 3,
+                                      ),
+                                    ),
+                                  ),
+                                  focusedPinTheme: PinTheme(
+                                    width: 56,
+                                    height: 56,
+                                    textStyle: GoogleFonts.poppins(
+                                      fontSize: 16,
+                                      color: const Color(0XFF414249),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      border: Border.all(
+                                        color: const Color(0XFFFE7A01),
+                                        width: 3,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                                Pinput(
+                                  length: 5,
+                                  key: key,
+                                  keyboardType: TextInputType.number,
+                                  controller: controller.multipleTicketNumber4,
+                                  defaultPinTheme: PinTheme(
+                                    width: 56,
+                                    height: 56,
+                                    textStyle: GoogleFonts.poppins(
+                                      fontSize: 16,
+                                      color: const Color(0XFF414249),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      border: Border.all(
+                                        color: const Color(0XFFDADEE3),
+                                        width: 3,
+                                      ),
+                                    ),
+                                  ),
+                                  focusedPinTheme: PinTheme(
+                                    width: 56,
+                                    height: 56,
+                                    textStyle: GoogleFonts.poppins(
+                                      fontSize: 16,
+                                      color: const Color(0XFF414249),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      border: Border.all(
+                                        color: const Color(0XFFFE7A01),
+                                        width: 3,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 32,
+                                ),
+                                CustomButton(
+                                  buttonText: "Confirm",
+                                  onPressed: () => Get.to(
+                                    () => JackpotGamesDetailsMobilePortrait(),
+                                    transition: Transition.cupertino,
+                                  ),
                                 ),
                               ],
                             ),

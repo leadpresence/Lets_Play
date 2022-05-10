@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import '../../controllers/jackpot_games_controller.dart';
 
 class JackpotGamesDetailsMobilePortrait extends StatelessWidget {
-  const JackpotGamesDetailsMobilePortrait({Key? key}) : super(key: key);
+  JackpotGamesDetailsMobilePortrait({Key? key}) : super(key: key);
+
+  final JackpotGamesController controller = Get.put(JackpotGamesController());
 
   @override
   Widget build(BuildContext context) {

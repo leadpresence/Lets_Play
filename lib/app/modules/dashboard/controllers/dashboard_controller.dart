@@ -10,8 +10,8 @@ class DashboardController extends GetxController
   late DateTime startDate, endDate;
   late Rx<AnimationController> animationController =
       AnimationController(vsync: this).obs;
-  int days = 0, hours = 0, minutes = 0, seconds = 0;
-  var timeRemainingInSec = 0;
+  RxInt days = 0.obs, hours = 0.obs, minutes = 0.obs, seconds = 0.obs;
+  RxInt timeRemainingInSec = 0.obs;
 
   Future<JackpotGameModel> getGames() async {
     await gamesService.getJackPotGame();
@@ -33,20 +33,23 @@ class DashboardController extends GetxController
 
   void startCountDown() {
     final difference = endDate.difference(DateTime.now());
-    days = difference.inDays;
-    hours = difference.inHours % 24;
-    minutes = difference.inMinutes % 60;
-    seconds = difference.inSeconds % 60;
+    days.value = difference.inDays;
+    hours.value = difference.inHours % 24;
+    minutes.value = difference.inMinutes % 60;
+    seconds.value = difference.inSeconds % 60;
 
-    timeRemainingInSec =
-        days * 86400 + hours * 3600 + minutes * 60 + seconds;
+    timeRemainingInSec.value = days.value * 86400 +
+        hours.value * 3600 +
+        minutes.value * 60 +
+        seconds.value;
+
     animationController.value = AnimationController(
         vsync: this,
         duration: Duration(
-          days: days,
-          hours: hours,
-          minutes: minutes,
-          seconds: seconds,
+          days: days.value,
+          hours: hours.value,
+          minutes: minutes.value,
+          seconds: seconds.value,
         ));
     animationController.value.forward();
     update();

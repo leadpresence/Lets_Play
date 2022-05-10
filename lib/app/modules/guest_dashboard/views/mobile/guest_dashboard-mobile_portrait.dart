@@ -89,7 +89,7 @@ class GuestDashboardMobilePortrait extends StatelessWidget {
                     );
                   },
                   animation: StepTween(
-                    begin: dashboardController.timeRemainingInSec,
+                    begin: dashboardController.timeRemainingInSec.value,
                     end: 0,
                   ).animate(
                     dashboardController.animationController.value,
@@ -99,9 +99,6 @@ class GuestDashboardMobilePortrait extends StatelessWidget {
                   height: 18,
                 ),
                 const DashboardInstantGames(),
-                const SizedBox(
-                  height: 12,
-                ),
               ],
             ),
           ),

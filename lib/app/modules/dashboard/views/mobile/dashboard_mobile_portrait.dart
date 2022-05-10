@@ -74,12 +74,12 @@ class DashboardMobilePortrait extends StatelessWidget {
                     onPressed: () {
                       // dashboardController.getGames();
                       Get.to(
-                        () => const JackpotGamesMobilePortrait(),
+                        () => JackpotGamesMobilePortrait(),
                         transition: Transition.cupertino,
                       );
                     },
                     animation: StepTween(
-                      begin: dashboardController.timeRemainingInSec,
+                      begin: dashboardController.timeRemainingInSec.value,
                       end: 0,
                     ).animate(
                       dashboardController.animationController.value,
