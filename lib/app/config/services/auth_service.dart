@@ -30,7 +30,7 @@ abstract class AuthServiceDataSource {
 
 class AuthServiceImpl extends AuthServiceDataSource {
   final httpProvider = Get.find<HttpService>();
-  final prospectIsProvider = Get.find<ProspectIdController>();
+  final prospectIsProvider = Get.find<UtilsController>();
   final UserLocalDataSourceImpl _userLocalDataSource =
       Get.find<UserLocalDataSourceImpl>();
   User? get user => _userLocalDataSource.user;
@@ -81,6 +81,8 @@ class AuthServiceImpl extends AuthServiceDataSource {
       GetStorage().write('lastName', res.data.user.lastName);
       GetStorage().write('phoneNumber', res.data.user.mobile);
       GetStorage().write('profileImage', res.data.user.avatar);
+      GetStorage().write('referralCode', res.data.user.inviteLink);
+
       if (raw['success']) {
         if (kDebugMode) {
           print(
@@ -141,6 +143,8 @@ class AuthServiceImpl extends AuthServiceDataSource {
       GetStorage().write('lastName', res.data.user.lastName);
       GetStorage().write('profileImage', res.data.user.avatar);
       GetStorage().write('phoneNumber', res.data.user.mobile);
+      GetStorage().write('token', raw['token']);
+      GetStorage().write('referralCode', res.data.user.inviteLink);
       if (raw['success']) {
         return const Right("Login Successful");
       } else {

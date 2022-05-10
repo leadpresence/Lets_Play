@@ -12,6 +12,7 @@ import 'app/config/services/di/di_locator.dart';
 void main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: 'dotenv');
   await setDi();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
@@ -19,7 +20,6 @@ void main() async {
       statusBarColor: Colors.transparent,
       statusBarBrightness: Brightness.light,
       statusBarIconBrightness: Brightness.light));
-  await dotenv.load(fileName: 'dotenv');
   runApp(const MyApp());
 }
 

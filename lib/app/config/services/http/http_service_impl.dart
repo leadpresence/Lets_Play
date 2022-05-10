@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:jekawin_mobile_flutter/app/config/data/local/user_local_impl.dart';
 import 'package:jekawin_mobile_flutter/app/utils/simple_log_printer.dart';
 import 'package:flutter/foundation.dart';
@@ -26,9 +27,11 @@ class HttpServiceImpl extends HttpService {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
     };
-    if (user != null) {
-      header['Authorization'] = 'Bearer ${user?.token}';
-    }
+    // if (user != null) {
+    //   header['Authorization'] = 'Bearer ${user?.token}';
+    // }
+    header['Authorization'] = 'Bearer ${GetStorage().read('token')}';
+
     _dio.options.headers.addAll(header);
   }
 
@@ -45,10 +48,10 @@ class HttpServiceImpl extends HttpService {
 
   @override
   Future<dynamic> getHttp(String route,
-      {Map<String, dynamic>? params, bool refreshed: false}) async {
+      {Map<String, dynamic>? params, bool refreshed : false}) async {
     dio_response.Response response;
     params?.removeWhere((key, value) => value == null);
-    final fullRoute = route;
+    final fullRoute = route ;
     if (dotenv.get('APP_DEBUG') == 'true') {
       getLogger().d('[GET] Sending $params to $fullRoute');
     }
@@ -73,7 +76,8 @@ class HttpServiceImpl extends HttpService {
       }
 
       if (e.response?.statusCode == 401) {}
-
+      if (e.response?.statusCode == 407) {
+      }
       throw NetworkException(e.message);
     }
 
@@ -116,6 +120,7 @@ class HttpServiceImpl extends HttpService {
       if (e.response?.statusCode == 401) {
         throw const AuthException('Invalid token and credentials');
       }
+
       if (dotenv.get('APP_DEBUG') == 'true') {
         getLogger()
             .e('HttpService: Failed to POST ${e.response?.data['message']}');
@@ -188,6 +193,7 @@ class HttpServiceImpl extends HttpService {
     getLogger().d('[DELETE] Sending $params to $route');
 
     try {
+
       setHeader();
       response = await _dio.delete(
         route,

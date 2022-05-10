@@ -2,6 +2,8 @@
 // splitting a path to get a specific value etc.
 // I'm not sure of this helpers folder yet, we may delete it in favor of mixins
 
+import 'package:intl/intl.dart';
+
 class TextUtils{
   TextUtils();
   String stripFirstZeroAddCountryCode({required String number, String? code='+234'}){
@@ -17,6 +19,12 @@ class TextUtils{
       newNumber   =  number.replaceRange(0,1,code!);
     }
     return newNumber;
+  }
+
+  String shortDate(DateTime date){
+    final DateFormat formatter = DateFormat('yyyy-MM-dd');
+    final String formatted = formatter.format(date);
+    return formatted; // something like 2013-04-20
   }
 }
 
