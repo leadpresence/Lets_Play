@@ -6,6 +6,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jekawin_mobile_flutter/app/modules/user_profile/controllers/user_profile_cntroller.dart';
 
+import '../../../edit_profile/views/mobile/edit_profile_mobile_porttrait.dart';
+
 class UserProfileMobilePortrait extends StatelessWidget {
   UserProfileMobilePortrait({Key? key}) : super(key: key);
 
@@ -113,13 +115,21 @@ class UserProfileMobilePortrait extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Column(
-                          children: [
-                            SvgPicture.asset(
-                              'assets/svgs/ic_outline-mode-edit-outline.svg',
-                            ),
-                            const Gap(12),
-                          ],
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(
+                                  () =>EditProfileMobilePortrait(),
+                              transition: Transition.cupertino,
+                            );
+                          },
+                          child: Column(
+                            children: [
+                              SvgPicture.asset(
+                                'assets/svgs/ic_outline-mode-edit-outline.svg',
+                              ),
+                              const Gap(12),
+                            ],
+                          ),
                         )
                       ],
                     ),

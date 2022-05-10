@@ -3,6 +3,7 @@ import 'package:jekawin_mobile_flutter/app/modules/add_bank_acccount/bindings/ad
 import 'package:jekawin_mobile_flutter/app/modules/auth/views/auth_home.dart';
 import 'package:jekawin_mobile_flutter/app/modules/e_shop/bindings/e_shop_binding.dart';
 import 'package:jekawin_mobile_flutter/app/modules/e_shop/views/e_shop_view.dart';
+import 'package:jekawin_mobile_flutter/app/modules/edit_profile/views/edit_profile_view.dart';
 import 'package:jekawin_mobile_flutter/app/modules/fund_wallet/bindings/fund_wallet_bindings.dart';
 import 'package:jekawin_mobile_flutter/app/modules/fund_wallet/views/fund_wallet_view.dart';
 import 'package:jekawin_mobile_flutter/app/modules/login/bindings/login_bindings.dart';
@@ -133,6 +134,13 @@ class AppPages {
     GetPage(
       name: _Paths.referral,
       page: () => const ReferralView(),
+      binding: ReferralBindings(),
+      transition: Transition.fadeIn,
+    ),
+
+    GetPage(
+      name: _Paths.editProfile,
+      page: () => const EditProfileView(),
       binding: ReferralBindings(),
       transition: Transition.fadeIn,
     ),

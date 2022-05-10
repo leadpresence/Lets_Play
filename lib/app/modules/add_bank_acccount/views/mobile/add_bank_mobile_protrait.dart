@@ -107,11 +107,7 @@ class AddBankMobilePortrait extends GetView<AddBankController> {
         Padding(
           padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
           child:
-          InputDecorator(
-            decoration:  const InputDecoration(
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(18))))    ,
-              child: DropdownButtonHideUnderline(
+       DropdownButtonHideUnderline(
                 child: DropdownButtonFormField(
                     // decoration: const InputDecoration(
                     //   enabledBorder: UnderlineInputBorder(
@@ -134,7 +130,7 @@ class AddBankMobilePortrait extends GetView<AddBankController> {
                     onChanged: (String? newValue) {
                       // setState((){dropdownvalue = newValue!;}) ;
                     }),
-              )),
+              ),
         ),
         const Gap(30),
 
