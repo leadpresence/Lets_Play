@@ -96,7 +96,7 @@ class EditProfileMobilePortrait extends GetView {
 
               SizedBox(
                 height: 24,
-                width: 90 ?? Get.width * .6,
+                width: 90  ,
                 child: Theme(
                   data: ThemeData(
                     splashColor: Colors.white,

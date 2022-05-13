@@ -9,6 +9,7 @@ import 'package:jekawin_mobile_flutter/app/modules/fund_wallet/views/fund_wallet
 import 'package:jekawin_mobile_flutter/app/modules/login/bindings/login_bindings.dart';
 import 'package:jekawin_mobile_flutter/app/modules/login/views/login.dart';
 import 'package:jekawin_mobile_flutter/app/modules/new_password/views/new_password.dart';
+import 'package:jekawin_mobile_flutter/app/modules/notification/views/notification_view.dart';
 import 'package:jekawin_mobile_flutter/app/modules/referral/bindings/referral_bindings.dart';
 import 'package:jekawin_mobile_flutter/app/modules/referral/views/referral_view.dart';
 import 'package:jekawin_mobile_flutter/app/modules/resetpassword/views/reset_password.dart';
@@ -141,6 +142,12 @@ class AppPages {
     GetPage(
       name: _Paths.editProfile,
       page: () => const EditProfileView(),
+      binding: ReferralBindings(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: _Paths.notification,
+      page: () => const NotificationView(),
       binding: ReferralBindings(),
       transition: Transition.fadeIn,
     ),

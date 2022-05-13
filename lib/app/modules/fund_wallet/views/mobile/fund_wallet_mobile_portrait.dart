@@ -120,10 +120,7 @@ class FundWalletMobilePortrait extends GetView {
                                 Icons.check_circle,
                                 color: Colors.green,
                               )
-                            : const Icon(
-                                Icons.check_circle,
-                                color: Colors.grey,
-                              )
+                            : const SizedBox()
                       ],
                     ),
                   ),
@@ -162,10 +159,7 @@ class FundWalletMobilePortrait extends GetView {
                                 Icons.check_circle,
                                 color: Colors.green,
                               )
-                            : const Icon(
-                                Icons.check_circle,
-                                color: Colors.grey,
-                              )
+                            :   const SizedBox()
                       ],
                     ),
                   ),
