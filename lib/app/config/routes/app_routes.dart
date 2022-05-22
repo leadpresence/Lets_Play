@@ -22,6 +22,7 @@ abstract class Routes {
   static const referral = _Paths.referral;
   static const editProfile = _Paths.editProfile;
   static const notification = _Paths.notification;
+  static const leaderBoard = _Paths.leaderBoard;
 }
 
 abstract class _Paths {
@@ -43,4 +44,5 @@ abstract class _Paths {
   static const referral = '/referral';
   static const editProfile = '/editProfile';
   static const notification = '/notification';
+  static const leaderBoard = '/leaderBoard';
 }

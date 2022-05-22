@@ -6,6 +6,8 @@ import 'package:jekawin_mobile_flutter/app/modules/e_shop/views/e_shop_view.dart
 import 'package:jekawin_mobile_flutter/app/modules/edit_profile/views/edit_profile_view.dart';
 import 'package:jekawin_mobile_flutter/app/modules/fund_wallet/bindings/fund_wallet_bindings.dart';
 import 'package:jekawin_mobile_flutter/app/modules/fund_wallet/views/fund_wallet_view.dart';
+import 'package:jekawin_mobile_flutter/app/modules/leaderboard/biindings/leaderboard_bindings.dart';
+import 'package:jekawin_mobile_flutter/app/modules/leaderboard/views/leaderboard_view.dart';
 import 'package:jekawin_mobile_flutter/app/modules/login/bindings/login_bindings.dart';
 import 'package:jekawin_mobile_flutter/app/modules/login/views/login.dart';
 import 'package:jekawin_mobile_flutter/app/modules/new_password/views/new_password.dart';
@@ -39,7 +41,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const initial = Routes.splash;
+  static const initial = Routes.leaderBoard;
 
   static final routes = [
     GetPage(
@@ -149,6 +151,12 @@ class AppPages {
       name: _Paths.notification,
       page: () => const NotificationView(),
       binding: ReferralBindings(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: _Paths.leaderBoard,
+      page: () => const LeaderBoardView(),
+      binding: LeaderBoarBindings(),
       transition: Transition.fadeIn,
     ),
   ];
