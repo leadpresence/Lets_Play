@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:jekawin_mobile_flutter/app/modules/e_shop/views/e_shop_view.dart';
+import 'package:jekawin_mobile_flutter/app/modules/leaderboard/views/leaderboard_view.dart';
+import 'package:jekawin_mobile_flutter/app/modules/leaderboard/views/mobile/leaderboard_mobile_portrait.dart';
 
 import '../../dashboard/views/mobile/dashboard_mobile_portrait.dart';
 import '../../menu/view/mobile/menu_mobile_portrait.dart';
@@ -33,7 +35,7 @@ class _JekawinBottomTabsState extends State<JekawinBottomTabs> {
     });
     _children.add({
       "title": "Leaderboard",
-      "widget": Container(),
+      "widget": const LeaderBoardView(),
     });
     _children.add({
       "title": "Wallet",

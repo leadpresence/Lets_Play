@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:jekawin_mobile_flutter/app/modules/dashboard/controllers/dashboard_controller.dart';
+import 'package:jekawin_mobile_flutter/app/modules/notification/views/mobile/notifications_mobile_portrait.dart';
 import '../../../../config/data/local/user_local_impl.dart';
 import '../../../jackpot_games/views/mobile/jackpot_games_mobile_portrait.dart';
 import '../../../signup/controllers/sign_up_controller.dart';
@@ -23,8 +24,10 @@ class DashboardMobilePortrait extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var firstName = GetStorage().read("firstName");
-    return Obx(
-      () => Scaffold(
+    return
+      Obx(
+      () =>
+          Scaffold(
         body: SafeArea(
           child: Container(
             color: Colors.white,
@@ -61,9 +64,16 @@ class DashboardMobilePortrait extends StatelessWidget {
                             ],
                           ),
                         ),
-                        SvgPicture.asset(
-                          'assets/svgs/clarity_notification-outline-badged.svg',
-                        )
+                        GestureDetector(
+                            onTap: () {
+                              Get.to(
+                                    () => NotificationMobilePortrait(),
+                                transition: Transition.cupertino,
+                              );
+                            },
+                            child: SvgPicture.asset(
+                              'assets/svgs/clarity_notification-outline-badged.svg',
+                            ))
                       ],
                     ),
                   ),

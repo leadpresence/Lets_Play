@@ -113,19 +113,14 @@ class FundWalletMobilePortrait extends GetView {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          "Paystack",
-                          style: TextStyle(color: Colors.black),
-                        ),
+                        const Text("Paystack",
+                            style: TextStyle(color: Colors.black)),
                         controller.paystackSelected.value
                             ? const Icon(
                                 Icons.check_circle,
                                 color: Colors.green,
                               )
-                            : const Icon(
-                                Icons.check_circle,
-                                color: Colors.white,
-                              ),
+                            : const SizedBox()
                       ],
                     ),
                   ),
@@ -164,10 +159,7 @@ class FundWalletMobilePortrait extends GetView {
                                 Icons.check_circle,
                                 color: Colors.green,
                               )
-                            : const Icon(
-                                Icons.check_circle,
-                                color: Colors.white,
-                              )
+                            :   const SizedBox()
                       ],
                     ),
                   ),

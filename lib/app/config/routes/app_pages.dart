@@ -6,9 +6,12 @@ import 'package:jekawin_mobile_flutter/app/modules/e_shop/views/e_shop_view.dart
 import 'package:jekawin_mobile_flutter/app/modules/edit_profile/views/edit_profile_view.dart';
 import 'package:jekawin_mobile_flutter/app/modules/fund_wallet/bindings/fund_wallet_bindings.dart';
 import 'package:jekawin_mobile_flutter/app/modules/fund_wallet/views/fund_wallet_view.dart';
+import 'package:jekawin_mobile_flutter/app/modules/leaderboard/biindings/leaderboard_bindings.dart';
+import 'package:jekawin_mobile_flutter/app/modules/leaderboard/views/leaderboard_view.dart';
 import 'package:jekawin_mobile_flutter/app/modules/login/bindings/login_bindings.dart';
 import 'package:jekawin_mobile_flutter/app/modules/login/views/login.dart';
 import 'package:jekawin_mobile_flutter/app/modules/new_password/views/new_password.dart';
+import 'package:jekawin_mobile_flutter/app/modules/notification/views/notification_view.dart';
 import 'package:jekawin_mobile_flutter/app/modules/referral/bindings/referral_bindings.dart';
 import 'package:jekawin_mobile_flutter/app/modules/referral/views/referral_view.dart';
 import 'package:jekawin_mobile_flutter/app/modules/resetpassword/views/reset_password.dart';
@@ -142,6 +145,18 @@ class AppPages {
       name: _Paths.editProfile,
       page: () => const EditProfileView(),
       binding: ReferralBindings(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: _Paths.notification,
+      page: () => const NotificationView(),
+      binding: ReferralBindings(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: _Paths.leaderBoard,
+      page: () => const LeaderBoardView(),
+      binding: LeaderBoarBindings(),
       transition: Transition.fadeIn,
     ),
   ];

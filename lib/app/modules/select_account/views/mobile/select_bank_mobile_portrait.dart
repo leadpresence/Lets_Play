@@ -62,7 +62,7 @@ class SelectBankMobilePortrait extends GetView {
                     addBankIcon,
                     const Gap(15),
                     SizedBox(
-                      child: Text(
+                      child: const Text(
                         "Add new bank account",
                         overflow: TextOverflow.ellipsis,
                       ),

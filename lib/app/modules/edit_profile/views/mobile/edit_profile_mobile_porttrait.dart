@@ -38,6 +38,24 @@ class EditProfileMobilePortrait extends GetView {
     // Initial Selected Value
     String dropdownvalue = genders[0];
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 16.0),
+          child: IconButton(
+            splashRadius: 24,
+            icon: SvgPicture.asset(
+              'assets/svgs/chevronLeft.svg',
+              color: const Color(0xff12121D),
+            ),
+            onPressed: () {
+              Get.back();
+            },
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
           child: Form(
               child: Padding(
@@ -46,7 +64,7 @@ class EditProfileMobilePortrait extends GetView {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Gap(100),
+              // const Gap(100),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -75,9 +93,10 @@ class EditProfileMobilePortrait extends GetView {
                 ],
               ),
               const Gap(12),
+
               SizedBox(
                 height: 24,
-                width: Get.width * .6,
+                width: 90  ,
                 child: Theme(
                   data: ThemeData(
                     splashColor: Colors.white,
@@ -100,11 +119,11 @@ class EditProfileMobilePortrait extends GetView {
                 ),
               ),
               const Gap(42),
-              editFormField(hint: "First name"),
+              editFormField(hint: firstName),
               const Gap(16),
-              editFormField(hint: "Last name"),
+              editFormField(hint: lastName),
               const Gap(16),
-              editFormField(hint: "Phone number"),
+              editFormField(hint: phoneNumber),
               const Gap(16),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
