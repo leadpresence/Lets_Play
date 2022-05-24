@@ -49,7 +49,7 @@ borderLageButton(String text, Function onpressed, BuildContext context) =>
 class CustomButton extends StatelessWidget {
   final onPressed, hasIcon, buttonText, hasBorder, height, isLoading;
 
-  final Color buttonColor, buttonTextColor;
+  final Color buttonColor, buttonTextColor, borderColor;
   const CustomButton({
     Key? key,
     this.onPressed,
@@ -60,6 +60,7 @@ class CustomButton extends StatelessWidget {
     this.buttonTextColor = const Color(0xffffffff),
     this.height,
     this.isLoading = false,
+    this.borderColor = const Color(0xff543884),
   }) : super(key: key);
 
   @override
@@ -82,7 +83,7 @@ class CustomButton extends StatelessWidget {
             splashFactory: NoSplash.splashFactory,
             shape: RoundedRectangleBorder(
               side: hasBorder
-                  ? const BorderSide(color: Color(0xff543884), width: 1)
+                  ? BorderSide(color: borderColor, width: 1)
                   : BorderSide.none,
               borderRadius: BorderRadius.circular(16),
             ),

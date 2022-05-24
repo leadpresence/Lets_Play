@@ -100,7 +100,7 @@ class WithdrawalConfirmationMobilePortrait
                   Get.to(
                     () => const SuccessOrFailureMobileView(
                       msg:
-                          "Thanks for using this service\nWithdrawal request is been processed",
+                          "Your request is being processed",
                       className: JekawinBottomTabs(
                         tabIndex: 2,
                       ),

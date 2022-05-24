@@ -63,21 +63,21 @@ class SignUpController extends GetxController {
     super.onInit();
   }
 
-  @override
-  void dispose() {
-    phoneNumberController.dispose();
-    passwordController.dispose();
-    isLoading.value = false;
-    super.dispose();
-  }
-
-  @override
-  void onClose() {
-    phoneNumberController.dispose();
-    passwordController.dispose();
-    isLoading.value = false;
-    super.onClose();
-  }
+  // @override
+  // void dispose() {
+  //   phoneNumberController.dispose();
+  //   passwordController.dispose();
+  //   isLoading.value = false;
+  //   super.dispose();
+  // }
+  //
+  // @override
+  // void onClose() {
+  //   phoneNumberController.dispose();
+  //   passwordController.dispose();
+  //   isLoading.value = false;
+  //   super.onClose();
+  // }
 
   Future<void> signUp(Key? k) async {
     var firstName = firstNameController.value.text;

@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../../../widgets/custom_large_button.dart';
+import '../../../true_or_false/views/true_or_false_view.dart';
 
 class DashboardInstantGames extends StatelessWidget {
   const DashboardInstantGames({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class DashboardInstantGames extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: const [
                 Text(
-                  'Instant Wins',
+                  'Instant Games',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -66,7 +67,7 @@ class DashboardInstantGames extends StatelessWidget {
                               color: const Color(0xff9A77CF),
                             ),
                             child: const Text(
-                              'Spin & Win',
+                              'True or False',
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
@@ -98,7 +99,10 @@ class DashboardInstantGames extends StatelessWidget {
                     const SizedBox(
                       height: 12,
                     ),
-                    Image.asset('assets/svgs/roll_dice.png'),
+                    Image.asset(
+                      'assets/svgs/true_false.png',
+                      height: 120,
+                    ),
                     const SizedBox(
                       height: 12,
                     ),
@@ -106,7 +110,9 @@ class DashboardInstantGames extends StatelessWidget {
                       width: Get.width * .32,
                       child: CustomButton(
                         height: 44.0,
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.to(() => const TrueOrFalseView());
+                        },
                         buttonText: 'Play Now',
                         buttonColor: const Color(0xFFFE7A01),
                       ),
@@ -212,7 +218,7 @@ class DashboardInstantGames extends StatelessWidget {
                               color: const Color(0xff9A77CF),
                             ),
                             child: const Text(
-                              'Spin & Win',
+                              'True or False',
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
@@ -244,7 +250,10 @@ class DashboardInstantGames extends StatelessWidget {
                     const SizedBox(
                       height: 12,
                     ),
-                    Image.asset('assets/svgs/roll_dice.png'),
+                    Image.asset(
+                      'assets/svgs/true_false.png',
+                      height: 120,
+                    ),
                     const SizedBox(
                       height: 12,
                     ),
@@ -445,7 +454,7 @@ class DashboardInstantGames extends StatelessWidget {
                               color: const Color(0xff9A77CF),
                             ),
                             child: const Text(
-                              'Spin & Win',
+                              'True or False',
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
@@ -477,7 +486,10 @@ class DashboardInstantGames extends StatelessWidget {
                     const SizedBox(
                       height: 12,
                     ),
-                    Image.asset('assets/svgs/roll_dice.png'),
+                    Image.asset(
+                      'assets/svgs/true_false.png',
+                      height: 120,
+                    ),
                     const SizedBox(
                       height: 12,
                     ),
@@ -591,7 +603,7 @@ class DashboardInstantGames extends StatelessWidget {
                               color: const Color(0xff9A77CF),
                             ),
                             child: const Text(
-                              'Spin & Win',
+                              'True or False',
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
@@ -623,7 +635,10 @@ class DashboardInstantGames extends StatelessWidget {
                     const SizedBox(
                       height: 12,
                     ),
-                    Image.asset('assets/svgs/roll_dice.png'),
+                    Image.asset(
+                      'assets/svgs/true_false.png',
+                      height: 120,
+                    ),
                     const SizedBox(
                       height: 12,
                     ),

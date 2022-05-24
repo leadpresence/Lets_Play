@@ -56,6 +56,12 @@ class DashboardController extends GetxController
   }
 
   @override
+  void dispose() {
+    animationController.value.dispose();
+    super.dispose();
+  }
+
+  @override
   void onInit() {
     getGames();
     super.onInit();

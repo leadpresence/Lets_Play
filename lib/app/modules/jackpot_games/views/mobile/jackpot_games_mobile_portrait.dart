@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -11,6 +13,7 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
   JackpotGamesMobilePortrait({Key? key}) : super(key: key);
 
   final JackpotGamesController controller = Get.put(JackpotGamesController());
+  final Random random = Random();
 
   @override
   Widget build(BuildContext context) {
@@ -146,7 +149,11 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
                                               BorderRadius.circular(16.0),
                                         ),
                                       ),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        controller.singleTicketNumber.text =
+                                            (random.nextInt(899999) + 100000)
+                                                .toString();
+                                      },
                                       child: const Text(
                                         'Generate all',
                                         style: TextStyle(
@@ -203,7 +210,12 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
                                 CustomButton(
                                   buttonText: "Confirm",
                                   onPressed: () => Get.to(
-                                    () => JackpotGamesDetailsMobilePortrait(),
+                                    () => JackpotGamesDetailsMobilePortrait(
+                                      gameCost: "50",
+                                      numberOfGames: "1",
+                                      ticketNumber:
+                                          controller.singleTicketNumber.text,
+                                    ),
                                     transition: Transition.cupertino,
                                   ),
                                 ),
@@ -240,7 +252,22 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
                                               BorderRadius.circular(16.0),
                                         ),
                                       ),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        controller.multipleTicketNumber1.text =
+                                            (random.nextInt(899999) + 100000)
+                                                .toString();
+
+                                        controller.multipleTicketNumber2.text =
+                                            (random.nextInt(899999) + 100000)
+                                                .toString();
+                                        controller.multipleTicketNumber3.text =
+                                            (random.nextInt(899999) + 100000)
+                                                .toString();
+
+                                        controller.multipleTicketNumber4.text =
+                                            (random.nextInt(899999) + 100000)
+                                                .toString();
+                                      },
                                       child: const Text(
                                         'Generate all',
                                         style: TextStyle(
@@ -420,7 +447,12 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
                                 CustomButton(
                                   buttonText: "Confirm",
                                   onPressed: () => Get.to(
-                                    () => JackpotGamesDetailsMobilePortrait(),
+                                    () => JackpotGamesDetailsMobilePortrait(
+                                      gameCost: "200",
+                                      numberOfGames: "4",
+                                      ticketNumber:
+                                          '${controller.multipleTicketNumber1.text}\n${controller.multipleTicketNumber2.text}\n${controller.multipleTicketNumber3.text}\n${controller.multipleTicketNumber4.text}',
+                                    ),
                                     transition: Transition.cupertino,
                                   ),
                                 ),

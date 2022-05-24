@@ -75,10 +75,9 @@ class EditProfileMobilePortrait extends GetView {
                 ],
               ),
               const Gap(12),
-
               SizedBox(
                 height: 24,
-                width: 90 ?? Get.width * .6,
+                width: Get.width * .6,
                 child: Theme(
                   data: ThemeData(
                     splashColor: Colors.white,
@@ -101,12 +100,11 @@ class EditProfileMobilePortrait extends GetView {
                 ),
               ),
               const Gap(42),
-              editFormField(hint: "what's your first name"),
+              editFormField(hint: "First name"),
               const Gap(16),
-              editFormField(hint: "And your last name"),
-
+              editFormField(hint: "Last name"),
               const Gap(16),
-              editFormField(hint: "phone number"),
+              editFormField(hint: "Phone number"),
               const Gap(16),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
@@ -114,7 +112,7 @@ class EditProfileMobilePortrait extends GetView {
                       child: DropdownButtonFormField(
                         decoration:   InputDecoration(
                           filled: true,
-                          fillColor: Color(0xFFDADEE3).withOpacity(.5),
+                          fillColor: const Color(0xFFDADEE3).withOpacity(.5),
                           enabledBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(color: Color(0x0ff8e8e8), width: 4)),
                           focusedBorder: UnderlineInputBorder(
@@ -155,7 +153,7 @@ class EditProfileMobilePortrait extends GetView {
                       // controller.signUpFormValidator(key);
                       Get.to(
                             () => const SuccessOrFailureMobileView(
-                          msg: 'Profile uppdate successful',
+                          msg: 'Profile update successful',
                           className: JekawinBottomTabs(
                             tabIndex: 0,
                             isGuestUser: true,

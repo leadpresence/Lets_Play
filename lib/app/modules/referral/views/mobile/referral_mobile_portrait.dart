@@ -1,12 +1,9 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:dotted_border/dotted_border.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:jekawin_mobile_flutter/app/modules/referral/controllers/referral_controller.dart';
 import 'package:jekawin_mobile_flutter/app/modules/referral/models/ReferralResponse.dart';
@@ -27,35 +24,35 @@ class ReferralMobilePortrait extends GetView<ReferralController> {
   @override
   Widget build(BuildContext context) {
     var firstName = GetStorage().read('firstName');
-    return Obx(() =>
-        Scaffold(
-            backgroundColor: Colors.white,
-            appBar: AppBar(
-              elevation: 0,
-              backgroundColor: Colors.white,
-              leading: Padding(
-                padding: const EdgeInsets.only(left: 16.0),
-                child: IconButton(
-                  splashRadius: 24,
-                  icon: SvgPicture.asset(
-                    'assets/svgs/chevronLeft.svg',
-                    color: const Color(0xff12121D),
-                  ),
-                  onPressed: () {
-                    Get.back();
-                  },
-                ),
+    return Obx(
+      () => Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.white,
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 16.0),
+            child: IconButton(
+              splashRadius: 24,
+              icon: SvgPicture.asset(
+                'assets/svgs/chevronLeft.svg',
+                color: const Color(0xff12121D),
               ),
+              onPressed: () {
+                Get.back();
+              },
             ),
-            body: SingleChildScrollView(child: Padding(
-              padding: const EdgeInsets.only(
-                left: 24.0,
-                right: 24.0,
-                top: 12.0,
-              ),
-              child: Column(
-                children: [
-                const Text(
+          ),
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: 24.0,
+              right: 24.0,
+              top: 12.0,
+            ),
+            child: Column(children: [
+              const Text(
                 'Referral',
                 style: TextStyle(
                   fontSize: 24,
@@ -68,12 +65,12 @@ class ReferralMobilePortrait extends GetView<ReferralController> {
               Container(
                 padding: const EdgeInsets.only(
                   top: 18,
-                  bottom: 12,
+                  bottom: 16,
                   left: 16,
                   right: 16,
                 ),
                 width: Get.width,
-                height: Get.height * .19,
+                height: Get.height * .23,
                 decoration: BoxDecoration(
                   color: const Color(0XFF543884),
                   borderRadius: BorderRadius.circular(20),
@@ -92,12 +89,9 @@ class ReferralMobilePortrait extends GetView<ReferralController> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                        ]
-
-                    ),
+                        ]),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-
                       children: const [
                         Text(
                           'Give a friend or family a promo code to get 2%  \ndiscount on any purchase',
@@ -109,7 +103,6 @@ class ReferralMobilePortrait extends GetView<ReferralController> {
                             fontWeight: FontWeight.normal,
                           ),
                         ),
-
                       ],
                     ),
                     Row(
@@ -117,11 +110,10 @@ class ReferralMobilePortrait extends GetView<ReferralController> {
                       children: [
                         DottedBorder(
                           radius: const Radius.circular(50),
-                          strokeWidth: 3.8,
-                          dashPattern: [4, 3],
+                          strokeWidth: 1,
+                          dashPattern: const [4, 3],
                           color: Colors.white,
                           borderType: BorderType.RRect,
-                          // color:Colors.deepPurple,
                           child: CustomMediumButton(
                             onPressed: () {
                               BotToast.showText(
@@ -134,7 +126,6 @@ class ReferralMobilePortrait extends GetView<ReferralController> {
                             buttonText: controller.referralCode.value,
                             buttonTextColor: const Color(0xff543884),
                             buttonColor: Colors.white,
-
                           ),
                         ),
                         CustomMediumButton(
@@ -142,8 +133,7 @@ class ReferralMobilePortrait extends GetView<ReferralController> {
                           borderColor: Colors.white,
                           onPressed: () {
                             Share.share(
-                                'Hi i\'m $firstName join me on Jekawin !Let\'s Shop, Play & Win, register with my invite code ${controller
-                                    .referralCode}  ',
+                                'Hi i\'m $firstName join me on Jekawin !Let\'s Shop, Play & Win, register with my invite code ${controller.referralCode}  ',
                                 subject: 'Jekwawin Invite');
                           },
                           width: Get.width * .36,
@@ -158,34 +148,35 @@ class ReferralMobilePortrait extends GetView<ReferralController> {
                 ),
               ),
               const Gap(20),
-            //
-            //   controller.refs.isEmpty?
-            // SizedBox(
-            // height: Get.height * .35,
-            //   child: const Center(
-            //     child: Text(
-            //       'No Referrals yet,\n invite friends to acquire points',
-            //       style: TextStyle(
-            //         fontSize: 18,
-            //         color: Color(0xff414249),
-            //       ),
-            //       textAlign: TextAlign.center,
-            //     ),
-            //   ),
-            // ):
+              //
+              //   controller.refs.isEmpty?
+              // SizedBox(
+              // height: Get.height * .35,
+              //   child: const Center(
+              //     child: Text(
+              //       'No Referrals yet,\n invite friends to acquire points',
+              //       style: TextStyle(
+              //         fontSize: 18,
+              //         color: Color(0xff414249),
+              //       ),
+              //       textAlign: TextAlign.center,
+              //     ),
+              //   ),
+              // ):
               ListView.builder(
-              shrinkWrap: true,
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.vertical,
-              itemCount: controller.refs.length,
-              itemBuilder: (BuildContext context, int position) {
-                return referralItem(controller.refs[position]);
-              },
-            ),
-            // ),
+                shrinkWrap: true,
+                physics: const BouncingScrollPhysics(),
+                scrollDirection: Axis.vertical,
+                itemCount: controller.refs.length,
+                itemBuilder: (BuildContext context, int position) {
+                  return referralItem(controller.refs[position]);
+                },
+              ),
+              // ),
             ]),
-    )))
-    ,
+          ),
+        ),
+      ),
     );
   }
 
@@ -203,7 +194,6 @@ class ReferralMobilePortrait extends GetView<ReferralController> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-
                   Text(
                     invite.firstname + "- " + "@" + invite.autoUsername,
                     style: TextStyle(
@@ -212,24 +202,27 @@ class ReferralMobilePortrait extends GetView<ReferralController> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-
                 ]),
             const Gap(10),
             Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Invitation sent ", style: TextStyle(
-                    fontSize: 13,
-                    color: const Color(0xFFFE7A01).withOpacity(.6),
-                    fontWeight: FontWeight.w200,
-                  ),),
-                  Text(TextUtils().shortDate(invite.createdAt),
+                  Text(
+                    "Invitation sent ",
                     style: TextStyle(
                       fontSize: 13,
                       color: const Color(0xFFFE7A01).withOpacity(.6),
-                      fontWeight: FontWeight.w200,),
-
+                      fontWeight: FontWeight.w200,
+                    ),
+                  ),
+                  Text(
+                    TextUtils().shortDate(invite.createdAt),
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: const Color(0xFFFE7A01).withOpacity(.6),
+                      fontWeight: FontWeight.w200,
+                    ),
                   )
                 ]),
           ],

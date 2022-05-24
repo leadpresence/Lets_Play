@@ -71,6 +71,7 @@ class DashboardHeroSession extends StatelessWidget {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     singleTime(
                       index1: days[0],

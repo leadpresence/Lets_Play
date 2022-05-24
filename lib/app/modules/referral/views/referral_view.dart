@@ -10,19 +10,15 @@ class ReferralView extends GetView<ReferralController> {
 
   @override
   Widget build(BuildContext context) {
-    return  ScreenTypeLayout.builder(
-
-        mobile: (_) => OrientationLayoutBuilder(
-
-          portrait: (_)=>  ReferralMobilePortrait(),
-          landscape: (_)=>  ReferralMobilePortrait(),
-        ),
-
-        tablet: (_) => OrientationLayoutBuilder(
-
-          portrait: (_) =>  ReferralMobilePortrait(),
-          landscape: (_)=> ReferralMobilePortrait(),
-
-        ));
+    return ScreenTypeLayout.builder(
+      mobile: (_) => OrientationLayoutBuilder(
+        portrait: (_) => ReferralMobilePortrait(),
+        landscape: (_) => ReferralMobilePortrait(),
+      ),
+      tablet: (_) => OrientationLayoutBuilder(
+        portrait: (_) => ReferralMobilePortrait(),
+        landscape: (_) => ReferralMobilePortrait(),
+      ),
+    );
   }
 }

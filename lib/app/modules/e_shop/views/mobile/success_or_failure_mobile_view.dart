@@ -32,6 +32,7 @@ class SuccessOrFailureMobileView extends StatelessWidget {
                 fontSize: 18,
                 color: Color(0xFF4E4B66),
               ),
+              textAlign: TextAlign.center,
             ),
             const SizedBox(
               height: 32,

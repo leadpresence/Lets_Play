@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:jekawin_mobile_flutter/app/modules/jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
+import '../../../../widgets/custom_large_button.dart';
 import '../../controllers/jackpot_games_controller.dart';
+import 'jackpot_games_success_screen.dart';
 
 class JackpotGamesDetailsMobilePortrait extends StatelessWidget {
-  JackpotGamesDetailsMobilePortrait({Key? key}) : super(key: key);
+  final String ticketNumber, numberOfGames, gameCost;
+  JackpotGamesDetailsMobilePortrait({
+    Key? key,
+    required this.ticketNumber,
+    required this.numberOfGames,
+    required this.gameCost,
+  }) : super(key: key);
 
   final JackpotGamesController controller = Get.put(JackpotGamesController());
 
@@ -53,42 +63,107 @@ class JackpotGamesDetailsMobilePortrait extends StatelessWidget {
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    'Number of games:',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Color(0XFF414249),
-                      fontSize: 16,
-                      height: 1.4,
-                    ),
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Number of games:',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Color(0XFF414249),
+                          fontSize: 16,
+                          height: 1.4,
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Text(
+                        numberOfGames,
+                        style: GoogleFonts.mulish(
+                          color: const Color(0xffFE7A01),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 24),
-                  Text(
-                    'Selected Numbers:',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Color(0XFF414249),
-                      fontSize: 16,
-                      height: 1.4,
-                    ),
+                  const SizedBox(height: 24),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Selected Numbers:',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Color(0XFF414249),
+                          fontSize: 16,
+                          height: 1.4,
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Text(
+                        ticketNumber,
+                        style: GoogleFonts.mulish(
+                          color: const Color(0xffFE7A01),
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 4,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 24),
-                  Text(
-                    'Cost of Game:',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Color(0XFF414249),
-                      fontSize: 16,
-                      height: 1.4,
-                    ),
+                  const SizedBox(height: 24),
+                  Row(
+                    children: [
+                      const Text(
+                        'Cost of Game:',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Color(0XFF414249),
+                          fontSize: 16,
+                          height: 1.4,
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Text(
+                        '₦$gameCost',
+                        style: GoogleFonts.mulish(
+                          color: const Color(0xffFE7A01),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                 ],
               ),
             ),
             const SizedBox(
               height: 24,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24.0,
+                vertical: 12.0,
+              ),
+              child: CustomButton(
+                buttonText: "Pay with Wallet",
+                buttonColor: Colors.white,
+                buttonTextColor: const Color(0xffFE7A01),
+                borderColor: const Color(0xffFE7A01),
+                hasBorder: true,
+                onPressed: () {
+                  Get.to(
+                    () => JackpotGamesSuccessMobileView(
+                      className: const JekawinBottomTabs(
+                        tabIndex: 0,
+                      ),
+                      msg: 'Ticket purchased Successfully',
+                    ),
+                  );
+                },
+              ),
             ),
           ],
         ),
