@@ -10,6 +10,7 @@ class CustomTextField extends StatefulWidget {
     this.isDropdownField = false,
     this.textController,
     this.suffixIcon = '',
+    this.prefixIcon = '',
     this.textCapitalization = TextCapitalization.none,
     this.textInputAction,
     this.labelText,
@@ -38,6 +39,7 @@ class CustomTextField extends StatefulWidget {
   final keyboardType;
   final hintText;
   final String suffixIcon;
+  final String prefixIcon;
 
   @override
   _CustomTextFieldState createState() => _CustomTextFieldState();
@@ -103,6 +105,15 @@ class _CustomTextFieldState extends State<CustomTextField> {
         decoration: InputDecoration(
           errorStyle: const TextStyle(fontSize: 0, height: 0),
           errorText: widget.errorText,
+          prefixIcon: widget.prefixIcon==''?null:
+            SizedBox(
+              height: 17,
+              width: 17,
+              child: SvgPicture.asset(
+                widget.prefixIcon,
+                color: Colors.black,
+              ),
+            ),
           suffixIcon: widget.suffixIcon == ''
               ? null
               : GestureDetector(

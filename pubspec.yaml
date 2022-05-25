@@ -52,6 +52,7 @@ dependencies:
   custom_check_box: ^0.0.4
   bot_toast: ^4.0.1
   font_awesome_flutter: ^10.1.0
+  flutter_switch: ^0.3.2
 
 dev_dependencies:
   flutter_test:
