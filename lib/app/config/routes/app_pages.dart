@@ -30,6 +30,7 @@ import '../../modules/add_bank_acccount/views/add_bank_view.dart';
 import '../../modules/auth/bindings/auth_binding.dart';
 import '../../modules/messages/bindings/messages_bindings.dart';
 import '../../modules/messages/views/response_message.dart';
+import '../../modules/pin/bindings/set_pin_bindings.dart';
 import '../../modules/resetpassword/bindings/reset_password_bindings.dart';
 import '../../modules/select_account/bindings/select_bank_binding.dart';
 import '../../modules/signup/views/sign_up.dart';
@@ -43,7 +44,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const initial = Routes.myGames;
+  static const initial = Routes.splash;
 
   static final routes = [
     GetPage(
@@ -165,6 +166,12 @@ class AppPages {
       name: _Paths.myGames,
       page: () => const MyGamesView(),
       binding: MyGamesBindings(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: _Paths.setPin,
+      page: () => const MyGamesView(),
+      binding: SetPinBindings(),
       transition: Transition.fadeIn,
     ),
   ];

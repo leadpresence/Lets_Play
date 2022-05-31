@@ -22,7 +22,7 @@ abstract class Routes {
   static const referral = _Paths.referral;
   static const editProfile = _Paths.editProfile;
   static const notification = _Paths.notification;
-  static const myGames = _Paths.myGames;
+  static const setPin = _Paths.setPin;
 }
 
 abstract class _Paths {
@@ -46,4 +46,5 @@ abstract class _Paths {
   static const notification = '/notification';
   static const leaderBoard = '/leaderBoard';
   static const myGames = '/myGames';
+  static const setPin = '/setPin';
 }

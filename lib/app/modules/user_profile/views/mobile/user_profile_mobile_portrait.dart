@@ -5,6 +5,9 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:jekawin_mobile_flutter/app/modules/my_games/views/mobile/my_games_mobile_portrait.dart';
+import 'package:jekawin_mobile_flutter/app/modules/pin/views/set_pin_mobile_portrait.dart';
+import 'package:jekawin_mobile_flutter/app/modules/resetpassword/views/mobile/reset_password_mobile_potrait.dart';
 import 'package:jekawin_mobile_flutter/app/modules/user_profile/controllers/user_profile_cntroller.dart';
 
 import '../../../edit_profile/views/mobile/edit_profile_mobile_porttrait.dart';
@@ -162,7 +165,12 @@ class UserProfileMobilePortrait extends StatelessWidget {
                   shrinkWrap: true,
                   children: [
                     userProfileCardItem(
-                        onTap: () {},
+                        onTap: () {
+                          Get.to(
+                                () => ResetPasswordMobilePortrait(),
+                            transition: Transition.cupertino,
+                          );
+                        },
                         text: "Change Password",
                         description: "Make changes to your account",
                         icon: 'assets/svgs/change_password.svg'),
@@ -183,12 +191,22 @@ class UserProfileMobilePortrait extends StatelessWidget {
                             "Link your bank details for payment and \nwithdrawals",
                         icon: 'assets/svgs/bank_details.svg'),
                     userProfileCardItem(
-                        onTap: () {},
+                        onTap: () {
+                          Get.to(
+                                () => SetPinMobilePortrait(),
+                            transition: Transition.cupertino,
+                          );
+                        },
                         text: "Set Transaction Pin",
                         description: "Set a pin for secured transactions",
                         icon: 'assets/svgs/two_fa.svg'),
                     userProfileCardItem(
-                        onTap: () {},
+                        onTap: () {
+                          Get.to(
+                                () => MyGamesMobilePortrait(),
+                            transition: Transition.cupertino,
+                          );
+                        },
                         text: "My Games",
                         description: "View game History",
                         icon: 'assets/svgs/my_games.svg'),
