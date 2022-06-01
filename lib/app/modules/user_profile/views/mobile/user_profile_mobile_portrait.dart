@@ -39,6 +39,7 @@ class UserProfileMobilePortrait extends StatelessWidget {
             ),
             onPressed: () {
               Get.back();
+
             },
           ),
         ),

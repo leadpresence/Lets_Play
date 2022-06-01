@@ -11,6 +11,7 @@ import 'package:jekawin_mobile_flutter/app/widgets/custom_otp_field.dart';
 import '../../../widgets/count_down.dart';
 import '../../dashboard/views/mobile/dashboard_mobile_portrait.dart';
 import '../../e_shop/views/mobile/success_or_failure_mobile_view.dart';
+import '../../jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
 import '../../login/views/login.dart';
 import '../../user_profile/views/mobile/user_profile_mobile_portrait.dart';
 import '../../user_profile/views/user_profile_view.dart';
@@ -40,6 +41,13 @@ class SetPinMobilePortrait extends GetView<SetPinController> {
             ),
             onPressed: () {
               Get.back();
+              // Get.to(
+              //       () => const JekawinBottomTabs(
+              //     tabIndex: 0,
+              //     isGuestUser: false,
+              //   ),
+              //   transition: Transition.cupertino,
+              // );
             },
           ),
         ),
