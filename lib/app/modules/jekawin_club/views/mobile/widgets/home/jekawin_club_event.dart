@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:jekawin_mobile_flutter/app/modules/jekawin_club/views/mobile/widgets/home/event_view.dart';
+import 'package:jekawin_mobile_flutter/app/modules/jekawin_club/views/mobile/widgets/home/suggest_events.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
 
 class JekawinClubEvent extends StatelessWidget {
@@ -40,39 +42,45 @@ class JekawinClubEvent extends StatelessWidget {
                   top: 12.0,
                 ),
                 child: Column(
-                  children: [
-                    const Text(
+                  children: const [
+                    Text(
                       'Jekawin Club Events',
                       style: TextStyle(
                         fontSize: 24,
                         color: Color(0xff414249),
                       ),
                     ),
-                    const SizedBox(height: 24),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Featured Events',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          textAlign: TextAlign.center,
+                    SizedBox(height: 24),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 24.0,
+                  right: 24.0,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Featured Events',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text(
+                        'View All',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xffFE7A01),
                         ),
-                        TextButton(
-                          onPressed: () {},
-                          child: const Text(
-                            'View All',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xffFE7A01),
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ],
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ],
                 ),
@@ -93,9 +101,80 @@ class JekawinClubEvent extends StatelessWidget {
                       date: 'Fri, 29 Dec 2020',
                       time: '12:00pm',
                       onTap: () {
-
-                      }
+                        Get.to(
+                          () => EventView(),
+                          transition: Transition.cupertino,
+                        );
+                      },
                     ),
+                    featuredEventCard(
+                        location: '20b law close magodo, Lagos',
+                        date: 'Fri, 29 Dec 2020',
+                        time: '12:00pm',
+                        onTap: () {
+                          Get.to(
+                            () => EventView(),
+                            transition: Transition.cupertino,
+                          );
+                        }),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 24.0,
+                  right: 24.0,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Past Events',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text(
+                        'View All',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xffFE7A01),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 316,
+                child: ListView(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                    vertical: 8.0,
+                  ),
+                  physics: const ScrollPhysics(),
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    featuredEventCard(
+                        location: '20b law close magodo, Lagos',
+                        date: 'Fri, 29 Dec 2020',
+                        time: '12:00pm',
+                        onTap: () {
+                          Get.to(
+                            () => EventView(),
+                            transition: Transition.cupertino,
+                          );
+                        }),
                     featuredEventCard(
                       location: '20b law close magodo, Lagos',
                       date: 'Fri, 29 Dec 2020',
@@ -112,13 +191,21 @@ class JekawinClubEvent extends StatelessWidget {
                 height: 48,
                 child: CustomButton(
                   hasBorder: true,
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(
+                      () => const SuggestEvents(),
+                      transition: Transition.cupertino,
+                    );
+                  },
                   borderColor: const Color(0xffFE7A01),
                   buttonColor: Colors.white,
                   buttonTextColor: const Color(0xffFE7A01),
                   buttonText: 'Suggest Events',
                 ),
-              )
+              ),
+              const SizedBox(
+                height: 40,
+              ),
             ],
           ),
         ),

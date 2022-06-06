@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:jekawin_mobile_flutter/app/modules/jekawin_club/views/mobile/widgets/home/suggest_events.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
 
 import 'jekawin_club_event.dart';
@@ -30,6 +31,45 @@ class JekawinClubHome extends StatelessWidget {
               Get.back();
             },
           ),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(
+          left: 24.0,
+          right: 24.0,
+          bottom: 24.0,
+          top: 8.0,
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: CustomButton(
+                hasBorder: true,
+                onPressed: () {
+                   Get.to(
+                    () => const SuggestEvents(),
+                    transition: Transition.cupertino,
+                  );
+                },
+                borderColor: const Color(0xffFE7A01),
+                buttonColor: Colors.white,
+                buttonTextColor: const Color(0xffFE7A01),
+                buttonText: 'Suggest Events',
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: CustomButton(
+                onPressed: () {
+                  Get.to(
+                    () => const JekawinClubEvent(),
+                    transition: Transition.cupertino,
+                  );
+                },
+                buttonText: 'View Events',
+              ),
+            )
+          ],
         ),
       ),
       body: SingleChildScrollView(
@@ -118,32 +158,6 @@ class JekawinClubHome extends StatelessWidget {
                   ),
                 ],
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: CustomButton(
-                      hasBorder: true,
-                      onPressed: () {},
-                      borderColor: const Color(0xffFE7A01),
-                      buttonColor: Colors.white,
-                      buttonTextColor: const Color(0xffFE7A01),
-                      buttonText: 'Suggest Events',
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: CustomButton(
-                      onPressed: () {
-                        Get.to(
-                          () => const JekawinClubEvent(),
-                          transition: Transition.cupertino,
-                        );
-                      },
-                      buttonText: 'View Events',
-                    ),
-                  )
-                ],
-              )
             ],
           ),
         ),

@@ -3,8 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:jekawin_mobile_flutter/app/modules/e_shop/views/e_shop_view.dart';
 import 'package:jekawin_mobile_flutter/app/modules/leaderboard/views/leaderboard_view.dart';
-import 'package:jekawin_mobile_flutter/app/modules/leaderboard/views/mobile/leaderboard_mobile_portrait.dart';
-
 import '../../dashboard/views/mobile/dashboard_mobile_portrait.dart';
 import '../../menu/view/mobile/menu_mobile_portrait.dart';
 import '../../wallet_home/views/wallet_home_view.dart';
@@ -72,14 +70,14 @@ class _JekawinBottomTabsState extends State<JekawinBottomTabs> {
           unselectedLabelStyle: TextStyle(
             height: 1.8,
             letterSpacing: .5,
-            fontSize: 8,
+            fontSize: 10,
             fontWeight: FontWeight.normal,
             color: Colors.grey.withOpacity(0.5),
           ),
           currentIndex: _currentIndex,
           type: BottomNavigationBarType.fixed,
           selectedLabelStyle: const TextStyle(
-            fontSize: 8,
+            fontSize: 10,
             letterSpacing: .5,
             color: Color(0xFFFE7A01),
             fontWeight: FontWeight.normal,
@@ -109,7 +107,7 @@ class _JekawinBottomTabsState extends State<JekawinBottomTabs> {
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/svgs/wallet_.svg',
-                height: 20,
+                height: 21,
                 color: _currentIndex == 2
                     ? const Color(0xFFFE7A01)
                     : const Color(0xff747B84),

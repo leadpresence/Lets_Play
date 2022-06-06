@@ -7,6 +7,7 @@ class TrueOrFalseController extends GetxController
   late Rx<int> currentPage;
   late AnimationController nextController;
   late PageController bgPageController;
+  Rx<int> totalRewardpoints = 0.obs;
   List<Item> items = [
     Item(
       title: 'M',

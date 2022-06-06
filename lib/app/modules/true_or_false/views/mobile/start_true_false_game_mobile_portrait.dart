@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:jekawin_mobile_flutter/app/modules/true_or_false/views/mobile/congratulations_view.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
 
 import '../../controllers/true_or_false_controller.dart';
@@ -46,6 +47,8 @@ class StartTrueFalseGameMobilePortrait extends StatelessWidget {
                   buttonColor: const Color(0XFF10B447),
                   buttonText: 'True',
                   onPressed: () {
+                    print(controller.totalRewardpoints.value);
+                    controller.totalRewardpoints.value += 5;
                     showSuccessOrFailureDialog(context);
                   },
                 ),
@@ -276,8 +279,17 @@ class StartTrueFalseGameMobilePortrait extends StatelessWidget {
                     height: 52,
                     child: CustomButton(
                       onPressed: () {
-                        controller.nextPage();
-                        Get.back();
+                        controller.currentPage.value == 4
+                            ? Get.offAll(
+                                () => CongratulationsView(
+                                  totalPoints: controller.totalRewardpoints.value,
+                                ),
+                                transition: Transition.cupertino,
+                              )
+                            : {
+                                controller.nextPage(),
+                                Get.back(),
+                              };
                       },
                       buttonText: 'Continue',
                     ),
