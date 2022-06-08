@@ -50,6 +50,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
       if (raw['success']) {
         AuthResponseModel res = AuthResponseModel.fromJson(raw);
         prospectIsProvider.setProspectId(res.data.prospectId);
+        prospectIsProvider.setOtp(res.data.otp);
         prospectIsProvider.setPhoneNumber(body.mobile);
         return Right(raw['message']);
       } else {

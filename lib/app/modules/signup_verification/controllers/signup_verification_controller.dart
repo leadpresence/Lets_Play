@@ -12,6 +12,8 @@ class SignUpVerificationController extends GetxController
     with SingleGetTickerProviderMixin {
   final signUpOtpController = TextEditingController();
   final UtilsController utilsController  = Get.find();
+  final prospectIsProvider = Get.find<UtilsController>();
+
   final AuthServiceImpl authService = Get.find<AuthServiceImpl>();
   late Rx<AnimationController> animationController =
       AnimationController(vsync: this).obs;
@@ -22,7 +24,8 @@ class SignUpVerificationController extends GetxController
   var pin = "".obs;
 
   setOtp(String otpPin) {
-    pin.value = otpPin;
+    // pin.value = otpPin;
+    pin.value = prospectIsProvider.getOtp();
   }
 
   Future<void> completeSignUp(Key? key) async {
