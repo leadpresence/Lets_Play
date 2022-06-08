@@ -16,18 +16,24 @@ import '../http/http_services.dart';
 class UtilsController extends GetxController {
   UtilsController();
   RxString prospectId = "".obs;
+  RxString otp = "".obs;
   RxString phoneNumber = "".obs;
   RxString forgotPasswordToken = "".obs;
 
   RxList guestLists = [].obs;
 
   getProspectId() => prospectId.value;
+  getOtp() => otp.value;
   getForgotPasswordToken() => forgotPasswordToken.value;
 
   getPhoneNumber() => phoneNumber.value;
 
   setProspectId(String prosId) {
     prospectId .value= prosId;
+  }
+
+  setOtp(String otpCode) {
+    otp.value= otpCode;
   }
   setForgotPasswordToken(String token) {
     forgotPasswordToken .value= token;

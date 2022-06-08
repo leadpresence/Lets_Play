@@ -31,22 +31,26 @@ class AuthResponseModel {
 class Data {
   Data({
     required this.prospectId,
+    required this.otp,
     required this.ttl,
     required this.createdAt,
   });
 
   String prospectId;
+  String otp;
   int ttl;
   DateTime createdAt;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
     prospectId: json["prospectId"],
+    otp: json["otp"],
     ttl: json["ttl"],
     createdAt: DateTime.parse(json["createdAt"]),
   );
 
   Map<String, dynamic> toJson() => {
     "prospectId": prospectId,
+    "otp": otp,
     "ttl": ttl,
     "createdAt": createdAt.toIso8601String(),
   };
