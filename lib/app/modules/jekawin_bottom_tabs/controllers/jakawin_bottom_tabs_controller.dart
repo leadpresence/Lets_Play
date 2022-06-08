@@ -1,21 +1,7 @@
 import 'package:get/get.dart';
 
 class JekawinBottomTabsController extends GetxController {
-  @override
-  void onInit() {
-    // TODO: implement onInit
-    super.onInit();
-  }
+  // Rx<bool> saveASlot = false.obs;
 
-  @override
-  void onReady() {
-    // TODO: implement onReady
-    super.onReady();
-  }
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
 }

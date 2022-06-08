@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:jekawin_mobile_flutter/app/modules/jekawin_club/views/mobile/widgets/home/jekawim_club_home.dart';
 import 'package:jekawin_mobile_flutter/app/modules/referral/views/referral_view.dart';
 import 'package:jekawin_mobile_flutter/app/modules/reward_points/views/mobile/reward_points_mobile_portrait.dart';
-
-import '../../../jekawin_club/views/mobile/jekawin_club_mobile_portrait.dart';
+import '../../../jekawin_club/views/mobile/widgets/home/jekawim_club_home.dart';
 import '../../../redeem_prizes/views/mobile/redeem_prizes_mobile_portrait.dart';
 
 class MenuMobilePortrait extends StatelessWidget {
@@ -60,6 +58,7 @@ class MenuMobilePortrait extends StatelessWidget {
                   menuListTile(
                     onTap: () => Get.to(
                       () => const JekawinClubHome(),
+                      // () => const JekawinClubMobilePortrait(),
                       transition: Transition.cupertino,
                     ),
                     icon: 'assets/svgs/share_referral.svg',
