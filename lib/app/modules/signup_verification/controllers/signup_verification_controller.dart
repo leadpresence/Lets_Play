@@ -22,6 +22,7 @@ class SignUpVerificationController extends GetxController
   var prospectId = "".obs;
   var phoneNumber = "".obs;
   var pin = "".obs;
+  var remoteOtp = "".obs;
 
   setOtp(String otpPin) {
     // pin.value = otpPin;
@@ -68,6 +69,8 @@ class SignUpVerificationController extends GetxController
     startTimer();
     phoneNumber.value = utilsController .getPhoneNumber();
     prospectId.value = utilsController .getProspectId();
+    remoteOtp.value = prospectIsProvider.getOtp();
+    signUpOtpController.text  = remoteOtp.value.toString();
     super.onInit();
   }
 
