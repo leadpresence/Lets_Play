@@ -173,6 +173,8 @@ class AuthServiceImpl extends AuthServiceDataSource {
       if (raw['success']) {
         ForgetPasswordResponse res = ForgetPasswordResponse.fromMap(raw);
         prospectIsProvider.setProspectId(res.data.prospectId);
+        prospectIsProvider.setOtp(res.data.otp);
+
         prospectIsProvider.setPhoneNumber(mobile);
 
         return const Right("Otp sent Successful for password reset");

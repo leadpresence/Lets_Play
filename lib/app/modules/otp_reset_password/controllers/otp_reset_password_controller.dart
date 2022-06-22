@@ -15,9 +15,13 @@ class OtpResetPasswordController extends GetxController
   late Rx<AnimationController> animationController =
       AnimationController(vsync: this).obs;
   var otp = "".obs;
+  var prospectId = "".obs;
+  var remoteOtp = "".obs;
+
 
   setOtp(String otpString) {
-    otp.value = otpString;
+    // otp.value = otpString;
+    otp.value = prospectIsProvider.getOtp();
   }
 
   Rx<bool> agree = false.obs;
@@ -25,7 +29,15 @@ class OtpResetPasswordController extends GetxController
   @override
   void onInit() {
     startTimer();
+    remoteOtp.value = prospectIsProvider.getOtp();
+    otpController.text=remoteOtp.value.toString();
     super.onInit();
+  }
+
+  @override
+  void onReady() {
+    prospectId.value = prospectIsProvider .getProspectId();
+    super.onReady();
   }
 
   @override
@@ -33,6 +45,7 @@ class OtpResetPasswordController extends GetxController
     animationController.value.dispose();
     super.dispose();
   }
+
 
   void startTimer() {
     animationController.value = AnimationController(
