@@ -83,7 +83,7 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                         Obx(
                           () =>
                               Text(
-                                controller.balance.value.toString(),
+                                "₦ "+controller.balance.value.toString(),
                                 style: const TextStyle(
                               fontSize: 18,
                               color: Colors.white,
