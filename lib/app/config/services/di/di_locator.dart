@@ -4,6 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:jekawin_mobile_flutter/app/config/services/subscriber_service.dart';
+import 'package:jekawin_mobile_flutter/app/config/services/wallet_service.dart';
 import 'package:jekawin_mobile_flutter/app/modules/referral/models/ReferralResponse.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -21,6 +22,7 @@ class UtilsController extends GetxController {
   RxString forgotPasswordToken = "".obs;
 
   RxList guestLists = [].obs;
+  RxList transactions = [].obs;
 
   getProspectId() => prospectId.value;
   getOtp() => otp.value;
@@ -53,5 +55,6 @@ Future<void>  setDi()async {
   Get.lazyPut<HttpService>(()=>HttpServiceImpl());
   Get.lazyPut<UtilsController> (()=>UtilsController());
   Get.put (AuthServiceImpl());
+  Get.put (WalletServiceImpl());
   Get.put (SubscriberServiceImpl());
 }
