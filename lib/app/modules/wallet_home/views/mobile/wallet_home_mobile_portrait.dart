@@ -25,8 +25,6 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
 
   @override
   Widget build(BuildContext context) {
-    var balance = controller.balance.toString();
-    var rewardPoints = controller.rewardPoints.toString();
 
     const TextStyle walletTextStyle = TextStyle(
       color: Colors.white,
@@ -227,7 +225,7 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                 children: [
                   false ? creditIcon : debitIcon,
                   Text(
-                    trxnItem.createdAt.day.toString() ?? "Date",
+                    trxnItem.createdAt.day.toString(),
                     style: const TextStyle(
                       fontSize: 12,
                       color: Colors.grey,

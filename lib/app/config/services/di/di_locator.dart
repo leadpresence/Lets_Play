@@ -9,6 +9,7 @@ import 'package:jekawin_mobile_flutter/app/modules/referral/models/ReferralRespo
 import 'package:path_provider/path_provider.dart';
 
 import '../../../../init_db.dart';
+import '../../../modules/fund_wallet/models/payment_processor_model.dart';
 import '../../data/local/user_local_impl.dart';
 import '../auth_service.dart';
 import '../http/http_service_impl.dart';
@@ -23,6 +24,7 @@ class UtilsController extends GetxController {
 
   RxList guestLists = [].obs;
   RxList transactions = [].obs;
+  RxList paymentProcessors = [].obs;
 
   getProspectId() => prospectId.value;
   getOtp() => otp.value;

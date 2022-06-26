@@ -51,4 +51,8 @@ class TextUtils {
   Object safeBool(Bool? text) {
     return (text != null) ? text : false;
   }
+
+
 }
+
+

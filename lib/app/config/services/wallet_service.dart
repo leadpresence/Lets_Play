@@ -2,13 +2,17 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:jekawin_mobile_flutter/app/modules/wallet_home/models/fund_wallet_model.dart';
+import 'package:jekawin_mobile_flutter/app/modules/fund_wallet/models/payment_processor_model.dart';
 
 import '../../constants/app_error.dart';
 import '../../constants/network_exceptions.dart';
 import '../../modules/wallet_home/models/all_wallet_transactions.dart';
+import '../../modules/fund_wallet/models/payment_link_response.dart';
 import '../../modules/wallet_home/models/user_wallet_response.dart';
 import '../../modules/wallet_home/models/withdrawalModel.dart';
 import '../data/local/user_local_impl.dart';
@@ -25,6 +29,8 @@ abstract class UserWalletDataSource {
   Future<Either<AppError, String>> walletTransactions(String walletId);
 
   Future<Either<AppError, String>> banks();
+  Future<Either<AppError, String>> paymentProcessors();
+  Future<Either<AppError, String>> paymentLink(String amount,String email,String processor);
 
   Future<Either<AppError, String>> addBank(String walletId);
 
@@ -135,5 +141,60 @@ class WalletServiceImpl extends UserWalletDataSource {
       WithdrawalModel withdrawalData) {
     // TODO: implement withdrawToBank
     throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<AppError, String>> paymentLink(String amount, email, processor) async{
+    Map<String, dynamic> payload = {'amount': amount, 'email': email, 'processor':processor};
+
+    try {
+      var raw = await httpProvider.postHttp(
+          '${JekawinBaseUrls.wallerBaseUrl}payment-link', payload);
+      if (raw['success']) {
+        PaymentLinkResponseModel res = PaymentLinkResponseModel.fromMap(raw);
+        var paymentLink= res.body.data.link;
+        return Right(paymentLink);
+      } else {
+        return Left(
+            AppError(errorType: AppErrorType.network, message: raw['message']));
+      }
+    } on NetworkException catch (e) {
+      return Left(
+          AppError(errorType: AppErrorType.network, message: e.message));
+    } on SocketException catch (e) {
+      return Left(
+          AppError(errorType: AppErrorType.network, message: e.message));
+    } on Exception {
+      return const Left(
+          AppError(errorType: AppErrorType.api, message: "An error occurred"));
+    }
+  }
+
+  @override
+  Future<Either<AppError, String>> paymentProcessors() async{
+
+    try {
+      var raw = await httpProvider
+          .getHttp('${JekawinBaseUrls.wallerBaseUrl}payment-processors');
+      if (raw['success']) {
+        PaymentProcessorModel res = PaymentProcessorModel.fromMap(raw);
+         var processors = res.body;
+        utilsProvider.paymentProcessors.value = processors;
+
+        return Right(raw['message']);
+      } else {
+        return Left(
+            AppError(errorType: AppErrorType.network, message: raw['message']));
+      }
+    } on NetworkException catch (e) {
+      return Left(
+          AppError(errorType: AppErrorType.network, message: e.message));
+    } on SocketException catch (e) {
+      return Left(
+          AppError(errorType: AppErrorType.network, message: e.message));
+    } on Exception {
+      return const Left(
+          AppError(errorType: AppErrorType.api, message: "An error occurred"));
+    }
   }
 }
