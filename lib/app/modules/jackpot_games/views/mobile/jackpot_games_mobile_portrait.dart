@@ -88,7 +88,7 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
                       const SizedBox(width: 12),
                       const Expanded(
                         child: Text(
-                          'Select 5 numbers from a range of 0 - 50 or auto generate the numbers',
+                          'Select 5 numbers from a range of 0 - 99 or auto generate the numbers',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: Color(0XFFFFFFFF),
@@ -161,15 +161,15 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
                                       ),
                                       onPressed: () {
                                         controller.pin1.text =
-                                            (random.nextInt(50)).toString();
+                                            (random.nextInt(99)).toString();
                                         controller.pin2.text =
-                                            (random.nextInt(50)).toString();
+                                            (random.nextInt(99)).toString();
                                         controller.pin3.text =
-                                            (random.nextInt(50)).toString();
+                                            (random.nextInt(99)).toString();
                                         controller.pin4.text =
-                                            (random.nextInt(50)).toString();
+                                            (random.nextInt(99)).toString();
                                         controller.pin5.text =
-                                            (random.nextInt(50)).toString();
+                                            (random.nextInt(99)).toString();
                                         FocusScope.of(context).unfocus();
 
                                         if (controller.pin1.text.length == 1) {
