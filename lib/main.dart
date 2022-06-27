@@ -8,10 +8,12 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'app/config/routes/app_pages.dart';
 import 'app/config/services/di/di_locator.dart';
+import 'app/modules/dashboard/controllers/dashboard_controller.dart';
 
 void main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
+  // DashboardController();
   await dotenv.load(fileName: 'dotenv');
   await setDi();
   SystemChrome.setPreferredOrientations(

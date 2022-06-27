@@ -81,18 +81,39 @@ class GuestDashboardMobilePortrait extends StatelessWidget {
                 const SizedBox(
                   height: 24,
                 ),
-                DashboardHeroSession(
-                  onPressed: () {
-                    Get.to(
-                      () => const LoginView(),
-                      transition: Transition.cupertino,
-                    );
-                  },
-                  animation: StepTween(
-                    begin: dashboardController.timeRemainingInSec.value,
-                    end: 0,
-                  ).animate(
-                    dashboardController.animationController.value,
+                Container(
+                  height: 360,
+                  width: Get.width,
+                  child: PageView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount:
+                        dashboardController.timeRemainingInSecsForGames.length,
+                    controller: dashboardController.pageController,
+                    physics: const ScrollPhysics(),
+                    itemBuilder: (BuildContext context, int index) {
+                      return Obx(
+                        () => DashboardHeroSession(
+                          onPressed: () {
+                            Get.to(
+                              () => const LoginView(),
+                              transition: Transition.cupertino,
+                            );
+                          },
+                          priceToBeWon: dashboardController
+                              .indexList![index].gameId.price,
+                          title: dashboardController
+                              .indexList![index].gameId.title,
+                          animation: StepTween(
+                            begin: dashboardController
+                                .timeRemainingInSecsForGames[index],
+                            end: 0,
+                          ).animate(
+                            dashboardController
+                                .gamesAnimationControllers[index].value,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
                 const SizedBox(

@@ -38,15 +38,15 @@ class JackpotGamesSuccessMobileView extends StatelessWidget {
                 color: Color(0xFF4E4B66),
               ),
             ),
-            TimeLeft(
-              onPressed: () {},
-              animation: StepTween(
-                begin: dashboardController.timeRemainingInSec.value,
-                end: 0,
-              ).animate(
-                dashboardController.animationController.value,
-              ),
-            ),
+            // TimeLeft(
+            //   onPressed: () {},
+            //   animation: StepTween(
+            //     begin: dashboardController.timeRemainingInSec.value,
+            //     end: 0,
+            //   ).animate(
+            //     dashboardController.animationController.value,
+            //   ),
+            // ),
 
             Padding(
               padding: const EdgeInsets.symmetric(
