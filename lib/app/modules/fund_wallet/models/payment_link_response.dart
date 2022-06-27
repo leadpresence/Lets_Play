@@ -16,20 +16,20 @@ class PaymentLinkResponseModel {
   int statusCode;
   bool success;
   String message;
-  Body body;
+  String body;
 
   factory PaymentLinkResponseModel.fromMap(Map<String, dynamic> json) => PaymentLinkResponseModel(
     statusCode: json["statusCode"],
     success: json["success"],
     message: json["message"],
-    body: Body.fromMap(json["body"]),
+    body: json["body"],
   );
 
   Map<String, dynamic> toMap() => {
     "statusCode": statusCode,
     "success": success,
     "message": message,
-    "body": body.toMap(),
+    "body": body,
   };
 }
 

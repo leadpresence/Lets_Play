@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:get_storage/get_storage.dart';
 import 'dart:io';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -13,20 +14,24 @@ class CompleteFundingWebView extends StatelessWidget {
   String? url;
   @override
   final WalletHomeController controller = Get.put(WalletHomeController());
-
   CompleteFundingWebView(
-      {Key? key, required url, this.themeData, this.customAppTheme})
+      {Key? key, this.themeData, this.customAppTheme})
       : super(key: key);
   final ThemeData? themeData;
   final CustomAppTheme? customAppTheme;
 
   @override
   Widget build(BuildContext context) {
+    var link = GetStorage().read("paymentLink");
+
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
+        appBar:
+        AppBar(
+          centerTitle: true,
+          title: const Text("Fund Wallet",overflow: TextOverflow.ellipsis,),
           elevation: 0,
-          backgroundColor: Colors.deepOrange,
+          backgroundColor: Colors.orange,
           leading: Padding(
             padding: const EdgeInsets.only(left: 16.0),
             child: IconButton(
@@ -41,19 +46,21 @@ class CompleteFundingWebView extends StatelessWidget {
             ),
           ),
         ),
-        body: SingleChildScrollView(
-            child: Padding(
-                padding: const EdgeInsets.only(
-                  left: 24.0,
-                  right: 24.0,
-                  top: 4.0,
-                ),
-                child: Column(
-                  children: [
-                    WebView(
-                      initialUrl: '$url',
-                    )
-                  ],
-                ))));
+        body: Padding(
+            padding: const EdgeInsets.only(
+              left: 24.0,
+              right: 24.0,
+              top: 4.0,
+            ),
+            child:
+                WebView(
+                  javascriptMode: JavascriptMode.unrestricted,
+                  onProgress: (k){
+                    const CircularProgressIndicator();
+                  },
+                  initialUrl: '$link',
+                )
+
+        ));
   }
 }

@@ -4,9 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:jekawin_mobile_flutter/app/modules/fund_wallet/views/fund_wallet_view.dart';
-import 'package:jekawin_mobile_flutter/app/utils/helpers/text_helper.dart';
-import 'package:jekawin_mobile_flutter/app/widgets/custom_small_button.dart';
-
+import 'package:intl/intl.dart';
 import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../constants/asset_paths.dart';
 import '../../../../widgets/custom_medium_button.dart';
@@ -159,7 +157,7 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
               Expanded(
                 child: ListView.builder(
                   shrinkWrap: true,
-                  itemCount: 13,
+                  itemCount: controller.transactions.length,
                   itemBuilder: (BuildContext context, int position) {
                     return transactionItem(
                       controller.transactions[position],
@@ -195,8 +193,6 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
       height: 24,
       width: 24,
     );
-    screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
-    screenHeight(BuildContext context) => MediaQuery.of(context).size.height;
 
     return GestureDetector(
       child: Padding(
@@ -209,7 +205,7 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
             boxShadow: [
               BoxShadow(
                 spreadRadius: -12,
-                offset: Offset(0, 10),
+                offset: const Offset(0, 10),
                 color: Colors.grey.withOpacity(0.2),
                 blurRadius: 25,
               ),
@@ -223,9 +219,9 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  false ? creditIcon : debitIcon,
+                  false ? debitIcon : creditIcon,
                   Text(
-                    trxnItem.createdAt.day.toString(),
+                     trxnItem.createdAt.toString(),
                     style: const TextStyle(
                       fontSize: 12,
                       color: Colors.grey,
@@ -233,7 +229,7 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                   ),
                 ],
               ),
-              Gap(10),
+             const  Gap(10),
               Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

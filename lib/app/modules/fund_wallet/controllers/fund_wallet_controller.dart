@@ -78,7 +78,7 @@ class FundWalletController extends GetxController {
     } else if (int.parse(amountController.text.toString()) < 200) {
       errAmountMessage.value = "amount can only b form 200 and above";
     }else if ((GetUtils.isBlank(emailController.text)) == true) {
-      return errAmountMessage.value = 'Email is required';
+      return errEmailMessage.value = 'Email is required';
     }
     else {
       clearErrorAmount();
@@ -107,7 +107,7 @@ class FundWalletController extends GetxController {
 
   Future<void> getPaymentLink() async {
     var amount = amountController.text.toString();
-    var email =amountController.text.toString(); //GetStorage().read('email').toString();
+    var email =emailController.text.toString(); //GetStorage().read('email').toString();
     var selectedProcessor = processorId.value.toString();
     final link =
         await walletService.paymentLink(amount, email, selectedProcessor);
@@ -115,6 +115,7 @@ class FundWalletController extends GetxController {
       BotToast.showText(text: l.message);
     }, (r) {
       paymentLink.value = r;
+      GetStorage().write("paymentLink", r);
       paymentLinkIsSet.value = true;
       buttonText.value = "Continue";
     });
@@ -124,7 +125,7 @@ class FundWalletController extends GetxController {
     if (paymentLinkIsSet.value) {
       var webUrl = paymentLink.value.toString();
       Get.to(
-        () => CompleteFundingWebView(url: webUrl),
+        () => CompleteFundingWebView(),
         transition: Transition.cupertino,
       );
     }

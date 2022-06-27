@@ -33,13 +33,29 @@ class FundWalletMobilePortrait extends GetView {
       height: MediaQuery.of(context).size.height * 0.110,
     );
     return Obx(() => Scaffold(
-          body: SingleChildScrollView(
+
+
+      body: SingleChildScrollView(
             child: Form(
               key: controller.fundWalletFormKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Gap(100),
+                  const Gap(50),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16.0),
+                    child: IconButton(
+                      splashRadius: 24,
+                      icon: SvgPicture.asset(
+                        'assets/svgs/chevronLeft.svg',
+                        color: const Color(0xff12121D),
+                      ),
+                      onPressed: () {
+                        Get.back();
+                      },
+                    ),
+                  ),
+                  const Gap(20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [

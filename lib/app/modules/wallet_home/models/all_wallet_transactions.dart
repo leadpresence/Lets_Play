@@ -2,6 +2,7 @@
 //
 //     final allTransactionsModel = allTransactionsModelFromMap(jsonString);
 
+import 'package:jekawin_mobile_flutter/app/modules/wallet_home/models/transaction_model.dart';
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
@@ -19,13 +20,13 @@ class AllTransactionsModel {
 
   String message;
   bool success;
-  List<Body> body;
+  List<TransactionsModel> body;
   int statusCode;
 
   factory AllTransactionsModel.fromMap(Map<String, dynamic> json) => AllTransactionsModel(
     message: json["message"],
     success: json["success"],
-    body: List<Body>.from(json["body"].map((x) => Body.fromMap(x))),
+    body: List<TransactionsModel>.from(json["body"].map((x) => TransactionsModel.fromMap(x))),
     statusCode: json["statusCode"],
   );
 

@@ -21,12 +21,14 @@ class UtilsController extends GetxController {
   RxString otp = "".obs;
   RxString phoneNumber = "".obs;
   RxString forgotPasswordToken = "".obs;
+  RxString recentPaymentLink = "".obs;
 
   RxList guestLists = [].obs;
   RxList transactions = [].obs;
   RxList paymentProcessors = [].obs;
 
   getProspectId() => prospectId.value;
+  getResentPaymentLink() => recentPaymentLink.value;
   getOtp() => otp.value;
   getForgotPasswordToken() => forgotPasswordToken.value;
 
@@ -34,6 +36,9 @@ class UtilsController extends GetxController {
 
   setProspectId(String prosId) {
     prospectId .value= prosId;
+  }
+  setRecentPaymentLink(String link) {
+    recentPaymentLink.value= link;
   }
 
   setOtp(String otpCode) {

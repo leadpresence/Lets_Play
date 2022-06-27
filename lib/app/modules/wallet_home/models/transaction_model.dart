@@ -1,8 +1,3 @@
-// To parse this JSON data, do
-//
-//     final transactionsModel = transactionsModelFromMap(jsonString);
-
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 TransactionsModel transactionsModelFromMap(String str) => TransactionsModel.fromMap(json.decode(str));

@@ -76,13 +76,13 @@ class WalletServiceImpl extends UserWalletDataSource {
     try {
       var raw = await httpProvider
           .getHttp('${JekawinBaseUrls.wallerBaseUrl}users/$userId/transactions');
-
-      AllTransactionsModel res = AllTransactionsModel.fromMap(raw);
-      var listOfTransactions=res.body;
-      utilsProvider.transactions.value= listOfTransactions;
       // var walletAsMap = res.body.map((wallet) => wallet.toMap()).toList();
       // String jsonString = jsonEncode(walletAsMap);
+      AllTransactionsModel res = AllTransactionsModel.fromMap(raw);
+      var listOfTransactions=res.body;
+      utilsProvider.transactions.value = listOfTransactions;
       if (raw['success']) {
+
         // return Right(jsonString);
         return Right(raw['message']);
       } else {
@@ -152,7 +152,7 @@ class WalletServiceImpl extends UserWalletDataSource {
           '${JekawinBaseUrls.wallerBaseUrl}payment-link', payload);
       if (raw['success']) {
         PaymentLinkResponseModel res = PaymentLinkResponseModel.fromMap(raw);
-        var paymentLink= res.body.data.link;
+        var paymentLink= res.body;
         return Right(paymentLink);
       } else {
         return Left(

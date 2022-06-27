@@ -30,8 +30,7 @@ class SubscriberServiceImpl extends SubscriberService {
     try {
       final raw = await httpProvider
           .getHttp('${JekawinBaseUrls.subscriberBaseUrl}referals');
-      ReferralsResponseModel res =
-      ReferralsResponseModel.fromMap(raw);
+      ReferralsResponseModel res = ReferralsResponseModel.fromMap(raw);
       var data = res.data.guestInvites;
       /// get the list of referrals from data
       /// and set it to referrals provider
