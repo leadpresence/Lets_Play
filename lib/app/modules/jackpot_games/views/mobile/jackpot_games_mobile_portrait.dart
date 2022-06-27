@@ -37,7 +37,7 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
               ),
               onPressed: () {
                 Get.back();
-                Future.delayed(const Duration(milliseconds: 2), () {
+                Future.delayed(const Duration(microseconds: 2), () {
                   controller.pin1.clear();
                   controller.pin2.clear();
                   controller.pin3.clear();
@@ -211,8 +211,8 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
                                         MainAxisAlignment.spaceAround,
                                     children: [
                                       Container(
-                                        height: 60,
-                                        width: 60,
+                                        height: 54,
+                                        width: 54,
                                         // margin: EdgeInsets.all(24),
                                         child: TextFormField(
                                           autofocus: true,
@@ -262,8 +262,8 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
                                         ),
                                       ),
                                       SizedBox(
-                                        height: 60,
-                                        width: 60,
+                                        height: 54,
+                                        width: 54,
                                         child: TextFormField(
                                           controller: controller.pin2,
                                           onChanged: (value) {
@@ -314,8 +314,8 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
                                         ),
                                       ),
                                       SizedBox(
-                                        height: 60,
-                                        width: 60,
+                                        height: 54,
+                                        width: 54,
                                         child: TextFormField(
                                           controller: controller.pin3,
                                           onChanged: (value) {
@@ -367,8 +367,8 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
                                         ),
                                       ),
                                       SizedBox(
-                                        height: 60,
-                                        width: 60,
+                                        height: 54,
+                                        width: 54,
                                         child: TextFormField(
                                           controller: controller.pin4,
                                           onChanged: (value) {
@@ -420,8 +420,8 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
                                         ),
                                       ),
                                       SizedBox(
-                                        height: 60,
-                                        width: 60,
+                                        height: 54,
+                                        width: 54,
                                         child: TextFormField(
                                           controller: controller.pin5,
                                           onChanged: (value) {
