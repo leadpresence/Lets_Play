@@ -21,9 +21,10 @@ class WalletHomeController extends GetxController{
 
   @override
   void onInit() {
+    super.onInit();
     getUserWallet();
     getUserTransactions();
-    balance.value = GetStorage().read('walletBalance');
+    balance.value = GetStorage().read('walletBalance').toInt();
     rewardPoints.value = GetStorage().read('rewardPoints');
     wins.value = GetStorage().read('wins');
   }
