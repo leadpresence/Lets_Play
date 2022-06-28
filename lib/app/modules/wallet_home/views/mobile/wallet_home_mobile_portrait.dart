@@ -4,8 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:jekawin_mobile_flutter/app/modules/fund_wallet/views/fund_wallet_view.dart';
-import 'package:jekawin_mobile_flutter/app/widgets/custom_small_button.dart';
-
 import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../constants/asset_paths.dart';
 import '../../../../widgets/custom_medium_button.dart';
