@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -108,11 +109,12 @@ class WalletServiceImpl extends UserWalletDataSource {
     try {
       var raw = await httpProvider
           .getHttp('${JekawinBaseUrls.wallerBaseUrl}wallets/$userId');
+      UserWalletModel res = UserWalletModel.fromMap(raw);
+      GetStorage().write('walletBalance', res.body.wallet.balance);
+      GetStorage().write('wins', res.body.wins);
+      GetStorage().write('rewardPoints', res.body.rewardPoints);
       if (raw['success']) {
-        UserWalletModel res = UserWalletModel.fromMap(raw);
-        GetStorage().write('walletBalance', res.body.wallet.balance);
-        GetStorage().write('wins', res.body.wins);
-        GetStorage().write('rewardPoints', res.body.rewardPoints);
+
         return Right(raw['message']);
       } else {
         return Left(
