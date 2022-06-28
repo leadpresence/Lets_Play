@@ -17,7 +17,7 @@ import 'package:jekawin_mobile_flutter/app/utils/network_utils.dart'
 class HttpServiceImpl extends HttpService {
   final _userService = Get.find<UserLocalDataSourceImpl>();
 
-  final _dio = Dio(BaseOptions(connectTimeout: 50000));
+  final _dio = Dio(BaseOptions(connectTimeout: 100000));
   User? get user => _userService.user;
 
   @override

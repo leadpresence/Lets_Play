@@ -149,20 +149,7 @@ class ReferralMobilePortrait extends GetView<ReferralController> {
               ),
               const Gap(20),
               //
-              //   controller.refs.isEmpty?
-              // SizedBox(
-              // height: Get.height * .35,
-              //   child: const Center(
-              //     child: Text(
-              //       'No Referrals yet,\n invite friends to acquire points',
-              //       style: TextStyle(
-              //         fontSize: 18,
-              //         color: Color(0xff414249),
-              //       ),
-              //       textAlign: TextAlign.center,
-              //     ),
-              //   ),
-              // ):
+                controller.refs.isNotEmpty?
               ListView.builder(
                 shrinkWrap: true,
                 physics: const BouncingScrollPhysics(),
@@ -171,7 +158,21 @@ class ReferralMobilePortrait extends GetView<ReferralController> {
                 itemBuilder: (BuildContext context, int position) {
                   return referralItem(controller.refs[position]);
                 },
-              ),
+              ):
+              SizedBox(
+              height: Get.height * .35,
+                child: const Center(
+                  child: Text(
+                    'No Referrals yet,\n invite friends to acquire points',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Color(0xff414249),
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              )
+
               // ),
             ]),
           ),

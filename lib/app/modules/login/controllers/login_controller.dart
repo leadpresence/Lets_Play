@@ -14,7 +14,7 @@ class LoginController extends GetxController {
   final loginFormKey = GlobalKey<FormState>();
   final phoneNumberController = TextEditingController();
   final passwordController = TextEditingController();
-  RxString errorPhoneNumberMessage = "".obs;
+    RxString errorPhoneNumberMessage = "".obs;
   RxString errorPasswordMessage = "".obs;
   var isLoading = false.obs;
 

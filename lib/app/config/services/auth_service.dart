@@ -141,6 +141,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
       UserSignupDetails res = UserSignupDetails.fromMap(raw);
       _userLocalDataSource.saveUser(res.data.user);
       GetStorage().write('firstName', res.data.user.firstName);
+      GetStorage().write('userId', res.data.user.id);
       GetStorage().write('lastName', res.data.user.lastName);
       GetStorage().write('profileImage', res.data.user.avatar);
       GetStorage().write('phoneNumber', res.data.user.mobile);
@@ -173,6 +174,8 @@ class AuthServiceImpl extends AuthServiceDataSource {
       if (raw['success']) {
         ForgetPasswordResponse res = ForgetPasswordResponse.fromMap(raw);
         prospectIsProvider.setProspectId(res.data.prospectId);
+        prospectIsProvider.setOtp(res.data.otp);
+
         prospectIsProvider.setPhoneNumber(mobile);
 
         return const Right("Otp sent Successful for password reset");

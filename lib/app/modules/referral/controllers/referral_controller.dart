@@ -6,6 +6,7 @@ import 'package:jekawin_mobile_flutter/app/config/services/di/di_locator.dart';
 import 'package:jekawin_mobile_flutter/app/config/services/subscriber_service.dart';
 
 class ReferralController extends GetxController {
+
   final subscriberService = Get.find<SubscriberServiceImpl>();
   final referralsProvider = Get.find<UtilsController>();
   var isLoading = false.obs;
@@ -25,7 +26,9 @@ class ReferralController extends GetxController {
   }
 
   @override
-  void dispose() {}
+  void dispose() {
+
+  }
 
   @override
   void onClose() {}

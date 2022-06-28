@@ -4,10 +4,12 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:jekawin_mobile_flutter/app/config/services/subscriber_service.dart';
+import 'package:jekawin_mobile_flutter/app/config/services/wallet_service.dart';
 import 'package:jekawin_mobile_flutter/app/modules/referral/models/ReferralResponse.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../../../../init_db.dart';
+import '../../../modules/fund_wallet/models/payment_processor_model.dart';
 import '../../data/local/user_local_impl.dart';
 import '../auth_service.dart';
 import '../http/http_service_impl.dart';
@@ -19,10 +21,14 @@ class UtilsController extends GetxController {
   RxString otp = "".obs;
   RxString phoneNumber = "".obs;
   RxString forgotPasswordToken = "".obs;
+  RxString recentPaymentLink = "".obs;
 
   RxList guestLists = [].obs;
+  RxList transactions = [].obs;
+  RxList paymentProcessors = [].obs;
 
   getProspectId() => prospectId.value;
+  getResentPaymentLink() => recentPaymentLink.value;
   getOtp() => otp.value;
   getForgotPasswordToken() => forgotPasswordToken.value;
 
@@ -30,6 +36,9 @@ class UtilsController extends GetxController {
 
   setProspectId(String prosId) {
     prospectId .value= prosId;
+  }
+  setRecentPaymentLink(String link) {
+    recentPaymentLink.value= link;
   }
 
   setOtp(String otpCode) {
@@ -53,5 +62,6 @@ Future<void>  setDi()async {
   Get.lazyPut<HttpService>(()=>HttpServiceImpl());
   Get.lazyPut<UtilsController> (()=>UtilsController());
   Get.put (AuthServiceImpl());
+  Get.put (WalletServiceImpl());
   Get.put (SubscriberServiceImpl());
 }
