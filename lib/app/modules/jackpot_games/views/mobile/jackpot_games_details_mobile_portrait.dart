@@ -1,13 +1,16 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jekawin_mobile_flutter/app/modules/jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
 import '../../../../widgets/custom_large_button.dart';
+import '../../../wallet_home/controllers/wallet_home_controller.dart';
 import '../../controllers/jackpot_games_controller.dart';
 import 'jackpot_games_success_screen.dart';
 
 class JackpotGamesDetailsMobilePortrait extends StatelessWidget {
+  final WalletHomeController walletController = Get.put(WalletHomeController());
   final String ticketNumber, numberOfGames, gameCost;
   JackpotGamesDetailsMobilePortrait({
     Key? key,
@@ -154,14 +157,16 @@ class JackpotGamesDetailsMobilePortrait extends StatelessWidget {
                 borderColor: const Color(0xffFE7A01),
                 hasBorder: true,
                 onPressed: () {
-                  Get.to(
-                    () => JackpotGamesSuccessMobileView(
-                      className: const JekawinBottomTabs(
-                        tabIndex: 0,
-                      ),
-                      msg: 'Ticket purchased Successfully',
-                    ),
-                  );
+                  walletController.balance.value == 0
+                      ? BotToast.showText(text: "Insufficient amount on wallet")
+                      : Get.to(
+                          () => JackpotGamesSuccessMobileView(
+                            className: const JekawinBottomTabs(
+                              tabIndex: 0,
+                            ),
+                            msg: 'Ticket purchased Successfully',
+                          ),
+                        );
                 },
               ),
             ),

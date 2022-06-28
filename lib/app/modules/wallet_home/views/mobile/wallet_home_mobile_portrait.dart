@@ -4,11 +4,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:jekawin_mobile_flutter/app/modules/fund_wallet/views/fund_wallet_view.dart';
+import 'package:intl/intl.dart';
 import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../constants/asset_paths.dart';
 import '../../../../widgets/custom_medium_button.dart';
 import '../../../select_account/views/select_bank_view.dart';
 import '../../controllers/wallet_home_controller.dart';
+import '../../models/transaction_model.dart';
 
 class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
   @override
@@ -21,8 +23,6 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
 
   @override
   Widget build(BuildContext context) {
-    screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
-    screenHeight(BuildContext context) => MediaQuery.of(context).size.height;
     const TextStyle walletTextStyle = TextStyle(
       color: Colors.white,
       fontWeight: FontWeight.bold,
@@ -66,8 +66,8 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
-                      children: const [
-                        Text(
+                      children: [
+                        const Text(
                           'Wallet Balance: ',
                           style: TextStyle(
                             fontSize: 16,
@@ -75,19 +75,21 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Text(
-                          '₦ 0.00',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                        Obx(
+                          () => Text(
+                            "₦ " + controller.balance.value.toString(),
+                            style: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ],
                     ),
                     Row(
-                      children: const [
-                        Text(
+                      children: [
+                        const Text(
                           'Reward points: ',
                           style: TextStyle(
                             fontSize: 16,
@@ -95,12 +97,15 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Text(
-                          '0',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                        Obx(
+                          () => Text(
+                            // "90",
+                            controller.rewardPoints.value.toString(),
+                            style: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ],
@@ -147,47 +152,40 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                   color: Color(0xff000000),
                 ),
               ),
-              Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: 13,
-                  itemBuilder: (BuildContext context, int position) {
-                    return TransactionItem(
-                      key: key,
-                      onPresssed: () {},
-                      type: "Withdrawal",
-                      amount: "2000000000000",
-                      credit: false,
-                      date: "12/2/2022",
-                    );
-                  },
-                ),
-              ),
+              controller.transactions.isNotEmpty
+                  ? Expanded(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: controller.transactions.length,
+                        itemBuilder: (BuildContext context, int position) {
+                          return transactionItem(
+                            controller.transactions[position],
+                          );
+                        },
+                      ),
+                    )
+                  : Center(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 70.0, left: 60, right: 20),
+                        child: Row(
+                          children: const [
+                            Text(
+                              "Your transaction will be displayed here",
+                              style: TextStyle(color: Colors.grey),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
             ],
           ),
         ),
       ),
     );
   }
-}
 
-class TransactionItem extends StatelessWidget {
-  final onPresssed;
-  final amount;
-  final date;
-  String type = "Trnx type";
-  bool credit = false;
-  TransactionItem(
-      {Key? key,
-      this.onPresssed,
-      required this.credit,
-      required this.amount,
-      required this.date,
-      required this.type})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
+  Widget transactionItem(TransactionsModel trxnItem) {
     final Widget debitIcon = SvgPicture.asset(
       debitSvg,
       height: 24,
@@ -199,8 +197,6 @@ class TransactionItem extends StatelessWidget {
       height: 24,
       width: 24,
     );
-    screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
-    screenHeight(BuildContext context) => MediaQuery.of(context).size.height;
 
     return GestureDetector(
       child: Padding(
@@ -213,7 +209,7 @@ class TransactionItem extends StatelessWidget {
             boxShadow: [
               BoxShadow(
                 spreadRadius: -12,
-                offset: Offset(0, 10),
+                offset: const Offset(0, 10),
                 color: Colors.grey.withOpacity(0.2),
                 blurRadius: 25,
               ),
@@ -227,9 +223,9 @@ class TransactionItem extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  credit ? creditIcon : debitIcon,
+                  false ? debitIcon : creditIcon,
                   Text(
-                    date ?? "Date",
+                    trxnItem.createdAt.toString(),
                     style: const TextStyle(
                       fontSize: 12,
                       color: Colors.grey,
@@ -237,20 +233,20 @@ class TransactionItem extends StatelessWidget {
                   ),
                 ],
               ),
-              Gap(10),
+              const Gap(10),
               Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    type,
+                    trxnItem.transactionType == 0 ? "Credit" : "Debit",
                     style: const TextStyle(
                       fontSize: 12,
                       color: Colors.black,
                     ),
                   ),
                   Text(
-                    "₦ " + amount,
+                    "₦ " + trxnItem.amount.toString(),
                     style: const TextStyle(
                       fontSize: 12,
                       color: Colors.black,
@@ -262,7 +258,7 @@ class TransactionItem extends StatelessWidget {
           ),
         ),
       ),
-      onTap: () => onPresssed,
+      onTap: () {},
     );
   }
 }

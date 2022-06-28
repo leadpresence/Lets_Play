@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,8 @@ class DashboardController extends GetxController
   late List<Body>? indexList = <Body>[];
   late List<Duration>? gamesDurations = <Duration>[];
   late List<DateTime>? endDates = <DateTime>[];
+  var _timer;
+  int _currentPage = 0;
 
   late List<Rx<AnimationController>> gamesAnimationControllers = [];
   RxInt days = 0.obs, hours = 0.obs, minutes = 0.obs, seconds = 0.obs;
@@ -32,6 +36,7 @@ class DashboardController extends GetxController
           indexList!.add(JackpotGameResponse.fromJson(response.data).body[i]);
           endDates!
               .add(JackpotGameResponse.fromJson(response.data).body[i].endDate);
+          _timer;
         }
         startCountDown();
       } else {
@@ -105,6 +110,21 @@ class DashboardController extends GetxController
     pageController = PageController(initialPage: 0);
     gamesDurations;
     getAllJackpotGames();
+    _timer = Timer.periodic(
+      const Duration(seconds: 3),
+      (Timer timer) {
+        if (_currentPage < indexList!.length - 1) {
+          _currentPage++;
+        } else {
+          _currentPage = 0;
+        }
+        pageController.animateToPage(
+          _currentPage,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOutQuart,
+        );
+      },
+    );
     super.onInit();
   }
 }
