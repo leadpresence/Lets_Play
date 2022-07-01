@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dartz/dartz_unsafe.dart';
 import 'package:flutter/cupertino.dart';
@@ -190,7 +191,8 @@ class WalletServiceImpl extends WalletDataSource {
       GetStorage().write('rewardPoints', res.body.rewardPoints);
 
       if(res.body.banks.isNotEmpty){
-        utilsProvider.savedBanks.value.addAll(res.body.banks.toList());
+        utilsProvider.savedBanks.value.clear();
+        utilsProvider.savedBanks.value.addAll(res.body.banks);
       }
       if (raw['success']) {
         return Right(raw['message']);
