@@ -9,6 +9,7 @@ import 'package:jekawin_mobile_flutter/app/modules/select_account/controller/sel
 
 import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../constants/asset_paths.dart';
+import '../../models/bank_model.dart';
 
 class SelectBankMobilePortrait extends GetView {
   @override
@@ -90,14 +91,19 @@ class SelectBankMobilePortrait extends GetView {
                     ],
                   ),
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 8),
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: 3,
-                      itemBuilder: (BuildContext context, int position) {
-                        return BankItem(
-                          showBin: true,
-                        );
-                      })))
+                  child: GetX<SelectBankController>(
+                    builder: (controller) {
+                      return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: controller.savedBanksList.value.length,
+                          itemBuilder: (BuildContext context, int position) {
+                            return BankItem(
+                              showBin: true,
+                                bankItem: controller.savedBanksList.value[position]
+                            );
+                          });
+                    }
+                  )))
         ],
       ),
     ));
@@ -107,8 +113,9 @@ class SelectBankMobilePortrait extends GetView {
 //Todo @felix create needed para meters for this class
 class BankItem extends StatelessWidget {
   var showBin = false;
+  final BankModel bankItem;
 
-  BankItem({required this.showBin});
+  BankItem({Key? key, required this.showBin,required  this.bankItem}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -125,11 +132,7 @@ class BankItem extends StatelessWidget {
       width: 30,
       height: 30,
     );
-    final Widget addBankIcon = SvgPicture.asset(
-      addBank,
-      width: 30,
-      height: 30,
-    );
+
     return
       Container(
       padding: const EdgeInsets.all(12),
@@ -155,13 +158,13 @@ class BankItem extends StatelessWidget {
             children: [
               //bank name
               SizedBox(
-                child: Text("UBA"),
+                child: Text(bankItem.bankName),
                 width: screenWidth(context) / 2,
               ),
               const Gap(8),
               //account number
               SizedBox(
-                child: Text("1234567890", overflow: TextOverflow.ellipsis),
+                child: Text(bankItem.accountNumber, overflow: TextOverflow.ellipsis),
                 width: screenWidth(context) / 2,
               ),
               const Gap(8),
@@ -171,8 +174,8 @@ class BankItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SizedBox(
-                      child: Text(
-                        "George Adejumoke Rachael Adejumoke Rachael",
+                      child: const Text(
+                        "Account Name N/A",
                         overflow: TextOverflow.ellipsis,
                       ),
                       width: screenWidth(context) / 2,

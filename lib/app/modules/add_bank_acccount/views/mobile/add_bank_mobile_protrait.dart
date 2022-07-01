@@ -8,6 +8,7 @@ import 'package:jekawin_mobile_flutter/app/modules/withdrawal_amount/views/withd
 
 import '../../../../widgets/custom_large_button.dart';
 import '../../../../widgets/custom_text_field.dart';
+import '../../models/bank_response_model.dart';
 
 class AddBankMobilePortrait extends GetView<AddBankController> {
   @override
@@ -17,26 +18,13 @@ class AddBankMobilePortrait extends GetView<AddBankController> {
 
   @override
   Widget build(BuildContext context) {
-    screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
-    screenHeight(BuildContext context) => MediaQuery.of(context).size.height;
     const TextStyle errorTextStyle =
         TextStyle(fontSize: 8, color: Colors.deepOrange);
 
-    // List of items in our dropdown menu
-    var items = [
-      'GTB',
-      'UBA-United Bank for Africa',
-      'FBN - First Bank of Nigeria',
-      'Polaris Bank',
-      'Union Bank',
-    ];
-      // Initial Selected Value
-        String dropdownvalue = items[0];
-       return
-        Obx(() =>
-        Scaffold(
-            body: SingleChildScrollView(
-                child: Form(
+    // Initial Selected Value
+    return Scaffold(
+        body: SingleChildScrollView(
+            child: Form(
       key: controller.addBankFormKey,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         const Gap(100),
@@ -71,81 +59,85 @@ class AddBankMobilePortrait extends GetView<AddBankController> {
         ),
         const Gap(10),
         Padding(
-            padding: const EdgeInsets.fromLTRB(24, 40, 24, 10),
-            child: CustomTextField(
-                hintText: "Card holder’s name",
-                textController: controller.cardHolderNameController,
-                onChanged: (v) {
-                  if (v.isNotEmpty) {
-                    controller.clearErrorCardHolderName();
-                  }
-                })),
+            padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+            child: Obx(
+              () => DropdownButtonHideUnderline(
+                child: Expanded(
+                  child: DropdownButtonFormField<String>(
+                      value: "Select Bank",
+                      validator: (val) {
+                        return controller.validateBank(val.toString());
+                      },
+                      hint: const Text("Select Bank"),
+                      icon: const Icon(Icons.keyboard_arrow_down),
+                      // Array list of items
+                      items: controller.bDropDownItemsList.value,
+                      onChanged: (selectedValue) {
+                        controller.bankNameController.text = "";
+                        controller.accountNumberController.text = "";
+                        controller.selectedBankName.value =
+                            selectedValue.toString();
+                        var item = controller.bList.value.firstWhere(
+                            (bank) => bank.name == selectedValue.toString());
+
+                        controller.selectedBankCode.value =
+                            item.code.toString();
+                      }),
+                ),
+              ),
+            )),
         Padding(
-          padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-          child: Text(
-            controller.errorCardHolderNameMessage.value,
-            style: errorTextStyle,
-          ),
-        ),
-        Padding(
-            padding: const EdgeInsets.fromLTRB(24, 12, 24, 10),
+            padding: const EdgeInsets.fromLTRB(24, 24, 24, 10),
             child: CustomTextField(
                 hintText: "Account Number",
                 textController: controller.accountNumberController,
                 onChanged: (v) {
                   if (v.isNotEmpty) {
+                    if (v.length == 10) {
+                      //enquire name
+                      controller.getAccountName(v.toString(),
+                          controller.selectedBankCode.value.toString());
+                    }
                     controller.clearErrorAccountNumber();
                   }
                 })),
         Padding(
-          padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-          child: Text(
-            controller.errorAccountNumberMessage.value,
-            style: errorTextStyle,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-          child:
-       DropdownButtonHideUnderline(
-                child: DropdownButtonFormField(
-                    // decoration: const InputDecoration(
-                    //   enabledBorder: UnderlineInputBorder(
-                    //     borderSide: BorderSide(color: Colors.transparent),
-                    //   ),
-                    // ),
-                    // Initial Value
-                    value: dropdownvalue,
-                    // Down Arrow Icon
-                    icon: const Icon(Icons.keyboard_arrow_down),
-                    // Array list of items
-                    items: items.map((String items) {
-                      return DropdownMenuItem(
-                        value: items,
-                        child: Text(items),
-                      );
-                    }).toList(),
-                    // After selecting the desired option,it will
-                    // change button value to selected value
-                    onChanged: (String? newValue) {
-                      // setState((){dropdownvalue = newValue!;}) ;
-                    }),
+            padding: const EdgeInsets.fromLTRB(24, 4, 24, 0),
+            child: Obx(
+              () => Text(
+                controller.errorAccountNumberMessage.value,
+                style: errorTextStyle,
               ),
+            )),
+        Padding(
+            padding: const EdgeInsets.fromLTRB(24, 4, 24, 10),
+            child: CustomTextField(
+                readOnly: true,
+                hintText: "Account name",
+                textController: controller.bankNameController,
+                onChanged: (v) {
+                  if (v.isNotEmpty) {
+                    controller.clearErrorBankName();
+                  }
+                })),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(24, 4, 24, 0),
+          child: Obx(() => Text(
+                controller.errorCardHolderNameMessage.value,
+                style: errorTextStyle,
+              )),
         ),
         const Gap(30),
-
         Padding(
           padding: const EdgeInsets.fromLTRB(24, 4, 24, 10),
           child: CustomButton(
               buttonText: "Save",
               onPressed: () {
                 //validate form and submit
-                // controller.addBankFormValidator(key);
-                Get.to(()=> const WithdrawalAmountView());
+                controller.addBankFormValidator(key);
               }),
         ),
       ]),
-    )))
-    );
+    )));
   }
 }
