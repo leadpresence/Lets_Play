@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:jekawin_mobile_flutter/app/modules/select_account/models/bank_model.dart';
 import 'package:jekawin_mobile_flutter/app/modules/select_account/views/mobile/select_bank_mobile_portrait.dart';
 import 'package:jekawin_mobile_flutter/app/modules/withdrawal_amount/controllers/withdrawal_amount_controller.dart';
 
@@ -31,7 +32,7 @@ class WithdrawalAmountMobilePortrait
                  Padding(
                    padding: const EdgeInsets.fromLTRB(20, 4, 20, 10),
 
-                   child: BankItem(showBin: false,),
+                   child: BankItem(showBin: false,bankItem: BankModel(accountNumber: "",id: "0",bankCode: "",bankName: "",country: "NGN", dateAdded: DateTime.now(),),),
                  ),
 
                       const Gap(10),

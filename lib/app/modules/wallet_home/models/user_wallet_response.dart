@@ -1,6 +1,8 @@
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
+import '../../select_account/models/bank_model.dart';
+
 UserWalletModel userWalletModelFromMap(String str) => UserWalletModel.fromMap(json.decode(str));
 
 String userWalletModelToMap(UserWalletModel data) => json.encode(data.toMap());
@@ -71,7 +73,7 @@ class Body {
   List<dynamic> guestInvites;
   String inviteLink;
   List<dynamic> games;
-  List<dynamic> banks;
+  List<BankModel> banks;
   DateTime createdAt;
   DateTime updatedAt;
   int v;
@@ -92,7 +94,7 @@ class Body {
     guestInvites: List<dynamic>.from(json["guestInvites"].map((x) => x)),
     inviteLink: json["inviteLink"],
     games: List<dynamic>.from(json["games"].map((x) => x)),
-    banks: List<dynamic>.from(json["banks"].map((x) => x)),
+    banks: List<BankModel>.from(json["banks"].map((bank) => BankModel.fromMap(bank))),
     createdAt: DateTime.parse(json["createdAt"]),
     updatedAt: DateTime.parse(json["updatedAt"]),
     v: json["__v"],
@@ -114,7 +116,7 @@ class Body {
     "guestInvites": List<dynamic>.from(guestInvites.map((x) => x)),
     "inviteLink": inviteLink,
     "games": List<dynamic>.from(games.map((x) => x)),
-    "banks": List<dynamic>.from(banks.map((x) => x)),
+    "banks": List<dynamic>.from(banks.map((bank) => bank.toMap())),
     "createdAt": createdAt.toIso8601String(),
     "updatedAt": updatedAt.toIso8601String(),
     "__v": v,
