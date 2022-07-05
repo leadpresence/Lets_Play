@@ -12,11 +12,15 @@ import 'jackpot_games_success_screen.dart';
 class JackpotGamesDetailsMobilePortrait extends StatelessWidget {
   final WalletHomeController walletController = Get.put(WalletHomeController());
   final String ticketNumber, numberOfGames, gameCost;
+  final String gameId;
+  final gameIndex;
   JackpotGamesDetailsMobilePortrait({
     Key? key,
     required this.ticketNumber,
     required this.numberOfGames,
     required this.gameCost,
+    required this.gameId,
+    this.gameIndex,
   }) : super(key: key);
 
   final JackpotGamesController controller = Get.put(JackpotGamesController());
@@ -159,13 +163,82 @@ class JackpotGamesDetailsMobilePortrait extends StatelessWidget {
                 onPressed: () {
                   walletController.balance.value == 0
                       ? BotToast.showText(text: "Insufficient amount on wallet")
-                      : Get.to(
-                          () => JackpotGamesSuccessMobileView(
-                            className: const JekawinBottomTabs(
-                              tabIndex: 0,
-                            ),
-                            msg: 'Ticket purchased Successfully',
-                          ),
+                      : showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Dialog(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              elevation: 0.0,
+                              backgroundColor: Colors.transparent,
+                              child: ConstrainedBox(
+                                constraints:
+                                    BoxConstraints(maxWidth: Get.width),
+                                child: Container(
+                                  margin: EdgeInsets.zero,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.rectangle,
+                                    borderRadius: BorderRadius.circular(16),
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        color: Colors.black26,
+                                        blurRadius: 24.0,
+                                        offset: Offset(0.0, 10.0),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize
+                                        .min, // To make the card compact
+                                    children: [
+                                      const SizedBox(height: 4.0),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                          left: 16.0,
+                                          right: 16.0,
+                                          top: 16.0,
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            InkWell(
+                                              onTap: () => Get.back(),
+                                              child: SvgPicture.asset(
+                                                'assets/svgs/cancel.svg',
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(height: 4.0),
+                                      const Divider(
+                                        thickness: .2,
+                                        color: Colors.black87,
+                                        // height: 1,
+                                      ),
+                                      Text(
+                                          'You\'ll be deducted ₦$gameCost for this operation'),
+                                      TextButton(
+                                        onPressed: () {
+                                          controller.stakeOnAGame(
+                                            gameId,
+                                            gameIndex: gameIndex,
+                                          );
+                                        },
+                                        child: const Text('Continue'),
+                                      ),
+                                      const SizedBox(
+                                        height: 4,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
                         );
                 },
               ),

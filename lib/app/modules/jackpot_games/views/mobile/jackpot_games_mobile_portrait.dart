@@ -11,9 +11,15 @@ import '../../../../widgets/custom_large_button.dart';
 import 'jackpot_games_details_mobile_portrait.dart';
 
 class JackpotGamesMobilePortrait extends StatelessWidget {
-  final gameID;
+  final String gameID;
 
-  JackpotGamesMobilePortrait({Key? key, this.gameID}) : super(key: key);
+  final int gameIndex;
+
+  JackpotGamesMobilePortrait({
+    Key? key,
+    required this.gameID,
+    required this.gameIndex,
+  }) : super(key: key);
 
   final JackpotGamesController controller = Get.put(JackpotGamesController());
   final Random random = Random();
@@ -481,6 +487,8 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
                                   buttonText: "Confirm",
                                   onPressed: () => Get.to(
                                     () => JackpotGamesDetailsMobilePortrait(
+                                      gameIndex: gameIndex,
+                                      gameId: gameID,
                                       gameCost: "50",
                                       numberOfGames: "1",
                                       ticketNumber:

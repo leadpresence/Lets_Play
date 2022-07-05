@@ -9,10 +9,12 @@ import '../../../dashboard/controllers/dashboard_controller.dart';
 class JackpotGamesSuccessMobileView extends StatelessWidget {
   final String msg;
   final Widget className;
+  final int gameIndex;
   JackpotGamesSuccessMobileView({
     Key? key,
     this.msg = 'Success',
     required this.className,
+    required this.gameIndex,
   }) : super(key: key);
 
   final DashboardController dashboardController =
@@ -38,16 +40,17 @@ class JackpotGamesSuccessMobileView extends StatelessWidget {
                 color: Color(0xFF4E4B66),
               ),
             ),
-            // TimeLeft(
-            //   onPressed: () {},
-            //   animation: StepTween(
-            //     begin: dashboardController.timeRemainingInSec.value,
-            //     end: 0,
-            //   ).animate(
-            //     dashboardController.animationController.value,
-            //   ),
-            // ),
-
+            TimeLeft(
+              onPressed: () {},
+              animation: StepTween(
+                begin: dashboardController
+                    .timeRemainingInSecsForGames[gameIndex],
+                end: 0,
+              ).animate(
+                dashboardController
+                    .gamesAnimationControllers[gameIndex].value,
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 32.0,

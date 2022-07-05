@@ -111,7 +111,7 @@ class DashboardController extends GetxController
     gamesDurations;
     getAllJackpotGames();
     _timer = Timer.periodic(
-      const Duration(seconds: 3),
+      const Duration(seconds: 5),
       (Timer timer) {
         if (_currentPage < indexList!.length - 1) {
           _currentPage++;

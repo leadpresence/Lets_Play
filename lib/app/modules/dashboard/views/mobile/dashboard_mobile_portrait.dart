@@ -93,6 +93,7 @@ class DashboardMobilePortrait extends StatelessWidget {
                           onPressed: () {
                             Get.to(
                               () => JackpotGamesMobilePortrait(
+                                gameIndex: index,
                                 gameID: dashboardController
                                     .indexList![index].gameId.id,
                               ),
