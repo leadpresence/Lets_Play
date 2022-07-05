@@ -1,21 +1,20 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:get_storage/get_storage.dart';
-import 'dart:io';
+import 'package:jekawin_mobile_flutter/app/modules/fund_wallet/controllers/complete_funding_controller.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
 import '../../../../config/themes/app_theme_constants.dart';
-import '../../../wallet_home/controllers/wallet_home_controller.dart';
+import '../../../../widgets/custom_large_button.dart';
+import '../../../jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
 
 class CompleteFundingWebView extends StatelessWidget {
   String? url;
   @override
-  final WalletHomeController controller = Get.put(WalletHomeController());
-  CompleteFundingWebView(
-      {Key? key, this.themeData, this.customAppTheme})
+  final CompleteFundingController controller =
+      Get.put(CompleteFundingController());
+
+  CompleteFundingWebView({Key? key, this.themeData, this.customAppTheme})
       : super(key: key);
   final ThemeData? themeData;
   final CustomAppTheme? customAppTheme;
@@ -26,10 +25,12 @@ class CompleteFundingWebView extends StatelessWidget {
 
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar:
-        AppBar(
+        appBar: AppBar(
           centerTitle: true,
-          title: const Text("Fund Wallet",overflow: TextOverflow.ellipsis,),
+          title: const Text(
+            "Fund Wallet",
+            overflow: TextOverflow.ellipsis,
+          ),
           elevation: 0,
           backgroundColor: Colors.orange,
           leading: Padding(
@@ -45,21 +46,41 @@ class CompleteFundingWebView extends StatelessWidget {
               },
             ),
           ),
+          actions: [
+            Padding(
+                padding: const EdgeInsets.only(left: 16.0 ,right: 16.0),
+                child: GestureDetector(
+                  child: const Text(
+                    "Done",
+                    style: TextStyle(color: Colors.white, fontSize: 20.0),
+                  ),
+                  onTap: () {
+                    Get.offAll(
+                      () => const JekawinBottomTabs(
+                        tabIndex: 0,
+                        isGuestUser: true,
+                      ),
+                      transition: Transition.cupertino,
+                    );
+                  },
+                )),
+          ],
         ),
         body: Padding(
-            padding: const EdgeInsets.only(
-              left: 24.0,
-              right: 24.0,
-              top: 4.0,
-            ),
-            child:
-                WebView(
-                  javascriptMode: JavascriptMode.unrestricted,
-                  onProgress: (k){
-                    const CircularProgressIndicator();
-                  },
-                  initialUrl: '$link',
-                )
+          padding: const EdgeInsets.only(
+            left: 16.0,
+            right: 16.0,
+            top: 0.0,
+          ),
+          child:
+
+              WebView(
+            javascriptMode: JavascriptMode.unrestricted,
+            onProgress: (k) {
+              const CircularProgressIndicator();
+            },
+            initialUrl: '$link',
+          ),
 
         ));
   }
