@@ -81,39 +81,52 @@ class GuestDashboardMobilePortrait extends StatelessWidget {
                 const SizedBox(
                   height: 24,
                 ),
-                Container(
+                SizedBox(
                   height: 360,
-                  width: Get.width,
-                  child: PageView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount:
-                        dashboardController.timeRemainingInSecsForGames.length,
-                    controller: dashboardController.pageController,
-                    physics: const ScrollPhysics(),
-                    itemBuilder: (BuildContext context, int index) {
-                      return Obx(
-                        () => DashboardHeroSession(
-                          onPressed: () {
-                            Get.to(
-                              () => const LoginView(),
-                              transition: Transition.cupertino,
+                  child: Stack(
+                    children: [
+                      const Center(
+                        child: CircularProgressIndicator(
+                          strokeWidth: 1,
+                          color: Color(0xFFFE7A01),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 360,
+                        width: Get.width,
+                        child: PageView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: dashboardController
+                              .timeRemainingInSecsForGames.length,
+                          controller: dashboardController.pageController,
+                          physics: const ScrollPhysics(),
+                          itemBuilder: (BuildContext context, int index) {
+                            return Obx(
+                              () => DashboardHeroSession(
+                                onPressed: () {
+                                  Get.to(
+                                    () => const LoginView(),
+                                    transition: Transition.cupertino,
+                                  );
+                                },
+                                priceToBeWon: dashboardController
+                                    .indexList![index].gameId.price,
+                                title: dashboardController
+                                    .indexList![index].gameId.title,
+                                animation: StepTween(
+                                  begin: dashboardController
+                                      .timeRemainingInSecsForGames[index],
+                                  end: 0,
+                                ).animate(
+                                  dashboardController
+                                      .gamesAnimationControllers[index].value,
+                                ),
+                              ),
                             );
                           },
-                          priceToBeWon: dashboardController
-                              .indexList![index].gameId.price,
-                          title: dashboardController
-                              .indexList![index].gameId.title,
-                          animation: StepTween(
-                            begin: dashboardController
-                                .timeRemainingInSecsForGames[index],
-                            end: 0,
-                          ).animate(
-                            dashboardController
-                                .gamesAnimationControllers[index].value,
-                          ),
                         ),
-                      );
-                    },
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(
