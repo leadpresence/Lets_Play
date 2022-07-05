@@ -9,10 +9,10 @@ import '../../../config/services/wallet_service.dart';
 import '../views/mobile/complete_funding_webview.dart';
 
 class FundWalletController extends GetxController {
+
   final WalletServiceImpl walletService = Get.find<WalletServiceImpl>();
   final processorsProvider = Get.find<UtilsController>();
   var isLoading = false.obs;
-
   final amountController = TextEditingController();
   final emailController = TextEditingController();
   final fundWalletFormKey = GlobalKey<FormState>();
