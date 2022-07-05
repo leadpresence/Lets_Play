@@ -1,18 +1,18 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:jekawin_mobile_flutter/app/modules/add_bank_acccount/views/add_bank_view.dart';
 import 'package:jekawin_mobile_flutter/app/modules/select_account/controller/select_bank_controller.dart';
 
 import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../constants/asset_paths.dart';
+import '../../../../widgets/slide_in_animation.dart';
 import '../../models/bank_model.dart';
 
 class SelectBankMobilePortrait extends GetView {
-  @override
+    @override
   final SelectBankController controller = Get.put(SelectBankController());
 
   SelectBankMobilePortrait({Key? key, this.themeData, this.customAppTheme})
@@ -32,11 +32,28 @@ class SelectBankMobilePortrait extends GetView {
     return
         // Obx(() =>
         Scaffold(
+            appBar: AppBar(
+              elevation: 0,
+              backgroundColor: Colors.white,
+              leading: Padding(
+                padding: const EdgeInsets.only(left: 16.0),
+                child: IconButton(
+                  splashRadius: 24,
+                  icon: SvgPicture.asset(
+                    'assets/svgs/chevronLeft.svg',
+                    color: const Color(0xff12121D),
+                  ),
+                  onPressed: () {
+                    Get.back();
+                  },
+                ),
+              ),
+            ),
             body: SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Gap(100),
+          const Gap(20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
@@ -97,9 +114,19 @@ class SelectBankMobilePortrait extends GetView {
                           shrinkWrap: true,
                           itemCount: controller.savedBanksList.value.length,
                           itemBuilder: (BuildContext context, int position) {
-                            return BankItem(
-                              showBin: true,
-                                bankItem: controller.savedBanksList.value[position]
+                            return GestureDetector(
+                              onTap: (){
+                                controller.setWithdrawalAccount(controller.savedBanksList.value[position]);
+                              },
+                              child:
+                              SlideInAnimation(
+                                duration: const Duration(milliseconds: 600),
+                                child:  BankItem(
+                                    showBin: true,
+                                    bankItem: controller.savedBanksList.value[position]
+                                ),
+                              )
+
                             );
                           });
                     }

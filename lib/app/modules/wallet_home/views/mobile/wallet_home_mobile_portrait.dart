@@ -23,7 +23,6 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
 
   @override
   Widget build(BuildContext context) {
-
     const TextStyle walletTextStyle = TextStyle(
       color: Colors.white,
       fontWeight: FontWeight.bold,
@@ -77,10 +76,9 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                           ),
                         ),
                         Obx(
-                          () =>
-                              Text(
-                                "₦ "+controller.balance.value.toString(),
-                                style: const TextStyle(
+                          () => Text(
+                            "₦ " + controller.balance.value.toString(),
+                            style: const TextStyle(
                               fontSize: 18,
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -99,9 +97,10 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Obx(() => Text(
-                                // "90",
-                                controller.rewardPoints.value.toString(),
+                        Obx(
+                          () => Text(
+                            // "90",
+                            controller.rewardPoints.value.toString(),
                             style: const TextStyle(
                               fontSize: 18,
                               color: Colors.white,
@@ -153,27 +152,37 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                   color: Color(0xff000000),
                 ),
               ),
-              controller.transactions.isNotEmpty?
-              Expanded(
-                child: ListView.builder(
+              // controller.transactions.value.isNotEmpty
+              //     ?
+              GetX<WalletHomeController>(builder: (controller) {
+                return Expanded(
+                    child: ListView.builder(
                   shrinkWrap: true,
-                  itemCount: controller.transactions.length,
+                  itemCount: controller.transactions.value.length,
                   itemBuilder: (BuildContext context, int position) {
                     return transactionItem(
-                      controller.transactions[position],
+                      controller.transactions.value[position],
                     );
                   },
-                ),
-              )
-                  :Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 70.0,left: 60,right: 20),
-                      child: Row(children: const [
-                Text("Your transaction will be displayed here",style: TextStyle(color: Colors.grey),)
-              ],),
-                    ),
-                  ),
-
+                )
+                    // }
+                    // ),
+                    );
+              })
+              // : Center(
+              //     child: Padding(
+              //       padding: const EdgeInsets.only(
+              //           top: 70.0, left: 60, right: 20),
+              //       child: Row(
+              //         children: const [
+              //           Text(
+              //             "Your transaction will be displayed here",
+              //             style: TextStyle(color: Colors.grey),
+              //           )
+              //         ],
+              //       ),
+              //     ),
+              //   ),
             ],
           ),
         ),
@@ -219,9 +228,9 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  false ? debitIcon : creditIcon,
+                  trxnItem.transactionType == 'C' ? creditIcon : debitIcon,
                   Text(
-                     trxnItem.createdAt.toString(),
+                    trxnItem.createdAt.toString(),
                     style: const TextStyle(
                       fontSize: 12,
                       color: Colors.grey,
@@ -229,20 +238,20 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                   ),
                 ],
               ),
-             const  Gap(10),
+              const Gap(10),
               Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    trxnItem.transactionType == 0 ? "Credit" : "Debit",
+                    trxnItem.transactionType == 'C' ? "Credit" : "Debit",
                     style: const TextStyle(
                       fontSize: 12,
                       color: Colors.black,
                     ),
                   ),
                   Text(
-                    "₦ " + trxnItem.amount.toString(),
+                    trxnItem.currency + " " + trxnItem.amount.toString(),
                     style: const TextStyle(
                       fontSize: 12,
                       color: Colors.black,

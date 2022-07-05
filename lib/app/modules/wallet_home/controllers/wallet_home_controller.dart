@@ -8,58 +8,51 @@ import 'package:jekawin_mobile_flutter/app/modules/wallet_home/models/transactio
 
 import '../../../config/services/di/di_locator.dart';
 
-class WalletHomeController extends GetxController{
+class WalletHomeController extends GetxController {
   final WalletServiceImpl walletService = Get.find<WalletServiceImpl>();
   final transactionsProvider = Get.find<UtilsController>();
 
   var balance = 0.obs;
   var rewardPoints = 0.obs;
   var wins = 0.obs;
-  RxList transactions = [].obs;
+  Rx<List<TransactionsModel>> transactions = Rx<List<TransactionsModel>>([]);
+
 
   var trnxsList = <TransactionsModel>[].obs;
 
+  Future<void> getUserWallet() async {
+    final wallet = await walletService.userWallet();
+    wallet.fold((l) {
+      BotToast.showText(text: l.message);
+    }, (r) {});
+  }
+
+  Future<void> getUserTransactions() async {
+    final trxns = await walletService.userTransactions();
+    trxns.fold((l) {
+      BotToast.showText(text: l.message);
+    }, (r) {
+      transactions.value.addAll(transactionsProvider.transactions.value);
+    });
+  }
+
   @override
   void onInit() {
-    super.onInit();
+    super.onReady();
+
     getUserWallet();
     getUserTransactions();
+
     balance.value = GetStorage().read('walletBalance').toInt();
     rewardPoints.value = GetStorage().read('rewardPoints');
     wins.value = GetStorage().read('wins');
   }
-
-
   @override
   void onReady() {
     super.onReady();
   }
 
-  Future<void> getUserWallet() async {
-    final wallet = await  walletService.userWallet();
-    wallet.fold((l) {
-      BotToast.showText(text: l.message);
-    }, (r) {
-    });
-  }
-
-  Future<void> getUserTransactions() async {
-    final trxns = await  walletService.userTransactions();
-    trxns.fold((l) {
-      BotToast.showText(text: l.message);
-    }, (r) {
-      transactions.value = transactionsProvider.transactions;
-      // dynamic jsonData = jsonDecode(r);
-      // trnxsList.value = jsonData.map((transaction) =>
-      //     AllTransactionsModel.fromMap(transaction)).toList().obs;
-    });
-  }
-
-
-
-
-
-    @override
+  @override
   void dispose() {}
 
   @override

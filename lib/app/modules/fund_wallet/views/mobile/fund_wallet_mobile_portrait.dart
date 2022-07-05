@@ -8,6 +8,13 @@ import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../widgets/custom_large_button.dart';
 import '../../../../widgets/custom_text_field.dart';
 
+const TextStyle errorTextStyle = TextStyle(
+  fontSize: 10,
+  color: Colors.deepOrange,
+  // height: 1.8,
+  letterSpacing: .2,
+  fontWeight: FontWeight.bold,
+);
 class FundWalletMobilePortrait extends GetView {
   @override
   final FundWalletController controller = Get.put(FundWalletController());
@@ -20,13 +27,7 @@ class FundWalletMobilePortrait extends GetView {
   @override
   Widget build(BuildContext context) {
 
-    const TextStyle errorTextStyle = TextStyle(
-      fontSize: 10,
-      color: Colors.deepOrange,
-      // height: 1.8,
-      letterSpacing: .2,
-      fontWeight: FontWeight.bold,
-    );
+
     final Widget wallet = SvgPicture.asset(
       walletCard,
       width: MediaQuery.of(context).size.width / 16,
@@ -213,6 +214,7 @@ class FundWalletMobilePortrait extends GetView {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(24, 4, 24, 10),
                     child: CustomButton(
+                      isLoading: controller.isLoading.value ,
                       buttonText: controller.buttonText.value.toString(),
                       onPressed: () {
                         if(controller.paymentLinkIsSet.isFalse){

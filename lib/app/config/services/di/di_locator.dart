@@ -6,6 +6,7 @@ import 'package:hive/hive.dart';
 import 'package:jekawin_mobile_flutter/app/config/services/subscriber_service.dart';
 import 'package:jekawin_mobile_flutter/app/config/services/wallet_service.dart';
 import 'package:jekawin_mobile_flutter/app/modules/referral/models/ReferralResponse.dart';
+import 'package:jekawin_mobile_flutter/app/modules/wallet_home/models/transaction_model.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../../../../init_db.dart';
@@ -28,9 +29,11 @@ class UtilsController extends GetxController {
   RxString accountName = "".obs;
 
   RxList guestLists = [].obs;
-  RxList transactions = [].obs;
+  // RxList transactions = [].obs;
   Rx<List<Bank>> banks = Rx<List<Bank>>([]);
   Rx<List<BankModel>> savedBanks = Rx<List<BankModel>>([]);
+  Rx<List<BankModel>> withdrawalAccount = Rx<List<BankModel>>([]);
+  Rx<List<TransactionsModel>> transactions = Rx<List<TransactionsModel>>([]);
   RxList paymentProcessors = [].obs;
 
   getProspectId() => prospectId.value;

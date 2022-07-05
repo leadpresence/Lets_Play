@@ -36,8 +36,6 @@ class LoginMobilePortrait extends GetView<LoginController> {
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height * 0.090,
     );
-    // screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
-
     return Obx(
       () => Scaffold(
         body: SafeArea(
