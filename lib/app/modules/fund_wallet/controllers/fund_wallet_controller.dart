@@ -1,12 +1,9 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:jekawin_mobile_flutter/app/modules/fund_wallet/models/payment_processor_model.dart';
-
 import '../../../config/services/di/di_locator.dart';
 import '../../../config/services/wallet_service.dart';
 import '../views/mobile/complete_funding_webview.dart';
