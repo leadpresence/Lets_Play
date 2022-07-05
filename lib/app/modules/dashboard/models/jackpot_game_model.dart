@@ -1,13 +1,16 @@
+// To parse this JSON data, do
+//
+//     final jackpotGameResponse = jackpotGameResponseFromJson(jsonString);
+
+import 'package:meta/meta.dart';
 import 'dart:convert';
 
-JackpotGameModel jackpotGameModelFromJson(String str) =>
-    JackpotGameModel.fromJson(json.decode(str));
+JackpotGameResponse jackpotGameResponseFromJson(String str) => JackpotGameResponse.fromJson(json.decode(str));
 
-String jackpotGameModelToJson(JackpotGameModel data) =>
-    json.encode(data.toJson());
+String jackpotGameResponseToJson(JackpotGameResponse data) => json.encode(data.toJson());
 
-class JackpotGameModel {
-  JackpotGameModel({
+class JackpotGameResponse {
+  JackpotGameResponse({
     required this.message,
     required this.statusCode,
     required this.body,
@@ -16,23 +19,22 @@ class JackpotGameModel {
 
   String message;
   int statusCode;
-  Body body;
+  List<Body> body;
   bool success;
 
-  factory JackpotGameModel.fromJson(Map<String, dynamic> json) =>
-      JackpotGameModel(
-        message: json["message"],
-        statusCode: json["statusCode"],
-        body: Body.fromJson(json["body"]),
-        success: json["success"],
-      );
+  factory JackpotGameResponse.fromJson(Map<String, dynamic> json) => JackpotGameResponse(
+    message: json["message"],
+    statusCode: json["statusCode"],
+    body: List<Body>.from(json["body"].map((x) => Body.fromJson(x))),
+    success: json["success"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "message": message,
-        "statusCode": statusCode,
-        "body": body.toJson(),
-        "success": success,
-      };
+    "message": message,
+    "statusCode": statusCode,
+    "body": List<dynamic>.from(body.map((x) => x.toJson())),
+    "success": success,
+  };
 }
 
 class Body {
@@ -47,7 +49,7 @@ class Body {
   });
 
   String id;
-  String gameId;
+  GameId gameId;
   DateTime startDate;
   DateTime endDate;
   List<dynamic> winnings;
@@ -55,22 +57,54 @@ class Body {
   int v;
 
   factory Body.fromJson(Map<String, dynamic> json) => Body(
-        id: json["_id"],
-        gameId: json["gameID"],
-        startDate: DateTime.parse(json["startDate"]),
-        endDate: DateTime.parse(json["endDate"]),
-        winnings: List<dynamic>.from(json["winnings"].map((x) => x)),
-        status: json["status"],
-        v: json["__v"],
-      );
+    id: json["_id"],
+    gameId: GameId.fromJson(json["gameID"]),
+    startDate: DateTime.parse(json["startDate"]),
+    endDate: DateTime.parse(json["endDate"]),
+    winnings: List<dynamic>.from(json["winnings"].map((x) => x)),
+    status: json["status"],
+    v: json["__v"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
-        "gameID": gameId,
-        "startDate": startDate.toIso8601String(),
-        "endDate": endDate.toIso8601String(),
-        "winnings": List<dynamic>.from(winnings.map((x) => x)),
-        "status": status,
-        "__v": v,
-      };
+    "_id": id,
+    "gameID": gameId.toJson(),
+    "startDate": startDate.toIso8601String(),
+    "endDate": endDate.toIso8601String(),
+    "winnings": List<dynamic>.from(winnings.map((x) => x)),
+    "status": status,
+    "__v": v,
+  };
+}
+
+class GameId {
+  GameId({
+    required this.id,
+    required this.price,
+    required this.title,
+    required this.gameCycle,
+    required this.imageUrl,
+  });
+
+  String id;
+  int price;
+  String title;
+  int gameCycle;
+  String imageUrl;
+
+  factory GameId.fromJson(Map<String, dynamic> json) => GameId(
+    id: json["_id"],
+    price: json["price"],
+    title: json["title"],
+    gameCycle: json["gameCycle"],
+    imageUrl: json["imageUrl"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "_id": id,
+    "price": price,
+    "title": title,
+    "gameCycle": gameCycle,
+    "imageUrl": imageUrl,
+  };
 }

@@ -6,13 +6,14 @@ import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:jekawin_mobile_flutter/app/modules/jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
 import 'app/config/routes/app_pages.dart';
 import 'app/config/services/di/di_locator.dart';
+import 'app/modules/dashboard/controllers/dashboard_controller.dart';
 
 void main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
+  // DashboardController();
   await dotenv.load(fileName: 'dotenv');
   await setDi();
   SystemChrome.setPreferredOrientations(
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       builder: BotToastInit(),
       title: "Jekawin Mobile App",
-      // initialRoute: AppPages.initial,
+      initialRoute: AppPages.initial,
       getPages: AppPages.routes,
       theme: ThemeData(
         textTheme: GoogleFonts.mulishTextTheme(
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.white,
         canvasColor: Colors.white,
       ),
-      home: const JekawinBottomTabs(tabIndex: 0,)
+      // home: const JekawinBottomTabs(tabIndex: 0,)
     );
   }
 }

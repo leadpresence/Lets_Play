@@ -24,86 +24,106 @@ class DashboardMobilePortrait extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var firstName = GetStorage().read("firstName");
-    return
-      Obx(
-      () =>
-          Scaffold(
-        body: SafeArea(
-          child: Container(
-            color: Colors.white,
-            child: SingleChildScrollView(
-              padding: EdgeInsets.zero,
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 12,
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
+          color: Colors.white,
+          child: SingleChildScrollView(
+            padding: EdgeInsets.zero,
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 12,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 24.0,
+                    right: 24.0,
+                    // top: 24.0,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 24.0,
-                      right: 24.0,
-                      // top: 24.0,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Get.to(
+                            () => UserProfileMobilePortrait(),
+                            transition: Transition.cupertino,
+                          );
+                        },
+                        child: Row(
+                          children: [
+                            SvgPicture.asset('assets/svgs/user_icon.svg'),
+                            const SizedBox(
+                              width: 6,
+                            ),
+                            Text("Hi $firstName"),
+                          ],
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Get.to(
+                            () => NotificationMobilePortrait(),
+                            transition: Transition.cupertino,
+                          );
+                        },
+                        child: SvgPicture.asset(
+                          'assets/svgs/clarity_notification-outline-badged.svg',
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                Container(
+                  height: 360,
+                  width: Get.width,
+                  child: PageView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount:
+                        dashboardController.timeRemainingInSecsForGames.length,
+                    controller: dashboardController.pageController,
+                    physics: const ScrollPhysics(),
+                    itemBuilder: (BuildContext context, int index) {
+                      return Obx(
+                        () => DashboardHeroSession(
+                          onPressed: () {
                             Get.to(
-                              () => UserProfileMobilePortrait(),
+                              () => JackpotGamesMobilePortrait(
+                                gameID: dashboardController
+                                    .indexList![index].gameId.id,
+                              ),
                               transition: Transition.cupertino,
                             );
                           },
-                          child: Row(
-                            children: [
-                              SvgPicture.asset('assets/svgs/user_icon.svg'),
-                              const SizedBox(
-                                width: 6,
-                              ),
-                              Text("Hi $firstName"),
-                            ],
+                          priceToBeWon: dashboardController
+                              .indexList![index].gameId.price,
+                          title: dashboardController
+                              .indexList![index].gameId.title,
+                          animation: StepTween(
+                            begin: dashboardController
+                                .timeRemainingInSecsForGames[index],
+                            end: 0,
+                          ).animate(
+                            dashboardController
+                                .gamesAnimationControllers[index].value,
                           ),
                         ),
-                        GestureDetector(
-                            onTap: () {
-                              Get.to(
-                                    () => NotificationMobilePortrait(),
-                                transition: Transition.cupertino,
-                              );
-                            },
-                            child: SvgPicture.asset(
-                              'assets/svgs/clarity_notification-outline-badged.svg',
-                            ))
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 24,
-                  ),
-                  DashboardHeroSession(
-                    onPressed: () {
-                      // dashboardController.getGames();
-                      Get.to(
-                        () => JackpotGamesMobilePortrait(),
-                        transition: Transition.cupertino,
                       );
                     },
-                    animation: StepTween(
-                      begin: dashboardController.timeRemainingInSec.value,
-                      end: 0,
-                    ).animate(
-                      dashboardController.animationController.value,
-                    ),
                   ),
-                  const SizedBox(
-                    height: 18,
-                  ),
-                  const DashboardInstantGames(),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                ],
-              ),
+                ),
+                const SizedBox(
+                  height: 18,
+                ),
+                const DashboardInstantGames(),
+                const SizedBox(
+                  height: 12,
+                ),
+              ],
             ),
           ),
         ),

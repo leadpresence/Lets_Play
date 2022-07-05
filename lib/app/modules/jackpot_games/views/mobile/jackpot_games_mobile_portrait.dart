@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,7 +11,9 @@ import '../../../../widgets/custom_large_button.dart';
 import 'jackpot_games_details_mobile_portrait.dart';
 
 class JackpotGamesMobilePortrait extends StatelessWidget {
-  JackpotGamesMobilePortrait({Key? key}) : super(key: key);
+  final gameID;
+
+  JackpotGamesMobilePortrait({Key? key, this.gameID}) : super(key: key);
 
   final JackpotGamesController controller = Get.put(JackpotGamesController());
   final Random random = Random();
@@ -18,7 +21,7 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 1,
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -34,6 +37,13 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
               ),
               onPressed: () {
                 Get.back();
+                Future.delayed(const Duration(microseconds: 2), () {
+                  controller.pin1.clear();
+                  controller.pin2.clear();
+                  controller.pin3.clear();
+                  controller.pin4.clear();
+                  controller.pin5.clear();
+                });
               },
             ),
           ),
@@ -78,7 +88,7 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
                       const SizedBox(width: 12),
                       const Expanded(
                         child: Text(
-                          'Select 5 numbers from a range of 0- 50 or auto generate the numbers',
+                          'Select 5 numbers from a range of 0 - 99 or auto generate the numbers',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: Color(0XFFFFFFFF),
@@ -114,7 +124,7 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
                         automaticIndicatorColorAdjustment: true,
                         tabs: [
                           Text('Single Ticket'.toUpperCase()),
-                          Text('Multi Ticket'.toUpperCase()),
+                          // Text('Multi Ticket'.toUpperCase()),
                         ],
                       ),
                       Expanded(
@@ -150,9 +160,38 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
                                         ),
                                       ),
                                       onPressed: () {
-                                        controller.singleTicketNumber.text =
-                                            (random.nextInt(899999) + 100000)
-                                                .toString();
+                                        controller.pin1.text =
+                                            (random.nextInt(99)).toString();
+                                        controller.pin2.text =
+                                            (random.nextInt(99)).toString();
+                                        controller.pin3.text =
+                                            (random.nextInt(99)).toString();
+                                        controller.pin4.text =
+                                            (random.nextInt(99)).toString();
+                                        controller.pin5.text =
+                                            (random.nextInt(99)).toString();
+                                        FocusScope.of(context).unfocus();
+
+                                        if (controller.pin1.text.length == 1) {
+                                          controller.pin1.text =
+                                              "0" + controller.pin1.text;
+                                        }
+                                        if (controller.pin2.text.length == 1) {
+                                          controller.pin2.text =
+                                              "0" + controller.pin2.text;
+                                        }
+                                        if (controller.pin3.text.length == 1) {
+                                          controller.pin3.text =
+                                              "0" + controller.pin3.text;
+                                        }
+                                        if (controller.pin4.text.length == 1) {
+                                          controller.pin4.text =
+                                              "0" + controller.pin4.text;
+                                        }
+                                        if (controller.pin5.text.length == 1) {
+                                          controller.pin5.text =
+                                              "0" + controller.pin5.text;
+                                        }
                                       },
                                       child: const Text(
                                         'Generate all',
@@ -166,42 +205,273 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
                                   ],
                                 ),
                                 const SizedBox(height: 24),
-                                Pinput(
-                                  length: 5,
-                                  key: key,
-                                  keyboardType: TextInputType.number,
-                                  controller: controller.singleTicketNumber,
-                                  defaultPinTheme: PinTheme(
-                                    width: 56,
-                                    height: 56,
-                                    textStyle: GoogleFonts.poppins(
-                                      fontSize: 16,
-                                      color: const Color(0XFF414249),
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      border: Border.all(
-                                        color: const Color(0XFFDADEE3),
-                                        width: 3,
+                                Form(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Container(
+                                        height: 54,
+                                        width: 54,
+                                        // margin: EdgeInsets.all(24),
+                                        child: TextFormField(
+                                          autofocus: true,
+                                          controller: controller.pin1,
+                                          onChanged: (value) {
+                                            if (value.length == 2) {
+                                              FocusScope.of(context)
+                                                  .nextFocus();
+                                            }
+                                          },
+                                          onSaved: (pin1) {},
+                                          style: const TextStyle(
+                                            color: Colors.black87,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w900,
+                                          ),
+                                          keyboardType: TextInputType.number,
+                                          textAlign: TextAlign.center,
+                                          // cursorHeight: 12,
+                                          cursorColor: Colors.black87,
+                                          decoration: InputDecoration(
+                                            enabledBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                              borderSide: const BorderSide(
+                                                color: Colors.black12,
+                                                width: 3,
+                                              ),
+                                            ),
+                                            contentPadding:
+                                                const EdgeInsets.symmetric(
+                                                    vertical: 40.0),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                              borderSide: const BorderSide(
+                                                color: Color(0XFFFE7A01),
+                                                width: 3,
+                                              ),
+                                            ),
+                                          ),
+                                          inputFormatters: [
+                                            LengthLimitingTextInputFormatter(2),
+                                            FilteringTextInputFormatter
+                                                .digitsOnly,
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  focusedPinTheme: PinTheme(
-                                    width: 56,
-                                    height: 56,
-                                    textStyle: GoogleFonts.poppins(
-                                      fontSize: 16,
-                                      color: const Color(0XFF414249),
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      border: Border.all(
-                                        color: const Color(0XFFFE7A01),
-                                        width: 3,
+                                      SizedBox(
+                                        height: 54,
+                                        width: 54,
+                                        child: TextFormField(
+                                          controller: controller.pin2,
+                                          onChanged: (value) {
+                                            if (value.length == 2) {
+                                              FocusScope.of(context)
+                                                  .nextFocus();
+                                            } else if (value.length == 1) {
+                                            } else {
+                                              FocusScope.of(context)
+                                                  .previousFocus();
+                                            }
+                                          },
+                                          onSaved: (pin2) {},
+                                          style: const TextStyle(
+                                              color: Colors.black87,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w900),
+                                          keyboardType: TextInputType.number,
+                                          textAlign: TextAlign.center,
+                                          // cursorHeight: 12,
+                                          cursorColor: Colors.black87,
+                                          decoration: InputDecoration(
+                                            enabledBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                              borderSide: const BorderSide(
+                                                color: Colors.black12,
+                                                width: 3,
+                                              ),
+                                            ),
+                                            contentPadding:
+                                                const EdgeInsets.symmetric(
+                                                    vertical: 40.0),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                              borderSide: const BorderSide(
+                                                color: Color(0XFFFE7A01),
+                                                width: 3,
+                                              ),
+                                            ),
+                                          ),
+                                          inputFormatters: [
+                                            LengthLimitingTextInputFormatter(2),
+                                            FilteringTextInputFormatter
+                                                .digitsOnly,
+                                          ],
+                                        ),
                                       ),
-                                    ),
+                                      SizedBox(
+                                        height: 54,
+                                        width: 54,
+                                        child: TextFormField(
+                                          controller: controller.pin3,
+                                          onChanged: (value) {
+                                            if (value.length == 2) {
+                                              FocusScope.of(context)
+                                                  .nextFocus();
+                                            } else if (value.length == 1) {
+                                            } else {
+                                              FocusScope.of(context)
+                                                  .previousFocus();
+                                            }
+                                          },
+                                          onSaved: (pin3) {},
+                                          style: const TextStyle(
+                                            color: Colors.black87,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w900,
+                                          ),
+                                          keyboardType: TextInputType.number,
+                                          textAlign: TextAlign.center,
+                                          // cursorHeight: 12,
+                                          cursorColor: Colors.black87,
+                                          decoration: InputDecoration(
+                                            enabledBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                              borderSide: const BorderSide(
+                                                color: Colors.black12,
+                                                width: 3,
+                                              ),
+                                            ),
+                                            contentPadding:
+                                                const EdgeInsets.symmetric(
+                                                    vertical: 40.0),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                              borderSide: const BorderSide(
+                                                color: Color(0XFFFE7A01),
+                                                width: 3,
+                                              ),
+                                            ),
+                                          ),
+                                          inputFormatters: [
+                                            LengthLimitingTextInputFormatter(2),
+                                            FilteringTextInputFormatter
+                                                .digitsOnly,
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 54,
+                                        width: 54,
+                                        child: TextFormField(
+                                          controller: controller.pin4,
+                                          onChanged: (value) {
+                                            if (value.length == 2) {
+                                              FocusScope.of(context)
+                                                  .nextFocus();
+                                            } else if (value.length == 1) {
+                                            } else {
+                                              FocusScope.of(context)
+                                                  .previousFocus();
+                                            }
+                                          },
+                                          onSaved: (pin4) {},
+                                          style: const TextStyle(
+                                            color: Colors.black87,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w900,
+                                          ),
+                                          keyboardType: TextInputType.number,
+                                          textAlign: TextAlign.center,
+                                          // cursorHeight: 12,
+                                          cursorColor: Colors.black87,
+                                          decoration: InputDecoration(
+                                            enabledBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                              borderSide: const BorderSide(
+                                                color: Colors.black12,
+                                                width: 3,
+                                              ),
+                                            ),
+                                            contentPadding:
+                                                const EdgeInsets.symmetric(
+                                                    vertical: 40.0),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                              borderSide: const BorderSide(
+                                                color: Color(0XFFFE7A01),
+                                                width: 3,
+                                              ),
+                                            ),
+                                          ),
+                                          inputFormatters: [
+                                            LengthLimitingTextInputFormatter(2),
+                                            FilteringTextInputFormatter
+                                                .digitsOnly,
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 54,
+                                        width: 54,
+                                        child: TextFormField(
+                                          controller: controller.pin5,
+                                          onChanged: (value) {
+                                            if (value.length == 2) {
+                                              FocusScope.of(context).unfocus();
+                                            } else if (value.length == 1) {
+                                            } else {
+                                              FocusScope.of(context)
+                                                  .previousFocus();
+                                            }
+                                          },
+                                          onSaved: (pin6) {},
+                                          style: const TextStyle(
+                                            color: Colors.black87,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w900,
+                                          ),
+                                          keyboardType: TextInputType.number,
+                                          textAlign: TextAlign.center,
+                                          // cursorHeight: 12,
+                                          cursorColor: Colors.black87,
+                                          decoration: InputDecoration(
+                                            enabledBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                              borderSide: const BorderSide(
+                                                color: Colors.black12,
+                                                width: 3,
+                                              ),
+                                            ),
+                                            contentPadding:
+                                                const EdgeInsets.symmetric(
+                                                    vertical: 40.0),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                              borderSide: const BorderSide(
+                                                color: Color(0XFFFE7A01),
+                                                width: 3,
+                                              ),
+                                            ),
+                                          ),
+                                          inputFormatters: [
+                                            LengthLimitingTextInputFormatter(2),
+                                            FilteringTextInputFormatter
+                                                .digitsOnly,
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 const SizedBox(
@@ -214,244 +484,7 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
                                       gameCost: "50",
                                       numberOfGames: "1",
                                       ticketNumber:
-                                          controller.singleTicketNumber.text,
-                                    ),
-                                    transition: Transition.cupertino,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(24.0),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Text(
-                                      'Cost : ₦200',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Color(0XFF543884),
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        padding: const EdgeInsets.symmetric(
-                                          vertical: 6,
-                                          horizontal: 12,
-                                        ),
-                                        primary: const Color(0XFFfFF7EC),
-                                        shadowColor: Colors.transparent,
-                                        elevation: 0,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(16.0),
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        controller.multipleTicketNumber1.text =
-                                            (random.nextInt(899999) + 100000)
-                                                .toString();
-
-                                        controller.multipleTicketNumber2.text =
-                                            (random.nextInt(899999) + 100000)
-                                                .toString();
-                                        controller.multipleTicketNumber3.text =
-                                            (random.nextInt(899999) + 100000)
-                                                .toString();
-
-                                        controller.multipleTicketNumber4.text =
-                                            (random.nextInt(899999) + 100000)
-                                                .toString();
-                                      },
-                                      child: const Text(
-                                        'Generate all',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Color(0XFFFE7A01),
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 24),
-                                Pinput(
-                                  length: 5,
-                                  key: key,
-                                  keyboardType: TextInputType.number,
-                                  controller: controller.multipleTicketNumber1,
-                                  defaultPinTheme: PinTheme(
-                                    width: 56,
-                                    height: 56,
-                                    textStyle: GoogleFonts.poppins(
-                                      fontSize: 16,
-                                      color: const Color(0XFF414249),
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      border: Border.all(
-                                        color: const Color(0XFFDADEE3),
-                                        width: 3,
-                                      ),
-                                    ),
-                                  ),
-                                  focusedPinTheme: PinTheme(
-                                    width: 56,
-                                    height: 56,
-                                    textStyle: GoogleFonts.poppins(
-                                      fontSize: 16,
-                                      color: const Color(0XFF414249),
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      border: Border.all(
-                                        color: const Color(0XFFFE7A01),
-                                        width: 3,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 12,
-                                ),
-                                Pinput(
-                                  length: 5,
-                                  key: key,
-                                  keyboardType: TextInputType.number,
-                                  controller: controller.multipleTicketNumber2,
-                                  defaultPinTheme: PinTheme(
-                                    width: 56,
-                                    height: 56,
-                                    textStyle: GoogleFonts.poppins(
-                                      fontSize: 16,
-                                      color: const Color(0XFF414249),
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      border: Border.all(
-                                        color: const Color(0XFFDADEE3),
-                                        width: 3,
-                                      ),
-                                    ),
-                                  ),
-                                  focusedPinTheme: PinTheme(
-                                    width: 56,
-                                    height: 56,
-                                    textStyle: GoogleFonts.poppins(
-                                      fontSize: 16,
-                                      color: const Color(0XFF414249),
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      border: Border.all(
-                                        color: const Color(0XFFFE7A01),
-                                        width: 3,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 12,
-                                ),
-                                Pinput(
-                                  length: 5,
-                                  key: key,
-                                  keyboardType: TextInputType.number,
-                                  controller: controller.multipleTicketNumber3,
-                                  defaultPinTheme: PinTheme(
-                                    width: 56,
-                                    height: 56,
-                                    textStyle: GoogleFonts.poppins(
-                                      fontSize: 16,
-                                      color: const Color(0XFF414249),
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      border: Border.all(
-                                        color: const Color(0XFFDADEE3),
-                                        width: 3,
-                                      ),
-                                    ),
-                                  ),
-                                  focusedPinTheme: PinTheme(
-                                    width: 56,
-                                    height: 56,
-                                    textStyle: GoogleFonts.poppins(
-                                      fontSize: 16,
-                                      color: const Color(0XFF414249),
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      border: Border.all(
-                                        color: const Color(0XFFFE7A01),
-                                        width: 3,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 12,
-                                ),
-                                Pinput(
-                                  length: 5,
-                                  key: key,
-                                  keyboardType: TextInputType.number,
-                                  controller: controller.multipleTicketNumber4,
-                                  defaultPinTheme: PinTheme(
-                                    width: 56,
-                                    height: 56,
-                                    textStyle: GoogleFonts.poppins(
-                                      fontSize: 16,
-                                      color: const Color(0XFF414249),
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      border: Border.all(
-                                        color: const Color(0XFFDADEE3),
-                                        width: 3,
-                                      ),
-                                    ),
-                                  ),
-                                  focusedPinTheme: PinTheme(
-                                    width: 56,
-                                    height: 56,
-                                    textStyle: GoogleFonts.poppins(
-                                      fontSize: 16,
-                                      color: const Color(0XFF414249),
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      border: Border.all(
-                                        color: const Color(0XFFFE7A01),
-                                        width: 3,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 32,
-                                ),
-                                CustomButton(
-                                  buttonText: "Confirm",
-                                  onPressed: () => Get.to(
-                                    () => JackpotGamesDetailsMobilePortrait(
-                                      gameCost: "200",
-                                      numberOfGames: "4",
-                                      ticketNumber:
-                                          '${controller.multipleTicketNumber1.text}\n${controller.multipleTicketNumber2.text}\n${controller.multipleTicketNumber3.text}\n${controller.multipleTicketNumber4.text}',
+                                          "${controller.pin1.text} ${controller.pin2.text} ${controller.pin3.text} ${controller.pin4.text} ${controller.pin5.text}",
                                     ),
                                     transition: Transition.cupertino,
                                   ),
