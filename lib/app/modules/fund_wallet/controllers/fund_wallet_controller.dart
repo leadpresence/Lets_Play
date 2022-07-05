@@ -1,7 +1,10 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:jekawin_mobile_flutter/app/modules/fund_wallet/models/payment_processor_model.dart';
 
 import '../../../config/services/di/di_locator.dart';
@@ -11,6 +14,7 @@ import '../views/mobile/complete_funding_webview.dart';
 class FundWalletController extends GetxController {
   final WalletServiceImpl walletService = Get.find<WalletServiceImpl>();
   final processorsProvider = Get.find<UtilsController>();
+  var isLoading = false.obs;
 
   final amountController = TextEditingController();
   final emailController = TextEditingController();
@@ -90,7 +94,7 @@ class FundWalletController extends GetxController {
   Future<void> getPaymentProcessors() async {
     final wallet = await walletService.paymentProcessors();
     wallet.fold((l) {
-      BotToast.showText(text: l.message);
+      BotToast.showText(text: "Error getting payment processors \n check connection & try again.");
     }, (r) {
       paymentProcessors.value = processorsProvider.paymentProcessors.cast();
       //set processor id to be paystack by default
@@ -106,14 +110,17 @@ class FundWalletController extends GetxController {
   }
 
   Future<void> getPaymentLink() async {
+    isLoading.value =true;
     var amount = amountController.text.toString();
     var email =emailController.text.toString(); //GetStorage().read('email').toString();
     var selectedProcessor = processorId.value.toString();
     final link =
         await walletService.paymentLink(amount, email, selectedProcessor);
     link.fold((l) {
-      BotToast.showText(text: l.message);
+      isLoading.value =false;
+      BotToast.showText(text: "Error processing payment \n check connection & try again.");
     }, (r) {
+      isLoading.value =false;
       paymentLink.value = r;
       GetStorage().write("paymentLink", r);
       paymentLinkIsSet.value = true;

@@ -43,6 +43,7 @@ class Body {
     required this.id,
     required this.user,
     required this.transactionRef,
+    required this.transactionId,
     required this.processor,
     required this.status,
     required this.currency,
@@ -56,11 +57,12 @@ class Body {
   String id;
   String user;
   String transactionRef;
+  String transactionId;
   String processor;
   String status;
   String currency;
   int amount;
-  int transactionType;
+  String transactionType;
   DateTime createdAt;
   DateTime updatedAt;
   int v;
@@ -69,6 +71,7 @@ class Body {
     id: json["_id"],
     user: json["user"],
     transactionRef: json["transactionRef"],
+    transactionId: json["transactionId"],
     processor: json["processor"],
     status: json["status"],
     currency: json["currency"],
@@ -83,6 +86,7 @@ class Body {
     "_id": id,
     "user": user,
     "transactionRef": transactionRef,
+    "transactionId": transactionId,
     "processor": processor,
     "status": status,
     "currency": currency,

@@ -4,8 +4,6 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:jekawin_mobile_flutter/app/modules/add_bank_acccount/controllers/add_bank_controller.dart';
-import 'package:jekawin_mobile_flutter/app/modules/withdrawal_amount/views/withdrawal_amount_view.dart';
-
 import '../../../../widgets/custom_large_button.dart';
 import '../../../../widgets/custom_text_field.dart';
 import '../../models/bank_response_model.dart';

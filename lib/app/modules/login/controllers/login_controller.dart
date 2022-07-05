@@ -7,14 +7,13 @@ import '../../../config/services/auth_service.dart';
 import '../../jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
 
 class LoginController extends GetxController {
+
   final AuthServiceImpl authService = Get.find<AuthServiceImpl>();
-
   RxString numberObserver = ''.obs;
-
   final loginFormKey = GlobalKey<FormState>();
   final phoneNumberController = TextEditingController();
   final passwordController = TextEditingController();
-    RxString errorPhoneNumberMessage = "".obs;
+  RxString errorPhoneNumberMessage = "".obs;
   RxString errorPasswordMessage = "".obs;
   var isLoading = false.obs;
 
@@ -55,7 +54,7 @@ class LoginController extends GetxController {
       errorPhoneNumberMessage.value = "      Phone number must be 11 digits";
     } else if ((GetUtils.isBlank(passwordController.text)) == true) {
       return errorPasswordMessage.value =
-          "      Password field cannot be blank.";
+          "       Password field cannot be blank.";
     } else {
       login(k);
     }
@@ -69,7 +68,7 @@ class LoginController extends GetxController {
     final userData = await authService.login(phoneNumber, password);
     userData.fold(
       (l) {
-        BotToast.showText(text: l.message);
+        BotToast.showText(text: "An error occurred logining in,please try again.");
         isLoading.value = false;
       },
       (r) {

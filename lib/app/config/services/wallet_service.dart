@@ -152,14 +152,10 @@ class WalletServiceImpl extends WalletDataSource {
     try {
       var raw = await httpProvider.getHttp(
           '${JekawinBaseUrls.walletBaseUrl}users/$userId/transactions');
-      // var walletAsMap = res.body.map((wallet) => wallet.toMap()).toList();
-      // String jsonString = jsonEncode(walletAsMap);
       AllTransactionsModel res = AllTransactionsModel.fromMap(raw);
       var listOfTransactions = res.body;
       if (raw['success']) {
-        utilsProvider.transactions.value = listOfTransactions;
-
-        // return Right(jsonString);
+        utilsProvider.transactions.value.addAll(listOfTransactions);
         return Right(raw['message']);
       } else {
         return Left(
@@ -219,9 +215,33 @@ class WalletServiceImpl extends WalletDataSource {
 
   @override
   Future<Either<AppError, String>> withdrawToBank(
-      WithdrawalModel withdrawalData) {
-    // TODO: implement withdrawToBank
-    throw UnimplementedError();
+      WithdrawalModel withdrawalData) async {
+
+    Map<String, dynamic> payload = {
+      'amount': withdrawalData.amount,
+      'email': withdrawalData.email,
+      "bankCode": withdrawalData.bankCode,
+      "accountNumber": withdrawalData.accountNumber
+    };
+    try {
+      var raw = await httpProvider.postHttp(
+          '${JekawinBaseUrls.walletBaseUrl}withdraw-to-bank', payload);
+      if (raw['success']) {
+        return const Right("Withdrawal successful");
+      } else {
+        return Left(
+            AppError(errorType: AppErrorType.network, message: raw['message']));
+      }
+    } on NetworkException catch (e) {
+      return Left(
+          AppError(errorType: AppErrorType.network, message: e.message));
+    } on SocketException catch (e) {
+      return Left(
+          AppError(errorType: AppErrorType.network, message: e.message));
+    } on Exception {
+      return const Left(
+          AppError(errorType: AppErrorType.api, message: "An error occurred"));
+    }
   }
 
   @override

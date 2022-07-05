@@ -152,32 +152,37 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                   color: Color(0xff000000),
                 ),
               ),
-              controller.transactions.isNotEmpty
-                  ? Expanded(
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: controller.transactions.length,
-                        itemBuilder: (BuildContext context, int position) {
-                          return transactionItem(
-                            controller.transactions[position],
-                          );
-                        },
-                      ),
-                    )
-                  : Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: 70.0, left: 60, right: 20),
-                        child: Row(
-                          children: const [
-                            Text(
-                              "Your transaction will be displayed here",
-                              style: TextStyle(color: Colors.grey),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
+              // controller.transactions.value.isNotEmpty
+              //     ?
+              GetX<WalletHomeController>(builder: (controller) {
+                return Expanded(
+                    child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: controller.transactions.value.length,
+                  itemBuilder: (BuildContext context, int position) {
+                    return transactionItem(
+                      controller.transactions.value[position],
+                    );
+                  },
+                )
+                    // }
+                    // ),
+                    );
+              })
+              // : Center(
+              //     child: Padding(
+              //       padding: const EdgeInsets.only(
+              //           top: 70.0, left: 60, right: 20),
+              //       child: Row(
+              //         children: const [
+              //           Text(
+              //             "Your transaction will be displayed here",
+              //             style: TextStyle(color: Colors.grey),
+              //           )
+              //         ],
+              //       ),
+              //     ),
+              //   ),
             ],
           ),
         ),
@@ -223,7 +228,7 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  false ? debitIcon : creditIcon,
+                  trxnItem.transactionType == 'C' ? creditIcon : debitIcon,
                   Text(
                     trxnItem.createdAt.toString(),
                     style: const TextStyle(
@@ -239,14 +244,14 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    trxnItem.transactionType == 0 ? "Credit" : "Debit",
+                    trxnItem.transactionType == 'C' ? "Credit" : "Debit",
                     style: const TextStyle(
                       fontSize: 12,
                       color: Colors.black,
                     ),
                   ),
                   Text(
-                    "₦ " + trxnItem.amount.toString(),
+                    trxnItem.currency + " " + trxnItem.amount.toString(),
                     style: const TextStyle(
                       fontSize: 12,
                       color: Colors.black,
