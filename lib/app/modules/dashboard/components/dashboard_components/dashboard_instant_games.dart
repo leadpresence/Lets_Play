@@ -22,13 +22,13 @@ class DashboardInstantGames extends StatelessWidget {
                 Text(
                   'Instant Games',
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Color(0xff414249),
                   ),
                 ),
                 SizedBox(
-                  height: 12,
+                  height: 24,
                 ),
               ],
             ),

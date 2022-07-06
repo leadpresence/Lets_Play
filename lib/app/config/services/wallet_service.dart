@@ -1,14 +1,10 @@
-import 'dart:convert';
+import 'package:dio/dio.dart';
 import 'dart:io';
-import 'package:bot_toast/bot_toast.dart';
 import 'package:dartz/dartz.dart';
-import 'package:dartz/dartz_unsafe.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:jekawin_mobile_flutter/app/modules/fund_wallet/models/payment_processor_model.dart';
-import 'package:jekawin_mobile_flutter/app/modules/select_account/models/bank_model.dart';
 import '../../constants/app_error.dart';
 import '../../constants/network_exceptions.dart';
 import '../../modules/add_bank_acccount/models/account_name_response.dart';
@@ -17,6 +13,7 @@ import '../../modules/wallet_home/models/all_wallet_transactions.dart';
 import '../../modules/fund_wallet/models/payment_link_response.dart';
 import '../../modules/wallet_home/models/user_wallet_response.dart';
 import '../../modules/wallet_home/models/withdrawalModel.dart';
+import '../../services/base_service.dart';
 import '../data/local/user_local_impl.dart';
 import '../data/model/user.dart';
 import 'di/di_locator.dart';
@@ -50,6 +47,7 @@ abstract class WalletDataSource {
 class WalletServiceImpl extends WalletDataSource {
   final httpProvider = Get.find<HttpService>();
   final utilsProvider = Get.find<UtilsController>();
+  BaseService service = BaseService();
 
   final UserLocalDataSourceImpl _userLocalDataSource =
       Get.find<UserLocalDataSourceImpl>();
@@ -68,7 +66,8 @@ class WalletServiceImpl extends WalletDataSource {
     utilsProvider.walletId.value = walletId;
     try {
       var raw = await httpProvider.postHttp(
-        '${JekawinBaseUrls.walletBaseUrl}wallets/$walletId/add-bank', payload);
+          '${JekawinBaseUrls.walletBaseUrl}wallets/$walletId/add-bank',
+          payload);
       if (raw['success']) {
         return const Right("Account saved successfully");
       } else {
@@ -186,7 +185,7 @@ class WalletServiceImpl extends WalletDataSource {
       GetStorage().write('wins', res.body.wins);
       GetStorage().write('rewardPoints', res.body.rewardPoints);
 
-      if(res.body.banks.isNotEmpty){
+      if (res.body.banks.isNotEmpty) {
         utilsProvider.savedBanks.value.clear();
         utilsProvider.savedBanks.value.addAll(res.body.banks);
       }
@@ -216,7 +215,6 @@ class WalletServiceImpl extends WalletDataSource {
   @override
   Future<Either<AppError, String>> withdrawToBank(
       WithdrawalModel withdrawalData) async {
-
     Map<String, dynamic> payload = {
       'amount': withdrawalData.amount,
       'email': withdrawalData.email,

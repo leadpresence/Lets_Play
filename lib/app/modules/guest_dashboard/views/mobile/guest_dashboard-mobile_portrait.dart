@@ -9,6 +9,8 @@ import '../../../../config/data/local/user_local_impl.dart';
 import '../../../dashboard/components/dashboard_components/dashboard_hero.dart';
 import '../../../dashboard/components/dashboard_components/dashboard_instant_games.dart';
 import '../../../dashboard/controllers/dashboard_controller.dart';
+import '../../../dashboard/models/jackpot_game_model.dart';
+import '../../../jackpot_games/views/mobile/jackpot_games_mobile_portrait.dart';
 import '../../../signup/controllers/sign_up_controller.dart';
 
 class GuestDashboardMobilePortrait extends StatelessWidget {
@@ -83,51 +85,58 @@ class GuestDashboardMobilePortrait extends StatelessWidget {
                 ),
                 SizedBox(
                   height: 360,
-                  child: Stack(
-                    children: [
-                      const Center(
-                        child: CircularProgressIndicator(
-                          strokeWidth: 1,
-                          color: Color(0xFFFE7A01),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 360,
-                        width: Get.width,
-                        child: PageView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: dashboardController
-                              .timeRemainingInSecsForGames.length,
-                          controller: dashboardController.pageController,
-                          physics: const ScrollPhysics(),
-                          itemBuilder: (BuildContext context, int index) {
-                            return Obx(
-                              () => DashboardHeroSession(
-                                onPressed: () {
-                                  Get.to(
-                                    () => const LoginView(),
-                                    transition: Transition.cupertino,
-                                  );
-                                },
-                                priceToBeWon: dashboardController
-                                    .indexList![index].gameId.price,
-                                title: dashboardController
-                                    .indexList![index].gameId.title,
-                                animation: StepTween(
-                                  begin: dashboardController
-                                      .timeRemainingInSecsForGames[index],
-                                  end: 0,
-                                ).animate(
-                                  dashboardController
-                                      .gamesAnimationControllers[index].value,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
+                  child: FutureBuilder<dynamic>(
+                      future: dashboardController.getAllJackpotGames(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Text(
+                              "Snapshot has error: ${snapshot.hasError.toString()}");
+                        } else if (snapshot.hasData) {
+                          var body = snapshot.data["body"];
+                          return SizedBox(
+                            height: 360,
+                            width: Get.width,
+                            child: PageView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: body.length,
+                              controller: dashboardController.pageController,
+                              physics: const ScrollPhysics(),
+                              itemBuilder: (BuildContext context, int index) {
+                                return Obx(
+                                  () => DashboardHeroSession(
+                                    onPressed: () {
+                                      Get.to(
+                                        () => JackpotGamesMobilePortrait(
+                                          gameIndex: index,
+                                          gameID: body[index]["gameID"]["_id"],
+                                        ),
+                                        transition: Transition.cupertino,
+                                      );
+                                    },
+                                    priceToBeWon: body[index]["gameID"]["price"],
+                                    title: body[index]["gameID"]["title"],
+                                    animation: StepTween(
+                                      begin: dashboardController
+                                          .timeRemainingInSecsForGames[index],
+                                      end: 0,
+                                    ).animate(
+                                      dashboardController
+                                          .gamesAnimationControllers[index]
+                                          .value,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          );
+                        }
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            strokeWidth: 5,
+                            color: Color(0xFFFE7A01),
+                          ),
+                        );
+                      }),
                 ),
                 const SizedBox(
                   height: 18,

@@ -9,17 +9,15 @@ class WalletHomeView extends GetView<WalletHomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return  ScreenTypeLayout.builder(
-        mobile: (_) => OrientationLayoutBuilder(
-
-          portrait: (_)=>  WalletHomeMobilePortrait(),
-          landscape: (_)=>  WalletHomeMobilePortrait(),
-        ),
-        tablet: (_) => OrientationLayoutBuilder(
-          portrait: (_) =>     WalletHomeMobilePortrait(),
-          landscape: (_)=>
-           WalletHomeMobilePortrait(     ),
-
-        ));
+    return ScreenTypeLayout.builder(
+      mobile: (_) => OrientationLayoutBuilder(
+        portrait: (_) => WalletHomeMobilePortrait(),
+        landscape: (_) => WalletHomeMobilePortrait(),
+      ),
+      tablet: (_) => OrientationLayoutBuilder(
+        portrait: (_) => WalletHomeMobilePortrait(),
+        landscape: (_) => WalletHomeMobilePortrait(),
+      ),
+    );
   }
 }

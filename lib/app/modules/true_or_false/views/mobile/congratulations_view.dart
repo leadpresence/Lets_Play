@@ -22,6 +22,11 @@ class CongratulationsView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Image.asset('assets/jpgs/bubble_.png'),
+            const SizedBox(
+              height: 24,
+            ),
+            // Image.asset('assets/jpgs/CONGRATULATIONS.png'),
             Text(
               'CONGRATULATIONS',
               style: GoogleFonts.lemon(

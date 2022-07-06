@@ -16,6 +16,7 @@ class DashboardController extends GetxController
   late List<Duration>? gamesDurations = <Duration>[];
   late List<DateTime>? endDates = <DateTime>[];
   var _timer;
+  var body;
   int _currentPage = 0;
 
   late List<Rx<AnimationController>> gamesAnimationControllers = [];
@@ -26,6 +27,7 @@ class DashboardController extends GetxController
     try {
       var response = await gamesService.getAllJackpotGames();
       if (response.statusCode == 200 || response.statusCode == 201) {
+        body = response.data;
         for (int i = 0;
             i < JackpotGameResponse.fromJson(response.data).body.length;
             i++) {
@@ -39,22 +41,26 @@ class DashboardController extends GetxController
           _timer;
         }
         startCountDown();
+        return body;
       } else {
         if (kDebugMode) {
           print(
               'Response.statusCode != 200: \n${JackpotGameResponse.fromJson(response.data).message}');
           BotToast.showSimpleNotification(
-              title: JackpotGameResponse.fromJson(response.data)
-                  .message
-                  .toString()
-                  .trim());
+            title: JackpotGameResponse.fromJson(response.data)
+                .message
+                .toString()
+                .trim(),
+          );
         }
+        return body;
       }
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());
       }
     }
+    return body;
   }
 
   DateTime dateFormat(DateTime dateValue) {
@@ -65,6 +71,7 @@ class DashboardController extends GetxController
   }
 
   void startCountDown() {
+    gamesAnimationControllers.clear();
     for (int i = 0; i < endDates!.length; i++) {
       final Duration difference = endDates![i].difference(DateTime.now());
       days.value = difference.inDays;
@@ -99,6 +106,7 @@ class DashboardController extends GetxController
     for (int i = 0; i < gamesAnimationControllers.length; i++) {
       gamesAnimationControllers[i].value.dispose();
     }
+    // _timer.dispose();
     super.dispose();
   }
 

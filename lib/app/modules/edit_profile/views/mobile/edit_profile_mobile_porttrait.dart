@@ -93,28 +93,30 @@ class EditProfileMobilePortrait extends GetView {
                 ],
               ),
               const Gap(12),
-
               SizedBox(
-                height: 24,
-                width: 90  ,
+                height: 30,
                 child: Theme(
                   data: ThemeData(
                     splashColor: Colors.white,
                     highlightColor: Colors.white,
                   ),
                   child: ElevatedButton(
-                    onPressed: (){},
+                    onPressed: () {},
                     style: ElevatedButton.styleFrom(
-                      primary: const Color(0xFFFE7A01).withOpacity(.5),
+                      primary: const Color(0xFFFE7A01).withOpacity(.05),
                       shadowColor: Colors.transparent,
-                      onPrimary: const Color(0xFFFE7A01).withOpacity(.1),
+                      onPrimary: const Color(0xFFFE7A01).withOpacity(.01),
                       onSurface: Colors.white,
                       elevation: 0,
                       // splashFactory: NoSplash.splashFactory,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(36),
                       ),
-                    ), child:const  Text("Upload",style: TextStyle(color: Colors.white,fontSize: 14),),
+                    ),
+                    child: const Text(
+                      "Upload Image ",
+                      style: TextStyle(color: Colors.white, fontSize: 14),
+                    ),
                   ),
                 ),
               ),
@@ -127,34 +129,36 @@ class EditProfileMobilePortrait extends GetView {
               const Gap(16),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButtonFormField(
-                        decoration:   InputDecoration(
-                          filled: true,
-                          fillColor: const Color(0xFFDADEE3).withOpacity(.5),
-                          enabledBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(color: Color(0x0ff8e8e8), width: 4)),
-                          focusedBorder: UnderlineInputBorder(
-                              borderSide:
-                              BorderSide(color: Colors.orange.withOpacity(.9), width: 3)),
-                        ),
-                        // Initial Value
-                          value: dropdownvalue,
-                          // Down Arrow Icon
-                          icon: const Icon(Icons.keyboard_arrow_down),
-                          // Array list of items
-                          items: genders.map((String items) {
-                            return DropdownMenuItem(
-                              value: items,
-                              child: Text(items),
-                            );
-                          }).toList(),
-                          // After selecting the desired option,it will
-                          // change button value to selected value
-                          onChanged: (String? newValue) {
-                            // setState((){dropdownvalue = newValue!;}) ;
-                          }),
-                    ),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButtonFormField(
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: const Color(0xFFDADEE3).withOpacity(.5),
+                        enabledBorder: const UnderlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Color(0x0ff8e8e8), width: 4)),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Colors.orange.withOpacity(.9),
+                                width: 3)),
+                      ),
+                      // Initial Value
+                      value: dropdownvalue,
+                      // Down Arrow Icon
+                      icon: const Icon(Icons.keyboard_arrow_down),
+                      // Array list of items
+                      items: genders.map((String items) {
+                        return DropdownMenuItem(
+                          value: items,
+                          child: Text(items),
+                        );
+                      }).toList(),
+                      // After selecting the desired option,it will
+                      // change button value to selected value
+                      onChanged: (String? newValue) {
+                        // setState((){dropdownvalue = newValue!;}) ;
+                      }),
+                ),
               ),
 
               const Gap(16),
@@ -162,26 +166,23 @@ class EditProfileMobilePortrait extends GetView {
               const SizedBox(height: 16),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
-                child: SlideInAnimation(
-                  duration: const Duration(milliseconds: 775),
-                  child: CustomButton(
-                    // isLoading: controller.isLoading.value,
-                    buttonText: "Update profile",
-                    onPressed: () {
-                      //validate form and submit
-                      // controller.signUpFormValidator(key);
-                      Get.to(
-                            () => const SuccessOrFailureMobileView(
-                          msg: 'Profile update successful',
-                          className: JekawinBottomTabs(
-                            tabIndex: 0,
-                            isGuestUser: true,
-                          ),
+                child: CustomButton(
+                  // isLoading: controller.isLoading.value,
+                  buttonText: "Update profile",
+                  onPressed: () {
+                    //validate form and submit
+                    // controller.signUpFormValidator(key);
+                    Get.to(
+                      () => const SuccessOrFailureMobileView(
+                        msg: 'Profile update successful',
+                        className: JekawinBottomTabs(
+                          tabIndex: 0,
+                          isGuestUser: true,
                         ),
-                        transition: Transition.cupertino,
-                      );
-                    },
-                  ),
+                      ),
+                      transition: Transition.cupertino,
+                    );
+                  },
                 ),
               ),
             ]),
