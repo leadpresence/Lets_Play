@@ -145,3 +145,4 @@ class DashboardMobilePortrait extends StatelessWidget {
     );
   }
 }
+
