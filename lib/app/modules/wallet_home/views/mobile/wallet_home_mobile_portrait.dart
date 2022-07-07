@@ -258,7 +258,7 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Center(child:  CupertinoActivityIndicator(),),
+                          const Center(child:  CupertinoActivityIndicator(radius: 20.0),),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
