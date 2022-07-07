@@ -4,21 +4,21 @@ import 'package:get/get.dart';
 
 class CompleteFundingController extends GetxController{
 
-  var pageLoading = false.obs;
+  var pageLoading = true.obs;
 
   @override
   void onInit() {
     super.onInit();
-    Future.delayed(
-        const Duration(seconds: 15),
-            () {
-         pageLoading.value=false;
-          showDialog(
-              context: Get.context!,
-              builder: (BuildContext context) {
-                return ConstrainedBox(
-                    constraints: BoxConstraints(maxWidth: Get.width),
-                    child: const Center(child: CupertinoActivityIndicator(),));});});
+    // Future.delayed(
+    //     const Duration(seconds: 15),
+    //         () {
+    //      pageLoading.value=false;
+    //       showDialog(
+    //           context: Get.context!,
+    //           builder: (BuildContext context) {
+    //             return ConstrainedBox(
+    //                 constraints: BoxConstraints(maxWidth: Get.width),
+    //                 child: const Center(child: CupertinoActivityIndicator(),));});});
   }
 
   @override
@@ -28,7 +28,9 @@ class CompleteFundingController extends GetxController{
   }
 
   @override
-  void dispose() {}
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   void onClose() {}

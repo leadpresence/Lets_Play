@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -13,6 +16,8 @@ class CompleteFundingWebView extends StatelessWidget {
   @override
   final CompleteFundingController controller =
       Get.put(CompleteFundingController());
+  final Completer<WebViewController> _completer = Completer<WebViewController>();
+
 
   CompleteFundingWebView({Key? key, this.themeData, this.customAppTheme})
       : super(key: key);
@@ -23,65 +28,81 @@ class CompleteFundingWebView extends StatelessWidget {
   Widget build(BuildContext context) {
     var link = GetStorage().read("paymentLink");
 
-    return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          centerTitle: true,
-          title: const Text(
-            "Fund Wallet",
-            overflow: TextOverflow.ellipsis,
-          ),
-          elevation: 0,
-          backgroundColor: Colors.orange,
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 16.0),
-            child: IconButton(
-              splashRadius: 24,
-              icon: SvgPicture.asset(
-                'assets/svgs/chevronLeft.svg',
-                color: const Color(0xff12121D),
+    return StatefulBuilder(
+        builder: (BuildContext context, StateSetter setState) {
+        return Scaffold(
+            backgroundColor: Colors.white,
+            appBar: AppBar(
+              centerTitle: true,
+              title: const Text(
+                "Fund Wallet",
+                overflow: TextOverflow.ellipsis,
               ),
-              onPressed: () {
-                Get.back();
-              },
-            ),
-          ),
-          actions: [
-            Padding(
-                padding: const EdgeInsets.only(left: 16.0 ,right: 16.0),
-                child: GestureDetector(
-                  child: const Text(
-                    "Done",
-                    style: TextStyle(color: Colors.white, fontSize: 20.0),
+              elevation: 0,
+              backgroundColor: Colors.orange,
+              leading: Padding(
+                padding: const EdgeInsets.only(left: 16.0),
+                child: IconButton(
+                  splashRadius: 24,
+                  icon: SvgPicture.asset(
+                    'assets/svgs/chevronLeft.svg',
+                    color: const Color(0xff12121D),
                   ),
-                  onTap: () {
-                    Get.offAll(
-                      () => const JekawinBottomTabs(
-                        tabIndex: 0,
-                        isGuestUser: true,
-                      ),
-                      transition: Transition.cupertino,
-                    );
+                  onPressed: () {
+                    Get.back();
                   },
-                )),
-          ],
-        ),
-        body: Padding(
-          padding: const EdgeInsets.only(
-            left: 16.0,
-            right: 16.0,
-            top: 0.0,
-          ),
-          child:
+                ),
+              ),
+              actions: [
+                Padding(
+                    padding: const EdgeInsets.only(left: 16.0 ,right: 16.0),
+                    child: GestureDetector(
+                      child: const Text(
+                        "Done",
+                        style: TextStyle(color: Colors.white, fontSize: 20.0),
+                      ),
+                      onTap: () {
+                        Get.offAll(
+                          () => const JekawinBottomTabs(
+                            tabIndex: 0,
+                            isGuestUser: true,
+                          ),
+                          transition: Transition.cupertino,
+                        );
+                      },
+                    )),
+              ],
+            ),
+            body: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 16.0,
+                    right: 16.0,
+                    top: 0.0,
+                  ),
+                  child:
+                      WebView(
+                    javascriptMode: JavascriptMode.unrestricted,
+                        onWebViewCreated: (WebViewController webViewController) {
+                          _completer.complete(webViewController);
+                        },
+                        onPageFinished: (finish) {
+                            setState(() {
+                              controller.pageLoading.value= false;
 
-              WebView(
-            javascriptMode: JavascriptMode.unrestricted,
-            onProgress: (k) {
-              const CircularProgressIndicator();
-            },
-            initialUrl: '$link',
-          ),
+                            });
+                        },
 
-        ));
+                    initialUrl: '$link',
+                  ),
+                ),
+                controller.pageLoading.value
+                    ? const Center(child: CupertinoActivityIndicator(radius: 20.0,))
+                    : Container(),
+              ],
+            ));
+      }
+    );
   }
 }

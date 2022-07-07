@@ -9,7 +9,7 @@ class TransactionsModel {
     required this.id,
     required this.user,
     required this.transactionRef,
-    required this.narration,
+    // required this.narration,
     required this.processor,
     required this.status,
     required this.currency,
@@ -23,7 +23,7 @@ class TransactionsModel {
   String id;
   String user;
   String transactionRef;
-  String narration;
+  // String narration;
   String processor;
   String status;
   String currency;
@@ -37,7 +37,7 @@ class TransactionsModel {
     id: json["_id"],
     user: json["user"],
     transactionRef: json["transactionRef"],
-    narration: json["narration"],
+    // narration: json["narration"],
     processor: json["processor"],
     status: json["status"],
     currency: json["currency"],
