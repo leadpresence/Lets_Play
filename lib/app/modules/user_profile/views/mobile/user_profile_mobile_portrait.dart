@@ -11,11 +11,13 @@ import 'package:jekawin_mobile_flutter/app/modules/resetpassword/views/mobile/re
 import 'package:jekawin_mobile_flutter/app/modules/user_profile/controllers/user_profile_cntroller.dart';
 
 import '../../../edit_profile/views/mobile/edit_profile_mobile_porttrait.dart';
+import '../../../wallet_home/controllers/wallet_home_controller.dart';
 
 class UserProfileMobilePortrait extends StatelessWidget {
   UserProfileMobilePortrait({Key? key}) : super(key: key);
 
   final UserProfileController controller = Get.put(UserProfileController());
+  final WalletHomeController walletController = Get.put(WalletHomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +25,7 @@ class UserProfileMobilePortrait extends StatelessWidget {
     var lastName = GetStorage().read("lastName");
     var phoneNumber = GetStorage().read("phoneNumber");
     var imageAvatar = GetStorage().read("profileImage");
-    return
-      Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
@@ -39,7 +40,6 @@ class UserProfileMobilePortrait extends StatelessWidget {
             ),
             onPressed: () {
               Get.back();
-
             },
           ),
         ),
@@ -168,23 +168,20 @@ class UserProfileMobilePortrait extends StatelessWidget {
                     userProfileCardItem(
                         onTap: () {
                           Get.to(
-                                () => ResetPasswordMobilePortrait(),
+                            () => ResetPasswordMobilePortrait(),
                             transition: Transition.cupertino,
                           );
                         },
                         text: "Change Password",
                         description: "Make changes to your account",
                         icon: 'assets/svgs/change_password.svg'),
-
                     userProfileCardItem(
-                      onToggle:(value){} ,
+                        onToggle: (value) {},
                         onTap: () {},
                         text: "Touch ID",
                         description: "Manage your device security",
-                        icon: 'assets/svgs/change_password.svg',isFingerPrint: true
-
-                    ),
-
+                        icon: 'assets/svgs/change_password.svg',
+                        isFingerPrint: true),
                     userProfileCardItem(
                         onTap: () {},
                         text: "Bank Details",
@@ -194,7 +191,7 @@ class UserProfileMobilePortrait extends StatelessWidget {
                     userProfileCardItem(
                         onTap: () {
                           Get.to(
-                                () => SetPinMobilePortrait(),
+                            () => SetPinMobilePortrait(),
                             transition: Transition.cupertino,
                           );
                         },
@@ -204,7 +201,7 @@ class UserProfileMobilePortrait extends StatelessWidget {
                     userProfileCardItem(
                         onTap: () {
                           Get.to(
-                                () => MyGamesMobilePortrait(),
+                            () => MyGamesMobilePortrait(),
                             transition: Transition.cupertino,
                           );
                         },
@@ -213,6 +210,7 @@ class UserProfileMobilePortrait extends StatelessWidget {
                         icon: 'assets/svgs/my_games.svg'),
                     userProfileCardItem(
                         onTap: () {
+                          walletController.balance.value = 0;
                           controller.signout(key);
                         },
                         text: "Log out",
@@ -229,13 +227,12 @@ class UserProfileMobilePortrait extends StatelessWidget {
   }
 
   Widget userProfileCardItem({
-     void Function(bool value)? onToggle,
-
+    void Function(bool value)? onToggle,
     required void Function() onTap,
     required String text,
     required String description,
-    required String icon, bool isFingerPrint=false,
-
+    required String icon,
+    bool isFingerPrint = false,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -247,7 +244,10 @@ class UserProfileMobilePortrait extends StatelessWidget {
           children: [
             Row(
               children: [
-                SvgPicture.asset(icon,color: const Color(0XFFFE7A01),),
+                SvgPicture.asset(
+                  icon,
+                  color: const Color(0XFFFE7A01),
+                ),
                 const Gap(16),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -278,22 +278,24 @@ class UserProfileMobilePortrait extends StatelessWidget {
                 ),
               ],
             ),
-            isFingerPrint? FlutterSwitch(
-              activeColor: Colors.grey.shade100,
-              activeToggleColor: Colors.green.shade300,
-              width: 40.0,
-              height: 22.0,
-              valueFontSize: 25.0,
-              toggleSize: 15.0,
-              value: true,
-              borderRadius: 30.0,
-              padding: 4.0,
-              showOnOff: false,
-              onToggle: onToggle!,
-            ):SvgPicture.asset('assets/svgs/chevron.svg')
+            isFingerPrint
+                ? FlutterSwitch(
+                    activeColor: Colors.grey.shade100,
+                    activeToggleColor: Colors.green.shade300,
+                    width: 40.0,
+                    height: 22.0,
+                    valueFontSize: 25.0,
+                    toggleSize: 15.0,
+                    value: true,
+                    borderRadius: 30.0,
+                    padding: 4.0,
+                    showOnOff: false,
+                    onToggle: onToggle!,
+                  )
+                : SvgPicture.asset('assets/svgs/chevron.svg')
           ],
         ),
       ),
     );
-  }}
-
+  }
+}

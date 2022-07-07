@@ -11,6 +11,10 @@ class LocalStorage {
     return GetStorage().read("token");
   }
 
+  static getEmail() {
+    return GetStorage().read("email");
+  }
+
   /// use this to [deleteToken] from local storage
   deleteToken() {
     return GetStorage().remove("token");

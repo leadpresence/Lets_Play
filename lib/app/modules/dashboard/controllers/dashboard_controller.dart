@@ -17,13 +17,15 @@ class DashboardController extends GetxController
   late List<DateTime>? endDates = <DateTime>[];
   var _timer;
   var body;
-  int _currentPage = 0;
+  late int _currentPage;
 
   late List<Rx<AnimationController>> gamesAnimationControllers = [];
   RxInt days = 0.obs, hours = 0.obs, minutes = 0.obs, seconds = 0.obs;
   RxList<int> timeRemainingInSecsForGames = <int>[].obs;
 
   getAllJackpotGames() async {
+    timeRemainingInSecsForGames.clear();
+    gamesAnimationControllers.clear();
     try {
       var response = await gamesService.getAllJackpotGames();
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -71,7 +73,9 @@ class DashboardController extends GetxController
   }
 
   void startCountDown() {
+    timeRemainingInSecsForGames.clear();
     gamesAnimationControllers.clear();
+
     for (int i = 0; i < endDates!.length; i++) {
       final Duration difference = endDates![i].difference(DateTime.now());
       days.value = difference.inDays;
@@ -86,15 +90,17 @@ class DashboardController extends GetxController
             seconds.value,
       );
 
-      gamesAnimationControllers.add(AnimationController(
-        vsync: this,
-        duration: Duration(
-          days: days.value,
-          hours: hours.value,
-          minutes: minutes.value,
-          seconds: seconds.value,
-        ),
-      ).obs);
+      gamesAnimationControllers.add(
+        AnimationController(
+          vsync: this,
+          duration: Duration(
+            days: days.value,
+            hours: hours.value,
+            minutes: minutes.value,
+            seconds: seconds.value,
+          ),
+        ).obs,
+      );
 
       gamesAnimationControllers[i].value.forward();
       update();
@@ -113,15 +119,16 @@ class DashboardController extends GetxController
   @override
   void onInit() {
     indexList;
+    _currentPage = 0;
     endDates;
     timeRemainingInSecsForGames;
     pageController = PageController(initialPage: 0);
     gamesDurations;
     getAllJackpotGames();
     _timer = Timer.periodic(
-      const Duration(seconds: 5),
+      const Duration(seconds: 10),
       (Timer timer) {
-        if (_currentPage < indexList!.length - 1) {
+        if (_currentPage < JackpotGameResponse.fromJson(body).body.length - 1) {
           _currentPage++;
         } else {
           _currentPage = 0;

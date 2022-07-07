@@ -30,13 +30,11 @@ class EditProfileMobilePortrait extends GetView {
     var phoneNumber = GetStorage().read("phoneNumber");
     var imageAvatar = GetStorage().read("profileImage");
 
-    // List of items in our dropdown menu
     var genders = [
       'Female',
       'Male',
     ];
-    // Initial Selected Value
-    String dropdownvalue = genders[0];
+    String dropDownValue = genders[0];
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -57,153 +55,179 @@ class EditProfileMobilePortrait extends GetView {
         ),
       ),
       body: SingleChildScrollView(
-          child: Form(
-              child: Padding(
-        padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // const Gap(100),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircleAvatar(
-                    radius: 36,
-                    child: Container(
-                      height: Get.height / 5,
-                      width: Get.width,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          colorFilter: const ColorFilter.mode(
-                            Colors.black45,
-                            BlendMode.dstIn,
-                          ),
-                          onError: (__, ___) {},
-                          image: NetworkImage(
-                            imageAvatar,
-                          ),
-                          fit: BoxFit.cover,
+        child: Form(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  radius: 48,
+                  child: Container(
+                    // width: Get.width,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        colorFilter: const ColorFilter.mode(
+                          Colors.black45,
+                          BlendMode.dstIn,
+                        ),
+                        onError: (__, ___) {},
+                        image: NetworkImage(
+                          imageAvatar,
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+                const Gap(12),
+                SizedBox(
+                  height: 30,
+                  child: Theme(
+                    data: ThemeData(
+                      splashColor: Colors.white,
+                      highlightColor: Colors.white,
+                    ),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        primary: const Color(0xFFFE7A01).withOpacity(.05),
+                        shadowColor: Colors.transparent,
+                        onPrimary: const Color(0xFFFE7A01).withOpacity(.01),
+                        onSurface: Colors.white,
+                        elevation: 0,
+                        // splashFactory: NoSplash.splashFactory,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(36),
+                        ),
+                      ),
+                      child: const Text(
+                        "Upload Image",
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Color(0xFFFE7A01),
                         ),
                       ),
                     ),
                   ),
-                  const Gap(12),
-                ],
-              ),
-              const Gap(12),
-              SizedBox(
-                height: 30,
-                child: Theme(
-                  data: ThemeData(
-                    splashColor: Colors.white,
-                    highlightColor: Colors.white,
-                  ),
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      primary: const Color(0xFFFE7A01).withOpacity(.05),
-                      shadowColor: Colors.transparent,
-                      onPrimary: const Color(0xFFFE7A01).withOpacity(.01),
-                      onSurface: Colors.white,
-                      elevation: 0,
-                      // splashFactory: NoSplash.splashFactory,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(36),
-                      ),
-                    ),
-                    child: const Text(
-                      "Upload Image ",
-                      style: TextStyle(color: Colors.white, fontSize: 14),
-                    ),
-                  ),
                 ),
-              ),
-              const Gap(42),
-              editFormField(hint: firstName),
-              const Gap(16),
-              editFormField(hint: lastName),
-              const Gap(16),
-              editFormField(hint: phoneNumber),
-              const Gap(16),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButtonFormField(
+                const Gap(42),
+                editFormField(
+                  controller: TextEditingController(text: firstName),
+                  readOnly: true,
+                ),
+                const Gap(16),
+                editFormField(
+                  controller: TextEditingController(text: lastName),
+                  readOnly: true,
+                ),
+                const Gap(16),
+                editFormField(
+                  controller: TextEditingController(text: phoneNumber),
+                  readOnly: true,
+                ),
+                const Gap(16),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButtonFormField(
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: const Color(0xFFDADEE3).withOpacity(.5),
                         enabledBorder: const UnderlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Color(0x0ff8e8e8), width: 4)),
+                          borderSide: BorderSide(
+                            color: Colors.black45,
+                            width: .5,
+                          ),
+                        ),
                         focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Colors.orange.withOpacity(.9),
-                                width: 3)),
+                          borderSide: BorderSide(
+                            color: Colors.orange.withOpacity(.9),
+                            width: 2,
+                          ),
+                        ),
                       ),
                       // Initial Value
-                      value: dropdownvalue,
+                      value: dropDownValue,
                       // Down Arrow Icon
                       icon: const Icon(Icons.keyboard_arrow_down),
                       // Array list of items
-                      items: genders.map((String items) {
-                        return DropdownMenuItem(
-                          value: items,
-                          child: Text(items),
-                        );
-                      }).toList(),
-                      // After selecting the desired option,it will
-                      // change button value to selected value
-                      onChanged: (String? newValue) {
-                        // setState((){dropdownvalue = newValue!;}) ;
-                      }),
+                      items: genders.map(
+                        (String items) {
+                          return DropdownMenuItem(
+                            value: items,
+                            child: Text(items),
+                          );
+                        },
+                      ).toList(),
+                      onChanged: (String? newValue) {},
+                    ),
+                  ),
                 ),
-              ),
-
-              const Gap(16),
-              editFormField(hint: "Address"),
-              const SizedBox(height: 16),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
-                child: CustomButton(
-                  // isLoading: controller.isLoading.value,
-                  buttonText: "Update profile",
-                  onPressed: () {
-                    //validate form and submit
-                    // controller.signUpFormValidator(key);
-                    Get.to(
-                      () => const SuccessOrFailureMobileView(
-                        msg: 'Profile update successful',
-                        className: JekawinBottomTabs(
-                          tabIndex: 0,
-                          isGuestUser: true,
+                const Gap(16),
+                editFormField(hint: "Address"),
+                const SizedBox(height: 16),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
+                  child: CustomButton(
+                    // isLoading: controller.isLoading.value,
+                    buttonText: "Update profile",
+                    onPressed: () {
+                      //validate form and submit
+                      // controller.signUpFormValidator(key);
+                      Get.to(
+                        () => const SuccessOrFailureMobileView(
+                          msg: 'Profile update successful',
+                          className: JekawinBottomTabs(
+                            tabIndex: 0,
+                            isGuestUser: true,
+                          ),
                         ),
-                      ),
-                      transition: Transition.cupertino,
-                    );
-                  },
+                        transition: Transition.cupertino,
+                      );
+                    },
+                  ),
                 ),
-              ),
-            ]),
-      ))),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 
-  Widget editFormField({dynamic controller, String? hint}) {
+  Widget editFormField({
+    dynamic controller,
+    String? hint,
+    bool readOnly = false,
+  }) {
     return SizedBox(
-        child: TextField(
-      // controller:controller,
-      decoration: InputDecoration(
-        hintText: hint ?? "",
-        filled: true,
-        fillColor: Color(0xFFDADEE3).withOpacity(.5),
-        enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: Color(0x0ff8e8e8), width: 4)),
-        focusedBorder: UnderlineInputBorder(
-            borderSide:
-                BorderSide(color: Colors.orange.withOpacity(.9), width: 3)),
+      child: TextField(
+        readOnly: readOnly,
+        controller: controller,
+        decoration: InputDecoration(
+          hintText: hint ?? "",
+          hintStyle: TextStyle(
+            color: Colors.grey.shade400,
+          ),
+          filled: true,
+          fillColor: const Color(0xFFDADEE3).withOpacity(.5),
+          enabledBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.black45,
+              width: .5,
+            ),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.orange.withOpacity(.9),
+              width: 2,
+            ),
+          ),
+        ),
       ),
-    ));
+    );
   }
 }

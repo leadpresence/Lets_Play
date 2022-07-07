@@ -31,7 +31,7 @@ class FundWalletController extends GetxController {
   var amount = "".obs;
   var paymentLink = "".obs;
   var processorId = "".obs;
-  var buttonText = "Submit".obs;
+  var buttonText = "Continue".obs;
 
   void clearErrorAmount() => errAmountMessage.value = '';
   void clearErrorEmail() => errEmailMessage.value = '';
@@ -45,7 +45,8 @@ class FundWalletController extends GetxController {
             .firstWhere((processor) => processor.name == "Paystack");
         processorId.value = paystack.id;
       } catch (e) {
-        debugPrint.printError(info: "Error selecting Paystack as processor:: $e");
+        debugPrint.printError(
+            info: "Error selecting Paystack as processor:: $e");
       }
     }
   }
@@ -60,7 +61,8 @@ class FundWalletController extends GetxController {
             .firstWhere((processor) => processor.name == "Flutterwave");
         processorId.value = flutterwave.id;
       } catch (e) {
-        debugPrint.printError(info: "Error selecting flutterwave as processor:: $e");
+        debugPrint.printError(
+            info: "Error selecting flutterwave as processor:: $e");
       }
     }
   }
@@ -81,20 +83,19 @@ class FundWalletController extends GetxController {
       return errAmountMessage.value = 'Amount field cannot be blank.';
     } else if (int.parse(amountController.text.toString()) < 200) {
       errAmountMessage.value = "amount can only b form 200 and above";
-    }else if ((GetUtils.isBlank(emailController.text)) == true) {
-      return errEmailMessage.value = 'Email is required';
-    }
-    else {
-      clearErrorAmount();
-      clearErrorEmail();
-      getPaymentLink();
+      // }else if ((GetUtils.isBlank(emailController.text)) == true) {
+      //   return errEmailMessage.value = 'Email is required';
+    } else {
+      // getPaymentLink();
     }
   }
 
   Future<void> getPaymentProcessors() async {
     final wallet = await walletService.paymentProcessors();
     wallet.fold((l) {
-      BotToast.showText(text: "Error getting payment processors \n check connection & try again.");
+      BotToast.showText(
+          text:
+              "Error getting payment processors \n check connection & try again.");
     }, (r) {
       paymentProcessors.value = processorsProvider.paymentProcessors.cast();
       //set processor id to be paystack by default
@@ -110,17 +111,18 @@ class FundWalletController extends GetxController {
   }
 
   Future<void> getPaymentLink() async {
-    isLoading.value =true;
+    isLoading.value = true;
     var amount = amountController.text.toString();
-    var email =emailController.text.toString(); //GetStorage().read('email').toString();
+    var email = emailController.text.toString();
     var selectedProcessor = processorId.value.toString();
     final link =
         await walletService.paymentLink(amount, email, selectedProcessor);
     link.fold((l) {
-      isLoading.value =false;
-      BotToast.showText(text: "Error processing payment \n check connection & try again.");
+      isLoading.value = false;
+      BotToast.showText(
+          text: "Error processing payment.\nCheck connection & try again.");
     }, (r) {
-      isLoading.value =false;
+      isLoading.value = false;
       paymentLink.value = r;
       GetStorage().write("paymentLink", r);
       paymentLinkIsSet.value = true;

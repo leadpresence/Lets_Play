@@ -1,24 +1,22 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:jekawin_mobile_flutter/app/modules/jackpot_games/controllers/jackpot_games_controller.dart';
-import 'package:pinput/pinput.dart';
 import '../../../../widgets/custom_large_button.dart';
 import 'jackpot_games_details_mobile_portrait.dart';
 
 class JackpotGamesMobilePortrait extends StatelessWidget {
   final String gameID;
-
+  final gameData;
   final int gameIndex;
 
   JackpotGamesMobilePortrait({
     Key? key,
     required this.gameID,
     required this.gameIndex,
+    this.gameData,
   }) : super(key: key);
 
   final JackpotGamesController controller = Get.put(JackpotGamesController());
@@ -143,9 +141,9 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    const Text(
-                                      'Cost : ₦50',
-                                      style: TextStyle(
+                                    Text(
+                                      'Cost : ₦${gameData["gameID"]["price"]}',
+                                      style: const TextStyle(
                                         fontSize: 16,
                                         color: Color(0XFF543884),
                                         fontWeight: FontWeight.bold,
@@ -485,17 +483,36 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
                                 ),
                                 CustomButton(
                                   buttonText: "Confirm",
-                                  onPressed: () => Get.to(
-                                    () => JackpotGamesDetailsMobilePortrait(
-                                      gameIndex: gameIndex,
-                                      gameId: gameID,
-                                      gameCost: "50",
-                                      numberOfGames: "1",
-                                      ticketNumber:
-                                          "${controller.pin1.text} ${controller.pin2.text} ${controller.pin3.text} ${controller.pin4.text} ${controller.pin5.text}",
-                                    ),
-                                    transition: Transition.cupertino,
-                                  ),
+                                  onPressed: () =>
+                                      controller.pin1.text.trim().length +
+                                                  controller.pin2.text
+                                                      .trim()
+                                                      .length +
+                                                  controller.pin3.text
+                                                      .trim()
+                                                      .length +
+                                                  controller.pin4.text
+                                                      .trim()
+                                                      .length +
+                                                  controller.pin5.text
+                                                      .trim()
+                                                      .length <
+                                              10
+                                          ? {}
+                                          : Get.to(
+                                              () =>
+                                                  JackpotGamesDetailsMobilePortrait(
+                                                gameIndex: gameIndex,
+                                                gameId: gameID,
+                                                gameCost: gameData["gameID"]
+                                                        ["price"]
+                                                    .toString(),
+                                                numberOfGames: "1",
+                                                ticketNumber:
+                                                    "${controller.pin1.text} ${controller.pin2.text} ${controller.pin3.text} ${controller.pin4.text} ${controller.pin5.text}",
+                                              ),
+                                              transition: Transition.cupertino,
+                                            ),
                                 ),
                               ],
                             ),

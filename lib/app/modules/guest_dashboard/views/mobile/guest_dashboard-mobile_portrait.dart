@@ -12,6 +12,7 @@ import '../../../dashboard/controllers/dashboard_controller.dart';
 import '../../../dashboard/models/jackpot_game_model.dart';
 import '../../../jackpot_games/views/mobile/jackpot_games_mobile_portrait.dart';
 import '../../../signup/controllers/sign_up_controller.dart';
+import '../../../true_or_false/views/true_or_false_view.dart';
 
 class GuestDashboardMobilePortrait extends StatelessWidget {
   GuestDashboardMobilePortrait({
@@ -83,6 +84,7 @@ class GuestDashboardMobilePortrait extends StatelessWidget {
                 const SizedBox(
                   height: 24,
                 ),
+                const SizedBox(height: 12),
                 SizedBox(
                   height: 360,
                   child: FutureBuilder<dynamic>(
@@ -93,42 +95,51 @@ class GuestDashboardMobilePortrait extends StatelessWidget {
                               "Snapshot has error: ${snapshot.hasError.toString()}");
                         } else if (snapshot.hasData) {
                           var body = snapshot.data["body"];
-                          return SizedBox(
-                            height: 360,
-                            width: Get.width,
-                            child: PageView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: body.length,
-                              controller: dashboardController.pageController,
-                              physics: const ScrollPhysics(),
-                              itemBuilder: (BuildContext context, int index) {
-                                return Obx(
-                                  () => DashboardHeroSession(
-                                    onPressed: () {
-                                      Get.to(
-                                        () => JackpotGamesMobilePortrait(
-                                          gameIndex: index,
-                                          gameID: body[index]["gameID"]["_id"],
+                          // dashboardController.timeRemainingInSecsForGames
+                          //     .clear();
+                          return body.length < 1
+                              ? const Text(
+                                  "No True or False Games Available",
+                                )
+                              : SizedBox(
+                                  height: 360,
+                                  width: Get.width,
+                                  child: PageView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: dashboardController
+                                        .timeRemainingInSecsForGames.length,
+                                    controller:
+                                        dashboardController.pageController,
+                                    physics: const ScrollPhysics(),
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return Obx(
+                                        () => DashboardHeroSession(
+                                          onPressed: () {
+                                            Get.to(
+                                              () => const LoginView(),
+                                              transition: Transition.cupertino,
+                                            );
+                                          },
+                                          priceToBeWon: body[index]["gameID"]
+                                              ["imageUrl"],
+                                          title: body[index]["gameID"]["title"],
+                                          animation: StepTween(
+                                            begin: dashboardController
+                                                    .timeRemainingInSecsForGames[
+                                                index],
+                                            end: 0,
+                                          ).animate(
+                                            dashboardController
+                                                .gamesAnimationControllers[
+                                                    index]
+                                                .value,
+                                          ),
                                         ),
-                                        transition: Transition.cupertino,
                                       );
                                     },
-                                    priceToBeWon: body[index]["gameID"]["price"],
-                                    title: body[index]["gameID"]["title"],
-                                    animation: StepTween(
-                                      begin: dashboardController
-                                          .timeRemainingInSecsForGames[index],
-                                      end: 0,
-                                    ).animate(
-                                      dashboardController
-                                          .gamesAnimationControllers[index]
-                                          .value,
-                                    ),
                                   ),
                                 );
-                              },
-                            ),
-                          );
                         }
                         return const Center(
                           child: CircularProgressIndicator(
@@ -139,9 +150,19 @@ class GuestDashboardMobilePortrait extends StatelessWidget {
                       }),
                 ),
                 const SizedBox(
-                  height: 18,
+                  height: 40,
                 ),
-                const DashboardInstantGames(),
+                DashboardInstantGames(
+                  onTap: () {
+                    Get.to(
+                      () => const LoginView(),
+                      transition: Transition.cupertino,
+                    );
+                  },
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
               ],
             ),
           ),
