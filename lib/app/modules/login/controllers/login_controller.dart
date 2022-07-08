@@ -81,7 +81,7 @@ class LoginController extends GetxController {
     phoneNumberController.text = '';
     passwordController.text = '';
     Get.offAll(
-      () => const JekawinBottomTabs(
+      () => JekawinBottomTabs(
         tabIndex: 0,
         isGuestUser: true,
       ),

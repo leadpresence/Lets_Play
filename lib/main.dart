@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.white,
         canvasColor: Colors.white,
       ),
-      // home: const JekawinBottomTabs(tabIndex: 0,)
+      // home: JekawinBottomTabs(tabIndex: 0,)
     );
   }
 }

@@ -251,21 +251,11 @@ class FundWalletMobilePortrait extends GetView {
                                               left: 16.0,
                                               right: 16.0,
                                               top: 16.0,
-                                              bottom: 16.0,
                                             ),
                                             child: Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                                  MainAxisAlignment.end,
                                               children: [
-                                                const Text(
-                                                  'Complete profile setup',
-                                                  style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.black87,
-                                                  ),
-                                                ),
                                                 InkWell(
                                                   onTap: () => Get.back(),
                                                   child: SvgPicture.asset(
@@ -275,14 +265,26 @@ class FundWalletMobilePortrait extends GetView {
                                               ],
                                             ),
                                           ),
-                                          const SizedBox(height: 4.0),
+                                          const SizedBox(height: 12.0),
                                           Padding(
                                             padding: const EdgeInsets.symmetric(
-                                                horizontal: 18.0),
+                                                horizontal: 24.0),
                                             child: Column(
                                               crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                                  CrossAxisAlignment.center,
                                               children: const [
+                                                Text(
+                                                  'Complete profile setup',
+                                                  style: TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black87,
+                                                  ),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                                SizedBox(
+                                                  height: 12,
+                                                ),
                                                 Text(
                                                   'Verify your Email to fund your wallet and have full access to all games.',
                                                   style: TextStyle(
@@ -290,7 +292,7 @@ class FundWalletMobilePortrait extends GetView {
                                                     color: Color(0xff000000),
                                                     height: 1.6,
                                                   ),
-                                                  textAlign: TextAlign.start,
+                                                  textAlign: TextAlign.center,
                                                 ),
                                               ],
                                             ),
@@ -310,17 +312,17 @@ class FundWalletMobilePortrait extends GetView {
                                                           Transition.downToUp);
                                                 },
                                                 buttonText: 'Update Profile',
-                                                buttonColor: Colors.white,
-                                                buttonTextColor:
-                                                    const Color(0xffFE7A01),
-                                                borderColor:
-                                                    const Color(0xffFE7A01),
-                                                hasBorder: true,
+                                                // buttonColor: Colors.white,
+                                                // buttonTextColor:
+                                                //     const Color(0xffFE7A01),
+                                                // borderColor:
+                                                //     const Color(0xffFE7A01),
+                                                // hasBorder: true,
                                               ),
                                             ),
                                           ),
                                           const SizedBox(
-                                            height: 4,
+                                            height: 12,
                                           ),
                                         ],
                                       ),

@@ -41,7 +41,7 @@ class UpdatePasswordController extends GetxController {
 
   void navigateToLoginView(Key? k) {
     Get.to(
-      () => const SuccessOrFailureMobileView(
+      () => SuccessOrFailureMobileView(
         msg: "Password update successful",
         className: LoginView(),
       ),

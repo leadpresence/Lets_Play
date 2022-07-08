@@ -77,7 +77,7 @@ class AuthHomeMobilePortrait extends GetView<AuthHomeController> {
                   child: CircleButton(
                     key: key,
                     onTap: () => Get.to(
-                      () => const JekawinBottomTabs(
+                      () => JekawinBottomTabs(
                         tabIndex: 0,
                         isGuestUser: false,
                       ),

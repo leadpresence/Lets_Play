@@ -44,7 +44,7 @@ class SignUpVerificationController extends GetxController
 
   void navigateToSignUpSuccessful(Key? key) {
     Get.to(
-      () => const SuccessOrFailureMobileView(
+      () => SuccessOrFailureMobileView(
         msg: 'Registration successful',
         className: JekawinBottomTabs(
           tabIndex: 0,

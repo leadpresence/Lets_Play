@@ -118,7 +118,7 @@ class LoginTabletPortrait extends GetView<LoginController> {
                 padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
                 child: CustomButton(
                     buttonText: "Sign Up",
-                    onPressed: () => Get.to(() => const JekawinBottomTabs(
+                    onPressed: () => Get.to(() => JekawinBottomTabs(
                       tabIndex: 0,
                     ))),
               )

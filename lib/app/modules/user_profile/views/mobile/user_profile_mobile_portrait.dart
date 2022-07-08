@@ -11,6 +11,7 @@ import 'package:jekawin_mobile_flutter/app/modules/resetpassword/views/mobile/re
 import 'package:jekawin_mobile_flutter/app/modules/user_profile/controllers/user_profile_cntroller.dart';
 
 import '../../../edit_profile/views/mobile/edit_profile_mobile_porttrait.dart';
+import '../../../jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
 import '../../../wallet_home/controllers/wallet_home_controller.dart';
 
 class UserProfileMobilePortrait extends StatelessWidget {
@@ -39,7 +40,12 @@ class UserProfileMobilePortrait extends StatelessWidget {
               color: const Color(0xff12121D),
             ),
             onPressed: () {
-              Get.back();
+              Get.to(
+                () => JekawinBottomTabs(
+                  tabIndex: 0,
+                  isGuestUser: true,
+                ),
+              );
             },
           ),
         ),

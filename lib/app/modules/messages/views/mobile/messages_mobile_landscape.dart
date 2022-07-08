@@ -59,7 +59,7 @@ class MessagesMobileLandscape extends StatelessWidget {
                   onPressed: () =>
                       nextRoute ??
                       Get.to(
-                        () => const JekawinBottomTabs(
+                        () => JekawinBottomTabs(
                           tabIndex: 3,
                         ),
                         transition: Transition.cupertino,

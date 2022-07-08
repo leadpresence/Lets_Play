@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:jekawin_mobile_flutter/app/modules/dashboard/controllers/dashboard_controller.dart';
 import 'package:jekawin_mobile_flutter/app/modules/e_shop/views/e_shop_view.dart';
 import 'package:jekawin_mobile_flutter/app/modules/leaderboard/views/leaderboard_view.dart';
 import '../../dashboard/views/mobile/dashboard_mobile_portrait.dart';
@@ -10,11 +12,14 @@ import '../../wallet_home/views/wallet_home_view.dart';
 class JekawinBottomTabs extends StatefulWidget {
   final int tabIndex;
   final bool isGuestUser;
-  const JekawinBottomTabs({
+  JekawinBottomTabs({
     Key? key,
     this.tabIndex = 0,
     this.isGuestUser = false,
   }) : super(key: key);
+
+  final DashboardController dashboardController =
+      Get.put(DashboardController());
   @override
   _JekawinBottomTabsState createState() => _JekawinBottomTabsState();
 }

@@ -154,7 +154,7 @@ class EShopDebitCardPaymentMobileView extends StatelessWidget {
                     hasIcon: false,
                     buttonText: 'Continue',
                     onPressed: () => Get.to(
-                      () => const SuccessOrFailureMobileView(
+                      () =>  SuccessOrFailureMobileView(
                         msg: 'Your order was successful',
                         className: JekawinBottomTabs(
                           tabIndex: 3,

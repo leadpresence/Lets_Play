@@ -50,7 +50,7 @@ class JackpotGamesController extends GetxController {
         Get.to(
           () => JackpotGamesSuccessMobileView(
             gameIndex: gameIndex,
-            className: const JekawinBottomTabs(
+            className: JekawinBottomTabs(
               tabIndex: 0,
             ),
             msg: 'Ticket purchased Successfully',

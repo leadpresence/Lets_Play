@@ -76,7 +76,7 @@ class SelectBankController extends GetxController {
 
   void navigateToSignUpSuccessful() {
     Get.to(
-      () => const SuccessOrFailureMobileView(
+      () => SuccessOrFailureMobileView(
         msg: 'Withdrawal successful',
         className: JekawinBottomTabs(
           tabIndex: 0,

@@ -7,7 +7,7 @@ import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
 class SuccessOrFailureMobileView extends StatelessWidget {
   final String msg;
   final Widget className;
-  const SuccessOrFailureMobileView({
+  SuccessOrFailureMobileView({
     Key? key,
     this.msg = 'Success',
     required this.className,
