@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:jekawin_mobile_flutter/app/config/services/wallet_service.dart';
 import 'package:jekawin_mobile_flutter/app/modules/wallet_home/models/transaction_model.dart';
+import 'package:jekawin_mobile_flutter/app/modules/wallet_home/models/user_wallet_response.dart';
 
 import '../../../config/services/di/di_locator.dart';
 import '../../../config/services/games_service.dart';
@@ -20,7 +21,6 @@ class WalletHomeController extends GetxController {
   var wins = 0.obs;
   Rx<List<TransactionsModel>> transactions = Rx<List<TransactionsModel>>([]);
 
-
   var trnxsList = <TransactionsModel>[].obs;
 
   Future<void> getUserWallet() async {
@@ -30,19 +30,28 @@ class WalletHomeController extends GetxController {
     }, (r) {});
   }
 
-  Future<void> getUserTransactions() async {
-    final trxns = await walletService.userTransactions();
-    trxns.fold((l) {
-      BotToast.showText(text: l.message);
-    }, (r) {
-      transactions.value.addAll(transactionsProvider.transactions.value);
-    });
+  Future<List<TransactionsModel>> getUserTransactions() async {
+    List<TransactionsModel> trxns = await walletService.allWalletTransactions();
+    try {
+      return trxns;
+    } catch (e) {
+      BotToast.showText(text: "Error occured retrieving history");
+    }
+    return [];
+  }
+  Future<UserWalletModel?> getWalletAsync() async {
+  UserWalletModel userWallet = await walletService.userWalletAsync();
+    try {
+      return userWallet ;
+    } catch (e) {
+      print("Error retrieving Balance");
+    }
+    return null;
   }
 
   @override
   void onInit() {
-    super.onReady();
-
+    super.onInit();
     getUserWallet();
     getUserTransactions();
 
@@ -50,6 +59,7 @@ class WalletHomeController extends GetxController {
     rewardPoints.value = GetStorage().read('rewardPoints');
     wins.value = GetStorage().read('wins');
   }
+
   @override
   void onReady() {
     super.onReady();
