@@ -9,7 +9,6 @@ import '../../../config/services/wallet_service.dart';
 import '../views/mobile/complete_funding_webview.dart';
 
 class FundWalletController extends GetxController {
-
   final WalletServiceImpl walletService = Get.find<WalletServiceImpl>();
   final processorsProvider = Get.find<UtilsController>();
   var isLoading = false.obs;
@@ -73,8 +72,6 @@ class FundWalletController extends GetxController {
 
   @override
   void onInit() {
-
-
     getPaymentProcessors();
   }
 
@@ -83,10 +80,8 @@ class FundWalletController extends GetxController {
       return errAmountMessage.value = 'Amount field cannot be blank.';
     } else if (int.parse(amountController.text.toString()) < 200) {
       errAmountMessage.value = "amount can only b form 200 and above";
-      // }else if ((GetUtils.isBlank(emailController.text)) == true) {
-      //   return errEmailMessage.value = 'Email is required';
     } else {
-      // getPaymentLink();
+      getPaymentLink();
     }
   }
 

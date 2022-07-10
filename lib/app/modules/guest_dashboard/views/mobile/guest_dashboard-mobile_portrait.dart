@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -88,66 +89,73 @@ class GuestDashboardMobilePortrait extends StatelessWidget {
                 SizedBox(
                   height: 360,
                   child: FutureBuilder<dynamic>(
-                      future: dashboardController.getAllJackpotGames(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasError) {
-                          return Text(
-                              "Snapshot has error: ${snapshot.hasError.toString()}");
-                        } else if (snapshot.hasData) {
-                          var body = snapshot.data["body"];
-                          // dashboardController.timeRemainingInSecsForGames
-                          //     .clear();
-                          return body.length < 1
-                              ? const Text(
-                                  "No True or False Games Available",
-                                )
-                              : SizedBox(
-                                  height: 360,
-                                  width: Get.width,
-                                  child: PageView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: dashboardController
-                                        .timeRemainingInSecsForGames.length,
-                                    controller:
-                                        dashboardController.pageController,
-                                    physics: const ScrollPhysics(),
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return Obx(
-                                        () => DashboardHeroSession(
-                                          onPressed: () {
-                                            Get.to(
-                                              () => const LoginView(),
-                                              transition: Transition.cupertino,
-                                            );
-                                          },
-                                          priceToBeWon: body[index]["gameID"]
-                                              ["imageUrl"],
-                                          title: body[index]["gameID"]["title"],
-                                          animation: StepTween(
-                                            begin: dashboardController
-                                                    .timeRemainingInSecsForGames[
-                                                index],
-                                            end: 0,
-                                          ).animate(
-                                            dashboardController
-                                                .gamesAnimationControllers[
-                                                    index]
-                                                .value,
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                );
-                        }
-                        return const Center(
-                          child: CircularProgressIndicator(
-                            strokeWidth: 5,
-                            color: Color(0xFFFE7A01),
-                          ),
+                    future: dashboardController.getAllJackpotGames(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return const SizedBox(
+                          height: 360,
+                          child: DashboardHeroSessionUI(),
                         );
-                      }),
+                      } else if (snapshot.hasData) {
+                        var body = snapshot.data["body"];
+                        // dashboardController.timeRemainingInSecsForGames
+                        //     .clear();
+                        return body.length < 1
+                            ? const Text(
+                                "No True or False Games Available",
+                              )
+                            : SizedBox(
+                                height: 360,
+                                width: Get.width,
+                                child: PageView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: dashboardController
+                                      .timeRemainingInSecsForGames.length,
+                                  controller:
+                                      dashboardController.pageController,
+                                  physics: const ScrollPhysics(),
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Obx(
+                                      () => DashboardHeroSession(
+                                        onPressed: () {
+                                          Get.to(
+                                            () => const LoginView(),
+                                            transition: Transition.cupertino,
+                                          );
+                                        },
+                                        priceToBeWon: body[index]["gameID"]
+                                            ["imageUrl"],
+                                        title: body[index]["gameID"]["title"],
+                                        animation: StepTween(
+                                          begin: dashboardController
+                                                  .timeRemainingInSecsForGames[
+                                              index],
+                                          end: 0,
+                                        ).animate(
+                                          dashboardController
+                                              .gamesAnimationControllers[index]
+                                              .value,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              );
+                      }
+                      return const SizedBox(
+                        height: 360,
+                        child: DashboardHeroSessionUI(),
+                      );
+
+                      const Center(
+                        child: CupertinoActivityIndicator(
+                          // radius: 50,
+                          color: Color(0xFFFE7A01),
+                        ),
+                      );
+                    },
+                  ),
                 ),
                 const SizedBox(
                   height: 40,

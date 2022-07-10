@@ -43,8 +43,8 @@ class UserProfileMobilePortrait extends StatelessWidget {
               Get.to(
                 () => JekawinBottomTabs(
                   tabIndex: 0,
-                  isGuestUser: true,
                 ),
+                transition: Transition.cupertino,
               );
             },
           ),

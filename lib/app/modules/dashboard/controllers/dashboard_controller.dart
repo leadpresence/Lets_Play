@@ -112,8 +112,10 @@ class DashboardController extends GetxController
     for (int i = 0; i < gamesAnimationControllers.length; i++) {
       gamesAnimationControllers[i].value.dispose();
     }
-    // _timer.dispose();
+    getAllJackpotGames().dispose();
+    _timer.dispose();
     super.dispose();
+    pageController.dispose();
   }
 
   @override

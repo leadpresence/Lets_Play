@@ -220,9 +220,12 @@ class EditProfileMobilePortrait extends GetView {
         ),
         decoration: InputDecoration(
           errorText: errorText,
-          errorStyle: TextStyle(
-            color: Colors.red.shade600,
-            fontSize: 12,
+          errorStyle: const TextStyle(
+            fontSize: 10,
+            color: Colors.deepOrange,
+            // height: 1.8,
+            letterSpacing: .2,
+            fontWeight: FontWeight.bold,
           ),
           hintText: hint ?? "",
           hintStyle: TextStyle(

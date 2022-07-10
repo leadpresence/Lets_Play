@@ -84,7 +84,6 @@ class MyGamesMobilePortrait extends StatelessWidget {
                         "Snapshot has error: ${snapshot.hasError.toString()}");
                   } else if (snapshot.hasData) {
                     var body = snapshot.data!;
-                    print("BOOOOOOOOOdy: \n $body");
                     return body.body.games.length < 1
                         ? const Text(
                             "No Games History",
@@ -108,10 +107,6 @@ class MyGamesMobilePortrait extends StatelessWidget {
                                             ? body.body.games[position]
                                                 .gameId["title"]
                                             : "",
-
-                                    // body.body.games[position]
-                                    //     .gameId['title']
-                                    //     .toString(),
                                     amount:
                                         body.body.games[position].amount == null
                                             ? ""

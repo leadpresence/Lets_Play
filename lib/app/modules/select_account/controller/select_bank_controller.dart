@@ -79,7 +79,7 @@ class SelectBankController extends GetxController {
       () => SuccessOrFailureMobileView(
         msg: 'Withdrawal successful',
         className: JekawinBottomTabs(
-          tabIndex: 0,
+          tabIndex: 2,
           isGuestUser: true,
         ),
       ),

@@ -48,84 +48,90 @@ class LoginTabletPortrait extends GetView<LoginController> {
     screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
 
     return
-      // Obx(
-      // ()=>
-      Scaffold(
-          body: SingleChildScrollView(
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              const Gap(30),
+        // Obx(
+        // ()=>
+        Scaffold(
+            body: SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Gap(30),
 
-              //Logo Row
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [logoSvg],
-              ),
-              const Gap(40),
+          //Logo Row
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [logoSvg],
+          ),
+          const Gap(40),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Text(
-                    "Sign up",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w300, // light
-                        fontStyle: FontStyle.normal,
-                        color: Colors.black,
-                        fontSize: 24 // italic
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Text(
+                "Sign up",
+                style: TextStyle(
+                    fontWeight: FontWeight.w300, // light
+                    fontStyle: FontStyle.normal,
+                    color: Colors.black,
+                    fontSize: 24 // italic
                     ),
-                  )
-                ],
-              ),
-
-              const Gap(20),
-
-              const Padding(
-                  padding: EdgeInsets.fromLTRB(10, 40, 10, 10),
-                  child: CustomTextField(
-                    hintText: "Phone number",
-                  )),
-
-              const Padding(
-                  padding: EdgeInsets.fromLTRB(10, 5, 10, 10),
-                  child: CustomTextField(
-                    hintText: "Password",
-                  )),
-
-              Row(
-                children: [
-                  Material(
-                    child: Checkbox(
-                      value: agree,
-                      onChanged: (value) {
-                        // setState(() {
-                        //   agree = value ?? false;
-                        // });
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    width: (screenWidth(context) * 0.75),
-                    child: const Text(
-                      'I agree to the Jekawin Term of Service and \nPrivacy Policy',
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: agreementColor),
-                    ),
-                  )
-                ],
-              ),
-
-              Padding(
-                padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
-                child: CustomButton(
-                    buttonText: "Sign Up",
-                    onPressed: () => Get.to(() => JekawinBottomTabs(
-                      tabIndex: 0,
-                    ))),
               )
-            ]),
+            ],
+          ),
+
+          const Gap(20),
+
+          const Padding(
+              padding: EdgeInsets.fromLTRB(10, 40, 10, 10),
+              child: CustomTextField(
+                hintText: "Phone number",
+              )),
+
+          const Padding(
+              padding: EdgeInsets.fromLTRB(10, 5, 10, 10),
+              child: CustomTextField(
+                hintText: "Password",
+              )),
+
+          Row(
+            children: [
+              Material(
+                child: Checkbox(
+                  value: agree,
+                  onChanged: (value) {
+                    // setState(() {
+                    //   agree = value ?? false;
+                    // });
+                  },
+                ),
+              ),
+              SizedBox(
+                width: (screenWidth(context) * 0.75),
+                child: const Text(
+                  'I agree to the Jekawin Term of Service and \nPrivacy Policy',
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: agreementColor),
+                ),
+              )
+            ],
+          ),
+
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
+            child: CustomButton(
+              buttonText: "Sign Up",
+              onPressed: () => Get.to(
+                () => JekawinBottomTabs(
+                  tabIndex: 0,
+                ),
+              ),
+            ),
           )
-        // )
-      );
+        ],
+      ),
+    )
+            // )
+            );
   }
 
   void submit() {}
