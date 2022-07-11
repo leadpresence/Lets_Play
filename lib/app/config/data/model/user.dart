@@ -14,7 +14,7 @@ class User extends Equatable {
   @HiveField(2)
   String? lastName = "";
   @HiveField(3)
-  String? mobile = "";
+  String? phone = "";
   @HiveField(4)
   String email = "";
   @HiveField(5)
@@ -53,7 +53,7 @@ class User extends Equatable {
     this.avatar,
     this.firstName,
     this.lastName,
-    this.mobile,
+    this.phone,
     this.autoUsername,
     this.rewardPoints,
     this.role,
@@ -72,9 +72,9 @@ class User extends Equatable {
   User.fromMap(Map<String, dynamic> json) {
     id = json["_id"];
     avatar = json["avatar"];
-    firstName = json["firstname"];
-    lastName = json["lastname"];
-    mobile = json["mobile"];
+    firstName = json["firstName"];
+    lastName = json["lastName"];
+    phone = json["phone"];
     autoUsername = json["autoUsername"];
     rewardPoints = json["rewardPoints"];
     role = json["role"];
@@ -89,10 +89,10 @@ class User extends Equatable {
 
   Map<String, dynamic> toMap() => {
         "_id": id,
-        "firstname": firstName,
-        "lastname": lastName,
+        "firstName": firstName,
+        "lastName": lastName,
         "avatar": avatar,
-        "mobile": mobile,
+        "phone": phone,
         "autoUsername": autoUsername,
         "rewardPoints": rewardPoints,
         "wins": wins,

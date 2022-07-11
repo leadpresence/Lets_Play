@@ -58,7 +58,7 @@ class EmailOTPVerification extends GetView<SignUpVerificationController> {
                   pinController: controller.signUpOtpController,
                   key: key,
                   onComplete: () {
-                    controller.setOtp(controller.signUpOtpController.text);
+                    // controller.setOtp(controller.signUpOtpController.text);
                   },
                 ),
                 const Gap(48),

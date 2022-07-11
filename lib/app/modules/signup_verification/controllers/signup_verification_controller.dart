@@ -25,7 +25,7 @@ class SignUpVerificationController extends GetxController
   var remoteOtp = "".obs;
 
   setOtp(String otpPin) {
-    // pin.value = otpPin;
+    pin.value = otpPin;
     pin.value = prospectIsProvider.getOtp();
   }
 

@@ -46,21 +46,21 @@ class Data {
 
 class GuestInvite {
   GuestInvite({
-    required this.firstname,
+    required this.firstName,
     required this.autoUsername,
     required this.avatar,
     required this.country,
     required this.createdAt,
   });
 
-  String firstname;
+  String firstName;
   String autoUsername;
   String avatar;
   String country;
   DateTime createdAt;
 
   factory GuestInvite.fromMap(Map<String, dynamic> json) => GuestInvite(
-    firstname: json["firstname"],
+    firstName: json["firstName"],
     autoUsername: json["autoUsername"],
     avatar: json["avatar"],
     country: json["country"],
@@ -68,7 +68,7 @@ class GuestInvite {
   );
 
   Map<String, dynamic> toMap() => {
-    "firstname": firstname,
+    "firstName": firstName,
     "autoUsername": autoUsername,
     "avatar": avatar,
     "country": country,

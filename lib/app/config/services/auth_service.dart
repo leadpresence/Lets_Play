@@ -20,9 +20,9 @@ import 'http/http_services.dart';
 abstract class AuthServiceDataSource {
   Future<Either<AppError, String>> signup(UserSignUpModel body);
   Future<Either<AppError, String>> verifySignUpOtp(String otp);
-  Future<Either<AppError, String>> login(String mobile, String password);
+  Future<Either<AppError, String>> login(String phone, String password);
   Future<Either<AppError, String>> resendSignUpResetOtp(String phoneNumber);
-  Future<Either<AppError, String>> forgetPassword(String mobile);
+  Future<Either<AppError, String>> forgetPassword(String phone);
   Future<Either<AppError, String>> verifyResetPasswordOtp(String Otp);
   Future<Either<AppError, String>> updatePassword(String password);
   Future<Either<AppError, String>> signout();
@@ -38,9 +38,9 @@ class AuthServiceImpl extends AuthServiceDataSource {
   @override
   Future<Either<AppError, String>> signup(UserSignUpModel body) async {
     Map<String, dynamic> payload = {
-      'firstname': body.firstname,
-      'lastname': body.lastname,
-      'mobile': body.mobile,
+      'firstName': body.firstName,
+      'lastName': body.lastName,
+      'phone': body.phone,
       'password': body.password,
       'agreement': body.agreement,
     };
@@ -49,13 +49,18 @@ class AuthServiceImpl extends AuthServiceDataSource {
           '${JekawinBaseUrls.authBaseUrl}signup', payload);
       if (raw['success']) {
         AuthResponseModel res = AuthResponseModel.fromJson(raw);
-        prospectIsProvider.setProspectId(res.data.prospectId);
-        prospectIsProvider.setOtp(res.data.otp);
-        prospectIsProvider.setPhoneNumber(body.mobile);
+        // prospectIsProvider.setProspectId(res.data.prospectId);
+        // prospectIsProvider.setOtp(res.data.otp);
+        prospectIsProvider.setPhoneNumber(body.phone);
+        GetStorage().write('referenceId', raw['body']['reference']);
         return Right(raw['message']);
       } else {
         return Left(
-            AppError(errorType: AppErrorType.network, message: raw['message']));
+          AppError(
+            errorType: AppErrorType.network,
+            message: raw['message'],
+          ),
+        );
       }
     } on NetworkException catch (e) {
       return Left(
@@ -71,8 +76,9 @@ class AuthServiceImpl extends AuthServiceDataSource {
 
   @override
   Future<Either<AppError, String>> verifySignUpOtp(String otp) async {
+    var referenceId = GetStorage().read('referenceId');
     String prospectId = prospectIsProvider.getProspectId();
-    Map<String, dynamic> payload = {'prospectId': prospectId, 'otp': otp};
+    Map<String, dynamic> payload = {'reference': referenceId, 'otp': otp};
     try {
       var raw = await httpProvider.postHttp(
           '${JekawinBaseUrls.authBaseUrl}otp', payload);
@@ -80,14 +86,14 @@ class AuthServiceImpl extends AuthServiceDataSource {
       _userLocalDataSource.saveUser(res.data.user);
       GetStorage().write('firstName', res.data.user.firstName);
       GetStorage().write('lastName', res.data.user.lastName);
-      GetStorage().write('phoneNumber', res.data.user.mobile);
+      GetStorage().write('phoneNumber', res.data.user.phone);
       GetStorage().write('profileImage', res.data.user.avatar);
       GetStorage().write('referralCode', res.data.user.inviteLink);
 
       if (raw['success']) {
         if (kDebugMode) {
           print(
-              '----> ${res.data.user.firstName}, ${res.data.user.lastName}, ${res.data.user.mobile}, ${res.data.user.avatar}, ');
+              '----> ${res.data.user.firstName}, ${res.data.user.lastName}, ${res.data.user.phone}, ${res.data.user.avatar}, ');
         }
         return const Right("Sign up successful");
       } else {
@@ -133,8 +139,8 @@ class AuthServiceImpl extends AuthServiceDataSource {
   }
 
   @override
-  Future<Either<AppError, String>> login(String mobile, String password) async {
-    Map<String, dynamic> payload = {'mobile': mobile, 'password': password};
+  Future<Either<AppError, String>> login(String phone, String password) async {
+    Map<String, dynamic> payload = {'phone': phone, 'password': password};
     try {
       var raw = await httpProvider.postHttp(
           '${JekawinBaseUrls.authBaseUrl}signin', payload);
@@ -144,7 +150,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
       GetStorage().write('userId', res.data.user.id);
       GetStorage().write('lastName', res.data.user.lastName);
       GetStorage().write('profileImage', res.data.user.avatar);
-      GetStorage().write('phoneNumber', res.data.user.mobile);
+      GetStorage().write('phoneNumber', res.data.user.phone);
       GetStorage().write('token', raw['token']);
       GetStorage().write('referralCode', res.data.user.inviteLink);
       if (raw['success']) {
@@ -166,8 +172,8 @@ class AuthServiceImpl extends AuthServiceDataSource {
   }
 
   @override
-  Future<Either<AppError, String>> forgetPassword(String mobile) async {
-    Map<String, dynamic> payload = {"mobile": mobile};
+  Future<Either<AppError, String>> forgetPassword(String phone) async {
+    Map<String, dynamic> payload = {"phone": phone};
     try {
       var raw = await httpProvider.postHttp(
           '${JekawinBaseUrls.authBaseUrl}forgetpassword', payload);
@@ -176,7 +182,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
         prospectIsProvider.setProspectId(res.data.prospectId);
         prospectIsProvider.setOtp(res.data.otp);
 
-        prospectIsProvider.setPhoneNumber(mobile);
+        prospectIsProvider.setPhoneNumber(phone);
 
         return const Right("Otp sent Successful for password reset");
       } else {

@@ -12,7 +12,7 @@ import '../views/mobile/email_otp_verification.dart';
 
 class EditProfileController extends GetxController {
   final editFormKey = GlobalKey<FormState>();
-  final firstnameController = TextEditingController();
+  final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
   final phoneNumberController = TextEditingController();
   final addressController = TextEditingController();

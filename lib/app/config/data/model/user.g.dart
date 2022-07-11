@@ -17,7 +17,7 @@ class UserAdapter extends TypeAdapter<User> {
       avatar: fields[14] as String?,
       firstName: fields[1] as String?,
       lastName: fields[2] as String?,
-      mobile: fields[3] as String?,
+      phone: fields[3] as String?,
       autoUsername: fields[10] as String?,
       rewardPoints: fields[19] as int?,
       role: fields[5] as String?,
@@ -47,7 +47,7 @@ class UserAdapter extends TypeAdapter<User> {
       ..writeByte(2)
       ..write(obj.lastName)
       ..writeByte(3)
-      ..write(obj.mobile)
+      ..write(obj.phone)
       ..writeByte(4)
       ..write(obj.email)
       ..writeByte(5)

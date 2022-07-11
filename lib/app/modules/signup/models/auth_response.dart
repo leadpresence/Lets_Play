@@ -8,50 +8,38 @@ class AuthResponseModel {
   bool success;
   String message;
   Data data;
-  AuthResponseModel( {
+  AuthResponseModel({
     required this.success,
     required this.data,
     required this.message,
   });
 
-
-  factory AuthResponseModel.fromJson(Map<String, dynamic> json) => AuthResponseModel(
-    success: json["success"],
-    message: json["message"],
-    data: Data.fromJson(json["data"]),
-  );
+  factory AuthResponseModel.fromJson(Map<String, dynamic> json) =>
+      AuthResponseModel(
+        success: json["success"],
+        message: json["message"],
+        data: Data.fromJson(json["body"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "success": success,
-    "message": message,
-    "data": data.toJson(),
-  };
+        "success": success,
+        "message": message,
+        "body": data.toJson(),
+      };
 }
 
 class Data {
   Data({
-    required this.prospectId,
-    required this.otp,
-    required this.ttl,
-    required this.createdAt,
+    required this.reference,
   });
 
-  String prospectId;
-  String otp;
-  int ttl;
-  DateTime createdAt;
+  String reference;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-    prospectId: json["prospectId"],
-    otp: json["otp"],
-    ttl: json["ttl"],
-    createdAt: DateTime.parse(json["createdAt"]),
-  );
+        reference: json["reference"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "prospectId": prospectId,
-    "otp": otp,
-    "ttl": ttl,
-    "createdAt": createdAt.toIso8601String(),
-  };
+        "reference": reference,
+      };
 }

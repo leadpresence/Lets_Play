@@ -40,8 +40,8 @@ class Body {
    required this.wallet,
     required this.id,
     required this.userId,
-    required this.firstname,
-    required this.lastname,
+    required this.firstName,
+    required this.lastName,
     required this.mobile,
     required this.autoUsername,
     required this.accountStatus,
@@ -61,8 +61,8 @@ class Body {
   Wallet wallet;
   String id;
   String userId;
-  String firstname;
-  String lastname;
+  String firstName;
+  String lastName;
   String mobile;
   String autoUsername;
   String accountStatus;
@@ -82,8 +82,8 @@ class Body {
     wallet: Wallet.fromMap(json["wallet"]),
     id: json["_id"],
     userId: json["userId"],
-    firstname: json["firstname"],
-    lastname: json["lastname"],
+    firstName: json["firstName"],
+    lastName: json["lastName"],
     mobile: json["mobile"],
     autoUsername: json["autoUsername"],
     accountStatus: json["accountStatus"],
@@ -104,8 +104,8 @@ class Body {
     "wallet": wallet.toMap(),
     "_id": id,
     "userId": userId,
-    "firstname": firstname,
-    "lastname": lastname,
+    "firstName": firstName,
+    "lastName": lastName,
     "mobile": mobile,
     "autoUsername": autoUsername,
     "accountStatus": accountStatus,

@@ -44,7 +44,7 @@ class UtilsController extends GetxController {
   getPhoneNumber() => phoneNumber.value;
 
   setProspectId(String prosId) {
-    prospectId .value= prosId;
+    prospectId.value = prosId;
   }
   setRecentPaymentLink(String link) {
     recentPaymentLink.value= link;

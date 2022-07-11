@@ -7,31 +7,31 @@ String userSignUpModelToJson(UserSignUpModel data) => json.encode(data.toJson())
 
 class UserSignUpModel {
   UserSignUpModel({
-    required this.firstname,
-    required this.lastname,
-    required this.mobile,
+    required this.firstName,
+    required this.lastName,
+    required this.phone,
     required this.password,
     required this.agreement,
   });
 
-  String firstname="";
-  String lastname="";
-  String mobile="";
+  String firstName="";
+  String lastName="";
+  String phone="";
   String password="";
   bool agreement=false;
 
   factory UserSignUpModel.fromJson(Map<String, dynamic> json) => UserSignUpModel(
-    firstname: json["firstname"],
-    lastname: json["lastname"],
-    mobile: json["mobile"],
+    firstName: json["firstName"],
+    lastName: json["lastName"],
+    phone: json["phone"],
     password: json["password"],
     agreement: json["agreement"],
   );
 
   Map<String, dynamic> toJson() => {
-    "firstname": firstname,
-    "lastname": lastname,
-    "mobile": mobile,
+    "firstName": firstName,
+    "lastName": lastName,
+    "phone": phone,
     "password": password,
     "agreement": agreement,
   };
