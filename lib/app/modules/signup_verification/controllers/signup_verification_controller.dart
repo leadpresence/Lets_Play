@@ -26,7 +26,7 @@ class SignUpVerificationController extends GetxController
 
   setOtp(String otpPin) {
     pin.value = otpPin;
-    pin.value = prospectIsProvider.getOtp();
+    // pin.value = prospectIsProvider.getOtp();
   }
 
   Future<void> completeSignUp(Key? key) async {
@@ -44,7 +44,7 @@ class SignUpVerificationController extends GetxController
 
   void navigateToSignUpSuccessful(Key? key) {
     Get.to(
-      () => SuccessOrFailureMobileView(
+      () => const SuccessOrFailureMobileView(
         msg: 'Registration successful',
         className: JekawinBottomTabs(
           tabIndex: 0,
@@ -69,8 +69,7 @@ class SignUpVerificationController extends GetxController
     startTimer();
     phoneNumber.value = utilsController .getPhoneNumber();
     prospectId.value = utilsController .getProspectId();
-    remoteOtp.value = prospectIsProvider.getOtp();
-    signUpOtpController.text  = remoteOtp.value.toString();
+
     super.onInit();
   }
 

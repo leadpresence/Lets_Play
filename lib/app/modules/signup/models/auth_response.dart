@@ -7,39 +7,39 @@ import 'dart:convert';
 class AuthResponseModel {
   bool success;
   String message;
-  Data data;
-  AuthResponseModel({
+  Body body;
+  AuthResponseModel( {
     required this.success,
-    required this.data,
+    required this.body,
     required this.message,
   });
 
-  factory AuthResponseModel.fromJson(Map<String, dynamic> json) =>
-      AuthResponseModel(
-        success: json["success"],
-        message: json["message"],
-        data: Data.fromJson(json["body"]),
-      );
+
+  factory AuthResponseModel.fromJson(Map<String, dynamic> json) => AuthResponseModel(
+    success: json["success"],
+    message: json["message"],
+    body: Body.fromJson(json["body"]),
+  );
 
   Map<String, dynamic> toJson() => {
-        "success": success,
-        "message": message,
-        "body": data.toJson(),
-      };
+    "success": success,
+    "message": message,
+    "body": body.toJson(),
+  };
 }
 
-class Data {
-  Data({
+class Body {
+  Body({
     required this.reference,
   });
 
   String reference;
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-        reference: json["reference"],
-      );
+  factory Body.fromJson(Map<String, dynamic> json) => Body(
+    reference: json["reference"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "reference": reference,
-      };
+    "reference": reference,
+  };
 }

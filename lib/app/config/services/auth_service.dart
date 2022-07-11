@@ -20,9 +20,9 @@ import 'http/http_services.dart';
 abstract class AuthServiceDataSource {
   Future<Either<AppError, String>> signup(UserSignUpModel body);
   Future<Either<AppError, String>> verifySignUpOtp(String otp);
-  Future<Either<AppError, String>> login(String phone, String password);
+  Future<Either<AppError, String>> login(String mobile, String password);
   Future<Either<AppError, String>> resendSignUpResetOtp(String phoneNumber);
-  Future<Either<AppError, String>> forgetPassword(String phone);
+  Future<Either<AppError, String>> forgetPassword(String mobile);
   Future<Either<AppError, String>> verifyResetPasswordOtp(String Otp);
   Future<Either<AppError, String>> updatePassword(String password);
   Future<Either<AppError, String>> signout();
@@ -30,17 +30,17 @@ abstract class AuthServiceDataSource {
 
 class AuthServiceImpl extends AuthServiceDataSource {
   final httpProvider = Get.find<HttpService>();
-  final prospectIsProvider = Get.find<UtilsController>();
+  final utilsProvider = Get.find<UtilsController>();
   final UserLocalDataSourceImpl _userLocalDataSource =
       Get.find<UserLocalDataSourceImpl>();
-  User? get user => _userLocalDataSource.user;
+  // User? get user => _userLocalDataSource.user;
 
   @override
   Future<Either<AppError, String>> signup(UserSignUpModel body) async {
     Map<String, dynamic> payload = {
-      'firstName': body.firstName,
-      'lastName': body.lastName,
-      'phone': body.phone,
+      'firstname': body.firstname,
+      'lastname': body.lastname,
+      'mobile': body.mobile,
       'password': body.password,
       'agreement': body.agreement,
     };
@@ -49,18 +49,12 @@ class AuthServiceImpl extends AuthServiceDataSource {
           '${JekawinBaseUrls.authBaseUrl}signup', payload);
       if (raw['success']) {
         AuthResponseModel res = AuthResponseModel.fromJson(raw);
-        // prospectIsProvider.setProspectId(res.data.prospectId);
-        // prospectIsProvider.setOtp(res.data.otp);
-        prospectIsProvider.setPhoneNumber(body.phone);
-        GetStorage().write('referenceId', raw['body']['reference']);
+        utilsProvider.setProspectId(res.body.reference);
+        utilsProvider.setPhoneNumber(body.mobile);
         return Right(raw['message']);
       } else {
         return Left(
-          AppError(
-            errorType: AppErrorType.network,
-            message: raw['message'],
-          ),
-        );
+            AppError(errorType: AppErrorType.network, message: raw['message']));
       }
     } on NetworkException catch (e) {
       return Left(
@@ -76,24 +70,24 @@ class AuthServiceImpl extends AuthServiceDataSource {
 
   @override
   Future<Either<AppError, String>> verifySignUpOtp(String otp) async {
-    var referenceId = GetStorage().read('referenceId');
-    String prospectId = prospectIsProvider.getProspectId();
-    Map<String, dynamic> payload = {'reference': referenceId, 'otp': otp};
+    String prospectId = utilsProvider.getProspectId();
+    Map<String, dynamic> payload = {'reference': prospectId, 'otp': otp};
     try {
       var raw = await httpProvider.postHttp(
           '${JekawinBaseUrls.authBaseUrl}otp', payload);
-      UserSignupDetails res = UserSignupDetails.fromMap(raw);
-      _userLocalDataSource.saveUser(res.data.user);
-      GetStorage().write('firstName', res.data.user.firstName);
-      GetStorage().write('lastName', res.data.user.lastName);
-      GetStorage().write('phoneNumber', res.data.user.phone);
-      GetStorage().write('profileImage', res.data.user.avatar);
-      GetStorage().write('referralCode', res.data.user.inviteLink);
+      UserSignupResponse res = UserSignupResponse.fromMap(raw);
+      // _userLocalDataSource.saveUser(res.body.user);
+      GetStorage().write('firstName', res.body.user.firstName);
+      GetStorage().write('lastName', res.body.user.lastName);
+      GetStorage().write('phoneNumber', res.body.user.phone);
+      GetStorage().write('profileImage', res.body.user.profileUrl);
+      GetStorage().write('referralCode', "inviteLink");
+      GetStorage().write('token', res.body.token);
 
       if (raw['success']) {
         if (kDebugMode) {
           print(
-              '----> ${res.data.user.firstName}, ${res.data.user.lastName}, ${res.data.user.phone}, ${res.data.user.avatar}, ');
+              '----> ${res.body.user.firstName}, ${res.body.user.lastName}, ${res.body.user.phone}, ${res.body.user.profileUrl}, ');
         }
         return const Right("Sign up successful");
       } else {
@@ -139,20 +133,20 @@ class AuthServiceImpl extends AuthServiceDataSource {
   }
 
   @override
-  Future<Either<AppError, String>> login(String phone, String password) async {
-    Map<String, dynamic> payload = {'phone': phone, 'password': password};
+  Future<Either<AppError, String>> login(String mobile, String password) async {
+    Map<String, dynamic> payload = {'mobile': mobile, 'password': password};
     try {
       var raw = await httpProvider.postHttp(
           '${JekawinBaseUrls.authBaseUrl}signin', payload);
-      UserSignupDetails res = UserSignupDetails.fromMap(raw);
-      _userLocalDataSource.saveUser(res.data.user);
-      GetStorage().write('firstName', res.data.user.firstName);
-      GetStorage().write('userId', res.data.user.id);
-      GetStorage().write('lastName', res.data.user.lastName);
-      GetStorage().write('profileImage', res.data.user.avatar);
-      GetStorage().write('phoneNumber', res.data.user.phone);
-      GetStorage().write('token', raw['token']);
-      GetStorage().write('referralCode', res.data.user.inviteLink);
+      UserSignupResponse res = UserSignupResponse.fromMap(raw);
+      // _userLocalDataSource.saveUser(res.body.user);
+      GetStorage().write('firstName', res.body.user.firstName);
+      GetStorage().write('lastName', res.body.user.lastName);
+      GetStorage().write('profileImage', res.body.user.profileUrl);
+      GetStorage().write('phoneNumber', res.body.user.phone);
+      GetStorage().write('token', res.body.token);
+      GetStorage().write('referralCode', "inviteLink");
+      GetStorage().write('isEmailVerified',res.body.user.isEmailVerified );
       if (raw['success']) {
         return const Right("Login Successful");
       } else {
@@ -172,17 +166,17 @@ class AuthServiceImpl extends AuthServiceDataSource {
   }
 
   @override
-  Future<Either<AppError, String>> forgetPassword(String phone) async {
-    Map<String, dynamic> payload = {"phone": phone};
+  Future<Either<AppError, String>> forgetPassword(String mobile) async {
+    Map<String, dynamic> payload = {"mobile": mobile};
     try {
       var raw = await httpProvider.postHttp(
           '${JekawinBaseUrls.authBaseUrl}forgetpassword', payload);
       if (raw['success']) {
         ForgetPasswordResponse res = ForgetPasswordResponse.fromMap(raw);
-        prospectIsProvider.setProspectId(res.data.prospectId);
-        prospectIsProvider.setOtp(res.data.otp);
+        utilsProvider.setProspectId(res.data.prospectId);
+        utilsProvider.setOtp(res.data.otp);
 
-        prospectIsProvider.setPhoneNumber(phone);
+        utilsProvider.setPhoneNumber(mobile);
 
         return const Right("Otp sent Successful for password reset");
       } else {
@@ -203,7 +197,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
 
   @override
   Future<Either<AppError, String>> verifyResetPasswordOtp(String Otp) async {
-    String prospectId = prospectIsProvider.getProspectId();
+    String prospectId = utilsProvider.getProspectId();
     Map<String, dynamic> payload = {"prospectId": prospectId, 'otp': Otp};
 
     try {
@@ -211,7 +205,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
           '${JekawinBaseUrls.authBaseUrl}forgetpassword_otp', payload);
       if (raw['success']) {
         ForgetPasswordOtpResponse res = ForgetPasswordOtpResponse.fromMap(raw);
-        prospectIsProvider.setForgotPasswordToken(res.token);
+        utilsProvider.setForgotPasswordToken(res.token);
 
         return Right(res.message);
       } else {
@@ -233,7 +227,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
   @override
   Future<Either<AppError, String>> updatePassword(String password) async {
     Map<String, dynamic> payload = {"password": password};
-    String tokenProvider = prospectIsProvider.getForgotPasswordToken();
+    String tokenProvider = utilsProvider.getForgotPasswordToken();
     Map<String, dynamic> token = {
       "token": tokenProvider,
     };
