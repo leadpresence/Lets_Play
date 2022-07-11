@@ -7,7 +7,6 @@ import 'package:jekawin_mobile_flutter/app/modules/signup/controllers/sign_up_co
 import 'package:jekawin_mobile_flutter/app/modules/signup_verification/controllers/signup_verification_controller.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_otp_field.dart';
-import 'package:jekawin_mobile_flutter/app/widgets/slide_in_animation.dart';
 import '../../../../widgets/count_down.dart';
 
 class SignupVerificationMP extends GetView<SignUpVerificationController> {

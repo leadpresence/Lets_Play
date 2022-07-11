@@ -7,10 +7,10 @@ import 'dart:convert';
 class AuthResponseModel {
   bool success;
   String message;
-  Data data;
+  Body body;
   AuthResponseModel( {
     required this.success,
-    required this.data,
+    required this.body,
     required this.message,
   });
 
@@ -18,40 +18,28 @@ class AuthResponseModel {
   factory AuthResponseModel.fromJson(Map<String, dynamic> json) => AuthResponseModel(
     success: json["success"],
     message: json["message"],
-    data: Data.fromJson(json["data"]),
+    body: Body.fromJson(json["body"]),
   );
 
   Map<String, dynamic> toJson() => {
     "success": success,
     "message": message,
-    "data": data.toJson(),
+    "body": body.toJson(),
   };
 }
 
-class Data {
-  Data({
-    required this.prospectId,
-    required this.otp,
-    required this.ttl,
-    required this.createdAt,
+class Body {
+  Body({
+    required this.reference,
   });
 
-  String prospectId;
-  String otp;
-  int ttl;
-  DateTime createdAt;
+  String reference;
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-    prospectId: json["prospectId"],
-    otp: json["otp"],
-    ttl: json["ttl"],
-    createdAt: DateTime.parse(json["createdAt"]),
+  factory Body.fromJson(Map<String, dynamic> json) => Body(
+    reference: json["reference"],
   );
 
   Map<String, dynamic> toJson() => {
-    "prospectId": prospectId,
-    "otp": otp,
-    "ttl": ttl,
-    "createdAt": createdAt.toIso8601String(),
+    "reference": reference,
   };
 }

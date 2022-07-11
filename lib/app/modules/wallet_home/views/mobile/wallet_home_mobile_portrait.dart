@@ -319,7 +319,6 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                       List<TransactionsModel>? listOftrxns = snapshot.data;
                       if (listOftrxns != null) {
                         if (listOftrxns.length > 1) {
-                          print("DATA ${listOftrxns.toString()}");
                           return Expanded(
                               child: ListView.builder(
                             shrinkWrap: true,

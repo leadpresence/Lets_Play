@@ -1,5 +1,5 @@
 class JekawinBaseUrls{
-  static const  String baseUrl = "http://54.167.201.151:8090/v1/";
+  static const  String baseUrl = "http://app.jekawin.com/";
   static const  String walletBaseUrl = "http://50.16.121.213:3500/";
   static const  String authBaseUrl = "${baseUrl}auth/";
   static const  String subscriberBaseUrl = "${baseUrl}subscriber/";
