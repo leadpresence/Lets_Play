@@ -54,8 +54,9 @@ class FundWalletController extends GetxController {
       paystackSelected.value = !flutterWaveSelected.value;
 
       try {
-        ProcessorModel flutterwave = paymentProcessors
-            .firstWhere((processor) => processor.name == "Flutterwave");
+        ProcessorModel flutterwave = paymentProcessors.firstWhere(
+          (processor) => processor.name == "Flutterwave",
+        );
         processorId.value = flutterwave.id;
       } catch (e) {
         debugPrint.printError(
