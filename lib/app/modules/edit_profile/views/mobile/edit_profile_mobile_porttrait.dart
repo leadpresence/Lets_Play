@@ -6,6 +6,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:jekawin_mobile_flutter/app/modules/e_shop/views/widgets/profile_image_avatar.dart';
+import 'package:jekawin_mobile_flutter/app/modules/user_profile/views/user_profile_view.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../widgets/custom_large_button.dart';
@@ -31,6 +33,9 @@ class EditProfileMobilePortrait extends GetView {
     var lastName = GetStorage().read("lastName");
     var phoneNumber = GetStorage().read("phoneNumber");
     var imageAvatar = GetStorage().read("profileImage");
+
+    double screenHeight([double percent = 1]) =>
+        MediaQuery.of(Get.context!).size.height * percent;
 
     var genders = [
       'Female',
@@ -118,29 +123,106 @@ class EditProfileMobilePortrait extends GetView {
                   ),
                   const Gap(42),
                   editFormField(
-                    controller: TextEditingController(text: firstName),
+                    textController: TextEditingController(text: firstName),
                     readOnly: true,
                   ),
                   const Gap(16),
                   editFormField(
-                    controller: TextEditingController(text: lastName),
+                    textController: TextEditingController(text: lastName),
                     readOnly: true,
                   ),
                   const Gap(16),
                   editFormField(
-                    controller: TextEditingController(text: phoneNumber),
+                    textController: TextEditingController(text: phoneNumber),
                     readOnly: true,
                   ),
                   const Gap(16),
                   editFormField(
-                    controller: controller.emailTextController,
+                    textController: controller.emailTextController,
                     hint: "Email Address",
                     onChanged: (value) {
                       controller.clearErrorEmail();
                     },
+                    onTap: () {
+                      showCupertinoModalBottomSheet<void>(
+                        backgroundColor: Colors.white,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                          ),
+                        ),
+                        isDismissible: true,
+                        enableDrag: true,
+                        context: context,
+                        builder: (context) => ClipRRect(
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                          ),
+                          child: SizedBox(
+                            // height: MediaQuery.of(context).size.height,
+                            child: Scaffold(
+                              body: Container(
+                                height: screenHeight(.9),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 18.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(height: 32),
+                                    SizedBox(
+                                      width: Get.width,
+                                      child: const Center(
+                                        child: Text(
+                                          'Add Email',
+                                          style: TextStyle(
+                                            fontSize: 24,
+                                            color: Color(0xff414249),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 24),
+                                    Center(
+                                      child: SizedBox(
+                                        child: editFormField(
+                                          focusNode: controller.searchTextField,
+                                          textController:
+                                              controller.emailTextController,
+                                          hint: "Email Address",
+                                          onChanged: (value) {
+                                            controller.clearErrorEmail();
+                                          },
+                                          errorText: controller
+                                              .emailErrorMessage.value,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 24),
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          0, 16, 0, 0),
+                                      child: CustomButton(
+                                        isLoading: controller.isLoading.value,
+                                        buttonText: "Continue",
+                                        onPressed: () {
+                                          controller
+                                              .editProfileFormValidator(key);
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
                     errorText: controller.emailErrorMessage.value,
                   ),
-                  const Gap(16),
+                  const Gap(8),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                     child: DropdownButtonHideUnderline(
@@ -189,7 +271,7 @@ class EditProfileMobilePortrait extends GetView {
                       // isLoading: controller.isLoading.value,
                       buttonText: "Update profile",
                       onPressed: () {
-                        controller.editProfileFormValidator();
+                        controller.editProfileFormValidator(key);
                       },
                     ),
                   ),
@@ -203,16 +285,20 @@ class EditProfileMobilePortrait extends GetView {
   }
 
   Widget editFormField({
-    dynamic controller,
+    dynamic textController,
     String? hint,
     String? errorText,
     bool readOnly = false,
     onChanged,
+    onTap,
+    focusNode,
   }) {
     return SizedBox(
       child: TextField(
+        onTap: onTap,
+        focusNode: focusNode,
         readOnly: readOnly,
-        controller: controller,
+        controller: textController,
         onChanged: onChanged,
         style: TextStyle(
           color: Colors.grey.shade900,
@@ -220,8 +306,8 @@ class EditProfileMobilePortrait extends GetView {
         ),
         decoration: InputDecoration(
           errorText: errorText,
-          errorStyle: const TextStyle(
-            fontSize: 10,
+          errorStyle: TextStyle(
+            fontSize: controller.emailErrorMessage.value == '' ? 0 : 10,
             color: Colors.deepOrange,
             // height: 1.8,
             letterSpacing: .2,
@@ -241,6 +327,18 @@ class EditProfileMobilePortrait extends GetView {
             ),
           ),
           focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.orange.withOpacity(.9),
+              width: 2,
+            ),
+          ),
+          errorBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.black45,
+              width: .5,
+            ),
+          ),
+          focusedErrorBorder: UnderlineInputBorder(
             borderSide: BorderSide(
               color: Colors.orange.withOpacity(.9),
               width: 2,

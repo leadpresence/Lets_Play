@@ -11,13 +11,15 @@ import 'package:jekawin_mobile_flutter/app/widgets/custom_otp_field.dart';
 import '../../../../widgets/count_down.dart';
 import '../../../e_shop/views/mobile/success_or_failure_mobile_view.dart';
 import '../../../jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
+import '../../controllers/edit_profile_controllers.dart';
 
-class EmailOTPVerification extends GetView<SignUpVerificationController> {
-  @override
+class EmailOTPVerification extends StatelessWidget {
+  final String email;
+  final EditProfileController editProfileController =
+      Get.put(EditProfileController());
+
   final SignUpVerificationController controller =
       Get.put(SignUpVerificationController());
-  final SignUpController signUpController = Get.put(SignUpController());
-  final String email;
 
   EmailOTPVerification({
     Key? key,
@@ -55,25 +57,18 @@ class EmailOTPVerification extends GetView<SignUpVerificationController> {
                   email: email,
                 ),
                 CustomOtpField(
-                  pinController: controller.signUpOtpController,
+                  length: 5,
+                  pinController: editProfileController.emailOTPCode,
                   key: key,
-                  onComplete: () {
-                    // controller.setOtp(controller.signUpOtpController.text);
-                  },
                 ),
                 const Gap(48),
                 Padding(
                   padding: const EdgeInsets.all(2.0),
                   child: CustomButton(
-                    isLoading: controller.isLoading.value,
+                    isLoading: editProfileController.isLoading.value,
                     hasIcon: false,
                     buttonText: 'Submit',
-                    onPressed: () => Get.to(
-                      () => SuccessOrFailureMobileView(
-                        msg: 'Profile update successful',
-                        className: UserProfileView(),
-                      ),
-                    ),
+                    onPressed: () => editProfileController.verifyEmailOTP(key),
                   ),
                 ),
                 const Gap(16),
@@ -85,11 +80,11 @@ class EmailOTPVerification extends GetView<SignUpVerificationController> {
                   width: Get.width,
                   child: Countdown(
                     onPressed: () => {
-                      signUpController.resendSignUp(key),
+                      editProfileController.addEmail(key),
                       controller.startTimer(),
                     },
                     animation: StepTween(
-                      begin: 120,
+                      begin: 300,
                       end: 0,
                     ).animate(
                       controller.animationController.value,
@@ -143,7 +138,7 @@ class OtpHeader extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'the 4-digit ',
+                  'the 5-digit ',
                   style: GoogleFonts.mulish(
                     fontSize: 12,
                     height: 1.6,

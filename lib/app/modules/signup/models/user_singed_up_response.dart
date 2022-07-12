@@ -1,8 +1,10 @@
 import 'dart:convert';
 
-UserSignupResponse userSignupResponseFromMap(String str) => UserSignupResponse.fromMap(json.decode(str));
+UserSignupResponse userSignupResponseFromMap(String str) =>
+    UserSignupResponse.fromMap(json.decode(str));
 
-String userSignupResponseToMap(UserSignupResponse data) => json.encode(data.toMap());
+String userSignupResponseToMap(UserSignupResponse data) =>
+    json.encode(data.toMap());
 
 class UserSignupResponse {
   UserSignupResponse({
@@ -17,19 +19,20 @@ class UserSignupResponse {
   String message;
   Body body;
 
-  factory UserSignupResponse.fromMap(Map<String, dynamic> json) => UserSignupResponse(
-    success: json["success"],
-    statusCode: json["statusCode"],
-    message: json["message"],
-    body: Body.fromMap(json["body"]),
-  );
+  factory UserSignupResponse.fromMap(Map<String, dynamic> json) =>
+      UserSignupResponse(
+        success: json["success"],
+        statusCode: json["statusCode"],
+        message: json["message"],
+        body: Body.fromMap(json["body"]),
+      );
 
   Map<String, dynamic> toMap() => {
-    "success": success,
-    "statusCode": statusCode,
-    "message": message,
-    "body": body.toMap(),
-  };
+        "success": success,
+        "statusCode": statusCode,
+        "message": message,
+        "body": body.toMap(),
+      };
 }
 
 class Body {
@@ -41,23 +44,23 @@ class Body {
   });
 
   User user;
-  String? email="";
-  int? rewardPoint =0;
+  String? email = "";
+  int? rewardPoint = 0;
   String token;
 
   factory Body.fromMap(Map<String, dynamic> json) => Body(
-    user: User.fromMap(json["user"]),
-    email: json["email"],
-    rewardPoint: json["rewardPoint"],
-    token: json["token"],
-  );
+        user: User.fromMap(json["user"]),
+        email: json["email"],
+        rewardPoint: json["rewardPoint"],
+        token: json["token"],
+      );
 
   Map<String, dynamic> toMap() => {
-    "user": user.toMap(),
-    "email": email??"",
-    "rewardPoint": rewardPoint??0,
-    "token": token,
-  };
+        "user": user.toMap(),
+        "email": email ?? "",
+        "rewardPoint": rewardPoint ?? 0,
+        "token": token,
+      };
 }
 
 class User {
@@ -69,6 +72,7 @@ class User {
     required this.wallet,
     required this.rewardPoint,
     required this.isEmailVerified,
+    required this.id,
   });
 
   String firstName;
@@ -78,26 +82,29 @@ class User {
   Wallet wallet;
   int rewardPoint;
   bool isEmailVerified;
+  String id;
 
   factory User.fromMap(Map<String, dynamic> json) => User(
-    firstName: json["firstName"],
-    lastName: json["lastName"],
-    phone: json["phone"],
-    profileUrl: json["profileUrl"],
-    wallet: Wallet.fromMap(json["wallet"]),
-    rewardPoint: json["rewardPoint"],
-    isEmailVerified: json["isEmailVerified"],
-  );
+        firstName: json["firstName"],
+        lastName: json["lastName"],
+        phone: json["phone"],
+        profileUrl: json["profileUrl"],
+        wallet: Wallet.fromMap(json["wallet"]),
+        rewardPoint: json["rewardPoint"],
+        isEmailVerified: json["isEmailVerified"],
+        id: json["id"],
+      );
 
   Map<String, dynamic> toMap() => {
-    "firstName": firstName,
-    "lastName": lastName,
-    "phone": phone,
-    "profileUrl": profileUrl,
-    "wallet": wallet.toMap(),
-    "rewardPoint": rewardPoint,
-    "isEmailVerified": isEmailVerified,
-  };
+        "firstName": firstName,
+        "lastName": lastName,
+        "phone": phone,
+        "profileUrl": profileUrl,
+        "wallet": wallet.toMap(),
+        "rewardPoint": rewardPoint,
+        "isEmailVerified": isEmailVerified,
+        "id": id,
+      };
 }
 
 class Wallet {
@@ -108,10 +115,10 @@ class Wallet {
   int balance;
 
   factory Wallet.fromMap(Map<String, dynamic> json) => Wallet(
-    balance: json["balance"],
-  );
+        balance: json["balance"],
+      );
 
   Map<String, dynamic> toMap() => {
-    "balance": balance,
-  };
+        "balance": balance,
+      };
 }

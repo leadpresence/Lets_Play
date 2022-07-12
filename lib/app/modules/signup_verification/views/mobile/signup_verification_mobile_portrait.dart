@@ -81,7 +81,7 @@ class SignupVerificationMP extends GetView<SignUpVerificationController> {
                       controller.startTimer(),
                     },
                     animation: StepTween(
-                      begin: 120,
+                      begin: 300,
                       end: 0,
                     ).animate(
                       controller.animationController.value,

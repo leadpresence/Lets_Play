@@ -4,12 +4,14 @@ import 'package:google_fonts/google_fonts.dart';
 
 class CustomOtpField extends StatefulWidget {
   final onComplete;
+  final length;
   final pinController;
 
   const CustomOtpField({
     Key? key,
     this.onComplete,
     required this.pinController,
+    this.length = 4,
   }) : super(key: key);
 
   @override
@@ -24,7 +26,7 @@ class _CustomOtpFieldState extends State<CustomOtpField> {
 
   @override
   void dispose() {
-    widget.pinController.dispose();
+    // widget.pinController.dispose();
     focusNode.dispose();
     super.dispose();
   }
@@ -49,6 +51,7 @@ class _CustomOtpFieldState extends State<CustomOtpField> {
     );
 
     return Pinput(
+      length: widget.length,
       controller: widget.pinController,
       focusNode: focusNode,
       showCursor: false,

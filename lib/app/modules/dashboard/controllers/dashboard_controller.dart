@@ -17,7 +17,7 @@ class DashboardController extends GetxController
   late List<DateTime>? endDates = <DateTime>[];
   var _timer;
   var body;
-  late int _currentPage;
+  int _currentPage = 0, totalGamesLength = 0;
 
   late List<Rx<AnimationController>> gamesAnimationControllers = [];
   RxInt days = 0.obs, hours = 0.obs, minutes = 0.obs, seconds = 0.obs;
@@ -30,6 +30,8 @@ class DashboardController extends GetxController
       var response = await gamesService.getAllJackpotGames();
       if (response.statusCode == 200 || response.statusCode == 201) {
         body = response.data;
+        totalGamesLength =
+            JackpotGameResponse.fromJson(response.data).body.length;
         for (int i = 0;
             i < JackpotGameResponse.fromJson(response.data).body.length;
             i++) {
@@ -108,20 +110,10 @@ class DashboardController extends GetxController
   }
 
   @override
-  void dispose() {
-    for (int i = 0; i < gamesAnimationControllers.length; i++) {
-      gamesAnimationControllers[i].value.dispose();
-    }
-    getAllJackpotGames().dispose();
-    _timer.dispose();
-    super.dispose();
-    pageController.dispose();
-  }
-
-  @override
   void onInit() {
     indexList;
     _currentPage = 0;
+    totalGamesLength = 0;
     endDates;
     timeRemainingInSecsForGames;
     pageController = PageController(initialPage: 0);
@@ -130,7 +122,7 @@ class DashboardController extends GetxController
     _timer = Timer.periodic(
       const Duration(seconds: 10),
       (Timer timer) {
-        if (_currentPage < JackpotGameResponse.fromJson(body).body.length - 1) {
+        if (_currentPage < totalGamesLength - 1) {
           _currentPage++;
         } else {
           _currentPage = 0;

@@ -60,7 +60,7 @@ class DashboardMobilePortrait extends StatelessWidget {
                         onTap: () {
                           Get.to(
                             () => UserProfileMobilePortrait(),
-                            transition: Transition.cupertino,
+                            transition: Transition.fadeIn,
                           );
                         },
                         child: Row(
@@ -77,7 +77,7 @@ class DashboardMobilePortrait extends StatelessWidget {
                         onTap: () {
                           Get.to(
                             () => NotificationMobilePortrait(),
-                            transition: Transition.cupertino,
+                            transition: Transition.fadeIn,
                           );
                         },
                         child: SvgPicture.asset(
@@ -344,7 +344,9 @@ class DashboardMobilePortrait extends StatelessWidget {
                                       buttonTextColor: const Color(0xff414249),
                                     ),
                                   ),
-                                  const SizedBox(width: 12,),
+                                  const SizedBox(
+                                    width: 12,
+                                  ),
                                   Expanded(
                                     child: CustomMediumButton(
                                       onPressed: () {
@@ -477,13 +479,8 @@ class DashboardMobilePortrait extends StatelessWidget {
                         );
                       } else if (snapshot.hasData) {
                         var body = snapshot.data["body"];
-                        // dashboardController.timeRemainingInSecsForGames
-                        //     .clear();
-                        return body.length < 1
-                            ? const Text(
-                                "No True or False Games Available",
-                              )
-                            : SizedBox(
+                        return body.length > 1
+                            ? SizedBox(
                                 height: 360,
                                 width: Get.width,
                                 child: PageView.builder(
@@ -527,18 +524,14 @@ class DashboardMobilePortrait extends StatelessWidget {
                                     );
                                   },
                                 ),
+                              )
+                            : const Text(
+                                "No True or False Games Available",
                               );
                       }
                       return const SizedBox(
                         height: 360,
                         child: DashboardHeroSessionUI(),
-                      );
-
-                      return const Center(
-                        child: CupertinoActivityIndicator(
-                          // strokeWidth: 5,
-                          color: Color(0xFFFE7A01),
-                        ),
                       );
                     },
                   ),

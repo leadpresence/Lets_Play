@@ -1,7 +1,8 @@
 import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/get_instance.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:jekawin_mobile_flutter/app/config/services/di/di_locator.dart';
 import 'package:jekawin_mobile_flutter/app/config/services/http/base_urls.dart';
@@ -11,10 +12,13 @@ import 'package:jekawin_mobile_flutter/app/modules/signup/models/forget_password
 import 'package:jekawin_mobile_flutter/app/modules/signup/models/forgot_password_otp_res.dart';
 import 'package:jekawin_mobile_flutter/app/modules/signup/models/user_singed_up_response.dart';
 import '../../constants/network_exceptions.dart';
+import '../../modules/edit_profile/models/add_email_response_model.dart';
+import 'package:dio/dio.dart';
+import '../../modules/edit_profile/models/verified_email_response_model.dart';
 import '../../modules/signup/models/resendotp_resonse_model.dart';
 import '../../modules/signup/models/user_sign_up_model.dart';
+import '../../services/base_service.dart';
 import '../data/local/user_local_impl.dart';
-import '../data/model/user.dart';
 import 'http/http_services.dart';
 
 abstract class AuthServiceDataSource {
@@ -33,14 +37,15 @@ class AuthServiceImpl extends AuthServiceDataSource {
   final utilsProvider = Get.find<UtilsController>();
   final UserLocalDataSourceImpl _userLocalDataSource =
       Get.find<UserLocalDataSourceImpl>();
+  BaseService service = BaseService();
   // User? get user => _userLocalDataSource.user;
 
   @override
   Future<Either<AppError, String>> signup(UserSignUpModel body) async {
     Map<String, dynamic> payload = {
-      'firstname': body.firstname,
-      'lastname': body.lastname,
-      'mobile': body.mobile,
+      'firstName': body.firstName,
+      'lastName': body.lastName,
+      'phone': body.phone,
       'password': body.password,
       'agreement': body.agreement,
     };
@@ -50,7 +55,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
       if (raw['success']) {
         AuthResponseModel res = AuthResponseModel.fromJson(raw);
         utilsProvider.setProspectId(res.body.reference);
-        utilsProvider.setPhoneNumber(body.mobile);
+        utilsProvider.setPhoneNumber(body.phone);
         return Right(raw['message']);
       } else {
         return Left(
@@ -74,7 +79,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
     Map<String, dynamic> payload = {'reference': prospectId, 'otp': otp};
     try {
       var raw = await httpProvider.postHttp(
-          '${JekawinBaseUrls.authBaseUrl}otp', payload);
+          '${JekawinBaseUrls.authBaseUrl}verify-signup-otp', payload);
       UserSignupResponse res = UserSignupResponse.fromMap(raw);
       // _userLocalDataSource.saveUser(res.body.user);
       GetStorage().write('firstName', res.body.user.firstName);
@@ -83,6 +88,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
       GetStorage().write('profileImage', res.body.user.profileUrl);
       GetStorage().write('referralCode', "inviteLink");
       GetStorage().write('token', res.body.token);
+      GetStorage().write('currentUserID', res.body.user.id);
 
       if (raw['success']) {
         if (kDebugMode) {
@@ -134,7 +140,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
 
   @override
   Future<Either<AppError, String>> login(String mobile, String password) async {
-    Map<String, dynamic> payload = {'mobile': mobile, 'password': password};
+    Map<String, dynamic> payload = {'phone': mobile, 'password': password};
     try {
       var raw = await httpProvider.postHttp(
           '${JekawinBaseUrls.authBaseUrl}signin', payload);
@@ -146,7 +152,9 @@ class AuthServiceImpl extends AuthServiceDataSource {
       GetStorage().write('phoneNumber', res.body.user.phone);
       GetStorage().write('token', res.body.token);
       GetStorage().write('referralCode', "inviteLink");
-      GetStorage().write('isEmailVerified',res.body.user.isEmailVerified );
+      GetStorage().write('isEmailVerified', res.body.user.isEmailVerified);
+      GetStorage().write('currentUserID', res.body.user.id);
+
       if (raw['success']) {
         return const Right("Login Successful");
       } else {
@@ -255,7 +263,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
 
   @override
   Future<Either<AppError, String>> signout() async {
-    var token = GetStorage().read("token");
+    GetStorage().write("token", "");
     try {
       var raw = await httpProvider.deleteHttp(
         '${JekawinBaseUrls.authBaseUrl}signout',
@@ -266,6 +274,51 @@ class AuthServiceImpl extends AuthServiceDataSource {
         return Left(
             AppError(errorType: AppErrorType.network, message: raw['message']));
       }
+    } on NetworkException catch (e) {
+      return Left(
+          AppError(errorType: AppErrorType.network, message: e.message));
+    } on SocketException catch (e) {
+      return Left(
+          AppError(errorType: AppErrorType.network, message: e.message));
+    } on Exception {
+      return const Left(
+          AppError(errorType: AppErrorType.api, message: "An error occurred"));
+    }
+  }
+
+  addEmail(String email) async {
+    Map<String, dynamic> payload = {'email': email};
+    var currentUserID = GetStorage().read('currentUserID');
+    try {
+      var raw = await httpProvider.postHttp(
+        '${JekawinBaseUrls.authBaseUrl}users/$currentUserID/add-email',
+        payload,
+      );
+      AddEmailResponseModel res = AddEmailResponseModel.fromJson(raw);
+      utilsProvider.setProspectId(res.body.reference);
+    } on NetworkException catch (e) {
+      return Left(
+          AppError(errorType: AppErrorType.network, message: e.message));
+    } on SocketException catch (e) {
+      return Left(
+          AppError(errorType: AppErrorType.network, message: e.message));
+    } on Exception {
+      return const Left(
+          AppError(errorType: AppErrorType.api, message: "An error occurred"));
+    }
+  }
+
+  verifyEmailOtp(String otp) async {
+    String prospectId = utilsProvider.getProspectId();
+    var currentUserID = GetStorage().read('currentUserID');
+    Map<String, dynamic> payload = {'reference': prospectId, 'otp': otp};
+    try {
+      var raw = await httpProvider.postHttp(
+        '${JekawinBaseUrls.authBaseUrl}users/$currentUserID/verify-email-token',
+        payload,
+      );
+      VerifiedEmailResponse res = VerifiedEmailResponse.fromMap(raw);
+      utilsProvider.setProspectId(res.body.email);
     } on NetworkException catch (e) {
       return Left(
           AppError(errorType: AppErrorType.network, message: e.message));

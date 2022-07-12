@@ -19,7 +19,7 @@ class UserProfileController extends GetxController {
   final AuthServiceImpl authService = Get.find<AuthServiceImpl>();
 
   Future<void> signout(Key? k) async {
-    final userData = await authService.signout();
+    // final userData = await authService.signout();
     // userData.fold(
     //   (l) {
     //     BotToast.showText(text: l.message);

@@ -33,11 +33,10 @@ class BaseService {
       options: Options(
         method: method,
         headers: token != null
-            ? {
-                'authorization': 'Bearer $token',
-                'email': 'felixpresence@gmail.com'
-              }
-            : null,
+            ? {'authorization': 'Bearer $token'}
+            : token != null && email != null
+                ? {'authorization': 'Bearer $token', 'email': email}
+                : null,
       ),
     );
     return res;

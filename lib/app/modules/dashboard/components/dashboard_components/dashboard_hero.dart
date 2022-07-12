@@ -497,7 +497,7 @@ class DashboardHeroSessionUI extends StatelessWidget {
                                         ),
                                       );
                                     },
-                                    image: NetworkImage(
+                                    image: const NetworkImage(
                                       '',
                                     ),
                                     fit: BoxFit.cover,

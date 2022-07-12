@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:jekawin_mobile_flutter/app/modules/dashboard/controllers/dashboard_controller.dart';
 import 'package:jekawin_mobile_flutter/app/modules/my_games/views/mobile/my_games_mobile_portrait.dart';
 import 'package:jekawin_mobile_flutter/app/modules/pin/views/set_pin_mobile_portrait.dart';
 import 'package:jekawin_mobile_flutter/app/modules/resetpassword/views/mobile/reset_password_mobile_potrait.dart';
@@ -19,6 +20,8 @@ class UserProfileMobilePortrait extends StatelessWidget {
 
   final UserProfileController controller = Get.put(UserProfileController());
   final WalletHomeController walletController = Get.put(WalletHomeController());
+  final DashboardController dashboardController =
+      Get.put(DashboardController());
 
   @override
   Widget build(BuildContext context) {
@@ -40,11 +43,11 @@ class UserProfileMobilePortrait extends StatelessWidget {
               color: const Color(0xff12121D),
             ),
             onPressed: () {
-              Get.to(
+              Get.off(
                 () => JekawinBottomTabs(
                   tabIndex: 0,
                 ),
-                transition: Transition.cupertino,
+                transition: Transition.fadeIn,
               );
             },
           ),
