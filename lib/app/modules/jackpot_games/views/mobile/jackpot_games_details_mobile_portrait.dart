@@ -220,21 +220,19 @@ class JackpotGamesDetailsMobilePortrait extends StatelessWidget {
                                   const SizedBox(height: 24.0),
                                   Obx(
                                     () => SizedBox(
-                                      width: Get.width * .36,
-                                      child: Expanded(
-                                        child: CustomButton(
-                                          isLoading: controller.isLoading.value,
-                                          height: 40.0,
-                                          onPressed: () {
-                                            controller.stakeOnAGame(
-                                              gameId,
-                                              gameIndex: gameIndex,
-                                              gameCost: gameCost,
-                                            );
-                                          },
-                                          buttonText: 'Continue',
-                                          buttonColor: const Color(0xFFFE7A01),
-                                        ),
+                                      width: Get.width * .38,
+                                      child: CustomButton(
+                                        isLoading: controller.isLoading.value,
+                                        height: 40.0,
+                                        onPressed: () {
+                                          controller.stakeOnAGame(
+                                            gameId,
+                                            gameIndex: gameIndex,
+                                            gameCost: gameCost,
+                                          );
+                                        },
+                                        buttonText: 'Continue',
+                                        buttonColor: const Color(0xFFFE7A01),
                                       ),
                                     ),
                                   ),

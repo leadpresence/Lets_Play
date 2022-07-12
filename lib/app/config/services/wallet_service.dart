@@ -1,14 +1,8 @@
-import 'dart:convert';
 import 'dart:io';
-import 'package:bot_toast/bot_toast.dart';
 import 'package:dartz/dartz.dart';
-import 'package:dartz/dartz_unsafe.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:jekawin_mobile_flutter/app/modules/fund_wallet/models/payment_processor_model.dart';
-import 'package:jekawin_mobile_flutter/app/modules/select_account/models/bank_model.dart';
 import 'package:jekawin_mobile_flutter/app/modules/wallet_home/models/transaction_model.dart';
 import '../../constants/app_error.dart';
 import '../../constants/network_exceptions.dart';
@@ -179,7 +173,6 @@ class WalletServiceImpl extends WalletDataSource {
   @override
   Future<Either<AppError, String>> userWallet() async {
     String userId = GetStorage().read('userId');
-
     try {
       var raw = await httpProvider
           .getHttp('${JekawinBaseUrls.walletBaseUrl}wallets/$userId');

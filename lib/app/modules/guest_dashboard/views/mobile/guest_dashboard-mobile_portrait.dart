@@ -102,7 +102,7 @@ class GuestDashboardMobilePortrait extends StatelessWidget {
                         //     .clear();
                         return body.length < 1
                             ? const Text(
-                                "No True or False Games Available",
+                                "No Jackpot Games Available",
                               )
                             : SizedBox(
                                 height: 360,
@@ -160,13 +160,15 @@ class GuestDashboardMobilePortrait extends StatelessWidget {
                 const SizedBox(
                   height: 40,
                 ),
-                DashboardInstantGames(
-                  onTap: () {
-                    Get.to(
-                      () => const LoginView(),
-                      transition: Transition.cupertino,
-                    );
-                  },
+                SizedBox(
+                  child: DashboardInstantGames(
+                    onTap: () {
+                      Get.to(
+                        () => const LoginView(),
+                        transition: Transition.cupertino,
+                      );
+                    },
+                  ),
                 ),
                 const SizedBox(
                   height: 12,

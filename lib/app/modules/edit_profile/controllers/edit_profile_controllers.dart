@@ -5,6 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:jekawin_mobile_flutter/app/modules/edit_profile/views/mobile/edit_profile_mobile_porttrait.dart';
 import '../../../config/services/auth_service.dart';
 import '../../../config/services/di/di_locator.dart';
+import '../../../services/local_storage.dart';
 import '../../../widgets/custom_large_button.dart';
 import '../../../widgets/fade_in_animations.dart';
 import '../../e_shop/views/mobile/success_or_failure_mobile_view.dart';
@@ -149,9 +150,20 @@ class EditProfileController extends GetxController {
   Future<void> addEmail(Key? k) async {
     isLoading.value = true;
     var emailAddressText = emailTextController.text;
-    await authService.addEmail(emailAddressText);
-    navigateToVerifyOTP(k);
-    isLoading.value = false;
+    final emailData = await authService.addEmail(emailAddressText);
+
+    emailData.fold(
+      (l) {
+        BotToast.showText(
+          text: "An error occurred. Please try again.",
+        );
+        isLoading.value = false;
+      },
+      (r) {
+        navigateToVerifyOTP(k);
+        isLoading.value = false;
+      },
+    );
   }
 
   navigateToVerifyOTP(Key? k) {
@@ -169,9 +181,20 @@ class EditProfileController extends GetxController {
 
   Future<void> verifyEmailOTP(Key? k) async {
     isLoading.value = true;
-    await authService.verifyEmailOtp(emailOTPCode.text);
-    navigateToDashboard(k);
-    isLoading.value = false;
+    final userData = await authService.verifyEmailOtp(emailOTPCode.text);
+
+    userData.fold(
+      (l) {
+        BotToast.showText(
+          text: "An error occurred. Please try again.",
+        );
+        isLoading.value = false;
+      },
+      (r) {
+        navigateToDashboard(k);
+        isLoading.value = false;
+      },
+    );
   }
 
   navigateToDashboard(Key? k) {

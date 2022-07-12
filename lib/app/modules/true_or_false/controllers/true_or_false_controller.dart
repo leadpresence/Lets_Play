@@ -47,11 +47,13 @@ class TrueOrFalseController extends GetxController
   }
 
   void slideBackgroundTo(int currentPage) {
-    bgPageController.animateToPage(
-      currentPage,
-      curve: Curves.fastOutSlowIn,
-      duration: const Duration(milliseconds: 470),
-    );
+    if (bgPageController.hasClients) {
+      bgPageController.animateToPage(
+        currentPage,
+        curve: Curves.fastOutSlowIn,
+        duration: const Duration(milliseconds: 470),
+      );
+    }
   }
 
   void moveToNextPage({required int lastPage}) async {

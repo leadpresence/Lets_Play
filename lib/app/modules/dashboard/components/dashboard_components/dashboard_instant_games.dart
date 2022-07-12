@@ -37,9 +37,9 @@ class DashboardInstantGames extends StatelessWidget {
           height: 260,
           child: ListView(
             shrinkWrap: true,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.symmetric(horizontal: 16),
             scrollDirection: Axis.horizontal,
-            physics: const BouncingScrollPhysics(),
+            physics: BouncingScrollPhysics(),
             children: [
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 4),
@@ -108,13 +108,11 @@ class DashboardInstantGames extends StatelessWidget {
                     ),
                     SizedBox(
                       width: Get.width * .36,
-                      child: Expanded(
-                        child: CustomButton(
-                          height: 40.0,
-                          onPressed: onTap,
-                          buttonText: 'Play Now',
-                          buttonColor: const Color(0xFFFE7A01),
-                        ),
+                      child: CustomButton(
+                        height: 40.0,
+                        onPressed: onTap,
+                        buttonText: 'Play Now',
+                        buttonColor: const Color(0xFFFE7A01),
                       ),
                     )
                   ],
@@ -187,13 +185,11 @@ class DashboardInstantGames extends StatelessWidget {
                     ),
                     SizedBox(
                       width: Get.width * .36,
-                      child: Expanded(
-                        child: CustomButton(
-                          height: 40.0,
-                          onPressed: () {},
-                          buttonText: 'Play Now',
-                          buttonColor: const Color(0xFFFE7A01),
-                        ),
+                      child: CustomButton(
+                        height: 40.0,
+                        onPressed: () {},
+                        buttonText: 'Play Now',
+                        buttonColor: const Color(0xFFFE7A01),
                       ),
                     )
                   ],

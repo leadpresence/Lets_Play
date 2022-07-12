@@ -42,6 +42,10 @@ class EditProfileMobilePortrait extends GetView {
       'Male',
     ];
     String dropDownValue = genders[0];
+    var email = GetStorage().read('email');
+    var isEmailVerified = GetStorage().read('isEmailVerified');
+    controller.emailTextController.text =
+        email ?? controller.emailTextController.text;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -56,7 +60,8 @@ class EditProfileMobilePortrait extends GetView {
               color: const Color(0xff12121D),
             ),
             onPressed: () {
-              Get.back();
+              Get.off(() => UserProfileView(),
+                  transition: Transition.leftToRight);
             },
           ),
         ),
@@ -144,81 +149,84 @@ class EditProfileMobilePortrait extends GetView {
                       controller.clearErrorEmail();
                     },
                     onTap: () {
-                      showCupertinoModalBottomSheet<void>(
-                        backgroundColor: Colors.white,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10),
+                      if (isEmailVerified != true) {
+                        showCupertinoModalBottomSheet<void>(
+                          backgroundColor: Colors.white,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10),
+                            ),
                           ),
-                        ),
-                        isDismissible: true,
-                        enableDrag: true,
-                        context: context,
-                        builder: (context) => ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10),
-                          ),
-                          child: SizedBox(
-                            // height: MediaQuery.of(context).size.height,
-                            child: Scaffold(
-                              body: Container(
-                                height: screenHeight(.9),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 18.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(height: 32),
-                                    SizedBox(
-                                      width: Get.width,
-                                      child: const Center(
-                                        child: Text(
-                                          'Add Email',
-                                          style: TextStyle(
-                                            fontSize: 24,
-                                            color: Color(0xff414249),
+                          isDismissible: true,
+                          enableDrag: true,
+                          context: context,
+                          builder: (context) => ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10),
+                            ),
+                            child: SizedBox(
+                              // height: MediaQuery.of(context).size.height,
+                              child: Scaffold(
+                                body: Container(
+                                  height: screenHeight(.9),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 18.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      const SizedBox(height: 32),
+                                      SizedBox(
+                                        width: Get.width,
+                                        child: const Center(
+                                          child: Text(
+                                            'Add Email',
+                                            style: TextStyle(
+                                              fontSize: 24,
+                                              color: Color(0xff414249),
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    const SizedBox(height: 24),
-                                    Center(
-                                      child: SizedBox(
-                                        child: editFormField(
-                                          focusNode: controller.searchTextField,
-                                          textController:
-                                              controller.emailTextController,
-                                          hint: "Email Address",
-                                          onChanged: (value) {
-                                            controller.clearErrorEmail();
-                                          },
-                                          errorText: controller
-                                              .emailErrorMessage.value,
+                                      const SizedBox(height: 24),
+                                      Center(
+                                        child: SizedBox(
+                                          child: editFormField(
+                                            focusNode:
+                                                controller.searchTextField,
+                                            textController:
+                                                controller.emailTextController,
+                                            hint: "Email Address",
+                                            onChanged: (value) {
+                                              controller.clearErrorEmail();
+                                            },
+                                            errorText: controller
+                                                .emailErrorMessage.value,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    const SizedBox(height: 24),
-                                    Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          0, 16, 0, 0),
-                                      child: CustomButton(
-                                        isLoading: controller.isLoading.value,
-                                        buttonText: "Continue",
-                                        onPressed: () {
-                                          controller
-                                              .editProfileFormValidator(key);
-                                        },
+                                      const SizedBox(height: 24),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            0, 16, 0, 0),
+                                        child: CustomButton(
+                                          isLoading: controller.isLoading.value,
+                                          buttonText: "Continue",
+                                          onPressed: () {
+                                            controller
+                                                .editProfileFormValidator(key);
+                                          },
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      );
+                        );
+                      }
                     },
                     errorText: controller.emailErrorMessage.value,
                   ),

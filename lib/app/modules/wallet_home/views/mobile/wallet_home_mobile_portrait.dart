@@ -121,34 +121,30 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Expanded(
-                                  child: CustomMediumButton(
-                                    onPressed: () {
-                                      BotToast.showText(
-                                          text:
-                                              "We are unable to get wallet details, try again");
-                                    },
-                                    // width: Get.width * .36,
-                                    fontSize: 12.0,
-                                    buttonText: 'Fund wallet',
-                                    buttonColor: Colors.white,
-                                    buttonTextColor: const Color(0xff414249),
-                                  ),
+                                CustomMediumButton(
+                                  onPressed: () {
+                                    BotToast.showText(
+                                        text:
+                                            "We are unable to get wallet details, try again");
+                                  },
+                                  width: Get.width * .38,
+                                  fontSize: 12.0,
+                                  buttonText: 'Fund wallet',
+                                  buttonColor: Colors.white,
+                                  buttonTextColor: const Color(0xff414249),
                                 ),
                                 const SizedBox(width: 12),
-                                Expanded(
-                                  child: CustomMediumButton(
-                                    onPressed: () {
-                                      BotToast.showText(
-                                          text:
-                                              "We are unable to get wallet details, try again");
-                                    },
-                                    // width: Get.width * .36,
-                                    fontSize: 12.0,
-                                    buttonText: 'Withdraw',
-                                    buttonColor: Colors.white,
-                                    buttonTextColor: const Color(0xff414249),
-                                  ),
+                                CustomMediumButton(
+                                  onPressed: () {
+                                    BotToast.showText(
+                                        text:
+                                            "We are unable to get wallet details, try again");
+                                  },
+                                  width: Get.width * .38,
+                                  fontSize: 12.0,
+                                  buttonText: 'Withdraw',
+                                  buttonColor: Colors.white,
+                                  buttonTextColor: const Color(0xff414249),
                                 ),
                               ],
                             )
@@ -223,36 +219,32 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Expanded(
-                                    child: CustomMediumButton(
-                                      onPressed: () {
-                                        Get.to(
-                                          () => const FundWalletView(),
-                                          transition: Transition.cupertino,
-                                        );
-                                      },
-                                      // width: Get.width * .36,
-                                      fontSize: 12.0,
-                                      buttonText: 'Fund wallet',
-                                      buttonColor: Colors.white,
-                                      buttonTextColor: const Color(0xff414249),
-                                    ),
+                                  CustomMediumButton(
+                                    onPressed: () {
+                                      Get.to(
+                                        () => const FundWalletView(),
+                                        transition: Transition.cupertino,
+                                      );
+                                    },
+                                    width: Get.width * .38,
+                                    fontSize: 12.0,
+                                    buttonText: 'Fund wallet',
+                                    buttonColor: Colors.white,
+                                    buttonTextColor: const Color(0xff414249),
                                   ),
                                   const SizedBox(width: 12),
-                                  Expanded(
-                                    child: CustomMediumButton(
-                                      onPressed: () {
-                                        Get.to(
-                                          () => const SelectBankView(),
-                                          transition: Transition.cupertino,
-                                        );
-                                      },
-                                      // width: Get.width * .36,
-                                      fontSize: 12.0,
-                                      buttonText: 'Withdraw',
-                                      buttonColor: Colors.white,
-                                      buttonTextColor: const Color(0xff414249),
-                                    ),
+                                  CustomMediumButton(
+                                    onPressed: () {
+                                      Get.to(
+                                        () => const SelectBankView(),
+                                        transition: Transition.cupertino,
+                                      );
+                                    },
+                                    width: Get.width * .38,
+                                    fontSize: 12.0,
+                                    buttonText: 'Withdraw',
+                                    buttonColor: Colors.white,
+                                    buttonTextColor: const Color(0xff414249),
                                   ),
                                 ],
                               )
@@ -286,36 +278,32 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Expanded(
-                                child: CustomMediumButton(
-                                  onPressed: () {
-                                    BotToast.showText(
-                                        text:
-                                            "We are unable to get wallet details, try again");
-                                  },
-                                  // width: Get.width * .36,
-                                  fontSize: 12.0,
-                                  buttonText: 'Fund wallet',
-                                  buttonColor: Colors.white,
-                                  buttonTextColor: const Color(0xff414249),
-                                ),
+                              CustomMediumButton(
+                                onPressed: () {
+                                  BotToast.showText(
+                                      text:
+                                          "We are unable to get wallet details, try again");
+                                },
+                                width: Get.width * .38,
+                                fontSize: 12.0,
+                                buttonText: 'Fund wallet',
+                                buttonColor: Colors.white,
+                                buttonTextColor: const Color(0xff414249),
                               ),
                               const SizedBox(
                                 width: 12,
                               ),
-                              Expanded(
-                                child: CustomMediumButton(
-                                  onPressed: () {
-                                    BotToast.showText(
-                                        text:
-                                            "We are unable to get wallet details, try again");
-                                  },
-                                  // width: Get.width * .36,
-                                  fontSize: 12.0,
-                                  buttonText: 'Withdraw',
-                                  buttonColor: Colors.white,
-                                  buttonTextColor: const Color(0xff414249),
-                                ),
+                              CustomMediumButton(
+                                onPressed: () {
+                                  BotToast.showText(
+                                      text:
+                                          "We are unable to get wallet details, try again");
+                                },
+                                width: Get.width * .38,
+                                fontSize: 12.0,
+                                buttonText: 'Withdraw',
+                                buttonColor: Colors.white,
+                                buttonTextColor: const Color(0xff414249),
                               ),
                             ],
                           )

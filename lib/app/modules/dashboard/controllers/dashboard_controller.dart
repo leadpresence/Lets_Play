@@ -127,11 +127,13 @@ class DashboardController extends GetxController
         } else {
           _currentPage = 0;
         }
-        pageController.animateToPage(
-          _currentPage,
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.easeInOutQuart,
-        );
+        if (pageController.hasClients) {
+          pageController.animateToPage(
+            _currentPage,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOutQuart,
+          );
+        }
       },
     );
     super.onInit();

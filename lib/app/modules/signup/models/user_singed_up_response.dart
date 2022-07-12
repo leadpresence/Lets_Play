@@ -38,26 +38,23 @@ class UserSignupResponse {
 class Body {
   Body({
     required this.user,
-    required this.email,
     required this.rewardPoint,
     required this.token,
   });
 
   User user;
-  String? email = "";
+
   int? rewardPoint = 0;
   String token;
 
   factory Body.fromMap(Map<String, dynamic> json) => Body(
         user: User.fromMap(json["user"]),
-        email: json["email"],
         rewardPoint: json["rewardPoint"],
         token: json["token"],
       );
 
   Map<String, dynamic> toMap() => {
         "user": user.toMap(),
-        "email": email ?? "",
         "rewardPoint": rewardPoint ?? 0,
         "token": token,
       };
@@ -70,6 +67,7 @@ class User {
     required this.phone,
     required this.profileUrl,
     required this.wallet,
+    required this.email,
     required this.rewardPoint,
     required this.isEmailVerified,
     required this.id,
@@ -78,6 +76,7 @@ class User {
   String firstName;
   String lastName;
   String phone;
+  String? email = "";
   String profileUrl;
   Wallet wallet;
   int rewardPoint;
@@ -88,6 +87,7 @@ class User {
         firstName: json["firstName"],
         lastName: json["lastName"],
         phone: json["phone"],
+        email: json["email"],
         profileUrl: json["profileUrl"],
         wallet: Wallet.fromMap(json["wallet"]),
         rewardPoint: json["rewardPoint"],
@@ -100,6 +100,7 @@ class User {
         "lastName": lastName,
         "phone": phone,
         "profileUrl": profileUrl,
+        "email": email ?? "",
         "wallet": wallet.toMap(),
         "rewardPoint": rewardPoint,
         "isEmailVerified": isEmailVerified,

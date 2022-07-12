@@ -31,7 +31,7 @@ class DashboardMobilePortrait extends StatelessWidget {
   final DashboardController dashboardController =
       Get.put(DashboardController());
   final UserLocalDataSourceImpl user = Get.find();
-  final WalletHomeController walletController = Get.put(WalletHomeController());
+  // final WalletHomeController walletController = Get.put(WalletHomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -87,287 +87,273 @@ class DashboardMobilePortrait extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: 24,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                  child: FutureBuilder<UserWalletModel?>(
-                      future: walletController.getWalletAsync(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasError) {
-                          return Container(
-                            padding: const EdgeInsets.only(
-                              top: 18,
-                              bottom: 12,
-                              left: 16,
-                              right: 16,
-                            ),
-                            width: Get.width,
-                            height: Get.height * .19,
-                            decoration: BoxDecoration(
-                              color: const Color(0XFF543884),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: const [
-                                    Text(
-                                      'Wallet Balance: ',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(
-                                      "₦ " + "N/A",
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: const [
-                                    Text(
-                                      'Reward points: ',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        letterSpacing: 1,
-                                      ),
-                                    ),
-                                    Text(
-                                      // "90",
-                                      "N/A",
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        letterSpacing: 1,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Expanded(
-                                      child: CustomMediumButton(
-                                        onPressed: () {
-                                          BotToast.showText(
-                                              text:
-                                                  "We are unable to get wallet details, try again");
-                                        },
-                                        // width: Get.width * .36,
-                                        fontSize: 12.0,
-                                        buttonText: 'Fund wallet',
-                                        buttonColor: Colors.white,
-                                        buttonTextColor:
-                                            const Color(0xff414249),
-                                      ),
-                                    ),
-                                    const SizedBox(width: 12),
-                                    Expanded(
-                                      child: CustomMediumButton(
-                                        onPressed: () {
-                                          BotToast.showText(
-                                              text:
-                                                  "We are unable to get wallet details, try again");
-                                        },
-                                        // width: Get.width * .36,
-                                        fontSize: 12.0,
-                                        buttonText: 'Withdraw',
-                                        buttonColor: Colors.white,
-                                        buttonTextColor:
-                                            const Color(0xff414249),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          );
-                        } else if (snapshot.hasData) {
-                          UserWalletModel? walletData = snapshot.data;
-                          if (walletData != null) {
-                            return Container(
-                              padding: const EdgeInsets.only(
-                                top: 18,
-                                bottom: 12,
-                                left: 16,
-                                right: 16,
-                              ),
-                              width: Get.width,
-                              height: Get.height * .19,
-                              decoration: BoxDecoration(
-                                color: const Color(0XFF543884),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        'Wallet Balance: ',
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Text(
-                                        "₦ " +
-                                            walletData.body.wallet.balance
-                                                .toString(),
-                                        style: const TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          letterSpacing: 1,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        'Reward points: ',
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Text(
-                                        // "90",
-                                        walletData.body.rewardPoints.toString(),
-                                        style: const TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          letterSpacing: 1,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        child: CustomMediumButton(
-                                          onPressed: () {
-                                            Get.to(
-                                              () => const FundWalletView(),
-                                              transition: Transition.cupertino,
-                                            );
-                                          },
-                                          // width: Get.width * .36,
-                                          fontSize: 12.0,
-                                          buttonText: 'Fund wallet',
-                                          buttonColor: Colors.white,
-                                          buttonTextColor:
-                                              const Color(0xff414249),
-                                        ),
-                                      ),
-                                      const SizedBox(width: 12),
-                                      Expanded(
-                                        child: CustomMediumButton(
-                                          onPressed: () {
-                                            Get.to(
-                                              () => const SelectBankView(),
-                                              transition: Transition.cupertino,
-                                            );
-                                          },
-                                          // width: Get.width * .36,
-                                          fontSize: 12.0,
-                                          buttonText: 'Withdraw',
-                                          buttonColor: Colors.white,
-                                          buttonTextColor:
-                                              const Color(0xff414249),
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            );
-                          }
-                        }
-                        return Container(
-                          padding: const EdgeInsets.only(
-                            top: 18,
-                            bottom: 12,
-                            left: 16,
-                            right: 16,
-                          ),
-                          width: Get.width,
-                          height: Get.height * .19,
-                          decoration: BoxDecoration(
-                            color: const Color(0XFF543884),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Center(
-                                child: CupertinoActivityIndicator(
-                                  radius: 12.0,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
-                                    child: CustomMediumButton(
-                                      onPressed: () {
-                                        BotToast.showText(
-                                            text:
-                                                "We are unable to get wallet details, try again");
-                                      },
-                                      // width: Get.width * .36,
-                                      fontSize: 12.0,
-                                      buttonText: 'Fund wallet',
-                                      buttonColor: Colors.white,
-                                      buttonTextColor: const Color(0xff414249),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 12,
-                                  ),
-                                  Expanded(
-                                    child: CustomMediumButton(
-                                      onPressed: () {
-                                        BotToast.showText(
-                                            text:
-                                                "We are unable to get wallet details, try again");
-                                      },
-                                      // width: Get.width * .36,
-                                      fontSize: 12.0,
-                                      buttonText: 'Withdraw',
-                                      buttonColor: Colors.white,
-                                      buttonTextColor: const Color(0xff414249),
-                                    ),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        );
-                      }),
-                ),
+                // const SizedBox(
+                //   height: 24,
+                // ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                //   child: FutureBuilder<UserWalletModel?>(
+                //       future: walletController.getWalletAsync(),
+                //       builder: (context, snapshot) {
+                //         if (snapshot.hasError) {
+                //           return Container(
+                //             padding: const EdgeInsets.only(
+                //               top: 18,
+                //               bottom: 12,
+                //               left: 16,
+                //               right: 16,
+                //             ),
+                //             width: Get.width,
+                //             height: Get.height * .19,
+                //             decoration: BoxDecoration(
+                //               color: const Color(0XFF543884),
+                //               borderRadius: BorderRadius.circular(20),
+                //             ),
+                //             child: Column(
+                //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //               children: [
+                //                 Row(
+                //                   children: const [
+                //                     Text(
+                //                       'Wallet Balance: ',
+                //                       style: TextStyle(
+                //                         fontSize: 16,
+                //                         color: Colors.white,
+                //                         fontWeight: FontWeight.bold,
+                //                       ),
+                //                     ),
+                //                     Text(
+                //                       "₦ " + "N/A",
+                //                       style: TextStyle(
+                //                         fontSize: 18,
+                //                         color: Colors.white,
+                //                         fontWeight: FontWeight.bold,
+                //                       ),
+                //                     ),
+                //                   ],
+                //                 ),
+                //                 Row(
+                //                   children: const [
+                //                     Text(
+                //                       'Reward points: ',
+                //                       style: TextStyle(
+                //                         fontSize: 16,
+                //                         color: Colors.white,
+                //                         fontWeight: FontWeight.bold,
+                //                         letterSpacing: 1,
+                //                       ),
+                //                     ),
+                //                     Text(
+                //                       // "90",
+                //                       "N/A",
+                //                       style: TextStyle(
+                //                         fontSize: 18,
+                //                         color: Colors.white,
+                //                         fontWeight: FontWeight.bold,
+                //                         letterSpacing: 1,
+                //                       ),
+                //                     ),
+                //                   ],
+                //                 ),
+                //                 Row(
+                //                   mainAxisAlignment:
+                //                       MainAxisAlignment.spaceBetween,
+                //                   children: [
+                //                     CustomMediumButton(
+                //                       onPressed: () {
+                //                         BotToast.showText(
+                //                             text:
+                //                                 "We are unable to get wallet details, try again");
+                //                       },
+                //                       width: Get.width * .38,
+                //                       fontSize: 12.0,
+                //                       buttonText: 'Fund wallet',
+                //                       buttonColor: Colors.white,
+                //                       buttonTextColor: const Color(0xff414249),
+                //                     ),
+                //                     const SizedBox(width: 12),
+                //                     CustomMediumButton(
+                //                       onPressed: () {
+                //                         BotToast.showText(
+                //                             text:
+                //                                 "We are unable to get wallet details, try again");
+                //                       },
+                //                       width: Get.width * .38,
+                //                       fontSize: 12.0,
+                //                       buttonText: 'Withdraw',
+                //                       buttonColor: Colors.white,
+                //                       buttonTextColor: const Color(0xff414249),
+                //                     ),
+                //                   ],
+                //                 )
+                //               ],
+                //             ),
+                //           );
+                //         } else if (snapshot.hasData) {
+                //           UserWalletModel? walletData = snapshot.data;
+                //           if (walletData != null) {
+                //             return Container(
+                //               padding: const EdgeInsets.only(
+                //                 top: 18,
+                //                 bottom: 12,
+                //                 left: 16,
+                //                 right: 16,
+                //               ),
+                //               width: Get.width,
+                //               height: Get.height * .19,
+                //               decoration: BoxDecoration(
+                //                 color: const Color(0XFF543884),
+                //                 borderRadius: BorderRadius.circular(20),
+                //               ),
+                //               child: Column(
+                //                 mainAxisAlignment:
+                //                     MainAxisAlignment.spaceBetween,
+                //                 children: [
+                //                   Row(
+                //                     children: [
+                //                       const Text(
+                //                         'Wallet Balance: ',
+                //                         style: TextStyle(
+                //                           fontSize: 16,
+                //                           color: Colors.white,
+                //                           fontWeight: FontWeight.bold,
+                //                         ),
+                //                       ),
+                //                       Text(
+                //                         "₦ " +
+                //                             walletData.body.wallet.balance
+                //                                 .toString(),
+                //                         style: const TextStyle(
+                //                           fontSize: 18,
+                //                           color: Colors.white,
+                //                           fontWeight: FontWeight.bold,
+                //                           letterSpacing: 1,
+                //                         ),
+                //                       ),
+                //                     ],
+                //                   ),
+                //                   Row(
+                //                     children: [
+                //                       const Text(
+                //                         'Reward points: ',
+                //                         style: TextStyle(
+                //                           fontSize: 16,
+                //                           color: Colors.white,
+                //                           fontWeight: FontWeight.bold,
+                //                         ),
+                //                       ),
+                //                       Text(
+                //                         // "90",
+                //                         walletData.body.rewardPoints.toString(),
+                //                         style: const TextStyle(
+                //                           fontSize: 18,
+                //                           color: Colors.white,
+                //                           fontWeight: FontWeight.bold,
+                //                           letterSpacing: 1,
+                //                         ),
+                //                       ),
+                //                     ],
+                //                   ),
+                //                   Row(
+                //                     mainAxisAlignment:
+                //                         MainAxisAlignment.spaceBetween,
+                //                     children: [
+                //                       CustomMediumButton(
+                //                         onPressed: () {
+                //                           Get.to(
+                //                             () => const FundWalletView(),
+                //                             transition: Transition.cupertino,
+                //                           );
+                //                         },
+                //                         width: Get.width * .38,
+                //                         fontSize: 12.0,
+                //                         buttonText: 'Fund wallet',
+                //                         buttonColor: Colors.white,
+                //                         buttonTextColor:
+                //                             const Color(0xff414249),
+                //                       ),
+                //                       const SizedBox(width: 12),
+                //                       CustomMediumButton(
+                //                         onPressed: () {
+                //                           Get.to(
+                //                             () => const SelectBankView(),
+                //                             transition: Transition.cupertino,
+                //                           );
+                //                         },
+                //                         width: Get.width * .38,
+                //                         fontSize: 12.0,
+                //                         buttonText: 'Withdraw',
+                //                         buttonColor: Colors.white,
+                //                         buttonTextColor:
+                //                             const Color(0xff414249),
+                //                       ),
+                //                     ],
+                //                   )
+                //                 ],
+                //               ),
+                //             );
+                //           }
+                //         }
+                //         return Container(
+                //           padding: const EdgeInsets.only(
+                //             top: 18,
+                //             bottom: 12,
+                //             left: 16,
+                //             right: 16,
+                //           ),
+                //           width: Get.width,
+                //           height: Get.height * .19,
+                //           decoration: BoxDecoration(
+                //             color: const Color(0XFF543884),
+                //             borderRadius: BorderRadius.circular(20),
+                //           ),
+                //           child: Column(
+                //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //             children: [
+                //               const Center(
+                //                 child: CupertinoActivityIndicator(
+                //                   radius: 12.0,
+                //                   color: Colors.white,
+                //                 ),
+                //               ),
+                //               Row(
+                //                 mainAxisAlignment:
+                //                     MainAxisAlignment.spaceBetween,
+                //                 children: [
+                //                   CustomMediumButton(
+                //                     onPressed: () {
+                //                       BotToast.showText(
+                //                           text:
+                //                               "We are unable to get wallet details, try again");
+                //                     },
+                //                     width: Get.width * .38,
+                //                     fontSize: 12.0,
+                //                     buttonText: 'Fund wallet',
+                //                     buttonColor: Colors.white,
+                //                     buttonTextColor: const Color(0xff414249),
+                //                   ),
+                //                   const SizedBox(
+                //                     width: 12,
+                //                   ),
+                //                   CustomMediumButton(
+                //                     onPressed: () {
+                //                       BotToast.showText(
+                //                           text:
+                //                               "We are unable to get wallet details, try again");
+                //                     },
+                //                     width: Get.width * .38,
+                //                     fontSize: 12.0,
+                //                     buttonText: 'Withdraw',
+                //                     buttonColor: Colors.white,
+                //                     buttonTextColor: const Color(0xff414249),
+                //                   ),
+                //                 ],
+                //               )
+                //             ],
+                //           ),
+                //         );
+                //       }),
+                // ),
                 const SizedBox(height: 4),
                 InkWell(
                   onTap: () => {
@@ -435,30 +421,35 @@ class DashboardMobilePortrait extends StatelessWidget {
                           ),
                         ),
                         const Gap(18),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text(
-                                'Complete profile setup',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0XFFFE7A01),
-                                ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Complete profile setup',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0XFFFE7A01),
                               ),
-                              Gap(8),
-                              Text(
-                                'Verify your Email to fund your wallet and have full access to all games.',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Color(0xff000000),
-                                  height: 1.4,
-                                ),
-                                textAlign: TextAlign.start,
+                            ),
+                            const Gap(8),
+                            SizedBox(
+                              width: Get.width * .52,
+                              child: Wrap(
+                                children: const [
+                                  Text(
+                                    'Verify your Email to fund your wallet and have full access to all games.',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Color(0xff000000),
+                                      height: 1.4,
+                                    ),
+                                    textAlign: TextAlign.start,
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                         const SizedBox(width: 8),
                         SvgPicture.asset('assets/svgs/complete_arrow.svg'),

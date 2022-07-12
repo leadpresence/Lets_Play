@@ -154,7 +154,8 @@ class AuthServiceImpl extends AuthServiceDataSource {
       GetStorage().write('referralCode', "inviteLink");
       GetStorage().write('isEmailVerified', res.body.user.isEmailVerified);
       GetStorage().write('currentUserID', res.body.user.id);
-
+      GetStorage().write('email', res.body.user.email);
+      GetStorage().write('isEmailVerified', res.body.user.isEmailVerified);
       if (raw['success']) {
         return const Right("Login Successful");
       } else {
@@ -296,6 +297,12 @@ class AuthServiceImpl extends AuthServiceDataSource {
       );
       AddEmailResponseModel res = AddEmailResponseModel.fromJson(raw);
       utilsProvider.setProspectId(res.body.reference);
+      if (raw['success']) {
+        return const Right("Success");
+      } else {
+        return Left(
+            AppError(errorType: AppErrorType.network, message: raw['message']));
+      }
     } on NetworkException catch (e) {
       return Left(
           AppError(errorType: AppErrorType.network, message: e.message));
@@ -319,6 +326,12 @@ class AuthServiceImpl extends AuthServiceDataSource {
       );
       VerifiedEmailResponse res = VerifiedEmailResponse.fromMap(raw);
       utilsProvider.setProspectId(res.body.email);
+      if (raw['success']) {
+        return const Right("Success");
+      } else {
+        return Left(
+            AppError(errorType: AppErrorType.network, message: raw['message']));
+      }
     } on NetworkException catch (e) {
       return Left(
           AppError(errorType: AppErrorType.network, message: e.message));

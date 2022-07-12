@@ -59,176 +59,180 @@ class UserProfileMobilePortrait extends StatelessWidget {
             horizontal: 24.0,
             vertical: 12.0,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                padding: const EdgeInsets.only(
-                  left: 24,
-                  right: 24,
-                ),
-                width: Get.width,
-                height: Get.height * .17,
-                decoration: BoxDecoration(
-                  color: const Color(0XFF543884),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 36,
-                              child: Container(
-                                height: Get.height / 5,
-                                width: Get.width,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                    colorFilter: const ColorFilter.mode(
-                                      Colors.black45,
-                                      BlendMode.dstIn,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(
+                    left: 24,
+                    right: 24,
+                  ),
+                  width: Get.width,
+                  height: Get.height * .17,
+                  decoration: BoxDecoration(
+                    color: const Color(0XFF543884),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Row(
+                            children: [
+                              CircleAvatar(
+                                radius: 36,
+                                child: Container(
+                                  height: Get.height / 5,
+                                  width: Get.width,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      colorFilter: const ColorFilter.mode(
+                                        Colors.black45,
+                                        BlendMode.dstIn,
+                                      ),
+                                      onError: (__, ___) {},
+                                      image: NetworkImage(
+                                        imageAvatar ??
+                                            'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALoAAAC6CAMAAAAu0KfDAAAAOVBMVEX///8AAADs7Oxra2uXl5f8/Pw1NTXU1NTw8PBnZ2fExMQgICBNTU3c3Nx1dXUxMTFBQUGxsbFhYWHBLujbAAAA6UlEQVR4nO3cbY7CIBiFUS32Qx2Kdv+LnQ1UIEbnbTLnLODm+UsgnE4AAAAAAAAAsNw6LNGVu+bHvekxR1fumqdz0yT9w6RHkB5BegTpEaRHkB5BegTpEaRHkB5BeoS5tNPLMdPz9tO05ejKXWPuMEZXAgBA1Vj3RxPvGNYyvVbWjvv/pTExfCs9VQ9v1570a3UiSZcuXbp06dKlS5cuXbp06dKlS2+np570xkRQ+paHprwdMr2ktSnVn0BEpX+AdOnSpUuXLl26dOnSpUuXLl26dOlR6cvz8mXPY37aAwAAAAAAAADw3/wCNHspK9U90TMAAAAASUVORK5CYII=',
+                                      ),
+                                      fit: BoxFit.cover,
                                     ),
-                                    onError: (__, ___) {},
-                                    image: NetworkImage(
-                                      imageAvatar ??
-                                          'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALoAAAC6CAMAAAAu0KfDAAAAOVBMVEX///8AAADs7Oxra2uXl5f8/Pw1NTXU1NTw8PBnZ2fExMQgICBNTU3c3Nx1dXUxMTFBQUGxsbFhYWHBLujbAAAA6UlEQVR4nO3cbY7CIBiFUS32Qx2Kdv+LnQ1UIEbnbTLnLODm+UsgnE4AAAAAAAAAsNw6LNGVu+bHvekxR1fumqdz0yT9w6RHkB5BegTpEaRHkB5BegTpEaRHkB5BeoS5tNPLMdPz9tO05ejKXWPuMEZXAgBA1Vj3RxPvGNYyvVbWjvv/pTExfCs9VQ9v1570a3UiSZcuXbp06dKlS5cuXbp06dKlS2+np570xkRQ+paHprwdMr2ktSnVn0BEpX+AdOnSpUuXLl26dOnSpUuXLl26dOlR6cvz8mXPY37aAwAAAAAAAADw3/wCNHspK9U90TMAAAAASUVORK5CYII=',
-                                    ),
-                                    fit: BoxFit.cover,
                                   ),
                                 ),
                               ),
-                            ),
-                            const Gap(12),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              const Gap(12),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    lastName == ''
+                                        ? firstName ?? 'First name'
+                                        : '$firstName $lastName',
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                  const Gap(8),
+                                  Text(
+                                    phoneNumber ?? "09060785373",
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Get.to(
+                                () => EditProfileMobilePortrait(),
+                                transition: Transition.cupertino,
+                              );
+                            },
+                            child: Column(
                               children: [
-                                Text(
-                                  lastName == ''
-                                      ? firstName ?? 'First name'
-                                      : '$firstName $lastName',
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.normal,
-                                  ),
+                                SvgPicture.asset(
+                                  'assets/svgs/ic_outline-mode-edit-outline.svg',
                                 ),
-                                const Gap(8),
-                                Text(
-                                  phoneNumber ?? "09060785373",
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                ),
+                                const Gap(12),
                               ],
                             ),
-                          ],
-                        ),
-                        GestureDetector(
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                    vertical: 24.0,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(.04),
+                        blurRadius: 12,
+                        spreadRadius: 8,
+                      )
+                    ],
+                  ),
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: [
+                      userProfileCardItem(
                           onTap: () {
                             Get.to(
-                              () => EditProfileMobilePortrait(),
+                              () => ResetPasswordMobilePortrait(),
                               transition: Transition.cupertino,
                             );
                           },
-                          child: Column(
-                            children: [
-                              SvgPicture.asset(
-                                'assets/svgs/ic_outline-mode-edit-outline.svg',
-                              ),
-                              const Gap(12),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                  vertical: 24.0,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(.04),
-                      blurRadius: 12,
-                      spreadRadius: 8,
-                    )
-                  ],
-                ),
-                child: ListView(
-                  shrinkWrap: true,
-                  children: [
-                    userProfileCardItem(
-                        onTap: () {
-                          Get.to(
-                            () => ResetPasswordMobilePortrait(),
-                            transition: Transition.cupertino,
-                          );
-                        },
-                        text: "Change Password",
-                        description: "Make changes to your account",
-                        icon: 'assets/svgs/change_password.svg'),
-                    userProfileCardItem(
-                        onToggle: (value) {},
-                        onTap: () {},
-                        text: "Touch ID",
-                        description: "Manage your device security",
-                        icon: 'assets/svgs/change_password.svg',
-                        isFingerPrint: true),
-                    userProfileCardItem(
-                        onTap: () {},
-                        text: "Bank Details",
-                        description:
-                            "Link your bank details for payment and \nwithdrawals",
-                        icon: 'assets/svgs/bank_details.svg'),
-                    userProfileCardItem(
-                        onTap: () {
-                          Get.to(
-                            () => SetPinMobilePortrait(),
-                            transition: Transition.cupertino,
-                          );
-                        },
-                        text: "Set Transaction Pin",
-                        description: "Set a pin for secured transactions",
-                        icon: 'assets/svgs/two_fa.svg'),
-                    userProfileCardItem(
-                        onTap: () {
-                          Get.to(
-                            () => MyGamesMobilePortrait(),
-                            transition: Transition.cupertino,
-                          );
-                        },
-                        text: "My Games",
-                        description: "View game History",
-                        icon: 'assets/svgs/my_games.svg'),
-                    userProfileCardItem(
-                        onTap: () {
-                          walletController.balance.value = 0;
-                          controller.signout(key);
-                        },
-                        text: "Log out",
-                        description: 'Further secure your account for safety',
-                        icon: 'assets/svgs/logout_icon.svg'),
-                  ],
-                ),
-              )
-            ],
+                          text: "Change Password",
+                          description: "Make changes to your account",
+                          icon: 'assets/svgs/change_password.svg'),
+                      userProfileCardItem(
+                          onToggle: (value) {},
+                          onTap: () {},
+                          text: "Touch ID",
+                          description: "Manage your device security",
+                          icon: 'assets/svgs/change_password.svg',
+                          isFingerPrint: true),
+                      userProfileCardItem(
+                          onTap: () {},
+                          text: "Bank Details",
+                          description:
+                              "Link your bank details for payment and \nwithdrawals",
+                          icon: 'assets/svgs/bank_details.svg'),
+                      userProfileCardItem(
+                          onTap: () {
+                            Get.to(
+                              () => SetPinMobilePortrait(),
+                              transition: Transition.cupertino,
+                            );
+                          },
+                          text: "Set Transaction Pin",
+                          description: "Set a pin for secured transactions",
+                          icon: 'assets/svgs/two_fa.svg'),
+                      userProfileCardItem(
+                          onTap: () {
+                            Get.to(
+                              () => MyGamesMobilePortrait(),
+                              transition: Transition.cupertino,
+                            );
+                          },
+                          text: "My Games",
+                          description: "View game History",
+                          icon: 'assets/svgs/my_games.svg'),
+                      userProfileCardItem(
+                          onTap: () {
+                            GetStorage().write('email', "");
+                            GetStorage().write('isEmailVerified', false);
+                            walletController.balance.value = 0;
+                            controller.signout(key);
+                          },
+                          text: "Log out",
+                          description: 'Further secure your account for safety',
+                          icon: 'assets/svgs/logout_icon.svg'),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
