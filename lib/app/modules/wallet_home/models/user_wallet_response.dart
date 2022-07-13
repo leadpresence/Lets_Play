@@ -1,7 +1,9 @@
+// To parse this JSON data, do
+//
+//     final userWalletModel = userWalletModelFromMap(jsonString);
+
 import 'package:meta/meta.dart';
 import 'dart:convert';
-
-import '../../select_account/models/bank_model.dart';
 
 UserWalletModel userWalletModelFromMap(String str) => UserWalletModel.fromMap(json.decode(str));
 
@@ -37,89 +39,61 @@ class UserWalletModel {
 
 class Body {
   Body({
-   required this.wallet,
     required this.id,
-    required this.userId,
     required this.firstName,
     required this.lastName,
-    required this.mobile,
-    required this.autoUsername,
-    required this.accountStatus,
-    required this.rewardPoints,
-    required this.wins,
-    required this.avatar,
-    required this.country,
-    required this.guestInvites,
-    required this.inviteLink,
-    required this.games,
+    required this.phone,
+    required this.profileUrl,
+    required this.isEmailVerified,
+    required this.rewardPoint,
+    required this.referralCount,
+    required this.referralCode,
+    required this.email,
+    required this.wallet,
     required this.banks,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.v,
   });
 
-  Wallet wallet;
   String id;
-  String userId;
   String firstName;
   String lastName;
-  String mobile;
-  String autoUsername;
-  String accountStatus;
-  int rewardPoints;
-  int wins;
-  String avatar;
-  String country;
-  List<dynamic> guestInvites;
-  String inviteLink;
-  List<dynamic> games;
-  List<BankModel> banks;
-  DateTime createdAt;
-  DateTime updatedAt;
-  int v;
+  String phone;
+  String profileUrl;
+  bool isEmailVerified;
+  int rewardPoint;
+  int referralCount;
+  String referralCode;
+  String email;
+  Wallet wallet;
+  List<dynamic> banks;
 
   factory Body.fromMap(Map<String, dynamic> json) => Body(
-    wallet: Wallet.fromMap(json["wallet"]),
     id: json["_id"],
-    userId: json["userId"],
     firstName: json["firstName"],
     lastName: json["lastName"],
-    mobile: json["mobile"],
-    autoUsername: json["autoUsername"],
-    accountStatus: json["accountStatus"],
-    rewardPoints: json["rewardPoints"],
-    wins: json["wins"],
-    avatar: json["avatar"],
-    country: json["country"],
-    guestInvites: List<dynamic>.from(json["guestInvites"].map((x) => x)),
-    inviteLink: json["inviteLink"],
-    games: List<dynamic>.from(json["games"].map((x) => x)),
-    banks: List<BankModel>.from(json["banks"].map((bank) => BankModel.fromMap(bank))),
-    createdAt: DateTime.parse(json["createdAt"]),
-    updatedAt: DateTime.parse(json["updatedAt"]),
-    v: json["__v"],
+    phone: json["phone"],
+    profileUrl: json["profileUrl"],
+    isEmailVerified: json["isEmailVerified"],
+    rewardPoint: json["rewardPoint"],
+    referralCount: json["referralCount"],
+    referralCode: json["referralCode"],
+    email: json["email"],
+    wallet: Wallet.fromMap(json["wallet"]),
+    banks: List<dynamic>.from(json["banks"].map((x) => x)),
   );
 
   Map<String, dynamic> toMap() => {
-    "wallet": wallet.toMap(),
     "_id": id,
-    "userId": userId,
     "firstName": firstName,
     "lastName": lastName,
-    "mobile": mobile,
-    "autoUsername": autoUsername,
-    "accountStatus": accountStatus,
-    "rewardPoints": rewardPoints,
-    "wins": wins,
-    "avatar": avatar,
-    "country": country,
-    "guestInvites": List<dynamic>.from(guestInvites.map((x) => x)),
-    "inviteLink": inviteLink,
-    "games": List<dynamic>.from(games.map((x) => x)),
-    "banks": List<dynamic>.from(banks.map((bank) => bank.toMap())),
-    "createdAt": createdAt.toIso8601String(),
-    "updatedAt": updatedAt.toIso8601String(),
-    "__v": v,
+    "phone": phone,
+    "profileUrl": profileUrl,
+    "isEmailVerified": isEmailVerified,
+    "rewardPoint": rewardPoint,
+    "referralCount": referralCount,
+    "referralCode": referralCode,
+    "email": email,
+    "wallet": wallet.toMap(),
+    "banks": List<dynamic>.from(banks.map((x) => x)),
   };
 }
 

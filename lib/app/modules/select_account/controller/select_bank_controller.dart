@@ -19,7 +19,7 @@ class SelectBankController extends GetxController {
   TextEditingController pinController = TextEditingController();
   var isLoading = false.obs;
 
-  Rx<List<BankModel>> savedBanksList = Rx<List<BankModel>>([]);
+  Rx<List<dynamic>> savedBanksList = Rx<List<dynamic>>([]);
   RxString errAmountMessage = "".obs;
   RxInt balance = 0.obs;
 

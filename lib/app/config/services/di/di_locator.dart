@@ -33,7 +33,7 @@ class UtilsController extends GetxController {
   RxList guestLists = [].obs;
   // RxList transactions = [].obs;
   Rx<List<Bank>> banks = Rx<List<Bank>>([]);
-  Rx<List<BankModel>> savedBanks = Rx<List<BankModel>>([]);
+  Rx<List<dynamic>> savedBanks = Rx<List<BankModel>>([]);
   Rx<List<BankModel>> withdrawalAccount = Rx<List<BankModel>>([]);
   Rx<List<TransactionsModel>> transactions = Rx<List<TransactionsModel>>([]);
   RxList paymentProcessors = [].obs;

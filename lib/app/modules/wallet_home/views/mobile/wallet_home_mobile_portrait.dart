@@ -205,7 +205,7 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                                   ),
                                   Text(
                                     // "90",
-                                    walletData.body.rewardPoints.toString(),
+                                    walletData.body.rewardPoint.toString(),
                                     style: const TextStyle(
                                       fontSize: 18,
                                       color: Colors.white,
@@ -349,16 +349,15 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                     List<TransactionsModel>? listOftrxns = snapshot.data;
                     if (listOftrxns != null) {
                       if (listOftrxns.length > 1) {
-                        return Expanded(
-                            child: ListView.builder(
+                        return ListView.builder(
                           shrinkWrap: true,
                           itemCount: listOftrxns.length,
                           itemBuilder: (BuildContext context, int position) {
-                            return transactionItem(
-                              listOftrxns[position],
-                            );
+                        return transactionItem(
+                          listOftrxns[position],
+                        );
                           },
-                        ));
+                        );
                       }
                       return Center(
                         child: SizedBox(

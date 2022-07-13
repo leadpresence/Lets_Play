@@ -34,7 +34,7 @@ dependencies:
   flutter_platform_widgets: ^1.20.0
   hive: null
   hive_flutter: null
-  image_picker: null
+  image_picker:
   equatable: ^2.0.3
   path_provider: ^2.0.9
   custom_check_box: ^0.0.4
@@ -43,7 +43,7 @@ dependencies:
   flutter_switch: ^0.3.2
   webview_flutter: ^3.0.4
   modal_bottom_sheet:
-#  aws_s3_plugin_flutter:
+  aws_s3_plugin_flutter:
 
 dev_dependencies:
   flutter_test:

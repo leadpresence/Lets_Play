@@ -37,7 +37,7 @@ class GamesServiceImpl {
   }
 
   Future<Response> getAllPlayedGames() async {
-    var userId = GetStorage().read('userId');
+    var userId = GetStorage().read('currentUserID');
     try {
       Response response =
           await service.request('users/$userId/games', method: 'Get');
@@ -65,4 +65,20 @@ class GamesServiceImpl {
     }
   }
 
+  Future<Response> playTrueOrFalseGames({gameID, dynamic userGuess}) async {
+    try {
+      Response response = await service
+          .request('instant-game/true-or-false/', method: 'Put', body: {
+        "userGuess": userGuess,
+        "itemId": gameID,
+      });
+      if (kDebugMode) {
+        print(
+            "This is the response status from the playTrueOrFalseGames API: \n ${response.data}");
+      }
+      return response;
+    } on DioError catch (e) {
+      throw handleError(e);
+    }
+  }
 }

@@ -40,6 +40,32 @@ class TrueOrFalseController extends GetxController
     return body;
   }
 
+  playTrueOrFalseGames({gameId, userGuess}) async {
+    try {
+      var response = await gamesService.playTrueOrFalseGames(
+          gameID: gameId, userGuess: userGuess);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // body = TrueOrFalseResModel.fromJson(response.data);
+        print("THIS IS BODY:::: ${response.data}");
+        return body;
+      } else {
+        if (kDebugMode) {
+          print(
+              'Response.statusCode != 200: \n${TrueOrFalseResModel.fromJson(response.data).statusCode}');
+          BotToast.showSimpleNotification(
+            title: TrueOrFalseResModel.fromJson(response.data).toString(),
+          );
+        }
+        return body;
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
+      }
+    }
+    return body;
+  }
+
   void nextPage() async {
     moveToNextPage(lastPage: body!.body.items.length - 1);
     await animateMovingToNextPage();

@@ -38,24 +38,19 @@ class UserSignupResponse {
 class Body {
   Body({
     required this.user,
-    required this.rewardPoint,
     required this.token,
   });
 
   User user;
-
-  int? rewardPoint = 0;
   String token;
 
   factory Body.fromMap(Map<String, dynamic> json) => Body(
         user: User.fromMap(json["user"]),
-        rewardPoint: json["rewardPoint"],
         token: json["token"],
       );
 
   Map<String, dynamic> toMap() => {
         "user": user.toMap(),
-        "rewardPoint": rewardPoint ?? 0,
         "token": token,
       };
 }

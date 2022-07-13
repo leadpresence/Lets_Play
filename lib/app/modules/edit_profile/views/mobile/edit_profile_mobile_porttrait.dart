@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
@@ -5,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:jekawin_mobile_flutter/app/modules/e_shop/views/widgets/profile_image_avatar.dart';
 import 'package:jekawin_mobile_flutter/app/modules/user_profile/views/user_profile_view.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -60,8 +62,10 @@ class EditProfileMobilePortrait extends GetView {
               color: const Color(0xff12121D),
             ),
             onPressed: () {
-              Get.off(() => UserProfileView(),
-                  transition: Transition.leftToRight);
+              Get.off(
+                () => UserProfileView(),
+                transition: Transition.leftToRight,
+              );
             },
           ),
         ),
@@ -77,23 +81,43 @@ class EditProfileMobilePortrait extends GetView {
                 children: [
                   CircleAvatar(
                     radius: 48,
-                    child: Container(
-                      // width: Get.width,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          colorFilter: const ColorFilter.mode(
-                            Colors.black45,
-                            BlendMode.dstIn,
+                    child: controller.profilePictureName == ""
+                        ? Stack(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    colorFilter: const ColorFilter.mode(
+                                      Colors.black45,
+                                      BlendMode.dstIn,
+                                    ),
+                                    onError: (__, ___) {},
+                                    image: NetworkImage(
+                                      imageAvatar,
+                                    ),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              const Center(
+                                child: CupertinoActivityIndicator(
+                                  // strokeWidth: 1,
+                                  color: Colors.white,
+                                ),
+                              )
+                            ],
+                          )
+                        : SizedBox(
+                            width: 96,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(50),
+                              child: Image.file(
+                                controller.imageFile,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
                           ),
-                          onError: (__, ___) {},
-                          image: NetworkImage(
-                            imageAvatar,
-                          ),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
                   ),
                   const Gap(12),
                   SizedBox(
@@ -104,7 +128,42 @@ class EditProfileMobilePortrait extends GetView {
                         highlightColor: Colors.white,
                       ),
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showModalBottomSheet(
+                              context: context,
+                              builder: (builder) {
+                                return Container(
+                                  height: 350.0,
+                                  color: Colors
+                                      .transparent, //could change this to Color(0xFF737373),
+                                  //so you don't have to change MaterialApp canvasColor
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      TextButton(
+                                          onPressed: () {
+                                            Get.back();
+                                            controller.pickImage(
+                                              ImageSource.camera,
+                                              context,
+                                            );
+                                          },
+                                          child: Text("Camera")),
+                                      TextButton(
+                                          onPressed: () {
+                                            Get.back();
+                                            controller.pickImage(
+                                              ImageSource.gallery,
+                                              context,
+                                            );
+                                          },
+                                          child: Text("Gallery"))
+                                    ],
+                                  ),
+                                );
+                              });
+                        },
                         style: ElevatedButton.styleFrom(
                           primary: const Color(0xFFFE7A01).withOpacity(.05),
                           shadowColor: Colors.transparent,

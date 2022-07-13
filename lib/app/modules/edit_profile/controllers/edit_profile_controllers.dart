@@ -1,15 +1,20 @@
+import 'dart:convert';
+import 'dart:io';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:jekawin_mobile_flutter/app/modules/edit_profile/views/mobile/edit_profile_mobile_porttrait.dart';
 import '../../../config/services/auth_service.dart';
 import '../../../config/services/di/di_locator.dart';
-import '../../../services/local_storage.dart';
+import '../../../config/services/sw_bucket_service.dart';
 import '../../../widgets/custom_large_button.dart';
 import '../../../widgets/fade_in_animations.dart';
 import '../../e_shop/views/mobile/success_or_failure_mobile_view.dart';
 import '../views/mobile/email_otp_verification.dart';
+import 'package:path/path.dart' as p;
+import 'package:path/path.dart';
 
 class EditProfileController extends GetxController {
   final AuthServiceImpl authService = Get.find<AuthServiceImpl>();
@@ -27,6 +32,15 @@ class EditProfileController extends GetxController {
   RxString avatarUrl = "".obs;
   RxString emailErrorMessage = "".obs;
   Rx<bool> isLoading = false.obs;
+
+  var extension;
+
+  var imageFile;
+  String profilePictureUrl = '';
+  String profilePictureName = '';
+  String base64Image = '';
+  Rx<String> imageLoading = "".obs;
+  Rx<String> imageName = ''.obs;
 
   @override
   void onInit() {
@@ -122,15 +136,13 @@ class EditProfileController extends GetxController {
                     Obx(
                       () => SizedBox(
                         width: Get.width * .36,
-                        child: Expanded(
-                          child: CustomButton(
-                            height: 40.0,
-                            onPressed: () {
-                              addEmail(k);
-                            },
-                            buttonText: 'Verify',
-                            isLoading: isLoading.value,
-                          ),
+                        child: CustomButton(
+                          height: 40.0,
+                          onPressed: () {
+                            addEmail(k);
+                          },
+                          buttonText: 'Verify',
+                          isLoading: isLoading.value,
                         ),
                       ),
                     ),
@@ -207,5 +219,51 @@ class EditProfileController extends GetxController {
     );
 
     isLoading.value = false;
+  }
+
+  void pickImage(ImageSource source, BuildContext context) async {
+    final pickedFile = await ImagePicker().getImage(source: source);
+    if (pickedFile != null) {
+      print('pickedFile != null');
+      imageLoading.value = 'image_loading';
+      imageFile = File(pickedFile.path);
+      print('imageFile ==> $imageFile');
+      List<int> imageBytes = imageFile.readAsBytesSync();
+      base64Image = base64Encode(imageBytes);
+      print('base64Image ==> $base64Image');
+      await uploadFile(context);
+      refresh();
+      update();
+    }
+    update();
+  }
+
+  Future<String> uploadFile(BuildContext context) async {
+    final file = basename(imageFile.path);
+    print('file ==> $file');
+    extension = p.extension(imageFile.path);
+    print('extension ==> $extension');
+
+    await S3BucketService.uploadImage(
+      file: imageFile,
+      awsFolderPath: "jekawinusers/users/profile_pictures",
+      number: 1,
+      context: context,
+      extension: extension,
+    );
+    update();
+    print('imageFile ==> $imageFile');
+
+    profilePictureUrl = 'loading';
+    final urlDownload = await S3BucketService.getPresignedURLFromUnsigned(
+      awsFolderPath: "jekawinusers/users/profile_pictures",
+    );
+    profilePictureName = file;
+    print('profilePictureName ==> $profilePictureName');
+    profilePictureUrl = urlDownload;
+    print('profilePictureUrl ==> $profilePictureUrl');
+
+    print('Download-Link: $urlDownload');
+    return urlDownload;
   }
 }

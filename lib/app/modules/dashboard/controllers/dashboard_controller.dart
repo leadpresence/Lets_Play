@@ -118,7 +118,7 @@ class DashboardController extends GetxController
     timeRemainingInSecsForGames;
     pageController = PageController(initialPage: 0);
     gamesDurations;
-    getAllJackpotGames();
+    // getAllJackpotGames();
     _timer = Timer.periodic(
       const Duration(seconds: 10),
       (Timer timer) {
