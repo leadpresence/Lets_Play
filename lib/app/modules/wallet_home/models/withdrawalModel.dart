@@ -5,7 +5,8 @@
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
-WithdrawalModel withdrawalModelFromMap(String str) => WithdrawalModel.fromMap(json.decode(str));
+WithdrawalModel withdrawalModelFromMap(String str) =>
+    WithdrawalModel.fromMap(json.decode(str));
 
 String withdrawalModelToMap(WithdrawalModel data) => json.encode(data.toMap());
 
@@ -18,21 +19,21 @@ class WithdrawalModel {
   });
 
   int amount;
-  String email;
-  String bankCode;
-  String accountNumber;
+  dynamic email;
+  dynamic bankCode;
+  dynamic accountNumber;
 
   factory WithdrawalModel.fromMap(Map<String, dynamic> json) => WithdrawalModel(
-    amount: json["amount"],
-    email: json["email"],
-    bankCode: json["bankCode"],
-    accountNumber: json["accountNumber"],
-  );
+        amount: json["amount"],
+        email: json["email"],
+        bankCode: json["bankCode"],
+        accountNumber: json["accountNumber"],
+      );
 
   Map<String, dynamic> toMap() => {
-    "amount": amount,
-    "email": email,
-    "bankCode": bankCode,
-    "accountNumber": accountNumber,
-  };
+        "amount": amount,
+        "email": email,
+        "bankCode": bankCode,
+        "accountNumber": accountNumber,
+      };
 }

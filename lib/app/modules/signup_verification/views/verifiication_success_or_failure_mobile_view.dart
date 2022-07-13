@@ -36,7 +36,7 @@ class VerificationSuccessOrFailureMobileView extends StatelessWidget {
                 ),
                 child: CustomButton(
                   onPressed: () => Get.to(
-                    () => const JekawinBottomTabs(
+                    () => JekawinBottomTabs(
                       tabIndex: 3,
                     ),
                     transition: Transition.cupertino,

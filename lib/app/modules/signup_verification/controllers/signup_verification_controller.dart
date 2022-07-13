@@ -11,7 +11,7 @@ import '../../jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
 class SignUpVerificationController extends GetxController
     with SingleGetTickerProviderMixin {
   final signUpOtpController = TextEditingController();
-  final UtilsController utilsController  = Get.find();
+  final UtilsController utilsController = Get.find();
   final prospectIsProvider = Get.find<UtilsController>();
 
   final AuthServiceImpl authService = Get.find<AuthServiceImpl>();
@@ -44,7 +44,7 @@ class SignUpVerificationController extends GetxController
 
   void navigateToSignUpSuccessful(Key? key) {
     Get.to(
-      () => const SuccessOrFailureMobileView(
+      () => SuccessOrFailureMobileView(
         msg: 'Registration successful',
         className: JekawinBottomTabs(
           tabIndex: 0,
@@ -59,7 +59,7 @@ class SignUpVerificationController extends GetxController
     animationController.value = AnimationController(
         vsync: this,
         duration: const Duration(
-          minutes: 2,
+          minutes: 5,
         ));
     animationController.value.forward();
   }
@@ -67,16 +67,16 @@ class SignUpVerificationController extends GetxController
   @override
   void onInit() {
     startTimer();
-    phoneNumber.value = utilsController .getPhoneNumber();
-    prospectId.value = utilsController .getProspectId();
+    phoneNumber.value = utilsController.getPhoneNumber();
+    prospectId.value = utilsController.getProspectId();
 
     super.onInit();
   }
 
   @override
   void onReady() {
-    phoneNumber.value = utilsController .getPhoneNumber();
-    prospectId.value = utilsController .getProspectId();
+    phoneNumber.value = utilsController.getPhoneNumber();
+    prospectId.value = utilsController.getProspectId();
     super.onReady();
   }
 

@@ -105,15 +105,15 @@ class _CustomTextFieldState extends State<CustomTextField> {
         decoration: InputDecoration(
           errorStyle: const TextStyle(fontSize: 0, height: 0),
           errorText: widget.errorText,
-          prefixIcon: widget.prefixIcon==''?null:
-            SizedBox(
-              height: 17,
-              width: 17,
-              child: SvgPicture.asset(
-                widget.prefixIcon,
-                color: Colors.black,
+          prefixIcon: widget.prefixIcon == ''
+              ? null
+              : Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SvgPicture.asset(
+                  widget.prefixIcon,
+                  color: Colors.black,
+                ),
               ),
-            ),
           suffixIcon: widget.suffixIcon == ''
               ? null
               : GestureDetector(

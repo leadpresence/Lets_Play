@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -9,7 +10,10 @@ import '../../../../config/data/local/user_local_impl.dart';
 import '../../../dashboard/components/dashboard_components/dashboard_hero.dart';
 import '../../../dashboard/components/dashboard_components/dashboard_instant_games.dart';
 import '../../../dashboard/controllers/dashboard_controller.dart';
+import '../../../dashboard/models/jackpot_game_model.dart';
+import '../../../jackpot_games/views/mobile/jackpot_games_mobile_portrait.dart';
 import '../../../signup/controllers/sign_up_controller.dart';
+import '../../../true_or_false/views/true_or_false_view.dart';
 
 class GuestDashboardMobilePortrait extends StatelessWidget {
   GuestDashboardMobilePortrait({
@@ -81,45 +85,94 @@ class GuestDashboardMobilePortrait extends StatelessWidget {
                 const SizedBox(
                   height: 24,
                 ),
-                Container(
+                const SizedBox(height: 12),
+                SizedBox(
                   height: 360,
-                  width: Get.width,
-                  child: PageView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount:
-                        dashboardController.timeRemainingInSecsForGames.length,
-                    controller: dashboardController.pageController,
-                    physics: const ScrollPhysics(),
-                    itemBuilder: (BuildContext context, int index) {
-                      return Obx(
-                        () => DashboardHeroSession(
-                          onPressed: () {
-                            Get.to(
-                              () => const LoginView(),
-                              transition: Transition.cupertino,
-                            );
-                          },
-                          priceToBeWon: dashboardController
-                              .indexList![index].gameId.price,
-                          title: dashboardController
-                              .indexList![index].gameId.title,
-                          animation: StepTween(
-                            begin: dashboardController
-                                .timeRemainingInSecsForGames[index],
-                            end: 0,
-                          ).animate(
-                            dashboardController
-                                .gamesAnimationControllers[index].value,
-                          ),
+                  child: FutureBuilder<dynamic>(
+                    future: dashboardController.getAllJackpotGames(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return const SizedBox(
+                          height: 360,
+                          child: DashboardHeroSessionUI(),
+                        );
+                      } else if (snapshot.hasData) {
+                        var body = snapshot.data["body"];
+                        // dashboardController.timeRemainingInSecsForGames
+                        //     .clear();
+                        return body.length < 1
+                            ? const Text(
+                                "No Jackpot Games Available",
+                              )
+                            : SizedBox(
+                                height: 360,
+                                width: Get.width,
+                                child: PageView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: dashboardController
+                                      .timeRemainingInSecsForGames.length,
+                                  controller:
+                                      dashboardController.pageController,
+                                  physics: const ScrollPhysics(),
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Obx(
+                                      () => DashboardHeroSession(
+                                        onPressed: () {
+                                          Get.to(
+                                            () => const LoginView(),
+                                            transition: Transition.cupertino,
+                                          );
+                                        },
+                                        priceToBeWon: body[index]["gameID"]
+                                            ["imageUrl"],
+                                        title: body[index]["gameID"]["title"],
+                                        animation: StepTween(
+                                          begin: dashboardController
+                                                  .timeRemainingInSecsForGames[
+                                              index],
+                                          end: 0,
+                                        ).animate(
+                                          dashboardController
+                                              .gamesAnimationControllers[index]
+                                              .value,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              );
+                      }
+                      return const SizedBox(
+                        height: 360,
+                        child: DashboardHeroSessionUI(),
+                      );
+
+                      const Center(
+                        child: CupertinoActivityIndicator(
+                          // radius: 50,
+                          color: Color(0xFFFE7A01),
                         ),
                       );
                     },
                   ),
                 ),
                 const SizedBox(
-                  height: 18,
+                  height: 40,
                 ),
-                const DashboardInstantGames(),
+                SizedBox(
+                  child: DashboardInstantGames(
+                    onTap: () {
+                      Get.to(
+                        () => const LoginView(),
+                        transition: Transition.cupertino,
+                      );
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
               ],
             ),
           ),

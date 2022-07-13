@@ -85,7 +85,7 @@ class SignupMobilePortrait extends GetView<SignUpController> {
                         keyboardType: TextInputType.text,
                         onChanged: (v) {
                           if (v.isNotEmpty) {
-                            controller.clearErrorFirstName();
+                            controller.clearErrorfirstName();
                           }
                         },
                       ),
@@ -94,7 +94,7 @@ class SignupMobilePortrait extends GetView<SignUpController> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
                     child: Text(
-                      controller.errorFirstNameMessage.value,
+                      controller.errorfirstNameMessage.value,
                       style: errorTextStyle,
                     ),
                   ),
@@ -109,7 +109,7 @@ class SignupMobilePortrait extends GetView<SignUpController> {
                         textController: controller.lastNameController,
                         onChanged: (v) {
                           if (v.isNotEmpty) {
-                            controller.clearErrorLastName();
+                            controller.clearErrorlastName();
                           }
                         },
                       ),
@@ -118,7 +118,7 @@ class SignupMobilePortrait extends GetView<SignUpController> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
                     child: Text(
-                      controller.errorLastNameMessage.value,
+                      controller.errorlastNameMessage.value,
                       style: errorTextStyle,
                     ),
                   ),

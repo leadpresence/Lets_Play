@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,15 +15,23 @@ class DashboardController extends GetxController
   late List<Body>? indexList = <Body>[];
   late List<Duration>? gamesDurations = <Duration>[];
   late List<DateTime>? endDates = <DateTime>[];
+  var _timer;
+  var body;
+  int _currentPage = 0, totalGamesLength = 0;
 
   late List<Rx<AnimationController>> gamesAnimationControllers = [];
   RxInt days = 0.obs, hours = 0.obs, minutes = 0.obs, seconds = 0.obs;
   RxList<int> timeRemainingInSecsForGames = <int>[].obs;
 
   getAllJackpotGames() async {
+    timeRemainingInSecsForGames.clear();
+    gamesAnimationControllers.clear();
     try {
       var response = await gamesService.getAllJackpotGames();
       if (response.statusCode == 200 || response.statusCode == 201) {
+        body = response.data;
+        totalGamesLength =
+            JackpotGameResponse.fromJson(response.data).body.length;
         for (int i = 0;
             i < JackpotGameResponse.fromJson(response.data).body.length;
             i++) {
@@ -32,24 +42,29 @@ class DashboardController extends GetxController
           indexList!.add(JackpotGameResponse.fromJson(response.data).body[i]);
           endDates!
               .add(JackpotGameResponse.fromJson(response.data).body[i].endDate);
+          _timer;
         }
         startCountDown();
+        return body;
       } else {
         if (kDebugMode) {
           print(
               'Response.statusCode != 200: \n${JackpotGameResponse.fromJson(response.data).message}');
           BotToast.showSimpleNotification(
-              title: JackpotGameResponse.fromJson(response.data)
-                  .message
-                  .toString()
-                  .trim());
+            title: JackpotGameResponse.fromJson(response.data)
+                .message
+                .toString()
+                .trim(),
+          );
         }
+        return body;
       }
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());
       }
     }
+    return body;
   }
 
   DateTime dateFormat(DateTime dateValue) {
@@ -60,6 +75,9 @@ class DashboardController extends GetxController
   }
 
   void startCountDown() {
+    timeRemainingInSecsForGames.clear();
+    gamesAnimationControllers.clear();
+
     for (int i = 0; i < endDates!.length; i++) {
       final Duration difference = endDates![i].difference(DateTime.now());
       days.value = difference.inDays;
@@ -74,15 +92,17 @@ class DashboardController extends GetxController
             seconds.value,
       );
 
-      gamesAnimationControllers.add(AnimationController(
-        vsync: this,
-        duration: Duration(
-          days: days.value,
-          hours: hours.value,
-          minutes: minutes.value,
-          seconds: seconds.value,
-        ),
-      ).obs);
+      gamesAnimationControllers.add(
+        AnimationController(
+          vsync: this,
+          duration: Duration(
+            days: days.value,
+            hours: hours.value,
+            minutes: minutes.value,
+            seconds: seconds.value,
+          ),
+        ).obs,
+      );
 
       gamesAnimationControllers[i].value.forward();
       update();
@@ -90,21 +110,32 @@ class DashboardController extends GetxController
   }
 
   @override
-  void dispose() {
-    for (int i = 0; i < gamesAnimationControllers.length; i++) {
-      gamesAnimationControllers[i].value.dispose();
-    }
-    super.dispose();
-  }
-
-  @override
   void onInit() {
     indexList;
+    _currentPage = 0;
+    totalGamesLength = 0;
     endDates;
     timeRemainingInSecsForGames;
     pageController = PageController(initialPage: 0);
     gamesDurations;
-    getAllJackpotGames();
+    // getAllJackpotGames();
+    _timer = Timer.periodic(
+      const Duration(seconds: 10),
+      (Timer timer) {
+        if (_currentPage < totalGamesLength - 1) {
+          _currentPage++;
+        } else {
+          _currentPage = 0;
+        }
+        if (pageController.hasClients) {
+          pageController.animateToPage(
+            _currentPage,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOutQuart,
+          );
+        }
+      },
+    );
     super.onInit();
   }
 }

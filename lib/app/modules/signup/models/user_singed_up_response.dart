@@ -1,8 +1,10 @@
 import 'dart:convert';
 
-UserSignupResponse userSignupResponseFromMap(String str) => UserSignupResponse.fromMap(json.decode(str));
+UserSignupResponse userSignupResponseFromMap(String str) =>
+    UserSignupResponse.fromMap(json.decode(str));
 
-String userSignupResponseToMap(UserSignupResponse data) => json.encode(data.toMap());
+String userSignupResponseToMap(UserSignupResponse data) =>
+    json.encode(data.toMap());
 
 class UserSignupResponse {
   UserSignupResponse({
@@ -17,47 +19,40 @@ class UserSignupResponse {
   String message;
   Body body;
 
-  factory UserSignupResponse.fromMap(Map<String, dynamic> json) => UserSignupResponse(
-    success: json["success"],
-    statusCode: json["statusCode"],
-    message: json["message"],
-    body: Body.fromMap(json["body"]),
-  );
+  factory UserSignupResponse.fromMap(Map<String, dynamic> json) =>
+      UserSignupResponse(
+        success: json["success"],
+        statusCode: json["statusCode"],
+        message: json["message"],
+        body: Body.fromMap(json["body"]),
+      );
 
   Map<String, dynamic> toMap() => {
-    "success": success,
-    "statusCode": statusCode,
-    "message": message,
-    "body": body.toMap(),
-  };
+        "success": success,
+        "statusCode": statusCode,
+        "message": message,
+        "body": body.toMap(),
+      };
 }
 
 class Body {
   Body({
     required this.user,
-    required this.email,
-    required this.rewardPoint,
     required this.token,
   });
 
   User user;
-  String? email="";
-  int? rewardPoint =0;
   String token;
 
   factory Body.fromMap(Map<String, dynamic> json) => Body(
-    user: User.fromMap(json["user"]),
-    email: json["email"],
-    rewardPoint: json["rewardPoint"],
-    token: json["token"],
-  );
+        user: User.fromMap(json["user"]),
+        token: json["token"],
+      );
 
   Map<String, dynamic> toMap() => {
-    "user": user.toMap(),
-    "email": email??"",
-    "rewardPoint": rewardPoint??0,
-    "token": token,
-  };
+        "user": user.toMap(),
+        "token": token,
+      };
 }
 
 class User {
@@ -67,37 +62,45 @@ class User {
     required this.phone,
     required this.profileUrl,
     required this.wallet,
+    required this.email,
     required this.rewardPoint,
     required this.isEmailVerified,
+    required this.id,
   });
 
   String firstName;
   String lastName;
   String phone;
+  String? email = "";
   String profileUrl;
   Wallet wallet;
   int rewardPoint;
   bool isEmailVerified;
+  String id;
 
   factory User.fromMap(Map<String, dynamic> json) => User(
-    firstName: json["firstName"],
-    lastName: json["lastName"],
-    phone: json["phone"],
-    profileUrl: json["profileUrl"],
-    wallet: Wallet.fromMap(json["wallet"]),
-    rewardPoint: json["rewardPoint"],
-    isEmailVerified: json["isEmailVerified"],
-  );
+        firstName: json["firstName"],
+        lastName: json["lastName"],
+        phone: json["phone"],
+        email: json["email"],
+        profileUrl: json["profileUrl"],
+        wallet: Wallet.fromMap(json["wallet"]),
+        rewardPoint: json["rewardPoint"],
+        isEmailVerified: json["isEmailVerified"],
+        id: json["id"],
+      );
 
   Map<String, dynamic> toMap() => {
-    "firstName": firstName,
-    "lastName": lastName,
-    "phone": phone,
-    "profileUrl": profileUrl,
-    "wallet": wallet.toMap(),
-    "rewardPoint": rewardPoint,
-    "isEmailVerified": isEmailVerified,
-  };
+        "firstName": firstName,
+        "lastName": lastName,
+        "phone": phone,
+        "profileUrl": profileUrl,
+        "email": email ?? "",
+        "wallet": wallet.toMap(),
+        "rewardPoint": rewardPoint,
+        "isEmailVerified": isEmailVerified,
+        "id": id,
+      };
 }
 
 class Wallet {
@@ -108,10 +111,10 @@ class Wallet {
   int balance;
 
   factory Wallet.fromMap(Map<String, dynamic> json) => Wallet(
-    balance: json["balance"],
-  );
+        balance: json["balance"],
+      );
 
   Map<String, dynamic> toMap() => {
-    "balance": balance,
-  };
+        "balance": balance,
+      };
 }

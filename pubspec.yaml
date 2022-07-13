@@ -1,7 +1,7 @@
 name: jekawin_mobile_flutter
 description: A new Flutter project.
 
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: 'none'
 
 version: 1.0.0+1
 
@@ -16,37 +16,25 @@ dependencies:
   get: ^4.6.1
   responsive_builder: ^0.4.1
   shared_preferences: ^2.0.1
-  #share
   share_plus:
   google_fonts: ^2.1.0
   get_storage: ^2.0.3
-  #cahable network images
   cached_network_image: ^3.2.0
-  #cache_image: ^1.0.5
   logger: ^1.1.0
   oktoast: ^3.1.5
   gap: ^2.0.0
-  #svg images
   flutter_svg: ^1.0.3
   pinput: ^2.2.5
-  #functional programming in Dart
   dartz: ^0.10.1
-  #Http client for Dart
   dio: ^4.0.6
-  #dotted lines
   dotted_border: ^2.0.0+2
-  #hide files forn producttion
   flutter_dotenv: ^5.0.2
-  #localization
   intl: ^0.17.0
-  #mocks
   mockito: ^5.1.0
-  #custom widgets for ios/android
   flutter_platform_widgets: ^1.20.0
-  #loacal storage
   hive: null
   hive_flutter: null
-  image_picker: null
+  image_picker:
   equatable: ^2.0.3
   path_provider: ^2.0.9
   custom_check_box: ^0.0.4
@@ -54,13 +42,14 @@ dependencies:
   font_awesome_flutter: ^10.1.0
   flutter_switch: ^0.3.2
   webview_flutter: ^3.0.4
+  modal_bottom_sheet:
+  aws_s3_plugin_flutter:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner: null
   hive_generator: null
-  # Run flutter packages pub run build_runner build to generate adapters
   flutter_lints: ^1.0.0
 
 

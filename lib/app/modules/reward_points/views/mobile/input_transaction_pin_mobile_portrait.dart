@@ -97,7 +97,7 @@ class InputTransactionPinMobilePortrait extends StatelessWidget {
               CustomButton(
                 buttonText: "Enter",
                 onPressed: () => Get.to(
-                  () => const SuccessOrFailureMobileView(
+                  () => SuccessOrFailureMobileView(
                     msg: 'You have successfully shared 0 RPT',
                     className: JekawinBottomTabs(
                       tabIndex: 4,

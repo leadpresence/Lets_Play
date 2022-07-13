@@ -6,9 +6,17 @@ class LocalStorage {
     return GetStorage().write("token", tokenValue);
   }
 
+  static saveEmail(String emailValue) {
+    return GetStorage().write("email", emailValue);
+  }
+
   /// use this to [getToken] from local storage
   static getToken() {
     return GetStorage().read("token");
+  }
+
+  static getEmail() {
+    return GetStorage().read("email");
   }
 
   /// use this to [deleteToken] from local storage

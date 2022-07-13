@@ -22,6 +22,11 @@ class CongratulationsView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Image.asset('assets/jpgs/bubble_.png'),
+            const SizedBox(
+              height: 24,
+            ),
+            // Image.asset('assets/jpgs/CONGRATULATIONS.png'),
             Text(
               'CONGRATULATIONS',
               style: GoogleFonts.lemon(
@@ -66,7 +71,7 @@ class CongratulationsView extends StatelessWidget {
                     buttonTextColor: const Color(0xffFE7A01),
                     onPressed: () {
                       Get.to(
-                        () => const JekawinBottomTabs(
+                        () => JekawinBottomTabs(
                           tabIndex: 0,
                         ),
                         transition: Transition.cupertino,

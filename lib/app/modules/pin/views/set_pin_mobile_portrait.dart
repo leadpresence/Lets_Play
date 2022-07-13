@@ -7,13 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:jekawin_mobile_flutter/app/modules/pin/controllers/set_pin_controllers.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_otp_field.dart';
-
-import '../../../widgets/count_down.dart';
-import '../../dashboard/views/mobile/dashboard_mobile_portrait.dart';
 import '../../e_shop/views/mobile/success_or_failure_mobile_view.dart';
-import '../../jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
-import '../../login/views/login.dart';
-import '../../user_profile/views/mobile/user_profile_mobile_portrait.dart';
 import '../../user_profile/views/user_profile_view.dart';
 
 class SetPinMobilePortrait extends GetView<SetPinController> {
@@ -22,8 +16,7 @@ class SetPinMobilePortrait extends GetView<SetPinController> {
   SetPinMobilePortrait({Key? key}) : super(key: key);
 
   @override
-  final SetPinController resetPasswordController =
-  Get.put(SetPinController());
+  final SetPinController resetPasswordController = Get.put(SetPinController());
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +35,7 @@ class SetPinMobilePortrait extends GetView<SetPinController> {
             onPressed: () {
               Get.back();
               // Get.to(
-              //       () => const JekawinBottomTabs(
+              //       () => JekawinBottomTabs(
               //     tabIndex: 0,
               //     isGuestUser: false,
               //   ),
@@ -62,7 +55,6 @@ class SetPinMobilePortrait extends GetView<SetPinController> {
                 phoneNumber: phoneNumber,
               ),
               const Gap(18),
-
               Text(
                 'Pin Code',
                 textAlign: TextAlign.left,
@@ -71,17 +63,15 @@ class SetPinMobilePortrait extends GetView<SetPinController> {
                     fontStyle: FontStyle.normal,
                     color: Colors.black,
                     fontSize: 16 // italic
-                ),
+                    ),
               ),
               const Gap(10),
-
               CustomOtpField(
                 key: key,
                 pinController: controller.pinController,
                 onComplete: () {},
               ),
               const Gap(18),
-
               Text(
                 'Confirm Pin Code',
                 style: GoogleFonts.mulish(
@@ -89,7 +79,7 @@ class SetPinMobilePortrait extends GetView<SetPinController> {
                     fontStyle: FontStyle.normal,
                     color: Colors.black,
                     fontSize: 16 // italic
-                ),
+                    ),
               ),
               const Gap(10),
               CustomOtpField(
@@ -104,18 +94,17 @@ class SetPinMobilePortrait extends GetView<SetPinController> {
                   hasIcon: false,
                   buttonText: 'Submit',
                   onPressed: () {
-
                     Get.to(
-                          () => const SuccessOrFailureMobileView(
+                      () => SuccessOrFailureMobileView(
                         msg: "Transaction pin set successful",
-                        className: UserProfileView(),),
+                        className: UserProfileView(),
+                      ),
                       transition: Transition.cupertino,
                     );
                   },
                 ),
               ),
               const Gap(16),
-
               const Gap(12),
             ],
           ),
@@ -142,7 +131,7 @@ class OtpHeader extends StatelessWidget {
               fontStyle: FontStyle.normal,
               color: Colors.black,
               fontSize: 24 // italic
-          ),
+              ),
         ), //Pin Code
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),

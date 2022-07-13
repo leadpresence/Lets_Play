@@ -1,28 +1,19 @@
 import 'dart:convert';
 
-// AuthResponseModel authResponseModelFromJson(String str) => AuthResponseModel.fromJson(json.decode(str));
-//
-// String authResponseModelToJson(AuthResponseModel data) => json.encode(data.toJson());
-
-class AuthResponseModel {
-  bool success;
+class AddEmailResponseModel {
   String message;
   Body body;
-  AuthResponseModel({
-    required this.success,
+  AddEmailResponseModel({
     required this.body,
     required this.message,
   });
 
-  factory AuthResponseModel.fromJson(Map<String, dynamic> json) =>
-      AuthResponseModel(
-        success: json["success"],
+  factory AddEmailResponseModel.fromJson(Map<String, dynamic> json) => AddEmailResponseModel(
         message: json["message"],
         body: Body.fromJson(json["body"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "success": success,
         "message": message,
         "body": body.toJson(),
       };

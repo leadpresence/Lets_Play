@@ -19,20 +19,20 @@ class SignUpController extends GetxController {
   final passwordController = TextEditingController();
 
   var isLoading = false.obs;
-  RxString errorFirstNameMessage = "".obs;
-  RxString errorLastNameMessage = "".obs;
+  RxString errorfirstNameMessage = "".obs;
+  RxString errorlastNameMessage = "".obs;
   RxString errorPhoneNumberMessage = "".obs;
   RxString errorPasswordMessage = "".obs;
 
   void clearErrorPhoneNumber() => errorPhoneNumberMessage.value = '';
-  void clearErrorFirstName() => errorFirstNameMessage.value = '';
+  void clearErrorfirstName() => errorfirstNameMessage.value = '';
   void clearErrorPassword() => errorPasswordMessage.value = '';
-  void clearErrorLastName() => errorLastNameMessage.value = '';
+  void clearErrorlastName() => errorlastNameMessage.value = '';
 
   signUpFormValidator(Key? k) {
     if ((GetUtils.isBlank(firstNameController.text)) == true) {
-      GetStorage().write("firstname", firstNameController.text);
-      return errorFirstNameMessage.value =
+      GetStorage().write("firstName", firstNameController.text);
+      return errorfirstNameMessage.value =
           "      First name field cannot be blank.";
     } else if ((GetUtils.isBlank(phoneNumberController.text)) == true) {
       return errorPhoneNumberMessage.value =
@@ -57,9 +57,9 @@ class SignUpController extends GetxController {
   void onInit() {
     isLoading.value = false;
     clearErrorPhoneNumber();
-    clearErrorFirstName();
+    clearErrorfirstName();
     clearErrorPassword();
-    clearErrorLastName();
+    clearErrorlastName();
     super.onInit();
   }
 
@@ -88,9 +88,9 @@ class SignUpController extends GetxController {
     var userAgreed = agreementCheck.value;
     isLoading(true);
     final userData = await authService.signup(UserSignUpModel(
-      firstname: firstName,
-      lastname: lastName,
-      mobile: phoneNumber,
+      firstName: firstName,
+      lastName: lastName,
+      phone: phoneNumber,
       password: password,
       agreement: userAgreed,
     ));
@@ -112,12 +112,13 @@ class SignUpController extends GetxController {
     var userAgreed = agreementCheck.value;
     isLoading(true);
     final userData = await authService.signup(UserSignUpModel(
-      firstname: firstName,
-      lastname: lastName,
-      mobile: phoneNumber,
+      firstName: firstName,
+      lastName: lastName,
+      phone: phoneNumber,
       password: password,
       agreement: userAgreed,
     ));
+    // userData.b
     userData.fold((l) {
       // isLoading(false);
       BotToast.showText(text: l.message);

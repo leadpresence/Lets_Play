@@ -225,7 +225,7 @@ class SuggestEvents extends StatelessWidget {
                     child: CustomButton(
                       onPressed: () {
                         Get.to(
-                          () => const SuccessOrFailureMobileView(
+                          () => SuccessOrFailureMobileView(
                             msg: 'Event Suggestion Successful',
                             className: JekawinBottomTabs(
                               tabIndex: 4,

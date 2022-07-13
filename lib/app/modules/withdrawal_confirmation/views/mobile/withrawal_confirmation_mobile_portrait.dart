@@ -98,7 +98,7 @@ class WithdrawalConfirmationMobilePortrait
                 buttonText: 'Confirm withdrawal',
                 onPressed: () {
                   Get.to(
-                    () => const SuccessOrFailureMobileView(
+                    () => SuccessOrFailureMobileView(
                       msg:
                           "Your request is being processed",
                       className: JekawinBottomTabs(

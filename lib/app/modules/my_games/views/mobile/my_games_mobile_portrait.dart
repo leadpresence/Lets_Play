@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:jekawin_mobile_flutter/app/widgets/fade_in_animations.dart';
 
 import '../../../../widgets/custom_text_field.dart';
 import '../../../../widgets/slide_in_animation.dart';
@@ -38,13 +39,13 @@ class MyGamesMobilePortrait extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 24.0,
-            vertical: 12.0,
+            // vertical: 12.0,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SlideInAnimation(
-                duration: const Duration(milliseconds: 625),
+              FadeIn(
+                duration: const Duration(milliseconds: 100),
                 child: Align(
                   alignment: Alignment.center,
                   child: Text(
@@ -59,55 +60,103 @@ class MyGamesMobilePortrait extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 16,
+                height: 24,
               ),
-              CustomTextField(
-                hintText: "Search games",
-                textCapitalization: TextCapitalization.words,
-                // textController: ,
-                // prefixIcon: 'assets/svgs/search.svg',
-                keyboardType: TextInputType.text,
-                onChanged: (v) {
-                  if (v.isNotEmpty) {}
-                },
+              SizedBox(
+                height: 40,
+                child: CustomTextField(
+                  hintText: "Search games",
+                  textCapitalization: TextCapitalization.words,
+                  // textController: ,
+                  prefixIcon: 'assets/svgs/search.svg',
+                  keyboardType: TextInputType.text,
+                  onChanged: (v) {
+                    if (v.isNotEmpty) {}
+                  },
+                ),
               ),
-
-              const Gap(20),
-              //
-              //   controller.games.isEmpty?
-              // SizedBox(
-              // height: Get.height * .35,
-              //   child: const Center(
-              //     child: Text(
-              //       'No Games yet,\n All games will show here.',
-              //       style: TextStyle(
-              //         fontSize: 18,
-              //         color: Color(0xff414249),
-              //       ),
-              //       textAlign: TextAlign.center,
-              //     ),
-              //   ),
-              // ):
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
-                scrollDirection: Axis.vertical,
-                itemCount: 14,
-                itemBuilder: (BuildContext context, int position) {
-                  return GestureDetector(
-                    child: gameItem(),
-                    onTap: () {
-                      Get.to(()=>
-                      const GameDetailMobilePortrait(
-                        gameCost: "50",
-                        numberOfGames: "1",
-                          ticketNumber:'562348\n876416\n930111\n098488'
-                      ));
-                    },
+              const Gap(16),
+              FutureBuilder<dynamic>(
+                future: controller.getAllPlayedGamesFunc(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Text(
+                        "Snapshot has error: ${snapshot.hasError.toString()}");
+                  } else if (snapshot.hasData) {
+                    var body = snapshot.data!;
+                    return body.body.games.length < 1
+                        ? const Text(
+                            "No Games History",
+                          )
+                        : ListView.builder(
+                            reverse: true,
+                            shrinkWrap: true,
+                            physics: const BouncingScrollPhysics(),
+                            scrollDirection: Axis.vertical,
+                            itemCount: body.body.games.length,
+                            itemBuilder: (BuildContext context, int position) {
+                              return FadeIn(
+                                duration: const Duration(milliseconds: 200),
+                                delay: const Duration(milliseconds: 200),
+                                child: GestureDetector(
+                                  child: gameItem(
+                                    date: body.body.games[position].createdAt
+                                        .toString(),
+                                    title:
+                                        body.body.games[position].gameId != null
+                                            ? body.body.games[position]
+                                                .gameId["title"]
+                                            : "",
+                                    amount:
+                                        body.body.games[position].amount == null
+                                            ? ""
+                                            : body.body.games[position].amount
+                                                .toString(),
+                                  ),
+                                  onTap: () {
+                                    Get.to(
+                                      () => GameDetailMobilePortrait(
+                                        date: body
+                                            .body.games[position].createdAt
+                                            .toString(),
+                                        gameCost: body.body.games[position]
+                                                    .amount ==
+                                                null
+                                            ? ""
+                                            : body.body.games[position].amount
+                                                .toString(),
+                                        numberOfGames: body
+                                            .body.games[position].duration
+                                            .toString(),
+                                        ticketNumber:
+                                            body.body.games[position].tickets,
+                                        title:
+                                            body.body.games[position].gameId !=
+                                                    null
+                                                ? body.body.games[position]
+                                                    .gameId["title"]
+                                                : "",
+                                        status:
+                                            body.body.games[position].status,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                          );
+                  }
+                  return const Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 24.0),
+                      child: CircularProgressIndicator(
+                        color: Color(0xffFE7A01),
+                        strokeWidth: 3,
+                      ),
+                    ),
                   );
                 },
               ),
-              // ),
             ],
           ),
         ),
@@ -115,52 +164,58 @@ class MyGamesMobilePortrait extends StatelessWidget {
     );
   }
 
-  Widget gameItem() {
+  Widget gameItem({date, title, amount}) {
     return Container(
-        padding: const EdgeInsets.all(12),
-        margin: const EdgeInsets.fromLTRB(8, 9, 8, 8),
-        decoration: BoxDecoration(
-          color: Colors.grey.shade200,
-          borderRadius: BorderRadius.circular(10),
+      padding: const EdgeInsets.all(12),
+      margin: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: Colors.grey.shade300,
         ),
-        child: Column(
-          children: [
-            Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    "01/04/22",
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ]),
-            const Gap(10),
-            Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Jackpot Maxi ",
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: Colors.black45,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  Text(
-                    "₦200.00",
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: Colors.black45,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  )
-                ]),
-          ],
-        ));
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                controller.f.format(DateTime.parse(date)),
+                style: GoogleFonts.mulish(
+                  fontSize: 12,
+                  color: const Color(0xFF414249),
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+          const Gap(16),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: Color(0xFF414249),
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Text(
+                '₦$amount.00',
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: Color(0xFF414249),
+                  fontWeight: FontWeight.bold,
+                ),
+              )
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }

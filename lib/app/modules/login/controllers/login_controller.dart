@@ -7,7 +7,6 @@ import '../../../config/services/auth_service.dart';
 import '../../jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
 
 class LoginController extends GetxController {
-
   final AuthServiceImpl authService = Get.find<AuthServiceImpl>();
   RxString numberObserver = ''.obs;
   final loginFormKey = GlobalKey<FormState>();
@@ -18,7 +17,6 @@ class LoginController extends GetxController {
   var isLoading = false.obs;
 
   void clearErrorPhoneNumber() => errorPhoneNumberMessage.value = '';
-
   void clearErrorPassword() => errorPasswordMessage.value = '';
 
   bool observePhoneNumber(String str) {
@@ -68,7 +66,9 @@ class LoginController extends GetxController {
     final userData = await authService.login(phoneNumber, password);
     userData.fold(
       (l) {
-        BotToast.showText(text: "An error occurred signing-in,please try again.");
+        BotToast.showText(
+          text: "An error occurred. Please try again.",
+        );
         isLoading.value = false;
       },
       (r) {
@@ -81,7 +81,7 @@ class LoginController extends GetxController {
     phoneNumberController.text = '';
     passwordController.text = '';
     Get.offAll(
-      () => const JekawinBottomTabs(
+      () => JekawinBottomTabs(
         tabIndex: 0,
         isGuestUser: true,
       ),

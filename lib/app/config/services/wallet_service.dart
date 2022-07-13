@@ -1,14 +1,8 @@
-import 'dart:convert';
 import 'dart:io';
-import 'package:bot_toast/bot_toast.dart';
 import 'package:dartz/dartz.dart';
-import 'package:dartz/dartz_unsafe.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:jekawin_mobile_flutter/app/modules/fund_wallet/models/payment_processor_model.dart';
-import 'package:jekawin_mobile_flutter/app/modules/select_account/models/bank_model.dart';
 import 'package:jekawin_mobile_flutter/app/modules/wallet_home/models/transaction_model.dart';
 import '../../constants/app_error.dart';
 import '../../constants/network_exceptions.dart';
@@ -72,7 +66,8 @@ class WalletServiceImpl extends WalletDataSource {
     utilsProvider.walletId.value = walletId;
     try {
       var raw = await httpProvider.postHttp(
-        '${JekawinBaseUrls.walletBaseUrl}wallets/$walletId/add-bank', payload);
+          '${JekawinBaseUrls.walletBaseUrl}wallets/$walletId/add-bank',
+          payload);
       if (raw['success']) {
         return const Right("Account saved successfully");
       } else {
@@ -151,7 +146,7 @@ class WalletServiceImpl extends WalletDataSource {
 
   @override
   Future<Either<AppError, String>> userTransactions() async {
-    String userId = GetStorage().read('userId');
+    String userId = GetStorage().read('currentUserID');
     try {
       var raw = await httpProvider.getHttp(
           '${JekawinBaseUrls.walletBaseUrl}users/$userId/transactions');
@@ -178,18 +173,17 @@ class WalletServiceImpl extends WalletDataSource {
 
   @override
   Future<Either<AppError, String>> userWallet() async {
-    String userId = GetStorage().read('userId');
-
+    var currentUserID = GetStorage().read('currentUserID');
     try {
       var raw = await httpProvider
-          .getHttp('${JekawinBaseUrls.walletBaseUrl}wallets/$userId');
+          .getHttp('${JekawinBaseUrls.walletBaseUrl}wallets/$currentUserID');
       UserWalletModel res = UserWalletModel.fromMap(raw);
       GetStorage().write('walletBalance', res.body.wallet.balance);
       GetStorage().write('walletId', res.body.id);
-      GetStorage().write('wins', res.body.wins);
-      GetStorage().write('rewardPoints', res.body.rewardPoints);
+      // GetStorage().write('wins', res.body.wins);
+      GetStorage().write('rewardPoints', res.body.rewardPoint);
 
-      if(res.body.banks.isNotEmpty){
+      if (res.body.banks.isNotEmpty) {
         utilsProvider.savedBanks.value.clear();
         utilsProvider.savedBanks.value.addAll(res.body.banks);
       }
@@ -219,7 +213,6 @@ class WalletServiceImpl extends WalletDataSource {
   @override
   Future<Either<AppError, String>> withdrawToBank(
       WithdrawalModel withdrawalData) async {
-
     Map<String, dynamic> payload = {
       'amount': withdrawalData.amount,
       'email': withdrawalData.email,
@@ -308,9 +301,9 @@ class WalletServiceImpl extends WalletDataSource {
 
   @override
   Future<List<TransactionsModel>> allWalletTransactions() async {
-    String userId = GetStorage().read('userId');
-    var raw = await httpProvider.getHttp(
-        '${JekawinBaseUrls.walletBaseUrl}users/$userId/transactions');
+    String userId = GetStorage().read('currentUserID');
+    var raw = await httpProvider
+        .getHttp('${JekawinBaseUrls.walletBaseUrl}users/$userId/transactions');
     AllTransactionsModel res = AllTransactionsModel.fromMap(raw);
     var listOfTransactions = res.body;
     return res.body;
@@ -318,8 +311,7 @@ class WalletServiceImpl extends WalletDataSource {
 
   @override
   Future<UserWalletModel> userWalletAsync() async {
-    String userId = GetStorage().read('userId');
-
+    String userId = GetStorage().read('currentUserID');
     var raw = await httpProvider
         .getHttp('${JekawinBaseUrls.walletBaseUrl}wallets/$userId');
     UserWalletModel res = UserWalletModel.fromMap(raw);
@@ -328,11 +320,10 @@ class WalletServiceImpl extends WalletDataSource {
 
   @override
   Future<String> userRewardPoint() async {
-    String userId = GetStorage().read('userId');
-
+    String userId = GetStorage().read('currentUserID');
     var raw = await httpProvider
         .getHttp('${JekawinBaseUrls.walletBaseUrl}wallets/$userId');
     UserWalletModel res = UserWalletModel.fromMap(raw);
-    return res.body.rewardPoints.toString();
+    return res.body.rewardPoint.toString();
   }
 }

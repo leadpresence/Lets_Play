@@ -196,7 +196,7 @@ class ReferralMobilePortrait extends GetView<ReferralController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    invite.firstname + "- " + "@" + invite.autoUsername,
+                    invite.firstName + "- " + "@" + invite.autoUsername,
                     style: TextStyle(
                       fontSize: 13,
                       color: const Color(0xFFFE7A01).withOpacity(.6),

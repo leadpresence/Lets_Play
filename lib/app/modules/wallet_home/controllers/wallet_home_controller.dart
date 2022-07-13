@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bot_toast/bot_toast.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:jekawin_mobile_flutter/app/config/services/wallet_service.dart';
@@ -8,10 +9,12 @@ import 'package:jekawin_mobile_flutter/app/modules/wallet_home/models/transactio
 import 'package:jekawin_mobile_flutter/app/modules/wallet_home/models/user_wallet_response.dart';
 
 import '../../../config/services/di/di_locator.dart';
+import '../../../config/services/games_service.dart';
 
 class WalletHomeController extends GetxController {
   final WalletServiceImpl walletService = Get.find<WalletServiceImpl>();
   final transactionsProvider = Get.find<UtilsController>();
+  final GamesServiceImpl gamesService = Get.put(GamesServiceImpl());
 
   var balance = 0.obs;
   var rewardPoints = 0.obs;

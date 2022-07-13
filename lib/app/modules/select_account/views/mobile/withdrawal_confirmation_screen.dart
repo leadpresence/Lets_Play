@@ -18,7 +18,8 @@ class WithdrawalConfirmation extends StatelessWidget {
   @override
   final SelectBankController controller = Get.put(SelectBankController());
 
-   WithdrawalConfirmation({Key? key,this.themeData, this.customAppTheme}) : super(key: key);
+  WithdrawalConfirmation({Key? key, this.themeData, this.customAppTheme})
+      : super(key: key);
 
   final ThemeData? themeData;
   final CustomAppTheme? customAppTheme;
@@ -28,100 +29,103 @@ class WithdrawalConfirmation extends StatelessWidget {
     BankModel account = controller.utilsProvider.withdrawalAccount.value[0];
 
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 0,
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.white,
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 16.0),
-            child: IconButton(
-              splashRadius: 24,
-              icon: SvgPicture.asset(
-                'assets/svgs/chevronLeft.svg',
-                color: const Color(0xff12121D),
-              ),
-              onPressed: () {
-                Get.back();
-              },
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 16.0),
+          child: IconButton(
+            splashRadius: 24,
+            icon: SvgPicture.asset(
+              'assets/svgs/chevronLeft.svg',
+              color: const Color(0xff12121D),
             ),
+            onPressed: () {
+              Get.back();
+            },
           ),
         ),
-        body: SingleChildScrollView(
-            child: Padding(
-                padding: const EdgeInsets.only(
-                  left: 24.0,
-                  right: 24.0,
-                  top: 12.0,
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(
+            left: 24.0,
+            right: 24.0,
+            top: 12.0,
+          ),
+          child: Column(
+            children: [
+              const Gap(10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    "Available Balance: ₦ ${controller.balance.value.toString()}",
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, // light
+                        fontStyle: FontStyle.normal,
+                        color: Colors.black,
+                        fontSize: 13 // italic
+                        ),
+                  )
+                ],
+              ),
+              BankItem(showBin: false, bankItem: account),
+              const Gap(10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Text(
+                    "A service charge of 1.4 % applies to card transactions.",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w300, // light
+                        fontStyle: FontStyle.normal,
+                        color: Colors.black,
+                        fontSize: 11 // italic
+                        ),
+                  )
+                ],
+              ),
+              const Gap(40),
+              CustomOtpField(
+                pinController: controller.pinController,
+                key: key,
+                onComplete: () {
+                  // controller.setOtp(controller.signUpOtpController.text);
+                },
+              ),
+              const Gap(5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Text(
+                    "Enter one time password to continue withdrawal request.",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w300, // light
+                        fontStyle: FontStyle.normal,
+                        color: Colors.black,
+                        fontSize: 11 // italic
+                        ),
+                  )
+                ],
+              ),
+              const Gap(25),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 4, 24, 10),
+                child: CustomButton(
+                  isLoading: controller.isLoading.value,
+                  buttonText: "Continue",
+                  onPressed: () {
+                    controller.withdrawalFormValidator();
+                  },
                 ),
-                child: Column(children: [
-
-                  const Gap(10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children:  [
-                      Text(
-                        "Available Balance: ₦ ${controller.balance.value.toString()}",
-                        style:const TextStyle(
-                            fontWeight: FontWeight.bold, // light
-                            fontStyle: FontStyle.normal,
-                            color: Colors.black,
-                            fontSize: 13 // italic
-                        ),
-                      )
-                    ],
-                  ),
-                  BankItem(showBin: false, bankItem: account),
-                  const Gap(10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
-                        "A service charge of 1.4 % applies to card transactions.",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w300, // light
-                            fontStyle: FontStyle.normal,
-                            color: Colors.black,
-                            fontSize: 11 // italic
-                        ),
-                      )
-                    ],
-                  ),
-                  const Gap(40),
-                  CustomOtpField(
-                    pinController: controller.pinController,
-                    key: key,
-                    onComplete: () {
-                      // controller.setOtp(controller.signUpOtpController.text);
-                    },
-                  ),
-                  const Gap(5),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
-                        "Enter one time password to continue withdrawal request.",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w300, // light
-                            fontStyle: FontStyle.normal,
-                            color: Colors.black,
-                            fontSize: 11 // italic
-                        ),
-                      )
-                    ],
-                  ),
-                  const Gap(25),
-
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(24, 4, 24, 10),
-                    child: CustomButton(
-                      isLoading: controller.isLoading.value,
-                      buttonText: "Continue",
-                      onPressed: () {
-                        controller.withdrawalFormValidator();
-                      },
-                    ),
-                  ),
-                  const Gap(40),
-                ]))));
+              ),
+              const Gap(40),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

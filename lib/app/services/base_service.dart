@@ -26,12 +26,19 @@ class BaseService {
     required String method,
   }) async {
     var token = await LocalStorage.getToken();
-    var res = _dio.request(url,
-        data: body,
-        options: Options(
-            method: method,
-            headers:
-                token != null ? {'authorization': 'Bearer $token'} : null));
+    var email = await LocalStorage.getEmail();
+    var res = _dio.request(
+      url,
+      data: body,
+      options: Options(
+        method: method,
+        headers: token != null
+            ? {'authorization': 'Bearer $token'}
+            : token != null && email != null
+                ? {'authorization': 'Bearer $token', 'email': email}
+                : null,
+      ),
+    );
     return res;
   }
 }

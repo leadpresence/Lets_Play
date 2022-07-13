@@ -6,13 +6,24 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../controller/my_games_controller.dart';
+
 class GameDetailMobilePortrait extends StatelessWidget {
-  final String ticketNumber, numberOfGames, gameCost;
+  final String title, status, numberOfGames, gameCost;
+  final List ticketNumber;
+  final date;
 
-  const GameDetailMobilePortrait({Key? key,  required this.ticketNumber,
+  GameDetailMobilePortrait({
+    Key? key,
+    required this.ticketNumber,
     required this.numberOfGames,
-    required this.gameCost,}) : super(key: key);
+    required this.gameCost,
+    required this.title,
+    required this.status,
+    this.date,
+  }) : super(key: key);
 
+  final MyGamesController controller = Get.put(MyGamesController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,20 +48,20 @@ class GameDetailMobilePortrait extends StatelessWidget {
         body: SafeArea(
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
-
-                children:  [
-              const Text(
-                'My Games',
-                style: TextStyle(
-                  fontSize: 24,
-                  color: Color(0xff414249),
-                ),
+                children: [
+              // Text(
+              //   title,
+              //   style: const TextStyle(
+              //     fontSize: 24,
+              //     color: Color(0xff414249),
+              //   ),
+              // ),
+              const Gap(
+                24,
               ),
-              const Gap(24,),
-
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 24.0),
-                padding: const EdgeInsets.all(24.0),
+                margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                padding: const EdgeInsets.all(16.0),
                 width: Get.width,
                 decoration: BoxDecoration(
                   color: const Color(0XFFFFF7EC),
@@ -59,7 +70,29 @@ class GameDetailMobilePortrait extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text(
+                      controller.f.format(DateTime.parse(date)),
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Color(0XFF414249),
+                        fontSize: 12,
+                        height: 1.4,
+                      ),
+                    ),
+                    const SizedBox(height: 18),
+                    Text(
+                      title,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Color(0XFF414249),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                        height: 1.4,
+                      ),
+                    ),
+                    const SizedBox(height: 24),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
@@ -67,17 +100,17 @@ class GameDetailMobilePortrait extends StatelessWidget {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Color(0XFF414249),
-                            fontSize: 16,
+                            fontSize: 14,
                             height: 1.4,
                           ),
                         ),
                         const SizedBox(width: 16),
                         Text(
-                          numberOfGames,
+                          numberOfGames.toString(),
                           style: GoogleFonts.mulish(
                             color: const Color(0xffFE7A01),
                             fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                            fontSize: 14,
                           ),
                         ),
                       ],
@@ -85,24 +118,54 @@ class GameDetailMobilePortrait extends StatelessWidget {
                     const SizedBox(height: 24),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
                           'Selected Numbers:',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Color(0XFF414249),
-                            fontSize: 16,
+                            fontSize: 14,
+                            height: 1.4,
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Column(
+                          children: [
+                            for (int i = 0; i < ticketNumber.length; i++)
+                              Text(
+                                ticketNumber[i].toString(),
+                                maxLines: 4,
+                                style: GoogleFonts.mulish(
+                                  color: const Color(0xffFE7A01),
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 1,
+                                  fontSize: 16,
+                                ),
+                              ),
+                          ],
+                        )
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Cost of Game:',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color(0XFF414249),
+                            fontSize: 14,
                             height: 1.4,
                           ),
                         ),
                         const SizedBox(width: 16),
                         Text(
-                          ticketNumber,
-                          maxLines: 4,
+                          '₦$gameCost.00',
                           style: GoogleFonts.mulish(
                             color: const Color(0xffFE7A01),
                             fontWeight: FontWeight.bold,
-                            letterSpacing: 4,
                             fontSize: 16,
                           ),
                         ),
@@ -110,19 +173,20 @@ class GameDetailMobilePortrait extends StatelessWidget {
                     ),
                     const SizedBox(height: 24),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
-                          'Cost of Game:',
+                          'Status:',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Color(0XFF414249),
-                            fontSize: 16,
+                            fontSize: 14,
                             height: 1.4,
                           ),
                         ),
                         const SizedBox(width: 16),
                         Text(
-                          '₦$gameCost',
+                          status.capitalizeFirst!,
                           style: GoogleFonts.mulish(
                             color: const Color(0xffFE7A01),
                             fontWeight: FontWeight.bold,
@@ -135,7 +199,6 @@ class GameDetailMobilePortrait extends StatelessWidget {
                   ],
                 ),
               ),
-
             ])));
   }
 }

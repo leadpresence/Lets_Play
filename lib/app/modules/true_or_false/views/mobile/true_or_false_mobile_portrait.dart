@@ -42,7 +42,7 @@ class TrueOrFalseMobilePortrait extends StatelessWidget {
               padding: const EdgeInsets.only(
                 left: 24.0,
                 right: 24.0,
-                bottom: 144.0,
+                bottom: 96.0,
               ),
               child: CustomButton(
                 buttonText: "Start Game",

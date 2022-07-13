@@ -12,13 +12,14 @@ class EditProfileView extends GetView<EditProfileController> {
   @override
   Widget build(BuildContext context) {
     return ScreenTypeLayout.builder(
-        mobile: (_) => OrientationLayoutBuilder(
-          portrait: (_) => EditProfileMobilePortrait(),
-          landscape: (_) => EditProfileMobilePortrait(),
-        ),
-        tablet: (_) => OrientationLayoutBuilder(
-          portrait: (_) => EditProfileMobilePortrait(),
-          landscape: (_) => EditProfileMobilePortrait(),
-        ));
+      mobile: (_) => OrientationLayoutBuilder(
+        portrait: (_) => EditProfileMobilePortrait(),
+        landscape: (_) => EditProfileMobilePortrait(),
+      ),
+      tablet: (_) => OrientationLayoutBuilder(
+        portrait: (_) => EditProfileMobilePortrait(),
+        landscape: (_) => EditProfileMobilePortrait(),
+      ),
+    );
   }
 }

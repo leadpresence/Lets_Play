@@ -13,13 +13,13 @@ import '../../jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
 import '../views/mobile/withdrawal_confirmation_screen.dart';
 
 class SelectBankController extends GetxController {
-
   final WalletServiceImpl walletService = Get.find<WalletServiceImpl>();
   final utilsProvider = Get.find<UtilsController>();
   TextEditingController amountController = TextEditingController();
   TextEditingController pinController = TextEditingController();
   var isLoading = false.obs;
-  Rx<List<BankModel>> savedBanksList = Rx<List<BankModel>>([]);
+
+  Rx<List<dynamic>> savedBanksList = Rx<List<dynamic>>([]);
   RxString errAmountMessage = "".obs;
   RxInt balance = 0.obs;
 
@@ -38,17 +38,15 @@ class SelectBankController extends GetxController {
   withdrawalFormValidator() {
     if (GetUtils.isBlank(pinController.text) == true) {
       BotToast.showText(text: "Pin can not be blank");
-    }
-    else {
+    } else {
       BankModel withdrawalAccount = utilsProvider.withdrawalAccount.value[0];
       var email = GetStorage().read('email');
 
       WithdrawalModel data = WithdrawalModel(
-          email: email,
+          email: 'felixpresence@gmail.com',
           accountNumber: withdrawalAccount.accountNumber,
           bankCode: withdrawalAccount.bankCode,
-          amount: int.parse(amountController.text.toString())
-      );
+          amount: int.parse(amountController.text.toString()));
       performWithdrawal(data);
     }
   }
@@ -65,9 +63,10 @@ class SelectBankController extends GetxController {
 
   Future<void> performWithdrawal(WithdrawalModel data) async {
     isLoading.value = true;
+
     final wallet = await walletService.withdrawToBank(data);
     wallet.fold((l) {
-      BotToast.showText(text: "Something went wrong on completing withdrawal,try again.");
+      BotToast.showText(text: l.message);
       isLoading.value = false;
     }, (r) {
       isLoading.value = false;
@@ -77,10 +76,10 @@ class SelectBankController extends GetxController {
 
   void navigateToSignUpSuccessful() {
     Get.to(
-          () => const SuccessOrFailureMobileView(
-           msg: 'Withdrawal successful',
-           className: JekawinBottomTabs(
-          tabIndex: 0,
+      () => SuccessOrFailureMobileView(
+        msg: 'Withdrawal successful',
+        className: JekawinBottomTabs(
+          tabIndex: 2,
           isGuestUser: true,
         ),
       ),
@@ -91,7 +90,7 @@ class SelectBankController extends GetxController {
   setWithdrawalAccount(BankModel account) {
     utilsProvider.withdrawalAccount.value.clear();
     utilsProvider.withdrawalAccount.value.add(account);
-    Get.to(()=>WithdrawalAmountScreen());
+    Get.to(() => WithdrawalAmountScreen());
   }
 
   @override

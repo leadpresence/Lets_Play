@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:hive/hive.dart';
 import 'package:jekawin_mobile_flutter/app/config/services/subscriber_service.dart';
 import 'package:jekawin_mobile_flutter/app/config/services/wallet_service.dart';
@@ -27,11 +28,12 @@ class UtilsController extends GetxController {
   RxString recentPaymentLink = "".obs;
   RxString walletId = "".obs;
   RxString accountName = "".obs;
+  RxString email = "".obs;
 
   RxList guestLists = [].obs;
   // RxList transactions = [].obs;
   Rx<List<Bank>> banks = Rx<List<Bank>>([]);
-  Rx<List<BankModel>> savedBanks = Rx<List<BankModel>>([]);
+  Rx<List<dynamic>> savedBanks = Rx<List<BankModel>>([]);
   Rx<List<BankModel>> withdrawalAccount = Rx<List<BankModel>>([]);
   Rx<List<TransactionsModel>> transactions = Rx<List<TransactionsModel>>([]);
   RxList paymentProcessors = [].obs;
@@ -43,34 +45,45 @@ class UtilsController extends GetxController {
 
   getPhoneNumber() => phoneNumber.value;
 
+  getEmail() => email.value;
+
   setProspectId(String prosId) {
-    prospectId .value= prosId;
+    prospectId.value = prosId;
   }
+
   setRecentPaymentLink(String link) {
-    recentPaymentLink.value= link;
+    recentPaymentLink.value = link;
+  }
+
+  setEmail(String emailT) {
+    email.value = emailT;
   }
 
   setOtp(String otpCode) {
-    otp.value= otpCode;
+    otp.value = otpCode;
   }
+
   setForgotPasswordToken(String token) {
-    forgotPasswordToken .value= token;
+    forgotPasswordToken.value = token;
   }
 
   setPhoneNumber(String mobile) {
     phoneNumber.value = mobile;
   }
 }
+
 //order matters here
-Future<void>  setDi()async {
-  Directory appDocDir = dotenv.get('APP_DEBUG') == 'true' ? Directory.current : await getApplicationDocumentsDirectory();
+Future<void> setDi() async {
+  Directory appDocDir = dotenv.get('APP_DEBUG') == 'true'
+      ? Directory.current
+      : await getApplicationDocumentsDirectory();
   Hive.init(appDocDir.path);
-  Get.lazyPut<HiveInterface>(()=>Hive);
+  Get.lazyPut<HiveInterface>(() => Hive);
   initHiveDb();
   Get.put(UserLocalDataSourceImpl());
-  Get.lazyPut<HttpService>(()=>HttpServiceImpl());
-  Get.lazyPut<UtilsController> (()=>UtilsController());
-  Get.put (AuthServiceImpl());
-  Get.put (WalletServiceImpl());
-  Get.put (SubscriberServiceImpl());
+  Get.lazyPut<HttpService>(() => HttpServiceImpl());
+  Get.lazyPut<UtilsController>(() => UtilsController());
+  Get.put(AuthServiceImpl());
+  Get.put(WalletServiceImpl());
+  Get.put(SubscriberServiceImpl());
 }
