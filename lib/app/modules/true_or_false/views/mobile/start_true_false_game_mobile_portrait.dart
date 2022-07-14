@@ -313,7 +313,7 @@ class StartTrueFalseGameMobilePortrait extends StatelessWidget {
         return AlertDialog(
           backgroundColor: Colors.transparent,
           content: Container(
-            height: Get.height * .4,
+            height: Get.height * .44,
             width: Get.width * .9,
             decoration: BoxDecoration(
               color: Colors.white,

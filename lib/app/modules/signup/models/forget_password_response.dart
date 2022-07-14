@@ -11,48 +11,44 @@ String forgetPasswordResponseToMap(ForgetPasswordResponse data) => json.encode(d
 
 class ForgetPasswordResponse {
   ForgetPasswordResponse({
+    required this.statusCode,
     required this.success,
-    required this.data,
+    required this.message,
+    required this.body,
   });
 
+  int statusCode;
   bool success;
-  Data data;
+  String message;
+  Body body;
 
   factory ForgetPasswordResponse.fromMap(Map<String, dynamic> json) => ForgetPasswordResponse(
+    statusCode: json["statusCode"],
     success: json["success"],
-    data: Data.fromMap(json["data"]),
+    message: json["message"],
+    body: Body.fromMap(json["body"]),
   );
 
   Map<String, dynamic> toMap() => {
+    "statusCode": statusCode,
     "success": success,
-    "data": data.toMap(),
+    "message": message,
+    "body": body.toMap(),
   };
 }
 
-class Data {
-  Data({
-    required this.prospectId,
-    required this.otp,
-    required this.ttl,
-    required this.createdAt,
+class Body {
+  Body({
+    required this.reference,
   });
 
-  String prospectId;
-  String otp;
-  int ttl;
-  DateTime createdAt;
+  String reference;
 
-  factory Data.fromMap(Map<String, dynamic> json) => Data(
-    prospectId: json["prospectId"],
-    otp: json["otp"],
-    ttl: json["ttl"],
-    createdAt: DateTime.parse(json["createdAt"]),
+  factory Body.fromMap(Map<String, dynamic> json) => Body(
+    reference: json["reference"],
   );
 
   Map<String, dynamic> toMap() => {
-    "prospectId": prospectId,
-    "otp": otp,
-    "ttl": ttl,
-    "createdAt": createdAt.toIso8601String(),
+    "reference": reference,
   };
 }

@@ -58,6 +58,14 @@ class EditProfileController extends GetxController {
       return emailErrorMessage.value = 'Email Address field cannot be blank';
     } else if (!GetUtils.isEmail(emailTextController.text)) {
       return emailErrorMessage.value = 'Invalid Email Address';
+    } else {}
+  }
+
+  emailValidator(Key? k) {
+    if ((GetUtils.isBlank(emailTextController.text)) == true) {
+      return emailErrorMessage.value = 'Email Address field cannot be blank';
+    } else if (!GetUtils.isEmail(emailTextController.text)) {
+      return emailErrorMessage.value = 'Invalid Email Address';
     } else {
       showAddEmailAlertDialog(k);
     }

@@ -109,7 +109,7 @@ class FundWalletController extends GetxController {
   Future<void> getPaymentLink() async {
     isLoading.value = true;
     var amount = amountController.text.toString();
-    var email = emailController.text.toString();
+    var email = GetStorage().read('email');
     var selectedProcessor = processorId.value.toString();
     final link =
         await walletService.paymentLink(amount, email, selectedProcessor);

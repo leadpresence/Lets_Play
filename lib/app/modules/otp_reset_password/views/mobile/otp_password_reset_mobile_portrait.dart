@@ -40,53 +40,57 @@ class OtpPasswordResetMP extends GetView<OtpResetPasswordController> {
           ),
         ),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
-          child: Column(
-            children: [
-              OtpHeader(
-                key: key,
-                phoneNumber: phoneNumber,
-              ),
-              CustomOtpField(
-                key: key,
-                pinController: controller.otpController,
-                onComplete: () {
-                  controller.setOtp(controller.otpController.text);
-                },
-              ),
-              const Gap(48),
-              Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: CustomButton(
-                  hasIcon: false,
-                  buttonText: 'Submit',
-                  onPressed: () {
-                    controller.verifyResetPasswordOtp(key);
+      body: Obx(
+        () => SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
+            child: Column(
+              children: [
+                OtpHeader(
+                  key: key,
+                  phoneNumber: phoneNumber,
+                ),
+                CustomOtpField(
+                  key: key,
+                  pinController: controller.otpController,
+                  onComplete: () {
+                    controller.setOtp(controller.otpController.text);
                   },
                 ),
-              ),
-              const Gap(16),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24.0,
-                  vertical: 8.0,
+                const Gap(48),
+                Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: CustomButton(
+                    isLoading: controller.isLoading.value,
+                    hasIcon: false,
+                    buttonText: 'Submit',
+                    onPressed: () {
+                      controller.verifyResetPasswordOtp(key);
+                    },
+                  ),
                 ),
-                width: Get.width,
-                child: Countdown(
-                  onPressed: () => {
-                    resetPasswordController.resendRequestForgotPasswordOtp(key),
-                    controller.startTimer(),
-                  },
-                  animation: StepTween(
-                    begin: 300,
-                    end: 0,
-                  ).animate(controller.animationController.value),
+                const Gap(16),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24.0,
+                    vertical: 8.0,
+                  ),
+                  width: Get.width,
+                  child: Countdown(
+                    onPressed: () => {
+                      resetPasswordController
+                          .resendRequestForgotPasswordOtp(key),
+                      controller.startTimer(),
+                    },
+                    animation: StepTween(
+                      begin: 300,
+                      end: 0,
+                    ).animate(controller.animationController.value),
+                  ),
                 ),
-              ),
-              const Gap(12),
-            ],
+                const Gap(12),
+              ],
+            ),
           ),
         ),
       ),

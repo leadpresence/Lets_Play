@@ -35,6 +35,7 @@ class DashboardMobilePortrait extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var email = GetStorage().read('email');
     var firstName = GetStorage().read("firstName");
     return Scaffold(
       body: SafeArea(
@@ -96,7 +97,66 @@ class DashboardMobilePortrait extends StatelessWidget {
                     future: walletController.getWalletAsync(),
                     builder: (context, snapshot) {
                       if (snapshot.hasError) {
-                        return Center(child: Text(snapshot.error.toString()));
+                        return Container(
+                          padding: const EdgeInsets.only(
+                            top: 18,
+                            bottom: 12,
+                            left: 16,
+                            right: 16,
+                          ),
+                          width: Get.width,
+                          height: Get.height * .19,
+                          decoration: BoxDecoration(
+                            color: const Color(0XFF543884),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Center(
+                                child: CupertinoActivityIndicator(
+                                  radius: 12.0,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  CustomMediumButton(
+                                    onPressed: () {
+                                      BotToast.showText(
+                                        text:
+                                            "We are unable to get wallet details, try again",
+                                      );
+                                    },
+                                    width: Get.width * .38,
+                                    fontSize: 12.0,
+                                    buttonText: 'Fund wallet',
+                                    buttonColor: Colors.white,
+                                    buttonTextColor: const Color(0xff414249),
+                                  ),
+                                  const SizedBox(
+                                    width: 12,
+                                  ),
+                                  CustomMediumButton(
+                                    onPressed: () {
+                                      BotToast.showText(
+                                        text:
+                                            "We are unable to get wallet details, try again",
+                                      );
+                                    },
+                                    width: Get.width * .38,
+                                    fontSize: 12.0,
+                                    buttonText: 'Withdraw',
+                                    buttonColor: Colors.white,
+                                    buttonTextColor: const Color(0xff414249),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        );
                       } else if (snapshot.hasData) {
                         UserWalletModel? walletData = snapshot.data;
                         if (walletData != null) {
@@ -127,7 +187,7 @@ class DashboardMobilePortrait extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      "₦ " +
+                                      "₦" +
                                           walletData.body.wallet.balance
                                               .toString(),
                                       style: const TextStyle(
@@ -261,108 +321,111 @@ class DashboardMobilePortrait extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 4),
-                InkWell(
-                  onTap: () => {
-                    Get.to(
-                      () => EditProfileMobilePortrait(),
-                      transition: Transition.cupertino,
-                    ),
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(18),
-                      border: Border.all(
-                        width: 2,
-                        color: const Color(0XFFFE7A01),
-                      ),
-                    ),
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 20.0,
-                      vertical: 24.0,
-                    ),
-                    padding: const EdgeInsets.only(
-                      top: 18,
-                      bottom: 18,
-                      left: 16,
-                      right: 16,
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        SizedBox(
-                          height: 58,
-                          width: 58,
-                          child: Stack(
-                            children: const <Widget>[
-                              SizedBox(
-                                height: 58,
-                                width: 58,
-                                child: CircularProgressIndicator(
-                                  value: 1,
-                                  strokeWidth: 1.6,
-                                  color: Color(0xffD9D9D9),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 58,
-                                width: 58,
-                                child: CircularProgressIndicator(
-                                  value: .7,
-                                  strokeWidth: 1.6,
-                                  color: Color(0xFFFE7A01),
-                                ),
-                              ),
-                              Center(
-                                child: Text(
-                                  '70%',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: .4,
-                                    color: Color(0xFFFE7A01),
-                                  ),
-                                ),
-                              ),
-                            ],
+                email == null
+                    ? InkWell(
+                        onTap: () => {
+                          Get.to(
+                            () => EditProfileMobilePortrait(),
+                            transition: Transition.cupertino,
                           ),
-                        ),
-                        const Gap(18),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Complete profile setup',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0XFFFE7A01),
-                              ),
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(18),
+                            border: Border.all(
+                              width: 2,
+                              color: const Color(0XFFFE7A01),
                             ),
-                            const Gap(8),
-                            SizedBox(
-                              width: Get.width * .52,
-                              child: Wrap(
-                                children: const [
-                                  Text(
-                                    'Verify your Email to fund your wallet and have full access to all games.',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Color(0xff000000),
-                                      height: 1.4,
+                          ),
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: 20.0,
+                            vertical: 24.0,
+                          ),
+                          padding: const EdgeInsets.only(
+                            top: 18,
+                            bottom: 18,
+                            left: 16,
+                            right: 16,
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              SizedBox(
+                                height: 58,
+                                width: 58,
+                                child: Stack(
+                                  children: const <Widget>[
+                                    SizedBox(
+                                      height: 58,
+                                      width: 58,
+                                      child: CircularProgressIndicator(
+                                        value: 1,
+                                        strokeWidth: 1.6,
+                                        color: Color(0xffD9D9D9),
+                                      ),
                                     ),
-                                    textAlign: TextAlign.start,
+                                    SizedBox(
+                                      height: 58,
+                                      width: 58,
+                                      child: CircularProgressIndicator(
+                                        value: .7,
+                                        strokeWidth: 1.6,
+                                        color: Color(0xFFFE7A01),
+                                      ),
+                                    ),
+                                    Center(
+                                      child: Text(
+                                        '70%',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          letterSpacing: .4,
+                                          color: Color(0xFFFE7A01),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const Gap(18),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'Complete profile setup',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0XFFFE7A01),
+                                    ),
+                                  ),
+                                  const Gap(8),
+                                  SizedBox(
+                                    width: Get.width * .52,
+                                    child: Wrap(
+                                      children: const [
+                                        Text(
+                                          'Verify your Email to fund your wallet and have full access to all games.',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: Color(0xff000000),
+                                            height: 1.4,
+                                          ),
+                                          textAlign: TextAlign.start,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
-                            ),
-                          ],
+                              const SizedBox(width: 8),
+                              SvgPicture.asset(
+                                  'assets/svgs/complete_arrow.svg'),
+                            ],
+                          ),
                         ),
-                        const SizedBox(width: 8),
-                        SvgPicture.asset('assets/svgs/complete_arrow.svg'),
-                      ],
-                    ),
-                  ),
-                ),
+                      )
+                    : const SizedBox(),
                 const SizedBox(height: 12),
                 SizedBox(
                   height: 360,
@@ -383,9 +446,8 @@ class DashboardMobilePortrait extends StatelessWidget {
                                 child: PageView.builder(
                                   scrollDirection: Axis.horizontal,
                                   itemCount: JackpotGameResponse.fromJson(
-                                          dashboardController.body,)
-                                      .body
-                                      .length,
+                                    dashboardController.body,
+                                  ).body.length,
                                   controller:
                                       dashboardController.pageController,
                                   physics: const ScrollPhysics(),

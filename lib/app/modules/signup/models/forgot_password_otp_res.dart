@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final forgetPasswordOtpResponse = forgetPasswordOtpResponseFromMap(jsonString);
+
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
@@ -5,31 +9,46 @@ ForgetPasswordOtpResponse forgetPasswordOtpResponseFromMap(String str) => Forget
 
 String forgetPasswordOtpResponseToMap(ForgetPasswordOtpResponse data) => json.encode(data.toMap());
 
-class
-ForgetPasswordOtpResponse {
+class ForgetPasswordOtpResponse {
   ForgetPasswordOtpResponse({
-   required this.success,
-   required this.token,
-   required this.validity,
-   required this.message,
+    required this.success,
+    required this.statusCode,
+    required this.message,
+    required this.body,
   });
 
   bool success;
-  String token;
-  String validity;
+  int statusCode;
   String message;
+  Body body;
 
   factory ForgetPasswordOtpResponse.fromMap(Map<String, dynamic> json) => ForgetPasswordOtpResponse(
     success: json["success"],
-    token: json["token"],
-    validity: json["validity"],
+    statusCode: json["statusCode"],
     message: json["message"],
+    body: Body.fromMap(json["body"]),
   );
 
   Map<String, dynamic> toMap() => {
     "success": success,
-    "token": token,
-    "validity": validity,
+    "statusCode": statusCode,
     "message": message,
+    "body": body.toMap(),
+  };
+}
+
+class Body {
+  Body({
+    required this.token,
+  });
+
+  String token;
+
+  factory Body.fromMap(Map<String, dynamic> json) => Body(
+    token: json["token"],
+  );
+
+  Map<String, dynamic> toMap() => {
+    "token": token,
   };
 }

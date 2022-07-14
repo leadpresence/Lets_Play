@@ -13,7 +13,6 @@ import 'package:jekawin_mobile_flutter/app/modules/signup/models/forgot_password
 import 'package:jekawin_mobile_flutter/app/modules/signup/models/user_singed_up_response.dart';
 import '../../constants/network_exceptions.dart';
 import '../../modules/edit_profile/models/add_email_response_model.dart';
-import 'package:dio/dio.dart';
 import '../../modules/edit_profile/models/verified_email_response_model.dart';
 import '../../modules/signup/models/resendotp_resonse_model.dart';
 import '../../modules/signup/models/user_sign_up_model.dart';
@@ -89,6 +88,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
       GetStorage().write('referralCode', "inviteLink");
       GetStorage().write('token', res.body.token);
       GetStorage().write('currentUserID', res.body.user.id);
+      GetStorage().write('email', '');
 
       if (raw['success']) {
         if (kDebugMode) {
@@ -155,7 +155,6 @@ class AuthServiceImpl extends AuthServiceDataSource {
       GetStorage().write('isEmailVerified', res.body.user.isEmailVerified);
       GetStorage().write('currentUserID', res.body.user.id);
       GetStorage().write('email', res.body.user.email);
-      GetStorage().write('isEmailVerified', res.body.user.isEmailVerified);
       if (raw['success']) {
         return const Right("Login Successful");
       } else {
@@ -176,17 +175,14 @@ class AuthServiceImpl extends AuthServiceDataSource {
 
   @override
   Future<Either<AppError, String>> forgetPassword(String mobile) async {
-    Map<String, dynamic> payload = {"mobile": mobile};
+    Map<String, dynamic> payload = {"phone": mobile};
     try {
       var raw = await httpProvider.postHttp(
-          '${JekawinBaseUrls.authBaseUrl}forgetpassword', payload);
+          '${JekawinBaseUrls.authBaseUrl}forgot-password', payload);
       if (raw['success']) {
         ForgetPasswordResponse res = ForgetPasswordResponse.fromMap(raw);
-        utilsProvider.setProspectId(res.data.prospectId);
-        utilsProvider.setOtp(res.data.otp);
-
+        utilsProvider.setProspectId(res.body.reference);
         utilsProvider.setPhoneNumber(mobile);
-
         return const Right("Otp sent Successful for password reset");
       } else {
         return Left(
@@ -207,15 +203,14 @@ class AuthServiceImpl extends AuthServiceDataSource {
   @override
   Future<Either<AppError, String>> verifyResetPasswordOtp(String Otp) async {
     String prospectId = utilsProvider.getProspectId();
-    Map<String, dynamic> payload = {"prospectId": prospectId, 'otp': Otp};
-
+    Map<String, dynamic> payload = {"reference": prospectId, 'otp': Otp};
     try {
       var raw = await httpProvider.postHttp(
-          '${JekawinBaseUrls.authBaseUrl}forgetpassword_otp', payload);
+          '${JekawinBaseUrls.authBaseUrl}verify-forgot-password-token',
+          payload);
       if (raw['success']) {
         ForgetPasswordOtpResponse res = ForgetPasswordOtpResponse.fromMap(raw);
-        utilsProvider.setForgotPasswordToken(res.token);
-
+        utilsProvider.setForgotPasswordToken(res.body.token);
         return Right(res.message);
       } else {
         return Left(
@@ -241,9 +236,12 @@ class AuthServiceImpl extends AuthServiceDataSource {
       "token": tokenProvider,
     };
     try {
+      print(token);
       var raw = await httpProvider.postHttp(
-          '${JekawinBaseUrls.authBaseUrl}resetpassword/$tokenProvider', payload,
-          params: token);
+        '${JekawinBaseUrls.authBaseUrl}reset-password',
+        payload,
+        params: token,
+      );
       if (raw['success']) {
         return const Right("Password reset successful");
       } else {
@@ -325,6 +323,8 @@ class AuthServiceImpl extends AuthServiceDataSource {
         payload,
       );
       VerifiedEmailResponse res = VerifiedEmailResponse.fromMap(raw);
+      GetStorage().write('email', res.body.email);
+      GetStorage().write('isEmailVerified', res.body.isEmailVerified);
       utilsProvider.setProspectId(res.body.email);
       if (raw['success']) {
         return const Right("Success");

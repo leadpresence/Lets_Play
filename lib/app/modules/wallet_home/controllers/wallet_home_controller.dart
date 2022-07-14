@@ -12,8 +12,8 @@ import '../../../config/services/di/di_locator.dart';
 import '../../../config/services/games_service.dart';
 
 class WalletHomeController extends GetxController {
-  final WalletServiceImpl walletService = Get.find<WalletServiceImpl>();
-  final transactionsProvider = Get.find<UtilsController>();
+  final WalletServiceImpl walletService = Get.put(WalletServiceImpl());
+  final UtilsController transactionsProvider = Get.put(UtilsController());
   final GamesServiceImpl gamesService = Get.put(GamesServiceImpl());
 
   var balance = 0.obs;
@@ -35,14 +35,15 @@ class WalletHomeController extends GetxController {
     try {
       return trxns;
     } catch (e) {
-      BotToast.showText(text: "Error occured retrieving history");
+      BotToast.showText(text: "Error occurred retrieving history");
     }
     return [];
   }
+
   Future<UserWalletModel?> getWalletAsync() async {
-  UserWalletModel userWallet = await walletService.userWalletAsync();
+    UserWalletModel userWallet = await walletService.userWalletAsync();
     try {
-      return userWallet ;
+      return userWallet;
     } catch (e) {
       print("Error retrieving Balance");
     }
