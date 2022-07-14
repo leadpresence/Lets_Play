@@ -215,8 +215,12 @@ class JackpotGamesDetailsMobilePortrait extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(height: 4.0),
-                                  Text(
-                                      'You\'ll be deducted ₦$gameCost for this operation'),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16.0),
+                                    child: Text(
+                                        'You\'ll be deducted ₦$gameCost for this operation'),
+                                  ),
                                   const SizedBox(height: 24.0),
                                   Obx(
                                     () => SizedBox(

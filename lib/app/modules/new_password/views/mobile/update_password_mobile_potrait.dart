@@ -74,7 +74,7 @@ class UpdatePasswordMobilePortrait extends GetView<UpdatePasswordController> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Update your Password",
+                      "Update your password",
                       style: GoogleFonts.mulish(
                           fontWeight: FontWeight.normal, // light
                           fontStyle: FontStyle.normal,

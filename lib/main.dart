@@ -11,6 +11,7 @@ import 'app/config/services/di/di_locator.dart';
 
 void main() async {
   await GetStorage.init();
+  GetStorage().write('email', "");
   WidgetsFlutterBinding.ensureInitialized();
   // DashboardController();
   await dotenv.load(fileName: 'dotenv');
@@ -50,4 +51,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

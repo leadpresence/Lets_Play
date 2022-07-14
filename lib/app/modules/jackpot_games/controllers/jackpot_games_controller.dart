@@ -121,22 +121,20 @@ class JackpotGamesController extends GetxController {
                           const SizedBox(height: 24.0),
                           SizedBox(
                             width: Get.width * .36,
-                            child: Expanded(
-                              child: CustomButton(
-                                height: 40.0,
-                                onPressed: () {
-                                  Get.back();
-                                  Get.to(
-                                    () => const FundWalletView(),
-                                    transition: Transition.downToUp,
-                                  );
-                                },
-                                buttonText: 'Fund Wallet',
-                                buttonColor: Colors.white,
-                                buttonTextColor: const Color(0xffFE7A01),
-                                borderColor: const Color(0xffFE7A01),
-                                hasBorder: true,
-                              ),
+                            child: CustomButton(
+                              height: 40.0,
+                              onPressed: () {
+                                Get.back();
+                                Get.to(
+                                  () => const FundWalletView(),
+                                  transition: Transition.downToUp,
+                                );
+                              },
+                              buttonText: 'Fund Wallet',
+                              buttonColor: Colors.white,
+                              buttonTextColor: const Color(0xffFE7A01),
+                              borderColor: const Color(0xffFE7A01),
+                              hasBorder: true,
                             ),
                           ),
                           const SizedBox(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:jekawin_mobile_flutter/app/constants/asset_paths.dart';
 import 'package:jekawin_mobile_flutter/app/modules/edit_profile/controllers/edit_profile_controllers.dart';
 import 'package:jekawin_mobile_flutter/app/modules/edit_profile/views/mobile/edit_profile_mobile_porttrait.dart';
@@ -27,6 +28,8 @@ class FundWalletMobilePortrait extends GetView {
       : super(key: key);
   final ThemeData? themeData;
   final CustomAppTheme? customAppTheme;
+
+  var isEmailVerified = GetStorage().read('isEmailVerified');
 
   @override
   Widget build(BuildContext context) {
@@ -209,8 +212,9 @@ class FundWalletMobilePortrait extends GetView {
                     isLoading: controller.isLoading.value,
                     buttonText: controller.buttonText.value.toString(),
                     onPressed: () {
-                      if (controller.paymentLinkIsSet.isFalse) {
-                        // showDialogToUpdateProfile(context);
+                      if (isEmailVerified != true) {
+                        showDialogToUpdateProfile(context);
+                      } else if (controller.paymentLinkIsSet.isFalse) {
                         controller.fundFormValidator();
                       } else {
                         controller.navigateTWebView();
@@ -312,18 +316,16 @@ Future showDialogToUpdateProfile(context) {
                   const SizedBox(height: 24.0),
                   SizedBox(
                     width: Get.width * .36,
-                    child: Expanded(
-                      child: CustomButton(
-                        height: 40.0,
-                        onPressed: () {
-                          Get.back();
-                          Get.to(
-                            () => EditProfileMobilePortrait(),
-                            transition: Transition.downToUp,
-                          );
-                        },
-                        buttonText: 'Update Profile',
-                      ),
+                    child: CustomButton(
+                      height: 40.0,
+                      onPressed: () {
+                        Get.back();
+                        Get.to(
+                          () => EditProfileMobilePortrait(),
+                          transition: Transition.downToUp,
+                        );
+                      },
+                      buttonText: 'Update Profile',
                     ),
                   ),
                   const SizedBox(

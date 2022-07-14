@@ -181,7 +181,7 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                                     ),
                                   ),
                                   Text(
-                                    "₦ " +
+                                    "₦" +
                                         walletData.body.wallet.balance
                                             .toString(),
                                     style: const TextStyle(

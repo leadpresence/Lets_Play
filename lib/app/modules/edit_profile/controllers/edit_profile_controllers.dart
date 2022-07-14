@@ -34,8 +34,8 @@ class EditProfileController extends GetxController {
   Rx<bool> isLoading = false.obs;
 
   var extension;
-
-  var imageFile;
+  Rx<bool> isRawImageAssigned = false.obs;
+  Rx<File> imageFile = File('').obs;
   String profilePictureUrl = '';
   String profilePictureName = '';
   String base64Image = '';
@@ -54,6 +54,14 @@ class EditProfileController extends GetxController {
   void clearErrorEmail() => emailErrorMessage.value = '';
 
   editProfileFormValidator(Key? k) {
+    if ((GetUtils.isBlank(emailTextController.text)) == true) {
+      return emailErrorMessage.value = 'Email Address field cannot be blank';
+    } else if (!GetUtils.isEmail(emailTextController.text)) {
+      return emailErrorMessage.value = 'Invalid Email Address';
+    } else {}
+  }
+
+  emailValidator(Key? k) {
     if ((GetUtils.isBlank(emailTextController.text)) == true) {
       return emailErrorMessage.value = 'Email Address field cannot be blank';
     } else if (!GetUtils.isEmail(emailTextController.text)) {
@@ -226,26 +234,26 @@ class EditProfileController extends GetxController {
     if (pickedFile != null) {
       print('pickedFile != null');
       imageLoading.value = 'image_loading';
-      imageFile = File(pickedFile.path);
+      imageFile.value = File(pickedFile.path);
+      GetStorage().write('rawImage', imageFile.value);
+      isRawImageAssigned.value = true;
       print('imageFile ==> $imageFile');
-      List<int> imageBytes = imageFile.readAsBytesSync();
+      List<int> imageBytes = imageFile.value.readAsBytesSync();
       base64Image = base64Encode(imageBytes);
       print('base64Image ==> $base64Image');
       await uploadFile(context);
       refresh();
-      update();
     }
-    update();
   }
 
   Future<String> uploadFile(BuildContext context) async {
-    final file = basename(imageFile.path);
+    final file = basename(imageFile.value.path);
     print('file ==> $file');
-    extension = p.extension(imageFile.path);
+    extension = p.extension(imageFile.value.path);
     print('extension ==> $extension');
 
     await S3BucketService.uploadImage(
-      file: imageFile,
+      file: imageFile.value,
       awsFolderPath: "jekawinusers/users/profile_pictures",
       number: 1,
       context: context,
