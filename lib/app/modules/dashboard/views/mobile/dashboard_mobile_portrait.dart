@@ -453,8 +453,7 @@ class DashboardMobilePortrait extends StatelessWidget {
                                   physics: const ScrollPhysics(),
                                   itemBuilder:
                                       (BuildContext context, int index) {
-                                    return Obx(
-                                      () => DashboardHeroSession(
+                                    return  DashboardHeroSession(
                                         onPressed: () {
                                           Get.to(
                                             () => JackpotGamesMobilePortrait(
@@ -479,7 +478,7 @@ class DashboardMobilePortrait extends StatelessWidget {
                                               .gamesAnimationControllers[index]
                                               .value,
                                         ),
-                                      ),
+
                                     );
                                   },
                                 ),

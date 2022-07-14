@@ -41,7 +41,7 @@ class StartTrueFalseGameMobilePortrait extends StatelessWidget {
             );
           } else if (snapshot.hasData) {
             var body = snapshot.data!.body.items;
-            if (body.length == 0) {
+            if (body == 0) {
               return const Center(
                 child: Text(
                   "No True or False Games Available\nright now",
@@ -74,7 +74,7 @@ class StartTrueFalseGameMobilePortrait extends StatelessWidget {
                                 body[controller.itemIndex.value]
                                             .correctOption ==
                                         true
-                                    ? controller.totalRewardPoints.value += 10
+                                    ? controller.totalRewardPoints.value += 5
                                     : controller.totalRewardPoints.value;
                                 showSuccessOrFailureDialog(
                                   context,
@@ -101,7 +101,7 @@ class StartTrueFalseGameMobilePortrait extends StatelessWidget {
                                 body[controller.itemIndex.value]
                                             .correctOption ==
                                         false
-                                    ? controller.totalRewardPoints.value += 10
+                                    ? controller.totalRewardPoints.value += 5
                                     : controller.totalRewardPoints.value;
                                 showSuccessOrFailureDialog(
                                   context,
@@ -338,7 +338,7 @@ class StartTrueFalseGameMobilePortrait extends StatelessWidget {
                       padding: const EdgeInsets.all(24.0),
                       child: isCorrect == true
                           ? const Text(
-                              'YAY! You have just earned 10 reward points',
+                              'YAY! You have just earned 5 reward points',
                               textAlign: TextAlign.center,
                             )
                           : const Text('Wrong Selection'),
@@ -353,13 +353,18 @@ class StartTrueFalseGameMobilePortrait extends StatelessWidget {
                     child: CustomButton(
                       onPressed: () {
                         controller.currentPage.value == 4
-                            ? Get.offAll(
-                                () => CongratulationsView(
-                                  totalPoints:
-                                      controller.totalRewardPoints.value,
-                                ),
-                                transition: Transition.cupertino,
-                              )
+                            ? controller.totalRewardPoints.value == 0
+                                ? Get.offAll(() => TryAgainView(
+                          totalPoints:
+                          controller.totalRewardPoints.value,
+                        ))
+                                : Get.offAll(
+                                    () => CongratulationsView(
+                                      totalPoints:
+                                          controller.totalRewardPoints.value,
+                                    ),
+                                    transition: Transition.cupertino,
+                                  )
                             : {
                                 controller.nextPage(),
                                 Get.back(),

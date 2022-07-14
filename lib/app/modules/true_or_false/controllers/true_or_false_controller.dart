@@ -2,7 +2,9 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:jekawin_mobile_flutter/app/modules/true_or_false/models/true_or_false_game_response_model.dart';
+import 'package:jekawin_mobile_flutter/app/services/local_storage.dart';
 
 import '../../../config/services/games_service.dart';
 
@@ -21,16 +23,19 @@ class TrueOrFalseController extends GetxController
       var response = await gamesService.getTrueOrFalseGames();
       if (response.statusCode == 200 || response.statusCode == 201) {
         body = TrueOrFalseResModel.fromJson(response.data);
+        LocalStorage.saveGameSession(
+            TrueOrFalseResModel.fromJson(response.data).body.session);
+        print("Na me be Game Session : ${LocalStorage.getGameSession()}");
         return body;
       } else {
         if (kDebugMode) {
-          print(
-              'Response.statusCode != 200: \n${TrueOrFalseResModel.fromJson(response.data).statusCode}');
-          BotToast.showSimpleNotification(
-            title: TrueOrFalseResModel.fromJson(response.data).toString(),
-          );
+          if (TrueOrFalseResModel.fromJson(response.data).body.items.isEmpty) {
+            BotToast.showText(
+              text: "We have no more items to show you",
+            );
+            Get.back();
+          }
         }
-        return body;
       }
     } catch (e) {
       if (kDebugMode) {

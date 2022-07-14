@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -25,9 +27,9 @@ class EditProfileMobilePortrait extends GetView {
     var lastName = GetStorage().read("lastName");
     var phoneNumber = GetStorage().read("phoneNumber");
     var imageAvatar = GetStorage().read("profileImage");
-
-    double screenHeight([double percent = 1]) =>
-        MediaQuery.of(Get.context!).size.height * percent;
+    var email = GetStorage().read('email');
+    var isEmailVerified = GetStorage().read('isEmailVerified');
+    var imageFile = GetStorage().read('rawImage') ?? File('');
 
     var genders = [
       'Female',
@@ -36,11 +38,12 @@ class EditProfileMobilePortrait extends GetView {
 
     String dropDownValue = genders[0];
 
-    var email = GetStorage().read('email');
-    var isEmailVerified = GetStorage().read('isEmailVerified');
+    double screenHeight([double percent = 1]) =>
+        MediaQuery.of(Get.context!).size.height * percent;
 
     controller.emailTextController.text =
         email ?? controller.emailTextController.text;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -71,7 +74,8 @@ class EditProfileMobilePortrait extends GetView {
                 children: [
                   CircleAvatar(
                     radius: 48,
-                    child: controller.profilePictureName == ""
+                    backgroundColor: Colors.black.withOpacity(.05),
+                    child: imageFile == File('')
                         ? Stack(
                             children: [
                               Container(
@@ -102,19 +106,15 @@ class EditProfileMobilePortrait extends GetView {
                               )
                             ],
                           )
-                        : GetBuilder<EditProfileController>(
-                            builder: (contr) {
-                              return SizedBox(
-                                width: 96,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(50),
-                                  child: Image.file(
-                                    contr.imageFile,
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                              );
-                            },
+                        : SizedBox(
+                            width: 96,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(50),
+                              child: Image.file(
+                                imageFile,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
                           ),
                   ),
                   const Gap(12),
@@ -131,33 +131,36 @@ class EditProfileMobilePortrait extends GetView {
                               context: context,
                               builder: (builder) {
                                 return Container(
-                                  height: 350.0,
+                                  height: 132.0,
                                   color: Colors
                                       .transparent, //could change this to Color(0xFF737373),
                                   //so you don't have to change MaterialApp canvasColor
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      TextButton(
-                                          onPressed: () {
-                                            Get.back();
-                                            controller.pickImage(
-                                              ImageSource.camera,
-                                              context,
-                                            );
-                                          },
-                                          child: Text("Camera")),
-                                      TextButton(
-                                          onPressed: () {
-                                            Get.back();
-                                            controller.pickImage(
-                                              ImageSource.gallery,
-                                              context,
-                                            );
-                                          },
-                                          child: Text("Gallery"))
-                                    ],
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        TextButton(
+                                            onPressed: () {
+                                              Get.back();
+                                              controller.pickImage(
+                                                ImageSource.camera,
+                                                context,
+                                              );
+                                            },
+                                            child: Text("Camera")),
+                                        TextButton(
+                                            onPressed: () {
+                                              Get.back();
+                                              controller.pickImage(
+                                                ImageSource.gallery,
+                                                context,
+                                              );
+                                            },
+                                            child: Text("Gallery"))
+                                      ],
+                                    ),
                                   ),
                                 );
                               });
@@ -167,7 +170,7 @@ class EditProfileMobilePortrait extends GetView {
                           shadowColor: Colors.white,
                           onSurface: Colors.white,
                           elevation: 0,
-                          splashFactory: NoSplash.splashFactory,
+                          // splashFactory: NoSplash.splashFactory,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(36),
                           ),

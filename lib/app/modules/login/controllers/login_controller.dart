@@ -66,9 +66,7 @@ class LoginController extends GetxController {
     final userData = await authService.login(phoneNumber, password);
     userData.fold(
       (l) {
-        BotToast.showText(
-          text: "An error occurred. Please try again.",
-        );
+        BotToast.showText(text: l.message);
         isLoading.value = false;
       },
       (r) {

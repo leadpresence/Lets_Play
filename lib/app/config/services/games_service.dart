@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_storage/get_storage.dart';
 import '../../services/base_service.dart';
+import '../../services/local_storage.dart';
 import 'di/di_locator.dart';
 import 'http/base_urls.dart';
 
@@ -67,11 +68,14 @@ class GamesServiceImpl {
 
   Future<Response> playTrueOrFalseGames({gameID, dynamic userGuess}) async {
     try {
-      Response response = await service
-          .request('instant-game/true-or-false/', method: 'Put', body: {
-        "userGuess": userGuess,
-        "itemId": gameID,
-      });
+      Response response = await service.request(
+        'instant-game/true-or-false/',
+        method: 'Put',
+        body: {
+          "userGuess": userGuess,
+          "itemId": gameID,
+        },
+      );
       if (kDebugMode) {
         print(
             "This is the response status from the playTrueOrFalseGames API: \n ${response.data}");
