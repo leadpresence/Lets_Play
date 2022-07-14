@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:jekawin_mobile_flutter/app/config/exceptions/auth_exceptions.dart';
 import 'package:jekawin_mobile_flutter/app/config/services/di/di_locator.dart';
 import 'package:jekawin_mobile_flutter/app/config/services/http/base_urls.dart';
 import 'package:jekawin_mobile_flutter/app/constants/app_error.dart';
@@ -23,12 +24,22 @@ import 'http/http_services.dart';
 
 abstract class AuthServiceDataSource {
   Future<Either<AppError, String>> signup(UserSignUpModel body);
+
   Future<Either<AppError, String>> verifySignUpOtp(String otp);
+
   Future<Either<AppError, String>> login(String mobile, String password);
+
+  Future<Either<String, UserSignupResponse>> signIn(
+      String mobile, String password);
+
   Future<Either<AppError, String>> resendSignUpResetOtp(String phoneNumber);
+
   Future<Either<AppError, String>> forgetPassword(String mobile);
+
   Future<Either<AppError, String>> verifyResetPasswordOtp(String Otp);
+
   Future<Either<AppError, String>> updatePassword(String password);
+
   Future<Either<AppError, String>> signout();
 }
 
@@ -38,6 +49,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
   final UserLocalDataSourceImpl _userLocalDataSource =
       Get.find<UserLocalDataSourceImpl>();
   BaseService service = BaseService();
+
   // User? get user => _userLocalDataSource.user;
 
   @override
@@ -135,6 +147,43 @@ class AuthServiceImpl extends AuthServiceDataSource {
     } on Exception {
       return const Left(
           AppError(errorType: AppErrorType.api, message: "An error occurred"));
+    }
+  }
+
+  @override
+  Future<Either<String, UserSignupResponse>> signIn(
+      String mobile, String password) async {
+    Map<String, dynamic> payload = {'phone': mobile, 'password': password};
+    try {
+      var raw = await httpProvider.postHttp(
+          '${JekawinBaseUrls.authBaseUrl}signin', payload);
+      UserSignupResponse res = UserSignupResponse.fromMap(raw);
+      // _userLocalDataSource.saveUser(res.body.user);
+      GetStorage().write('firstName', res.body.user.firstName);
+      GetStorage().write('lastName', res.body.user.lastName);
+      GetStorage().write('profileImage', res.body.user.profileUrl);
+      GetStorage().write('phoneNumber', res.body.user.phone);
+      GetStorage().write('token', res.body.token);
+      GetStorage().write('referralCode', "inviteLink");
+      GetStorage().write('isEmailVerified', res.body.user.isEmailVerified);
+      GetStorage().write('currentUserID', res.body.user.id);
+      GetStorage().write('email', res.body.user.email);
+      GetStorage().write('isEmailVerified', res.body.user.isEmailVerified);
+
+      if (raw['success']) {
+        return Right(res);
+      } else {
+        return Left(raw['message']);
+      }
+    } on NetworkException catch (e) {
+      return const Left("Something went wrong check connection and try again");
+    } on SocketException catch (e) {
+      return const Left("Something went wrong check connection and try again");
+    } on AuthException catch (e){
+      return  Left(e.message);
+    }
+    on Exception {
+      return const Left("Something went wrong signing you in and try again");
     }
   }
 
