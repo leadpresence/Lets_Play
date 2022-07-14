@@ -10,6 +10,10 @@ class LocalStorage {
     return GetStorage().write("email", emailValue);
   }
 
+  static saveGameSession(String gameSessionValue) {
+    return GetStorage().write("gameSession", gameSessionValue);
+  }
+
   /// use this to [getToken] from local storage
   static getToken() {
     return GetStorage().read("token");
@@ -17,6 +21,10 @@ class LocalStorage {
 
   static getEmail() {
     return GetStorage().read("email");
+  }
+
+  static getGameSession() {
+    return GetStorage().read("gameSession");
   }
 
   /// use this to [deleteToken] from local storage

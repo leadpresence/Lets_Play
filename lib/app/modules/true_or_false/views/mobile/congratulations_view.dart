@@ -88,3 +88,85 @@ class CongratulationsView extends StatelessWidget {
     );
   }
 }
+
+class TryAgainView extends StatelessWidget {
+  TryAgainView({Key? key, required this.totalPoints}) : super(key: key);
+  final int totalPoints;
+  final TrueOrFalseController controller = Get.put(TrueOrFalseController());
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 24.0),
+        height: Get.height,
+        width: Get.width,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset('assets/jpgs/sad_face.png'),
+            const SizedBox(
+              height: 24,
+            ),
+            Text(
+              'Oops',
+              style: GoogleFonts.lemon(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+            const SizedBox(
+              height: 24,
+            ),
+           const Text(
+              "You earned no reward points.",
+              style:  TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: CustomButton(
+                    onPressed: () {
+                      Get.to(
+                            () => const TrueOrFalseView(),
+                        transition: Transition.cupertino,
+                      );
+                    },
+                    buttonText: 'Play Again',
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: CustomButton(
+                    hasBorder: true,
+                    borderColor: const Color(0xffFE7A01),
+                    buttonColor: Colors.white,
+                    buttonTextColor: const Color(0xffFE7A01),
+                    onPressed: () {
+                      Get.to(
+                            () => JekawinBottomTabs(
+                          tabIndex: 0,
+                        ),
+                        transition: Transition.cupertino,
+                      );
+                    },
+                    buttonText: 'End Game',
+                  ),
+                )
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

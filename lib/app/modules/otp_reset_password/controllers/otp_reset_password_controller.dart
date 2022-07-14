@@ -9,15 +9,14 @@ import '../../new_password/views/new_password.dart';
 class OtpResetPasswordController extends GetxController
     with SingleGetTickerProviderMixin {
   final AuthServiceImpl authService = Get.find<AuthServiceImpl>();
-  final UtilsController prospectIsProvider =
-      Get.find<UtilsController>();
+  final UtilsController prospectIsProvider = Get.find<UtilsController>();
   final otpController = TextEditingController();
   late Rx<AnimationController> animationController =
       AnimationController(vsync: this).obs;
   var otp = "".obs;
   var prospectId = "".obs;
   var remoteOtp = "".obs;
-
+  var isLoading = false.obs;
 
   setOtp(String otpString) {
     // otp.value = otpString;
@@ -30,13 +29,13 @@ class OtpResetPasswordController extends GetxController
   void onInit() {
     startTimer();
     remoteOtp.value = prospectIsProvider.getOtp();
-    otpController.text=remoteOtp.value.toString();
+    otpController.text = remoteOtp.value.toString();
     super.onInit();
   }
 
   @override
   void onReady() {
-    prospectId.value = prospectIsProvider .getProspectId();
+    prospectId.value = prospectIsProvider.getProspectId();
     super.onReady();
   }
 
@@ -45,7 +44,6 @@ class OtpResetPasswordController extends GetxController
     animationController.value.dispose();
     super.dispose();
   }
-
 
   void startTimer() {
     animationController.value = AnimationController(
@@ -57,12 +55,15 @@ class OtpResetPasswordController extends GetxController
   }
 
   Future<void> verifyResetPasswordOtp(Key? k) async {
+    isLoading.value = true;
     final response =
         await authService.verifyResetPasswordOtp(otpController.text);
     response.fold((l) {
       BotToast.showText(text: l.message);
+      isLoading.value = false;
     }, (r) {
       navigateToUpdatePassword(k);
+      isLoading.value = false;
     });
   }
 
