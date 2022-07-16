@@ -73,7 +73,6 @@ class AddBankMobilePortrait extends GetView<AddBankController> {
                   return Padding(
                     padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
                     child: DropdownButtonHideUnderline(
-                      child: Expanded(
                         child: DropdownButtonFormField<String>(
                             value: snapshot.data?.first.name,
                             validator: (val) {
@@ -99,7 +98,6 @@ class AddBankMobilePortrait extends GetView<AddBankController> {
                               controller.selectedBankCode.value =
                                   item.code.toString();
                             }),
-                      ),
                     ),
                   );
                 }
