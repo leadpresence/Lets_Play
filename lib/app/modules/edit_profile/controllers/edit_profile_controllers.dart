@@ -1,33 +1,42 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:bot_toast/bot_toast.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:jekawin_mobile_flutter/app/config/services/games_service.dart';
 import 'package:jekawin_mobile_flutter/app/modules/edit_profile/views/mobile/edit_profile_mobile_porttrait.dart';
+import 'package:jekawin_mobile_flutter/app/modules/user_profile/views/user_profile_view.dart';
 import '../../../config/services/auth_service.dart';
 import '../../../config/services/di/di_locator.dart';
 import '../../../config/services/sw_bucket_service.dart';
 import '../../../widgets/custom_large_button.dart';
 import '../../../widgets/fade_in_animations.dart';
 import '../../e_shop/views/mobile/success_or_failure_mobile_view.dart';
+import '../models/update_profile_model.dart';
 import '../views/mobile/email_otp_verification.dart';
 import 'package:path/path.dart' as p;
 import 'package:path/path.dart';
 
 class EditProfileController extends GetxController {
   final AuthServiceImpl authService = Get.find<AuthServiceImpl>();
+  final GamesServiceImpl gamesServiceImpl = Get.put(GamesServiceImpl());
   final editFormKey = GlobalKey<FormState>();
-  final firstNameController = TextEditingController();
-  final lastNameController = TextEditingController();
-  final phoneNumberController = TextEditingController();
-  final addressController = TextEditingController();
   var emailTextController = TextEditingController();
   final emailOTPCode = TextEditingController();
+  final homeAddress = TextEditingController();
 
   final FocusNode searchTextField = FocusNode();
   final utilsProvider = UtilsController();
+
+  var genders = [
+    'Female',
+    'Male',
+  ];
+
+  String dropDownValue = 'Male';
 
   RxString avatarUrl = "".obs;
   RxString emailErrorMessage = "".obs;
@@ -58,7 +67,9 @@ class EditProfileController extends GetxController {
       return emailErrorMessage.value = 'Email Address field cannot be blank';
     } else if (!GetUtils.isEmail(emailTextController.text)) {
       return emailErrorMessage.value = 'Invalid Email Address';
-    } else {}
+    } else {
+      upDateProfile(k);
+    }
   }
 
   emailValidator(Key? k) {
@@ -167,6 +178,55 @@ class EditProfileController extends GetxController {
     );
   }
 
+  Future<void> upDateProfile(Key? k) async {
+    isLoading.value = true;
+    var data = {
+      "profileUrl": "https://jekawin.com/images/adeleke.jpeg",
+      "residentialAddress": homeAddress.text,
+      "gender": dropDownValue,
+    };
+
+    try {
+      final updateRes = await gamesServiceImpl.updateProfile(data);
+      UpdateProfileResponseModel res =
+          UpdateProfileResponseModel.fromMap(updateRes.data);
+      utilsProvider.setGender(res.body.data.gender);
+      utilsProvider.setHomeAddress(res.body.data.residentialAddress);
+      utilsProvider.setProfileUrl(res.body.data.profileUrl);
+      if (updateRes.statusCode == 200 || updateRes.statusCode == 201) {
+        GetStorage().write('homeAddress', homeAddress.text);
+        GetStorage().write('gender', dropDownValue);
+        Get.to(
+          () => SuccessOrFailureMobileView(
+            msg: 'Profile Updated Successfully',
+            className: const UserProfileView(),
+          ),
+          transition: Transition.cupertino,
+        );
+        isLoading.value = false;
+      } else {
+        if (kDebugMode) {
+          print(
+              'Response.statusCode != 200: \n${UpdateProfileResponseModel.fromMap(updateRes.data).statusCode}');
+          BotToast.showSimpleNotification(
+            title:
+                UpdateProfileResponseModel.fromMap(updateRes.data).toString(),
+          );
+        }
+        isLoading.value = false;
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
+        BotToast.showText(
+          text: "An error occurred. Please try again. $e",
+        );
+      }
+      isLoading.value = false;
+    }
+    // return body;
+  }
+
   Future<void> addEmail(Key? k) async {
     isLoading.value = true;
     var emailAddressText = emailTextController.text;
@@ -202,7 +262,6 @@ class EditProfileController extends GetxController {
   Future<void> verifyEmailOTP(Key? k) async {
     isLoading.value = true;
     final userData = await authService.verifyEmailOtp(emailOTPCode.text);
-
     userData.fold(
       (l) {
         BotToast.showText(
@@ -254,7 +313,7 @@ class EditProfileController extends GetxController {
 
     await S3BucketService.uploadImage(
       file: imageFile.value,
-      awsFolderPath: "jekawinusers/users/profile_pictures",
+      awsFolderPath: "/",
       number: 1,
       context: context,
       extension: extension,
@@ -264,14 +323,12 @@ class EditProfileController extends GetxController {
 
     profilePictureUrl = 'loading';
     final urlDownload = await S3BucketService.getPresignedURLFromUnsigned(
-      awsFolderPath: "jekawinusers/users/profile_pictures",
+      awsFolderPath: "/",
     );
     profilePictureName = file;
     print('profilePictureName ==> $profilePictureName');
     profilePictureUrl = urlDownload;
     print('profilePictureUrl ==> $profilePictureUrl');
-
-    print('Download-Link: $urlDownload');
     return urlDownload;
   }
 }

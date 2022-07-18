@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import '../../../../config/services/di/di_locator.dart';
 import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../widgets/custom_large_button.dart';
 import '../../controllers/edit_profile_controllers.dart';
@@ -28,6 +29,8 @@ class EditProfileMobilePortrait extends GetView {
     var phoneNumber = GetStorage().read("phoneNumber");
     var imageAvatar = GetStorage().read("profileImage");
     var email = GetStorage().read('email');
+    var homeAddress = GetStorage().read("homeAddress");
+    var gender = GetStorage().read('gender');
     var isEmailVerified = GetStorage().read('isEmailVerified');
     var imageFile = GetStorage().read('rawImage') ?? File('');
 
@@ -36,13 +39,15 @@ class EditProfileMobilePortrait extends GetView {
       'Male',
     ];
 
-    String dropDownValue = genders[0];
-
     double screenHeight([double percent = 1]) =>
         MediaQuery.of(Get.context!).size.height * percent;
 
     controller.emailTextController.text =
         email ?? controller.emailTextController.text;
+
+    controller.dropDownValue = gender ?? controller.dropDownValue;
+
+    controller.homeAddress.text = homeAddress ?? controller.homeAddress.text;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -315,7 +320,7 @@ class EditProfileMobilePortrait extends GetView {
                           ),
                         ),
                         // Initial Value
-                        value: dropDownValue,
+                        value: controller.dropDownValue,
                         icon: const Icon(Icons.keyboard_arrow_down),
                         items: genders.map(
                           (String items) {
@@ -325,17 +330,23 @@ class EditProfileMobilePortrait extends GetView {
                             );
                           },
                         ).toList(),
-                        onChanged: (String? newValue) {},
+                        onChanged: (String? newValue) {
+                          controller.dropDownValue = newValue!;
+                          print("Current gender: ${controller.dropDownValue}");
+                        },
                       ),
                     ),
                   ),
                   const Gap(16),
-                  editFormField(hint: "Address"),
+                  editFormField(
+                    hint: "Address",
+                    textController: controller.homeAddress,
+                  ),
                   const SizedBox(height: 24),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
                     child: CustomButton(
-                      // isLoading: controller.isLoading.value,
+                      isLoading: controller.isLoading.value,
                       buttonText: "Update profile",
                       onPressed: () {
                         controller.editProfileFormValidator(key);

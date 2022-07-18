@@ -55,7 +55,6 @@ class WalletHomeController extends GetxController {
     super.onInit();
     getUserWallet();
     getUserTransactions();
-
     balance.value = GetStorage().read('walletBalance').toInt();
     rewardPoints.value = GetStorage().read('rewardPoints');
     wins.value = GetStorage().read('wins');

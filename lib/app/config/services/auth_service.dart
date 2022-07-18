@@ -7,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:jekawin_mobile_flutter/app/config/services/di/di_locator.dart';
 import 'package:jekawin_mobile_flutter/app/config/services/http/base_urls.dart';
 import 'package:jekawin_mobile_flutter/app/constants/app_error.dart';
+import 'package:jekawin_mobile_flutter/app/modules/edit_profile/models/update_profile_model.dart';
 import 'package:jekawin_mobile_flutter/app/modules/signup/models/auth_response.dart';
 import 'package:jekawin_mobile_flutter/app/modules/signup/models/forget_password_response.dart';
 import 'package:jekawin_mobile_flutter/app/modules/signup/models/forgot_password_otp_res.dart';

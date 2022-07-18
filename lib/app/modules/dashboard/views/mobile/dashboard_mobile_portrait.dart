@@ -439,7 +439,7 @@ class DashboardMobilePortrait extends StatelessWidget {
                         );
                       } else if (snapshot.hasData) {
                         var body = snapshot.data["body"];
-                        return body.length > 1
+                        return body.isNotEmpty
                             ? SizedBox(
                                 height: 360,
                                 width: Get.width,
