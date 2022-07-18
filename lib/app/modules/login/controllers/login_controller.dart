@@ -63,10 +63,12 @@ class LoginController extends GetxController {
     var phoneNumber = TextUtils()
         .stripFirstZeroAddCountryCode(number: phoneNumberController.value.text);
     var password = passwordController.value.text;
-    final userData = await authService.login(phoneNumber, password);
+    final userData = await authService.signIn(phoneNumber, password);
     userData.fold(
       (l) {
-        BotToast.showText(text: l.message);
+        BotToast.showText(
+          text: l,
+        );
         isLoading.value = false;
       },
       (r) {

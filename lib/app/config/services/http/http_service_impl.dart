@@ -75,7 +75,9 @@ class HttpServiceImpl extends HttpService {
         debugPrint('Http response data is: ${e.response?.data}');
       }
 
-      if (e.response?.statusCode == 401) {}
+      if (e.response?.statusCode == 401) {
+
+      }
       if (e.response?.statusCode == 407) {
       }
       throw NetworkException(e.message);
@@ -118,8 +120,9 @@ class HttpServiceImpl extends HttpService {
       );
     } on DioError catch (e) {
       if (e.response?.statusCode == 401) {
-        throw const AuthException('Invalid token and credentials');
+        throw const AuthException('Invalid credentials');
       }
+
 
       if (dotenv.get('APP_DEBUG') == 'true') {
         getLogger()

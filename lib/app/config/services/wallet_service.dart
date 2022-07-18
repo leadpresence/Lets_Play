@@ -20,15 +20,20 @@ import 'http/http_services.dart';
 
 abstract class WalletDataSource {
   Future<Either<AppError, String>> userWallet();
+
   Future<UserWalletModel> userWalletAsync();
+
   Future<String> userRewardPoint();
 
   Future<Either<AppError, String>> userTransactions();
 
   Future<Either<AppError, String>> walletTransactions(String walletId);
+
   Future<List<TransactionsModel>> allWalletTransactions();
 
   Future<Either<AppError, String>> banks();
+
+  Future<List<Bank>> getBanks();
 
   Future<Either<AppError, String>> paymentProcessors();
 
@@ -325,5 +330,15 @@ class WalletServiceImpl extends WalletDataSource {
         .getHttp('${JekawinBaseUrls.walletBaseUrl}wallets/$userId');
     UserWalletModel res = UserWalletModel.fromMap(raw);
     return res.body.rewardPoint.toString();
+  }
+
+  @override
+  Future<List<Bank>> getBanks() async {
+    var raw =
+        await httpProvider.getHttp('${JekawinBaseUrls.walletBaseUrl}banks');
+    BanksResponseModel res = BanksResponseModel.fromMap(raw);
+    utilsProvider.banks.value.addAll(res.body.data);
+
+    return res.body.data;
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -57,27 +55,24 @@ class AddBankController extends GetxController {
     return null;
   }
 
-  Future<void> getBanks() async {
-    final bank = await walletService.banks();
-    bank.fold((l) {
-      BotToast.showText(text: l.message + "Error occurred fetching Banks");
-      Get.back();
-    }, (r) {
+  Future<List<Bank>> getBanks() async {
+    List<Bank> banks = await walletService.getBanks();
+    try{
+      return banks;
 
-      bDropDownItemsList.value = [];
-      bList.value = utilsProvider.banks.value;
-      bDropDownItemsList.value
-          .add(DropdownMenuItem(child: Text("Select Bank"), value: "Select Bank"));
-      for (Bank b in bList.value) {
-        bDropDownItemsList.value.add(
-            DropdownMenuItem(child: Text(b.name), value: b.name.toString()));
-      }
-    });
+    }catch(e){
+      BotToast.showText(text: "Error occurred retrieving all banks");
+
+    }
+
+    return [];
   }
+
+
   Future<void> getAccountName(String accountNumber,String bankCode )async {
     final bank = await walletService.resolveAccountNumber(accountNumber,bankCode);
     bank.fold((l) {
-      BotToast.showText(text: l.message + "Error occurred fetching Account name");
+      BotToast.showText(text: "Error occurred fetching Account name,please try again");
     }, (r) {
       BotToast.showText(text: r.toString());
       bankNameController.text =r.toString();

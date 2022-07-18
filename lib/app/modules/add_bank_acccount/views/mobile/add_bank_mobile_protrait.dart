@@ -56,34 +56,61 @@ class AddBankMobilePortrait extends GetView<AddBankController> {
           ],
         ),
         const Gap(10),
-        Padding(
-            padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-            child: Obx(
-              () => DropdownButtonHideUnderline(
-                child: Expanded(
-                  child: DropdownButtonFormField<String>(
-                      value: "Select Bank",
-                      validator: (val) {
-                        return controller.validateBank(val.toString());
-                      },
-                      hint: const Text("Select Bank"),
-                      icon: const Icon(Icons.keyboard_arrow_down),
-                      // Array list of items
-                      items: controller.bDropDownItemsList.value,
-                      onChanged: (selectedValue) {
-                        controller.bankNameController.text = "";
-                        controller.accountNumberController.text = "";
-                        controller.selectedBankName.value =
-                            selectedValue.toString();
-                        var item = controller.bList.value.firstWhere(
-                            (bank) => bank.name == selectedValue.toString());
-
-                        controller.selectedBankCode.value =
-                            item.code.toString();
-                      }),
+        FutureBuilder<List<Bank>>(
+            future: controller.getBanks(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return const DropdownButtonHideUnderline(
+                    child:Center(
+                      child: CupertinoActivityIndicator(
+                        radius: 16.0,
+                        color: Colors.white,
+                      ),
+                    ));
+              } else if (snapshot.hasData) {
+                List<Bank>? banks = snapshot.data;
+                if (banks != null) {
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+                    child: DropdownButtonHideUnderline(
+                        child: DropdownButtonFormField<String>(
+                            value: snapshot.data?.first.name,
+                            validator: (val) {
+                              return controller.validateBank(val.toString());
+                            },
+                            hint: const Text("Select Bank"),
+                            icon: const Icon(Icons.keyboard_arrow_down),
+                            // Array list of items
+                            items: snapshot.data
+                                ?.map((bank) => DropdownMenuItem<String>(
+                                      child: Text(bank.name),
+                                      value: bank.name,
+                                    ))
+                                .toList(),
+                            onChanged: (selectedValue) {
+                              controller.bankNameController.text = "";
+                              controller.accountNumberController.text = "";
+                              controller.selectedBankName.value =
+                                  selectedValue.toString();
+                              var item = controller.bList.value.firstWhere(
+                                  (bank) =>
+                                      bank.name == selectedValue.toString());
+                              controller.selectedBankCode.value =
+                                  item.code.toString();
+                            }),
+                    ),
+                  );
+                }
+              }
+              return const DropdownButtonHideUnderline(
+              child:Center(
+                child: CupertinoActivityIndicator(
+                radius: 16.0,
+                 color: Colors.orangeAccent,
                 ),
-              ),
-            )),
+              ));
+            }),
+
         Padding(
             padding: const EdgeInsets.fromLTRB(24, 24, 24, 10),
             child: CustomTextField(

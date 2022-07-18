@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:bot_toast/bot_toast.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:jekawin_mobile_flutter/app/config/services/wallet_service.dart';
@@ -55,7 +52,8 @@ class WalletHomeController extends GetxController {
     super.onInit();
     getUserWallet();
     getUserTransactions();
-    balance.value = GetStorage().read('walletBalance').toInt();
+
+    balance.value = GetStorage().read('walletBalance');
     rewardPoints.value = GetStorage().read('rewardPoints');
     wins.value = GetStorage().read('wins');
   }

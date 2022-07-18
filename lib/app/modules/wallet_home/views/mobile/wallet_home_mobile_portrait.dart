@@ -107,7 +107,6 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                                   ),
                                 ),
                                 Text(
-                                  // "90",
                                   "N/A",
                                   style: TextStyle(
                                     fontSize: 18,
@@ -151,7 +150,8 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                           ],
                         ),
                       );
-                    } else if (snapshot.hasData) {
+                    }
+                    else if (snapshot.hasData) {
                       UserWalletModel? walletData = snapshot.data;
                       if (walletData != null) {
                         return Container(

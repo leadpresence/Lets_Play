@@ -80,7 +80,7 @@ class FundWalletController extends GetxController {
     if ((GetUtils.isBlank(amountController.text)) == true) {
       return errAmountMessage.value = 'Amount field cannot be blank.';
     } else if (int.parse(amountController.text.toString()) < 200) {
-      errAmountMessage.value = "amount can only b form 200 and above";
+      errAmountMessage.value = "Amount can only be form 200 and above";
     } else {
       getPaymentLink();
     }

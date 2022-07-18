@@ -9,16 +9,6 @@ class CompleteFundingController extends GetxController{
   @override
   void onInit() {
     super.onInit();
-    // Future.delayed(
-    //     const Duration(seconds: 15),
-    //         () {
-    //      pageLoading.value=false;
-    //       showDialog(
-    //           context: Get.context!,
-    //           builder: (BuildContext context) {
-    //             return ConstrainedBox(
-    //                 constraints: BoxConstraints(maxWidth: Get.width),
-    //                 child: const Center(child: CupertinoActivityIndicator(),));});});
   }
 
   @override
