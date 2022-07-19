@@ -160,6 +160,7 @@ class DashboardMobilePortrait extends StatelessWidget {
                       } else if (snapshot.hasData) {
                         UserWalletModel? walletData = snapshot.data;
                         if (walletData != null) {
+                          GetStorage().write('walletBalance_', walletData.body.wallet.balance);
                           return Container(
                             padding: const EdgeInsets.only(
                               top: 18,

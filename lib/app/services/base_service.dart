@@ -28,22 +28,39 @@ class BaseService {
     var token = await LocalStorage.getToken();
     var email = await LocalStorage.getEmail();
     var gameSession = await LocalStorage.getGameSession();
+    var userID = await LocalStorage.getUserId();
     var res = _dio.request(
       url,
       data: body,
       options: Options(
         method: method,
-        headers: token != null && gameSession != null && email != null
+        headers: token != null &&
+                userID != null &&
+                email != null &&
+                gameSession != null
             ? {
                 'authorization': 'Bearer $token',
+                'userid': userID,
                 'gameSession': gameSession,
                 'email': email
               }
-            : token != null && email != null
-                ? {'authorization': 'Bearer $token', 'email': email}
-                : token != null
-                    ? {'authorization': 'Bearer $token'}
-                    : null,
+            : token != null && userID != null && email != null
+                ? {
+                    'authorization': 'Bearer $token',
+                    'userid': userID,
+                    'email': email
+                  }
+                : token != null && gameSession != null && email != null
+                    ? {
+                        'authorization': 'Bearer $token',
+                        'gameSession': gameSession,
+                        'email': email
+                      }
+                    : token != null && email != null
+                        ? {'authorization': 'Bearer $token', 'email': email}
+                        : token != null
+                            ? {'authorization': 'Bearer $token'}
+                            : null,
       ),
     );
     return res;

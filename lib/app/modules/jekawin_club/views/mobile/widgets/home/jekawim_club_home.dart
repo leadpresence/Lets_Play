@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:jekawin_mobile_flutter/app/modules/jekawin_club/views/mobile/widgets/home/suggest_events.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
 
+import '../../../../models/get_club_members_response_model.dart';
 import 'jekawin_club_event.dart';
 
 class JekawinClubHome extends StatelessWidget {
-  const JekawinClubHome({Key? key}) : super(key: key);
+  final GetAllClubMembersResponseModel membersBody;
+  const JekawinClubHome({Key? key, required this.membersBody})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var currentUserID = GetStorage().read("currentUserID");
     var size = MediaQuery.of(context).size;
     final double itemHeight = (size.height - kToolbarHeight - 24) / 3;
     final double itemWidth = size.width / 2;
@@ -33,45 +38,45 @@ class JekawinClubHome extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(
-          left: 24.0,
-          right: 24.0,
-          bottom: 24.0,
-          top: 8.0,
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: CustomButton(
-                hasBorder: true,
-                onPressed: () {
-                   Get.to(
-                    () => const SuggestEvents(),
-                    transition: Transition.cupertino,
-                  );
-                },
-                borderColor: const Color(0xffFE7A01),
-                buttonColor: Colors.white,
-                buttonTextColor: const Color(0xffFE7A01),
-                buttonText: 'Suggest Events',
-              ),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: CustomButton(
-                onPressed: () {
-                  Get.to(
-                    () => const JekawinClubEvent(),
-                    transition: Transition.cupertino,
-                  );
-                },
-                buttonText: 'View Events',
-              ),
-            )
-          ],
-        ),
-      ),
+      // bottomNavigationBar: Padding(
+      //   padding: const EdgeInsets.only(
+      //     left: 24.0,
+      //     right: 24.0,
+      //     bottom: 24.0,
+      //     top: 8.0,
+      //   ),
+      //   child: Row(
+      //     children: [
+      //       Expanded(
+      //         child: CustomButton(
+      //           hasBorder: true,
+      //           onPressed: () {
+      //             Get.to(
+      //               () => const SuggestEvents(),
+      //               transition: Transition.cupertino,
+      //             );
+      //           },
+      //           borderColor: const Color(0xffFE7A01),
+      //           buttonColor: Colors.white,
+      //           buttonTextColor: const Color(0xffFE7A01),
+      //           buttonText: 'Suggest Events',
+      //         ),
+      //       ),
+      //       const SizedBox(width: 16),
+      //       Expanded(
+      //         child: CustomButton(
+      //           onPressed: () {
+      //             Get.to(
+      //               () => const JekawinClubEvent(),
+      //               transition: Transition.cupertino,
+      //             );
+      //           },
+      //           buttonText: 'View Events',
+      //         ),
+      //       )
+      //     ],
+      //   ),
+      // ),
       body: SingleChildScrollView(
         child: Container(
           width: Get.width,
@@ -83,9 +88,9 @@ class JekawinClubHome extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text(
-                'Jekawin Bronze Club',
-                style: TextStyle(
+              Text(
+                'Jekawin ${membersBody.data.clubName}',
+                style: const TextStyle(
                   fontSize: 24,
                   color: Color(0xff414249),
                 ),
@@ -96,20 +101,19 @@ class JekawinClubHome extends StatelessWidget {
                   const SizedBox(
                     height: 16,
                   ),
-                  memberCard(
-                      image:
-                          'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
-                      name: 'Me'),
+                  Row(
+                    children: [
+                      for (int i = 0; i < membersBody.data.members.length; i++)
+                        membersBody.data.members[i].userId.id == currentUserID
+                            ? memberCard(
+                                image: membersBody
+                                    .data.members[i].userId.profileUrl,
+                                name: 'Me')
+                            : const SizedBox(),
+                    ],
+                  ),
                   const SizedBox(
                     height: 24,
-                  ),
-                  const Text(
-                    'Club Members',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    textAlign: TextAlign.center,
                   ),
                   GridView.count(
                     childAspectRatio: (itemWidth / itemHeight),
@@ -122,38 +126,27 @@ class JekawinClubHome extends StatelessWidget {
                       vertical: 12.0,
                     ),
                     children: [
-                      memberCard(
-                          image:
-                              'https://images.pexels.com/photos/997489/pexels-photo-997489.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
-                          name: 'Olamide'),
-                      memberCard(
-                          image:
-                              'https://images.pexels.com/photos/3778603/pexels-photo-3778603.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
-                          name: 'Wale'),
-                      memberCard(
-                          image:
-                              'https://images.pexels.com/photos/3965240/pexels-photo-3965240.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
-                          name: 'Roy'),
-                      memberCard(
-                          image:
-                              'https://images.pexels.com/photos/3951774/pexels-photo-3951774.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
-                          name: 'Maurice'),
-                      memberCard(
-                          image:
-                              'https://images.pexels.com/photos/749091/pexels-photo-749091.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
-                          name: 'Gideon'),
-                      memberCard(
-                          image:
-                              'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
-                          name: 'D\' Law'),
-                      memberCard(
-                          image:
-                              'https://images.pexels.com/photos/3454835/pexels-photo-3454835.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
-                          name: 'Rachael'),
-                      memberCard(
-                          image:
-                              'https://images.pexels.com/photos/997505/pexels-photo-997505.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
-                          name: 'Oyen'),
+                      for (int i = 0; i < membersBody.data.members.length; i++)
+                        membersBody.data.members[i].userId.id != currentUserID
+                            ? Column(
+                                children: [
+                                  const Text(
+                                    'Club Members',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  memberCard(
+                                    image: membersBody
+                                        .data.members[i].userId.profileUrl,
+                                    name: membersBody
+                                        .data.members[i].userId.firstName,
+                                  ),
+                                ],
+                              )
+                            : const SizedBox(),
                     ],
                   ),
                 ],
