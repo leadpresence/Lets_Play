@@ -15,6 +15,8 @@ import 'package:jekawin_mobile_flutter/app/modules/signup/models/user_singed_up_
 import '../../constants/network_exceptions.dart';
 import '../../modules/edit_profile/models/add_email_response_model.dart';
 import '../../modules/edit_profile/models/verified_email_response_model.dart';
+import '../../modules/pin/models/set_pin_response_model.dart';
+import '../../modules/pin/models/verify_pin_response.dart';
 import '../../modules/signup/models/resendotp_resonse_model.dart';
 import '../../modules/signup/models/user_sign_up_model.dart';
 import '../../services/base_service.dart';
@@ -38,6 +40,9 @@ abstract class AuthServiceDataSource {
   Future<Either<AppError, String>> verifyResetPasswordOtp(String Otp);
 
   Future<Either<AppError, String>> updatePassword(String password);
+
+  Future<Either<AppError, String>> setPin(String pin, String confirmPin);
+  Future<Either<AppError, String>> verifyPin(String pin);
 
   Future<Either<AppError, String>> signout();
 }
@@ -179,10 +184,9 @@ class AuthServiceImpl extends AuthServiceDataSource {
       return const Left("Something went wrong check connection and try again");
     } on SocketException catch (e) {
       return const Left("Something went wrong check connection and try again");
-    } on AuthException catch (e){
-      return  Left(e.message);
-    }
-    on Exception {
+    } on AuthException catch (e) {
+      return Left(e.message);
+    } on Exception {
       return const Left("Something went wrong signing you in and try again");
     }
   }
@@ -204,6 +208,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
       GetStorage().write('isEmailVerified', res.body.user.isEmailVerified);
       GetStorage().write('currentUserID', res.body.user.id);
       GetStorage().write('email', res.body.user.email);
+      GetStorage().write('uuid', res.body.user.id);
       if (raw['success']) {
         return const Right("Login Successful");
       } else {
@@ -377,6 +382,65 @@ class AuthServiceImpl extends AuthServiceDataSource {
       utilsProvider.setProspectId(res.body.email);
       if (raw['success']) {
         return const Right("Success");
+      } else {
+        return Left(
+            AppError(errorType: AppErrorType.network, message: raw['message']));
+      }
+    } on NetworkException catch (e) {
+      return Left(
+          AppError(errorType: AppErrorType.network, message: e.message));
+    } on SocketException catch (e) {
+      return Left(
+          AppError(errorType: AppErrorType.network, message: e.message));
+    } on Exception {
+      return const Left(
+          AppError(errorType: AppErrorType.api, message: "An error occurred"));
+    }
+  }
+
+  @override
+  Future<Either<AppError, String>> setPin(String pin, String confirmPin) async {
+    Map<String, dynamic> payload = {'pin': pin, 'confirmPin': confirmPin};
+    var currentUserID = GetStorage().read('currentUserID');
+    Map<String, dynamic>  bearerToken ={"Authorization": GetStorage().read('token')};
+
+    try {
+      var raw = await httpProvider.putHttp(
+          '${JekawinBaseUrls.authBaseUrl}users/$currentUserID/transaction-pin',payload);
+
+      PinSetResponse res = PinSetResponse.fromMap(raw);
+      if (raw['success']) {
+        GetStorage().write("pin", res.body.transactionPin);
+        return const Right("Transaction pin Successfully added");
+      } else {
+        return Left(
+            AppError(errorType: AppErrorType.network, message: raw['message']));
+      }
+    } on NetworkException catch (e) {
+      return Left(
+          AppError(errorType: AppErrorType.network, message: e.message));
+    } on SocketException catch (e) {
+      return Left(
+          AppError(errorType: AppErrorType.network, message: e.message));
+    } on Exception {
+      return const Left(
+          AppError(errorType: AppErrorType.api, message: "An error occurred"));
+    }
+  }
+
+  @override
+  Future<Either<AppError, String>> verifyPin(String pin) async{
+    Map<String, dynamic> payload = {'pin': pin};
+    var currentUserID = GetStorage().read('currentUserID');
+
+    try {
+      var raw = await httpProvider.postHttp(
+          '${JekawinBaseUrls.authBaseUrl}users/$currentUserID/verify-transaction-pin',
+          payload);
+
+      VerifyPinResponse res = VerifyPinResponse.fromMap(raw);
+      if (raw['success']) {
+        return const Right("Correct pin entered");
       } else {
         return Left(
             AppError(errorType: AppErrorType.network, message: raw['message']));

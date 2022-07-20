@@ -5,11 +5,13 @@ import 'package:google_fonts/google_fonts.dart';
 class CustomOtpField extends StatefulWidget {
   final onComplete;
   final length;
+  final obscureText;
   final pinController;
 
   const CustomOtpField({
     Key? key,
     this.onComplete,
+    this.obscureText,
     required this.pinController,
     this.length = 4,
   }) : super(key: key);
@@ -54,6 +56,7 @@ class _CustomOtpFieldState extends State<CustomOtpField> {
       length: widget.length,
       controller: widget.pinController,
       focusNode: focusNode,
+      obscureText: widget.obscureText,
       showCursor: false,
       androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsRetrieverApi,
       defaultPinTheme: defaultPinTheme,

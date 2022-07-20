@@ -27,10 +27,11 @@ class HttpServiceImpl extends HttpService {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
     };
-    // if (user != null) {
-    //   header['Authorization'] = 'Bearer ${user?.token}';
-    // }
-    header['Authorization'] = 'Bearer ${GetStorage().read('token')}';
+    String token = GetStorage().read("token");
+    if (token.isNotEmpty) {
+      header['Authorization'] = 'Bearer ${GetStorage().read('token')}';
+    }
+    // header['Authorization'] = 'Bearer ${GetStorage().read('token')}';
 
     _dio.options.headers.addAll(header);
   }
@@ -182,8 +183,13 @@ class HttpServiceImpl extends HttpService {
     }
 
     network_utils.checkForNetworkExceptions(response);
+    if (dotenv.get('APP_DEBUG') == 'true') {
+      getLogger().d('Received Response: $response');
+    }
 
-    return network_utils.decodeResponseBodyToJson(response.data);
+    return response.data;
+
+    // return network_utils.decodeResponseBodyToJson(response.data);
   }
 
   @override

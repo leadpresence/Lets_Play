@@ -7,8 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:jekawin_mobile_flutter/app/modules/pin/controllers/set_pin_controllers.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_otp_field.dart';
-import '../../e_shop/views/mobile/success_or_failure_mobile_view.dart';
-import '../../user_profile/views/user_profile_view.dart';
+import '../../fund_wallet/views/mobile/fund_wallet_mobile_portrait.dart';
 
 class SetPinMobilePortrait extends GetView<SetPinController> {
   String phoneNumber = GetStorage().read('phoneNumber');
@@ -34,13 +33,6 @@ class SetPinMobilePortrait extends GetView<SetPinController> {
             ),
             onPressed: () {
               Get.back();
-              // Get.to(
-              //       () => JekawinBottomTabs(
-              //     tabIndex: 0,
-              //     isGuestUser: false,
-              //   ),
-              //   transition: Transition.cupertino,
-              // );
             },
           ),
         ),
@@ -56,54 +48,86 @@ class SetPinMobilePortrait extends GetView<SetPinController> {
               ),
               const Gap(18),
               Text(
-                'Pin Code',
+                'Enter secure transaction pin',
                 textAlign: TextAlign.left,
                 style: GoogleFonts.mulish(
                     fontWeight: FontWeight.normal, // light
                     fontStyle: FontStyle.normal,
                     color: Colors.black,
                     fontSize: 16 // italic
-                    ),
+                ),
               ),
               const Gap(10),
               CustomOtpField(
                 key: key,
+                obscureText: true,
                 pinController: controller.pinController,
-                onComplete: () {},
+                onComplete: () {
+                  controller.pinFormValidator(key);
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Obx(() =>
+                          Text(
+                            controller.errorPinMessage.value,
+                            style: errorTextStyle,
+                          ),
+                    ),
+                  ],
+                ),
               ),
               const Gap(18),
               Text(
-                'Confirm Pin Code',
+                'Confirm secure transaction pin',
                 style: GoogleFonts.mulish(
                     fontWeight: FontWeight.normal, // light
                     fontStyle: FontStyle.normal,
                     color: Colors.black,
                     fontSize: 16 // italic
-                    ),
+                ),
               ),
               const Gap(10),
               CustomOtpField(
                 key: key,
+                obscureText: true,
                 pinController: controller.confirmPinController,
-                onComplete: () {},
+                onComplete: () {
+                  controller.confirmPinFormValidator(key);
+                },
               ),
-              const Gap(48),
               Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: CustomButton(
-                  hasIcon: false,
-                  buttonText: 'Submit',
-                  onPressed: () {
-                    Get.to(
-                      () => SuccessOrFailureMobileView(
-                        msg: "Transaction pin set successful",
-                        className: UserProfileView(),
-                      ),
-                      transition: Transition.cupertino,
-                    );
-                  },
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Obx(() =>
+                          Text(
+                            controller.errorConfirmPinMessage.value,
+                            style: errorTextStyle,
+                          ),
+                    ),
+                  ],
                 ),
               ),
+              const Gap(48),
+              Obx(
+                ()=> Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: CustomButton(
+                    isLoading: controller.isLoading.value,
+                    hasIcon: false,
+                    buttonText: 'Submit',
+                    onPressed: () {
+                      controller.confirmPinFormValidator(key);
+                    },
+                  ),
+                ),
+              ),
+
               const Gap(16),
               const Gap(12),
             ],
@@ -131,7 +155,7 @@ class OtpHeader extends StatelessWidget {
               fontStyle: FontStyle.normal,
               color: Colors.black,
               fontSize: 24 // italic
-              ),
+          ),
         ), //Pin Code
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),

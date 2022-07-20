@@ -2,9 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jekawin_mobile_flutter/app/modules/login/views/login.dart';
-import 'package:path/path.dart' as p;
 import '../../../config/services/auth_service.dart';
-import '../../../config/services/sw_bucket_service.dart';
 
 class UserProfileController extends GetxController {
   var extension;
