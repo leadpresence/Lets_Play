@@ -61,6 +61,7 @@ class User {
     required this.lastName,
     required this.phone,
     required this.profileUrl,
+    required this.referralCode,
     required this.wallet,
     required this.email,
     required this.rewardPoint,
@@ -73,6 +74,7 @@ class User {
   String phone;
   String? email = "";
   String profileUrl;
+  String referralCode;
   Wallet wallet;
   int rewardPoint;
   bool isEmailVerified;
@@ -84,6 +86,7 @@ class User {
         phone: json["phone"],
         email: json["email"],
         profileUrl: json["profileUrl"],
+    referralCode: json["referralCode"],
         wallet: Wallet.fromMap(json["wallet"]),
         rewardPoint: json["rewardPoint"],
         isEmailVerified: json["isEmailVerified"],
@@ -95,6 +98,7 @@ class User {
         "lastName": lastName,
         "phone": phone,
         "profileUrl": profileUrl,
+        "referralCode": referralCode,
         "email": email ?? "",
         "wallet": wallet.toMap(),
         "rewardPoint": rewardPoint,

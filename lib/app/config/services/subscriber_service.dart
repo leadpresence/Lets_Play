@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:jekawin_mobile_flutter/app/constants/app_error.dart';
 import 'package:jekawin_mobile_flutter/app/modules/referral/models/ReferralResponse.dart';
 import '../../constants/network_exceptions.dart';
@@ -27,13 +28,14 @@ class SubscriberServiceImpl extends SubscriberService {
 
   @override
   Future<Either<AppError, String>> getReferrals() async {
+    var currentUserID = GetStorage().read('currentUserID');
+
     try {
       final raw = await httpProvider
-          .getHttp('${JekawinBaseUrls.subscriberBaseUrl}referals');
-      ReferralsResponseModel res = ReferralsResponseModel.fromMap(raw);
-      var data = res.data.guestInvites;
-      /// get the list of referrals from data
-      /// and set it to referrals provider
+          .getHttp('${JekawinBaseUrls.baseUrl}users/$currentUserID/referrals');
+      ReferralsResponse res = ReferralsResponse.fromMap(raw);
+      var data = res.body.referrals;
+
       utilsProvider.guestLists.value = data;
       if (raw['success']) {
 

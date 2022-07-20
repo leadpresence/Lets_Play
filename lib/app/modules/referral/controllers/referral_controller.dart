@@ -17,6 +17,7 @@ class ReferralController extends GetxController {
   void onInit() {
     referralCode.value = GetStorage().read('referralCode');
     getReferralList();
+    super.onInit();
   }
 
   @override
@@ -38,7 +39,7 @@ class ReferralController extends GetxController {
     final referralData = await subscriberService.getReferrals();
     referralData.fold(
       (l) {
-        BotToast.showText(text: l.message);
+        // BotToast.showText(text: l.message);
         isLoading.value = false;
       },
       (r) {

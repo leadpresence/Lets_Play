@@ -1,77 +1,118 @@
+
 import 'dart:convert';
 
-ReferralsResponseModel referralsResponseModelFromMap(String str) => ReferralsResponseModel.fromMap(json.decode(str));
+ReferralsResponse referralsResponseFromMap(String str) => ReferralsResponse.fromMap(json.decode(str));
 
-String referralsResponseModelToMap(ReferralsResponseModel data) => json.encode(data.toMap());
+String referralsResponseToMap(ReferralsResponse data) => json.encode(data.toMap());
 
-class ReferralsResponseModel {
-  ReferralsResponseModel({
+class ReferralsResponse {
+  ReferralsResponse({
     required this.success,
+    required this.statusCode,
     required this.message,
-    required this.data,
+    required this.body,
   });
 
   bool success;
+  int statusCode;
   String message;
-  Data data;
+  Body body;
 
-  factory ReferralsResponseModel.fromMap(Map<String, dynamic> json) => ReferralsResponseModel(
+  factory ReferralsResponse.fromMap(Map<String, dynamic> json) => ReferralsResponse(
     success: json["success"],
+    statusCode: json["statusCode"],
     message: json["message"],
-    data: Data.fromMap(json["data"]),
+    body: Body.fromMap(json["body"]),
   );
 
   Map<String, dynamic> toMap() => {
     "success": success,
+    "statusCode": statusCode,
     "message": message,
-    "data": data.toMap(),
+    "body": body.toMap(),
   };
 }
 
-class Data {
-  Data({
-    required this.guestInvites,
+class Body {
+  Body({
+    required this.referrals,
   });
 
-  List<GuestInvite> guestInvites;
+  List<Referral> referrals;
 
-  factory Data.fromMap(Map<String, dynamic> json) => Data(
-    guestInvites: List<GuestInvite>.from(json["guestInvites"].map((guest) => GuestInvite.fromMap(guest))),
+  factory Body.fromMap(Map<String, dynamic> json) => Body(
+    referrals: List<Referral>.from(json["referrals"].map((x) => Referral.fromMap(x))),
   );
 
   Map<String, dynamic> toMap() => {
-    "guestInvites": List<dynamic>.from(guestInvites.map((guest) => guest.toMap())),
+    "referrals": List<dynamic>.from(referrals.map((x) => x.toMap())),
   };
 }
 
-class GuestInvite {
-  GuestInvite({
-    required this.firstName,
-    required this.autoUsername,
-    required this.avatar,
-    required this.country,
+class Referral {
+  Referral({
+    required this.id,
+    required this.referred,
+    required this.referrer,
+    required this.isActive,
+    required this.rewardPoint,
     required this.createdAt,
+    required this.updatedAt,
+    required this.v,
   });
 
-  String firstName;
-  String autoUsername;
-  String avatar;
-  String country;
+  String id;
+  Referre referred;
+  Referre referrer;
+  bool isActive;
+  int rewardPoint;
   DateTime createdAt;
+  DateTime updatedAt;
+  int v;
 
-  factory GuestInvite.fromMap(Map<String, dynamic> json) => GuestInvite(
-    firstName: json["firstName"],
-    autoUsername: json["autoUsername"],
-    avatar: json["avatar"],
-    country: json["country"],
+  factory Referral.fromMap(Map<String, dynamic> json) => Referral(
+    id: json["_id"],
+    referred: Referre.fromMap(json["referred"]),
+    referrer: Referre.fromMap(json["referrer"]),
+    isActive: json["isActive"],
+    rewardPoint: json["rewardPoint"],
     createdAt: DateTime.parse(json["createdAt"]),
+    updatedAt: DateTime.parse(json["updatedAt"]),
+    v: json["__v"],
   );
 
   Map<String, dynamic> toMap() => {
-    "firstName": firstName,
-    "autoUsername": autoUsername,
-    "avatar": avatar,
-    "country": country,
+    "_id": id,
+    "referred": referred.toMap(),
+    "referrer": referrer.toMap(),
+    "isActive": isActive,
+    "rewardPoint": rewardPoint,
     "createdAt": createdAt.toIso8601String(),
+    "updatedAt": updatedAt.toIso8601String(),
+    "__v": v,
+  };
+}
+
+class Referre {
+  Referre({
+    required this.id,
+    required this.firstName,
+    required this.lastName,
+  });
+
+  String id;
+  String firstName;
+  String lastName;
+
+  factory Referre.fromMap(Map<String, dynamic> json) => Referre(
+    id: json["_id"],
+    firstName: json["firstName"],
+    lastName: json["lastName"],
+  );
+
+  Map<String, dynamic> toMap() => {
+    "_id": id,
+    "firstName": firstName,
+    "lastName": lastName,
   };
 }

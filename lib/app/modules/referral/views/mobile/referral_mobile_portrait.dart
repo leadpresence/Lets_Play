@@ -181,7 +181,7 @@ class ReferralMobilePortrait extends GetView<ReferralController> {
     );
   }
 
-  Widget referralItem(GuestInvite invite) {
+  Widget referralItem(Referral invite) {
     return Container(
         padding: const EdgeInsets.all(12),
         margin: const EdgeInsets.fromLTRB(8, 9, 8, 8),
@@ -196,7 +196,7 @@ class ReferralMobilePortrait extends GetView<ReferralController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    invite.firstName + "- " + "@" + invite.autoUsername,
+                    invite.referred.firstName,
                     style: TextStyle(
                       fontSize: 13,
                       color: const Color(0xFFFE7A01).withOpacity(.6),

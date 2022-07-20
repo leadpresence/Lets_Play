@@ -102,7 +102,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
       GetStorage().write('lastName', res.body.user.lastName);
       GetStorage().write('phoneNumber', res.body.user.phone);
       GetStorage().write('profileImage', res.body.user.profileUrl);
-      GetStorage().write('referralCode', "inviteLink");
+      GetStorage().write('referralCode', res.body.user.referralCode);
       GetStorage().write('token', res.body.token);
       GetStorage().write('currentUserID', res.body.user.id);
       GetStorage().write('email', '');
@@ -169,7 +169,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
       GetStorage().write('profileImage', res.body.user.profileUrl);
       GetStorage().write('phoneNumber', res.body.user.phone);
       GetStorage().write('token', res.body.token);
-      GetStorage().write('referralCode', "inviteLink");
+      GetStorage().write('referralCode', res.body.user.referralCode);
       GetStorage().write('isEmailVerified', res.body.user.isEmailVerified);
       GetStorage().write('currentUserID', res.body.user.id);
       GetStorage().write('email', res.body.user.email);
@@ -204,11 +204,10 @@ class AuthServiceImpl extends AuthServiceDataSource {
       GetStorage().write('profileImage', res.body.user.profileUrl);
       GetStorage().write('phoneNumber', res.body.user.phone);
       GetStorage().write('token', res.body.token);
-      GetStorage().write('referralCode', "inviteLink");
+      GetStorage().write('referralCode', res.body.user.referralCode);
       GetStorage().write('isEmailVerified', res.body.user.isEmailVerified);
       GetStorage().write('currentUserID', res.body.user.id);
       GetStorage().write('email', res.body.user.email);
-      GetStorage().write('uuid', res.body.user.id);
       if (raw['success']) {
         return const Right("Login Successful");
       } else {
