@@ -95,7 +95,7 @@ class ReferralMobilePortrait extends GetView<ReferralController> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
                         Text(
-                          'Give a friend or family a promo code to get 2%  \ndiscount on any purchase',
+                          'Give a friend or family a promo code \nto get 2% discount on any purchase',
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
                           style: TextStyle(
