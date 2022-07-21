@@ -115,38 +115,44 @@ class JekawinClubHome extends StatelessWidget {
                   const SizedBox(
                     height: 24,
                   ),
-                  GridView.count(
-                    childAspectRatio: (itemWidth / itemHeight),
-                    controller: ScrollController(keepScrollOffset: false),
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    crossAxisCount: 3,
-                    padding: const EdgeInsets.symmetric(
-                      // horizontal: 12.0,
-                      vertical: 12.0,
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      for (int i = 0; i < membersBody.data.members.length; i++)
-                        membersBody.data.members[i].userId.id != currentUserID
-                            ? Column(
-                                children: [
-                                  const Text(
-                                    'Club Members',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  memberCard(
+                      membersBody.data.members.isEmpty
+                          ? const SizedBox()
+                          : const Text(
+                              'Club Members',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              textAlign: TextAlign.start,
+                            ),
+                      GridView.count(
+                        childAspectRatio: (itemWidth / itemHeight),
+                        controller: ScrollController(keepScrollOffset: false),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        crossAxisCount: 3,
+                        padding: const EdgeInsets.symmetric(
+                          // horizontal: 12.0,
+                          vertical: 12.0,
+                        ),
+                        children: [
+                          for (int i = 0;
+                              i < membersBody.data.members.length;
+                              i++)
+                            membersBody.data.members[i].userId.id !=
+                                    currentUserID
+                                ? memberCard(
                                     image: membersBody
                                         .data.members[i].userId.profileUrl,
                                     name: membersBody
                                         .data.members[i].userId.firstName,
-                                  ),
-                                ],
-                              )
-                            : const SizedBox(),
+                                  )
+                                : const SizedBox(),
+                        ],
+                      ),
                     ],
                   ),
                 ],
