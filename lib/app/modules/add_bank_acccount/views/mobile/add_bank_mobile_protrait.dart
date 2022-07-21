@@ -92,13 +92,10 @@ class AddBankMobilePortrait extends GetView<AddBankController> {
                             onChanged: (selectedValue) {
                               controller.bankNameController.text = "";
                               controller.accountNumberController.text = "";
-                              controller.selectedBankName.value =
-                                  selectedValue.toString();
-                              var item = controller.bList.value.firstWhere(
-                                  (bank) =>
-                                      bank.name == selectedValue.toString());
-                              controller.selectedBankCode.value =
-                                  item.code.toString();
+                              controller.selectedBankName.value = selectedValue.toString();
+                              var item = controller.bList.value.toList()
+                                   .firstWhere((bank) => bank.name == selectedValue.toString());
+                              controller.selectedBankCode.value = item.code.toString();
                             }),
                     ),
                   );
@@ -116,6 +113,7 @@ class AddBankMobilePortrait extends GetView<AddBankController> {
         Padding(
             padding: const EdgeInsets.fromLTRB(24, 24, 24, 10),
             child: CustomTextField(
+              maxLength: 10,
                 hintText: "Account Number",
                 textController: controller.accountNumberController,
                 onChanged: (v) {
