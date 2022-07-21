@@ -15,6 +15,7 @@ import 'package:jekawin_mobile_flutter/app/modules/security_question/views/mobil
 import 'package:jekawin_mobile_flutter/app/modules/user_profile/controllers/user_profile_cntroller.dart';
 import '../../../edit_profile/views/mobile/edit_profile_mobile_porttrait.dart';
 import '../../../jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
+import '../../../select_account/views/select_bank_view.dart';
 import '../../../wallet_home/controllers/wallet_home_controller.dart';
 
 class UserProfileMobilePortrait extends StatelessWidget {
@@ -221,7 +222,12 @@ class UserProfileMobilePortrait extends StatelessWidget {
                           icon: 'assets/svgs/change_password.svg',
                           isFingerPrint: true),
                       userProfileCardItem(
-                          onTap: () {},
+                          onTap: () {
+                            Get.to(
+                                  () => const SelectBankView(),
+                              transition: Transition.cupertino,
+                            );
+                          },
                           text: "Bank Details",
                           description:
                               "Link your bank details for payment and \nwithdrawals",

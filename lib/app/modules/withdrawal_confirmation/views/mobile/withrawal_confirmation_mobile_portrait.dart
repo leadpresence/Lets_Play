@@ -80,7 +80,7 @@ class WithdrawalConfirmationMobilePortrait
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
                 Text(
-                  "Enter one time password to continue withdrawal request.",
+                  "Enter transaction pin to continue withdrawal request.",
                   style: TextStyle(
                       fontWeight: FontWeight.w300, // light
                       fontStyle: FontStyle.normal,
@@ -97,16 +97,7 @@ class WithdrawalConfirmationMobilePortrait
                 hasIcon: false,
                 buttonText: 'Confirm withdrawal',
                 onPressed: () {
-                  Get.to(
-                    () => SuccessOrFailureMobileView(
-                      msg:
-                          "Your request is being processed",
-                      className: JekawinBottomTabs(
-                        tabIndex: 2,
-                      ),
-                    ),
-                    transition: Transition.cupertino,
-                  );
+               controller.validatePin();
                 },
               ),
             ),
