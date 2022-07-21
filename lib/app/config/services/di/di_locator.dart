@@ -29,6 +29,9 @@ class UtilsController extends GetxController {
   RxString walletId = "".obs;
   RxString accountName = "".obs;
   RxString email = "".obs;
+  RxString gender = "".obs;
+  RxString homeAddress = "".obs;
+  RxString profileUrl = "".obs;
 
   RxList guestLists = [].obs;
   // RxList transactions = [].obs;
@@ -42,10 +45,16 @@ class UtilsController extends GetxController {
   getResentPaymentLink() => recentPaymentLink.value;
   getOtp() => otp.value;
   getForgotPasswordToken() => forgotPasswordToken.value;
-
   getPhoneNumber() => phoneNumber.value;
-
   getEmail() => email.value;
+
+  setGender(String genderVal) => gender.value = genderVal;
+  setHomeAddress(String homeAddressVal) => homeAddress.value = homeAddressVal;
+  setProfileUrl(String profileUrlVal) => profileUrl.value = profileUrlVal;
+
+  getGender() => gender.value;
+  getHomeAddress() => homeAddress.value;
+  getProfileUrl() => profileUrl.value;
 
   setProspectId(String prosId) {
     prospectId.value = prosId;

@@ -50,7 +50,7 @@ class _JekawinBottomTabsState extends State<JekawinBottomTabs> {
     });
     _children.add({
       "title": "More",
-      "widget": const MenuMobilePortrait(),
+      "widget": MenuMobilePortrait(),
     });
     _currentIndex = widget.tabIndex;
     super.initState();
