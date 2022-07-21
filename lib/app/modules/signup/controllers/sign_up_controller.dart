@@ -17,6 +17,7 @@ class SignUpController extends GetxController {
   final lastNameController = TextEditingController();
   final phoneNumberController = TextEditingController();
   final passwordController = TextEditingController();
+  final inviteCodeController = TextEditingController();
 
   var isLoading = false.obs;
   RxString errorfirstNameMessage = "".obs;
@@ -82,6 +83,7 @@ class SignUpController extends GetxController {
   Future<void> signUp(Key? k) async {
     var firstName = firstNameController.value.text;
     var lastName = lastNameController.value.text;
+    var referralCode = inviteCodeController.value.text;
     var phoneNumber = TextUtils()
         .stripFirstZeroAddCountryCode(number: phoneNumberController.value.text);
     var password = passwordController.value.text;
@@ -92,6 +94,7 @@ class SignUpController extends GetxController {
       lastName: lastName,
       phone: phoneNumber,
       password: password,
+      referralCode: referralCode,
       agreement: userAgreed,
     ));
     userData.fold((l) {
@@ -110,12 +113,15 @@ class SignUpController extends GetxController {
         .stripFirstZeroAddCountryCode(number: phoneNumberController.value.text);
     var password = passwordController.value.text;
     var userAgreed = agreementCheck.value;
+    var referralCode = inviteCodeController.value.text;
+
     isLoading(true);
     final userData = await authService.signup(UserSignUpModel(
       firstName: firstName,
       lastName: lastName,
       phone: phoneNumber,
       password: password,
+      referralCode: referralCode,
       agreement: userAgreed,
     ));
     // userData.b

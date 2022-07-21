@@ -60,7 +60,8 @@ class AddBankMobilePortrait extends GetView<AddBankController> {
             future: controller.getBanks(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
-                return const DropdownButtonHideUnderline(
+                return const
+                DropdownButtonHideUnderline(
                     child:Center(
                       child: CupertinoActivityIndicator(
                         radius: 16.0,
@@ -72,7 +73,8 @@ class AddBankMobilePortrait extends GetView<AddBankController> {
                 if (banks != null) {
                   return Padding(
                     padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-                    child: DropdownButtonHideUnderline(
+                    child:
+                    DropdownButtonHideUnderline(
                         child: DropdownButtonFormField<String>(
                             value: snapshot.data?.first.name,
                             validator: (val) {

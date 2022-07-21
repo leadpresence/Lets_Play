@@ -11,6 +11,7 @@ class UserSignUpModel {
     required this.lastName,
     required this.phone,
     required this.password,
+    required this.referralCode,
     required this.agreement,
   });
 
@@ -18,6 +19,7 @@ class UserSignUpModel {
   String lastName="";
   String phone="";
   String password="";
+  String referralCode="";
   bool agreement=false;
 
   factory UserSignUpModel.fromJson(Map<String, dynamic> json) => UserSignUpModel(
@@ -25,6 +27,7 @@ class UserSignUpModel {
     lastName: json["lastName"],
     phone: json["phone"],
     password: json["password"],
+    referralCode: json["referralCode"],
     agreement: json["agreement"],
   );
 
@@ -33,6 +36,7 @@ class UserSignUpModel {
     "lastName": lastName,
     "phone": phone,
     "password": password,
+    "referralCode": referralCode,
     "agreement": agreement,
   };
 }

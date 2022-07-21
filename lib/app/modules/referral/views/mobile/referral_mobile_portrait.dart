@@ -11,6 +11,7 @@ import 'package:jekawin_mobile_flutter/app/utils/helpers/text_helper.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../widgets/custom_medium_button.dart';
+import 'package:flutter/services.dart';
 
 class ReferralMobilePortrait extends GetView<ReferralController> {
   @override
@@ -116,6 +117,8 @@ class ReferralMobilePortrait extends GetView<ReferralController> {
                           borderType: BorderType.RRect,
                           child: CustomMediumButton(
                             onPressed: () {
+
+                              Clipboard.setData(ClipboardData(text: controller.referralCode.value.toString()));
                               BotToast.showText(
                                   text: "${controller.referralCode} copied");
                             },

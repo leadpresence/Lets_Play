@@ -62,7 +62,6 @@ class AddBankController extends GetxController {
 
     }catch(e){
       BotToast.showText(text: "Error occurred retrieving all banks");
-
     }
 
     return [];
