@@ -28,11 +28,9 @@ class HttpServiceImpl extends HttpService {
       'Accept': 'application/json',
     };
     String token = GetStorage().read("token");
-    if (token.isNotEmpty) {
+    if (token!=null && token.isNotEmpty) {
       header['Authorization'] = 'Bearer ${GetStorage().read('token')}';
     }
-    // header['Authorization'] = 'Bearer ${GetStorage().read('token')}';
-
     _dio.options.headers.addAll(header);
   }
 
