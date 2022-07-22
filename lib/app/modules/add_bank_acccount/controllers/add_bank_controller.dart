@@ -3,9 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jekawin_mobile_flutter/app/modules/add_bank_acccount/models/bank_response_model.dart';
+import 'package:jekawin_mobile_flutter/app/modules/add_bank_acccount/views/add_bank_view.dart';
 
 import '../../../config/services/di/di_locator.dart';
 import '../../../config/services/wallet_service.dart';
+import '../../e_shop/views/mobile/success_or_failure_mobile_view.dart';
+import '../../select_account/views/select_bank_view.dart';
 import '../../withdrawal_amount/views/withdrawal_amount_view.dart';
 
 class AddBankController extends GetxController {
@@ -80,16 +83,18 @@ class AddBankController extends GetxController {
   }
 
   Future<void> addBankDetails(Key? key) async {
-    var accountNumber= accountNumberController.text.toString();
-    var bankCode= selectedBankCode.value.toString();
+    var accountNumber = accountNumberController.text.toString();
+    var bankCode = selectedBankCode.value.toString();
     var bankName = selectedBankName.value.toString();
-    final resposne = await walletService.addBank(bankName,accountNumber,bankCode);
-    resposne.fold((l) {
-      BotToast.showText(text: l.message + "Error occurred fetching Account name");
+    final response = await walletService.addBank(bankName,accountNumber,bankCode);
+    response.fold((l) {
+      Get.to(() => SuccessOrFailureMobileView(
+        msg: l.message,
+        success: false,
+        className: const SelectBankView(),
+      ));
     }, (r) {
-      BotToast.showText(text: r.toString());
-      Get.to(() => const WithdrawalAmountView());
-
+      Get.to(() => const SelectBankView());
     });
   }
 

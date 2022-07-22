@@ -14,6 +14,7 @@ import '../../../../init_db.dart';
 import '../../../modules/add_bank_acccount/models/bank_response_model.dart';
 import '../../../modules/fund_wallet/models/payment_processor_model.dart';
 import '../../../modules/select_account/models/bank_model.dart';
+import '../../../modules/wallet_home/models/user_wallet_response.dart';
 import '../../data/local/user_local_impl.dart';
 import '../auth_service.dart';
 import '../http/http_service_impl.dart';
@@ -36,8 +37,8 @@ class UtilsController extends GetxController {
   RxList guestLists = [].obs;
   // RxList transactions = [].obs;
   Rx<List<Bank>> banks = Rx<List<Bank>>([]);
-  Rx<List<dynamic>> savedBanks = Rx<List<BankModel>>([]);
-  Rx<List<BankModel>> withdrawalAccount = Rx<List<BankModel>>([]);
+  Rx<List<BankResponse>> savedBanks = Rx<List<BankResponse>>([]);
+  Rx<List<BankResponse>> withdrawalAccount = Rx<List<BankResponse>>([]);
   Rx<List<TransactionsModel>> transactions = Rx<List<TransactionsModel>>([]);
   RxList paymentProcessors = [].obs;
 

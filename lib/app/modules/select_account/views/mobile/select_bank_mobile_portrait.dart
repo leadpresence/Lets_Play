@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:jekawin_mobile_flutter/app/modules/add_bank_acccount/views/add_bank_view.dart';
 import 'package:jekawin_mobile_flutter/app/modules/select_account/controller/select_bank_controller.dart';
+import 'package:jekawin_mobile_flutter/app/modules/wallet_home/models/user_wallet_response.dart';
 
 import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../constants/asset_paths.dart';
@@ -140,7 +141,7 @@ class SelectBankMobilePortrait extends GetView {
 //Todo @felix create needed para meters for this class
 class BankItem extends StatelessWidget {
   var showBin = false;
-  final BankModel bankItem;
+  final BankResponse bankItem;
 
   BankItem({Key? key, required this.showBin, required this.bankItem})
       : super(key: key);
