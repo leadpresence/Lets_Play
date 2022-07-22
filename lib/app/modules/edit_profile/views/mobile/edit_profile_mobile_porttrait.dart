@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import '../../../../config/services/di/di_locator.dart';
 import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../widgets/custom_large_button.dart';
 import '../../controllers/edit_profile_controllers.dart';
@@ -22,31 +21,28 @@ class EditProfileMobilePortrait extends GetView {
   final ThemeData? themeData;
   final CustomAppTheme? customAppTheme;
 
+  var firstName = GetStorage().read("firstName");
+  var lastName = GetStorage().read("lastName");
+  var phoneNumber = GetStorage().read("phoneNumber");
+  var imageAvatar = GetStorage().read("profileImage");
+  var email = GetStorage().read('email');
+  var homeAddress = GetStorage().read("homeAddress");
+  var gender = GetStorage().read('gender');
+  var isEmailVerified = GetStorage().read('isEmailVerified');
+  var imageFile = GetStorage().read('rawImage') ?? File('');
+
+  var genders = [
+    'Female',
+    'Male',
+  ];
+
   @override
   Widget build(BuildContext context) {
-    var firstName = GetStorage().read("firstName");
-    var lastName = GetStorage().read("lastName");
-    var phoneNumber = GetStorage().read("phoneNumber");
-    var imageAvatar = GetStorage().read("profileImage");
-    var email = GetStorage().read('email');
-    var homeAddress = GetStorage().read("homeAddress");
-    var gender = GetStorage().read('gender');
-    var isEmailVerified = GetStorage().read('isEmailVerified');
-    var imageFile = GetStorage().read('rawImage') ?? File('');
-
-    var genders = [
-      'Female',
-      'Male',
-    ];
-
     double screenHeight([double percent = 1]) =>
         MediaQuery.of(Get.context!).size.height * percent;
-
     controller.emailTextController.text =
         email ?? controller.emailTextController.text;
-
     controller.dropDownValue = gender ?? controller.dropDownValue;
-
     controller.homeAddress.text = homeAddress ?? controller.homeAddress.text;
 
     return Scaffold(

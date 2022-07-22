@@ -12,6 +12,7 @@ import 'package:jekawin_mobile_flutter/app/modules/my_games/views/mobile/my_game
 import 'package:jekawin_mobile_flutter/app/modules/pin/views/set_pin_mobile_portrait.dart';
 import 'package:jekawin_mobile_flutter/app/modules/resetpassword/views/mobile/reset_password_mobile_potrait.dart';
 import 'package:jekawin_mobile_flutter/app/modules/user_profile/controllers/user_profile_cntroller.dart';
+import 'package:jekawin_mobile_flutter/app/services/local_storage.dart';
 import '../../../edit_profile/views/mobile/edit_profile_mobile_porttrait.dart';
 import '../../../jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
 import '../../../wallet_home/controllers/wallet_home_controller.dart';
@@ -247,6 +248,7 @@ class UserProfileMobilePortrait extends StatelessWidget {
                           icon: 'assets/svgs/my_games.svg'),
                       userProfileCardItem(
                           onTap: () {
+                            LocalStorage.deleteToken();
                             GetStorage().write('email', "");
                             GetStorage().write('isEmailVerified', false);
                             walletController.balance.value = 0;

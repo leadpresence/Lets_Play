@@ -180,11 +180,16 @@ class EditProfileController extends GetxController {
 
   Future<void> upDateProfile(Key? k) async {
     isLoading.value = true;
-    var data = {
-      "profileUrl": "https://jekawin.com/images/adeleke.jpeg",
-      "residentialAddress": homeAddress.text,
-      "gender": dropDownValue,
-    };
+    var data = homeAddress.text == ""
+        ? {
+            "profileUrl": profilePictureUrl,
+            "gender": dropDownValue,
+          }
+        : {
+            "profileUrl": profilePictureUrl,
+            "residentialAddress": homeAddress.text,
+            "gender": dropDownValue,
+          };
 
     try {
       final updateRes = await gamesServiceImpl.updateProfile(data);
@@ -291,15 +296,14 @@ class EditProfileController extends GetxController {
   void pickImage(ImageSource source, BuildContext context) async {
     final pickedFile = await ImagePicker().getImage(source: source);
     if (pickedFile != null) {
-      print('pickedFile != null');
       imageLoading.value = 'image_loading';
       imageFile.value = File(pickedFile.path);
+
       GetStorage().write('rawImage', imageFile.value);
+
       isRawImageAssigned.value = true;
-      print('imageFile ==> $imageFile');
       List<int> imageBytes = imageFile.value.readAsBytesSync();
       base64Image = base64Encode(imageBytes);
-      print('base64Image ==> $base64Image');
       await uploadFile(context);
       refresh();
     }
@@ -307,28 +311,29 @@ class EditProfileController extends GetxController {
 
   Future<String> uploadFile(BuildContext context) async {
     final file = basename(imageFile.value.path);
-    print('file ==> $file');
     extension = p.extension(imageFile.value.path);
-    print('extension ==> $extension');
 
     await S3BucketService.uploadImage(
       file: imageFile.value,
-      awsFolderPath: "/",
+      awsFolderPath: "",
       number: 1,
       context: context,
       extension: extension,
     );
     update();
-    print('imageFile ==> $imageFile');
 
     profilePictureUrl = 'loading';
+
     final urlDownload = await S3BucketService.getPresignedURLFromUnsigned(
-      awsFolderPath: "/",
+      awsFolderPath: "",
     );
+
     profilePictureName = file;
-    print('profilePictureName ==> $profilePictureName');
     profilePictureUrl = urlDownload;
-    print('profilePictureUrl ==> $profilePictureUrl');
+    if (kDebugMode) {
+      print('profilePictureName ==> $profilePictureName');
+      print('profilePictureUrl ==> $profilePictureUrl');
+    }
     return urlDownload;
   }
 }

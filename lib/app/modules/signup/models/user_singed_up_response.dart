@@ -67,6 +67,8 @@ class User {
     required this.rewardPoint,
     required this.isEmailVerified,
     required this.id,
+    this.gender,
+    this.residentialAddress,
   });
 
   String firstName;
@@ -79,6 +81,8 @@ class User {
   int rewardPoint;
   bool isEmailVerified;
   String id;
+  String? gender;
+  String? residentialAddress;
 
   factory User.fromMap(Map<String, dynamic> json) => User(
         firstName: json["firstName"],
@@ -86,11 +90,13 @@ class User {
         phone: json["phone"],
         email: json["email"],
         profileUrl: json["profileUrl"],
-    referralCode: json["referralCode"],
+        referralCode: json["referralCode"],
         wallet: Wallet.fromMap(json["wallet"]),
         rewardPoint: json["rewardPoint"],
         isEmailVerified: json["isEmailVerified"],
         id: json["id"],
+        gender: json["gender"],
+        residentialAddress: json["residentialAddress"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -104,6 +110,8 @@ class User {
         "rewardPoint": rewardPoint,
         "isEmailVerified": isEmailVerified,
         "id": id,
+        "gender": "gender",
+        "residentialAddress": "residentialAddress",
       };
 }
 

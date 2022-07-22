@@ -14,9 +14,9 @@ class S3BucketService {
     AwsS3PluginFlutter awsS3 = AwsS3PluginFlutter(
       awsFolderPath: awsFolderPath,
       region: Regions.EU_WEST_1,
-      bucketName: dotenv.env['bucketName'],
-      AWSSecret: dotenv.env['secretAccessKey'],
-      AWSAccess: dotenv.env['accessKey'],
+      bucketName: 'jekawinusers',
+      AWSSecret: "Jr27z7vajvhhRxRvfW7+VG/yjT86+FaJLhw5E7us",
+      AWSAccess: 'AKIAZG3ZF6NYWY5MTI7L',
       fileNameWithExt: result,
     );
     return await awsS3.getPreSignedURLOfFile;
@@ -33,13 +33,14 @@ class S3BucketService {
       String fileName =
           "$number$extension\_${DateTime.now().millisecondsSinceEpoch}.$extension";
       AwsS3PluginFlutter awsS3 = AwsS3PluginFlutter(
-          awsFolderPath: awsFolderPath,
-          file: file,
-          fileNameWithExt: fileName,
-          region: Regions.EU_WEST_1,
-          bucketName: dotenv.env['bucketName'],
-          AWSSecret: dotenv.env['secretAccessKey'],
-          AWSAccess: dotenv.env['accessKey']);
+        awsFolderPath: awsFolderPath,
+        file: file,
+        fileNameWithExt: fileName,
+        region: Regions.EU_WEST_1,
+        bucketName: 'jekawinusers',
+        AWSSecret: "Jr27z7vajvhhRxRvfW7+VG/yjT86+FaJLhw5E7us",
+        AWSAccess: 'AKIAZG3ZF6NYWY5MTI7L',
+      );
       displayUploadDialog(awsS3, context);
       try {
         try {

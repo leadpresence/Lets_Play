@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:jekawin_mobile_flutter/app/modules/dashboard/controllers/dashboard_controller.dart';
 import 'package:jekawin_mobile_flutter/app/modules/notification/controllers/notification_controller.dart';
 import 'package:jekawin_mobile_flutter/app/modules/notification/models/notification_model.dart';
 import 'package:jekawin_mobile_flutter/app/modules/referral/models/ReferralResponse.dart';
@@ -23,6 +24,8 @@ class NotificationMobilePortrait extends GetView<NotificationController> {
   final CustomAppTheme? customAppTheme;
   @override
   final NotificationController controller = Get.put(NotificationController());
+  final DashboardController dashboardController =
+      Get.put(DashboardController());
 
   @override
   Widget build(BuildContext context) {
@@ -83,16 +86,20 @@ class NotificationMobilePortrait extends GetView<NotificationController> {
                             scrollDirection: Axis.vertical,
                             itemCount: body.body.notifications.length,
                             itemBuilder: (BuildContext context, int position) {
+                              dashboardController.unSeenNotification.value =
+                                  body.body.notifications[position].seen ==
+                                          false
+                                      ? true
+                                      : false;
                               return notificationItem(
                                 message:
                                     body.body.notifications[position].content,
-                                timeAgo: TimeAgo.timeAgoSinceDate(body
-                                    .body.notifications[position].createdAt
-                                    .toString()),
+                                timeAgo: timeAgo(body
+                                    .body.notifications[position].createdAt),
                                 image: body.body.notifications[position].event
                                             .title ==
                                         "reward point"
-                                    ? 'assets/svgs/no_ou.png'
+                                    ? 'assets/svgs/no_wi.png'
                                     : 'assets/svgs/no_in.png',
                               );
                             },
@@ -141,7 +148,7 @@ class NotificationMobilePortrait extends GetView<NotificationController> {
                   height: 44,
                   width: 44,
                   child: Image.asset(
-                    'assets/svgs/no_in.png',
+                    image,
                   ),
                 ),
               )

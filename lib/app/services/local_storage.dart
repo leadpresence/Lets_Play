@@ -41,7 +41,7 @@ class LocalStorage {
     return GetStorage().read("gameSession");
   }
 
-  deleteToken() {
+  static deleteToken() {
     return GetStorage().remove("token");
   }
 

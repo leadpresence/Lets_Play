@@ -12,6 +12,8 @@ class DashboardController extends GetxController
   late PageController pageController;
   final GamesServiceImpl gamesService = Get.put(GamesServiceImpl());
 
+  Rx<bool> unSeenNotification = false.obs;
+
   late List<Body>? indexList = <Body>[];
   late List<Duration>? gamesDurations = <Duration>[];
   late List<DateTime>? endDates = <DateTime>[];
