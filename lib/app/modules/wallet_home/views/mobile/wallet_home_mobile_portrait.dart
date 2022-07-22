@@ -167,7 +167,8 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                             color: const Color(0XFF543884),
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          child: Column(
+                          child: 
+                          Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Row(
@@ -349,14 +350,16 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                     List<TransactionsModel>? listOftrxns = snapshot.data;
                     if (listOftrxns != null) {
                       if (listOftrxns.length > 1) {
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: listOftrxns.length,
-                          itemBuilder: (BuildContext context, int position) {
-                        return transactionItem(
-                          listOftrxns[position],
-                        );
-                          },
+                        return Expanded(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: listOftrxns.length,
+                            itemBuilder: (BuildContext context, int position) {
+                          return transactionItem(
+                            listOftrxns[position],
+                          );
+                            },
+                          ),
                         );
                       }
                       return Center(
