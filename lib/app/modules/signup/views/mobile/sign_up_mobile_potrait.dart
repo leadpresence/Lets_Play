@@ -169,6 +169,20 @@ class SignupMobilePortrait extends GetView<SignUpController> {
                       style: errorTextStyle,
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(24, 8, 24, 4),
+                    child: SlideInAnimation(
+                      duration: const Duration(milliseconds: 725),
+                      child: CustomTextField(
+                        hintText: "Invite code",
+                        isPasswordField: true,
+                        textController: controller.inviteCodeController,
+                        // suffixIcon:   unselected,
+                        onChanged: (v) {
+                        },
+                      ),
+                    ),
+                  ),
                   Gap(Get.height * 0.0056),
                   SlideInAnimation(
                     duration: const Duration(milliseconds: 750),

@@ -8,6 +8,7 @@ import 'package:jekawin_mobile_flutter/app/config/exceptions/auth_exceptions.dar
 import 'package:jekawin_mobile_flutter/app/config/services/di/di_locator.dart';
 import 'package:jekawin_mobile_flutter/app/config/services/http/base_urls.dart';
 import 'package:jekawin_mobile_flutter/app/constants/app_error.dart';
+import 'package:jekawin_mobile_flutter/app/modules/edit_profile/models/update_profile_model.dart';
 import 'package:jekawin_mobile_flutter/app/modules/signup/models/auth_response.dart';
 import 'package:jekawin_mobile_flutter/app/modules/signup/models/forget_password_response.dart';
 import 'package:jekawin_mobile_flutter/app/modules/signup/models/forgot_password_otp_res.dart';
@@ -17,6 +18,8 @@ import '../../modules/edit_profile/models/add_email_response_model.dart';
 import '../../modules/edit_profile/models/verified_email_response_model.dart';
 import '../../modules/pin/models/set_pin_response_model.dart';
 import '../../modules/pin/models/verify_pin_response.dart';
+import '../../modules/security_question/model/question_set_response.dart';
+import '../../modules/security_question/model/verify_question_response.dart';
 import '../../modules/signup/models/resendotp_resonse_model.dart';
 import '../../modules/signup/models/user_sign_up_model.dart';
 import '../../services/base_service.dart';
@@ -43,6 +46,9 @@ abstract class AuthServiceDataSource {
 
   Future<Either<AppError, String>> setPin(String pin, String confirmPin);
   Future<Either<AppError, String>> verifyPin(String pin);
+
+  Future<Either<AppError, String>> setSecurityQuestion(String question, String answer);
+  Future<Either<AppError, String>> verifySecurityQuestion(String question, String answer);
 
   Future<Either<AppError, String>> signout();
 }
@@ -174,8 +180,6 @@ class AuthServiceImpl extends AuthServiceDataSource {
       GetStorage().write('currentUserID', res.body.user.id);
       GetStorage().write('email', res.body.user.email);
       GetStorage().write('isEmailVerified', res.body.user.isEmailVerified);
-      GetStorage().write('gender', res.body.user.gender);
-      GetStorage().write('homeAddress', res.body.user.residentialAddress);
 
       if (raw['success']) {
         return Right(res);
@@ -403,14 +407,11 @@ class AuthServiceImpl extends AuthServiceDataSource {
   Future<Either<AppError, String>> setPin(String pin, String confirmPin) async {
     Map<String, dynamic> payload = {'pin': pin, 'confirmPin': confirmPin};
     var currentUserID = GetStorage().read('currentUserID');
-    Map<String, dynamic> bearerToken = {
-      "Authorization": GetStorage().read('token')
-    };
+    Map<String, dynamic>  bearerToken ={"Authorization": GetStorage().read('token')};
 
     try {
       var raw = await httpProvider.putHttp(
-          '${JekawinBaseUrls.authBaseUrl}users/$currentUserID/transaction-pin',
-          payload);
+          '${JekawinBaseUrls.authBaseUrl}users/$currentUserID/transaction-pin',payload);
 
       PinSetResponse res = PinSetResponse.fromMap(raw);
       if (raw['success']) {
@@ -433,7 +434,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
   }
 
   @override
-  Future<Either<AppError, String>> verifyPin(String pin) async {
+  Future<Either<AppError, String>> verifyPin(String pin) async{
     Map<String, dynamic> payload = {'pin': pin};
     var currentUserID = GetStorage().read('currentUserID');
 
@@ -445,6 +446,62 @@ class AuthServiceImpl extends AuthServiceDataSource {
       VerifyPinResponse res = VerifyPinResponse.fromMap(raw);
       if (raw['success']) {
         return const Right("Correct pin entered");
+      } else {
+        return Left(
+            AppError(errorType: AppErrorType.network, message: raw['message']));
+      }
+    } on NetworkException catch (e) {
+      return Left(
+          AppError(errorType: AppErrorType.network, message: e.message));
+    } on SocketException catch (e) {
+      return Left(
+          AppError(errorType: AppErrorType.network, message: e.message));
+    } on Exception {
+      return const Left(
+          AppError(errorType: AppErrorType.api, message: "An error occurred"));
+    }
+  }
+
+  @override
+  Future<Either<AppError, String>> setSecurityQuestion(String question, String answer) async {
+    Map<String, dynamic> payload = {'question': question, 'answer': answer};
+    var currentUserID = GetStorage().read('currentUserID');
+    try {
+      var raw = await httpProvider.putHttp(
+          '${JekawinBaseUrls.authBaseUrl}users/$currentUserID/security-question',payload);
+
+      QuestionSetResponse res = QuestionSetResponse.fromMap(raw);
+      if (raw['success']) {
+        return const Right("Security question successfully added");
+      } else {
+        return Left(
+            AppError(errorType: AppErrorType.network, message: raw['message']));
+      }
+    } on NetworkException catch (e) {
+      return Left(
+          AppError(errorType: AppErrorType.network, message: e.message));
+    } on SocketException catch (e) {
+      return Left(
+          AppError(errorType: AppErrorType.network, message: e.message));
+    } on Exception {
+      return const Left(
+          AppError(errorType: AppErrorType.api, message: "An error occurred"));
+    }
+  }
+
+  @override
+  Future<Either<AppError, String>> verifySecurityQuestion(String question, String answer) async {
+    Map<String, dynamic> payload = {'question': question, 'answer': answer};
+    var currentUserID = GetStorage().read('currentUserID');
+
+    try {
+      var raw = await httpProvider.postHttp(
+          '${JekawinBaseUrls.authBaseUrl}users/$currentUserID/verify-security-question',
+          payload);
+
+      VerifyQuestionResponse res = VerifyQuestionResponse.fromMap(raw);
+      if (raw['success']) {
+        return const Right("Correct");
       } else {
         return Left(
             AppError(errorType: AppErrorType.network, message: raw['message']));

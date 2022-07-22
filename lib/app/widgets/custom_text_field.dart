@@ -17,6 +17,7 @@ class CustomTextField extends StatefulWidget {
     this.width,
     this.keyboardType = TextInputType.text,
     this.hintText = '',
+    this.maxLength=600,
     this.isPasswordField = false,
     this.errorText = '',
     this.onSaved,
@@ -28,6 +29,7 @@ class CustomTextField extends StatefulWidget {
   final void Function()? onTap;
   final bool isDropdownField, readOnly;
   final onSaved;
+  final maxLength;
   final void Function(String)? onChanged;
   final width;
   final errorText;
@@ -80,6 +82,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return SizedBox(
       width: widget.width ?? Get.width,
       child: TextFormField(
+        maxLength: widget.maxLength,
+
         readOnly: widget.readOnly,
         focusNode: _focusNode,
         textInputAction: widget.textInputAction,
@@ -103,6 +107,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             fontSize: 14,
             fontWeight: FontWeight.w600),
         decoration: InputDecoration(
+          counterText: "",
           errorStyle: const TextStyle(fontSize: 0, height: 0),
           errorText: widget.errorText,
           prefixIcon: widget.prefixIcon == ''

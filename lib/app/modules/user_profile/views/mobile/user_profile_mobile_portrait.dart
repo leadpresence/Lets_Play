@@ -11,10 +11,12 @@ import 'package:jekawin_mobile_flutter/app/modules/dashboard/controllers/dashboa
 import 'package:jekawin_mobile_flutter/app/modules/my_games/views/mobile/my_games_mobile_portrait.dart';
 import 'package:jekawin_mobile_flutter/app/modules/pin/views/set_pin_mobile_portrait.dart';
 import 'package:jekawin_mobile_flutter/app/modules/resetpassword/views/mobile/reset_password_mobile_potrait.dart';
+import 'package:jekawin_mobile_flutter/app/modules/security_question/views/mobile/question_mobile_portrait.dart';
 import 'package:jekawin_mobile_flutter/app/modules/user_profile/controllers/user_profile_cntroller.dart';
 import 'package:jekawin_mobile_flutter/app/services/local_storage.dart';
 import '../../../edit_profile/views/mobile/edit_profile_mobile_porttrait.dart';
 import '../../../jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
+import '../../../select_account/views/select_bank_view.dart';
 import '../../../wallet_home/controllers/wallet_home_controller.dart';
 
 class UserProfileMobilePortrait extends StatelessWidget {
@@ -221,7 +223,12 @@ class UserProfileMobilePortrait extends StatelessWidget {
                           icon: 'assets/svgs/change_password.svg',
                           isFingerPrint: true),
                       userProfileCardItem(
-                          onTap: () {},
+                          onTap: () {
+                            Get.to(
+                                  () => const SelectBankView(),
+                              transition: Transition.cupertino,
+                            );
+                          },
                           text: "Bank Details",
                           description:
                               "Link your bank details for payment and \nwithdrawals",
@@ -236,6 +243,18 @@ class UserProfileMobilePortrait extends StatelessWidget {
                           text: "Set Transaction Pin",
                           description: "Set a pin for secured transactions",
                           icon: 'assets/svgs/two_fa.svg'),
+
+
+                      userProfileCardItem(
+                          onTap: () {
+                            Get.to(
+                                  () => QuestionsMobilePortrait(),
+                              transition: Transition.cupertino,
+                            );
+                          },
+                          text: "2FA Security Questions",
+                          description: "Set Security Question to secure and restore your account",
+                          icon: 'assets/svgs/security_questions.svg'),
                       userProfileCardItem(
                           onTap: () {
                             Get.to(

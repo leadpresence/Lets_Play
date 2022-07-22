@@ -58,11 +58,11 @@ class AddBankController extends GetxController {
   Future<List<Bank>> getBanks() async {
     List<Bank> banks = await walletService.getBanks();
     try{
+      bList.value.addAll(banks);
       return banks;
 
     }catch(e){
       BotToast.showText(text: "Error occurred retrieving all banks");
-
     }
 
     return [];
@@ -74,7 +74,7 @@ class AddBankController extends GetxController {
     bank.fold((l) {
       BotToast.showText(text: "Error occurred fetching Account name,please try again");
     }, (r) {
-      BotToast.showText(text: r.toString());
+      // BotToast.showText(text: r.toString());
       bankNameController.text =r.toString();
     });
   }
