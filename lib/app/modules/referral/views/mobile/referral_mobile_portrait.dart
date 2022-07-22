@@ -117,7 +117,6 @@ class ReferralMobilePortrait extends GetView<ReferralController> {
                           borderType: BorderType.RRect,
                           child: CustomMediumButton(
                             onPressed: () {
-
                               Clipboard.setData(ClipboardData(text: controller.referralCode.value.toString()));
                               BotToast.showText(
                                   text: "${controller.referralCode} copied");
