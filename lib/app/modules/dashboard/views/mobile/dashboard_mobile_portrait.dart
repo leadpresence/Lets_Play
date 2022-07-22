@@ -33,10 +33,11 @@ class DashboardMobilePortrait extends StatelessWidget {
   final UserLocalDataSourceImpl user = Get.find();
   final WalletHomeController walletController = Get.put(WalletHomeController());
 
+  var imageAvatar = GetStorage().read("profileImage");
+  var email = GetStorage().read('email');
+  var firstName = GetStorage().read("firstName");
   @override
   Widget build(BuildContext context) {
-    var email = GetStorage().read('email');
-    var firstName = GetStorage().read("firstName");
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -66,11 +67,34 @@ class DashboardMobilePortrait extends StatelessWidget {
                         },
                         child: Row(
                           children: [
-                            SvgPicture.asset('assets/svgs/user_icon.svg'),
+                            CircleAvatar(
+                              radius: 18,
+                              backgroundColor: Colors.white10,
+                              child: imageAvatar == ''
+                                  ? SvgPicture.asset(
+                                      'assets/svgs/user_icon.svg')
+                                  : ClipRRect(
+                                    borderRadius:
+                                        BorderRadius.circular(50),
+                                    child: SizedBox(
+                                      width: Get.width,
+                                      child: Image.network(
+                                        imageAvatar,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                            ),
                             const SizedBox(
                               width: 6,
                             ),
-                            Text("Hi $firstName"),
+                            Text(
+                              "Hi $firstName,",
+                              style: const TextStyle(
+                                // fontWeight: FontWeight.w600,
+                                color: Color(0xff414249),
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -160,7 +184,8 @@ class DashboardMobilePortrait extends StatelessWidget {
                       } else if (snapshot.hasData) {
                         UserWalletModel? walletData = snapshot.data;
                         if (walletData != null) {
-                          GetStorage().write('walletBalance_', walletData.body.wallet.balance);
+                          GetStorage().write(
+                              'walletBalance_', walletData.body.wallet.balance);
                           return Container(
                             padding: const EdgeInsets.only(
                               top: 18,
@@ -454,32 +479,30 @@ class DashboardMobilePortrait extends StatelessWidget {
                                   physics: const ScrollPhysics(),
                                   itemBuilder:
                                       (BuildContext context, int index) {
-                                    return  DashboardHeroSession(
-                                        onPressed: () {
-                                          Get.to(
-                                            () => JackpotGamesMobilePortrait(
-                                              gameIndex: index,
-                                              gameData: body[index],
-                                              gameID: body[index]["gameID"]
-                                                  ["_id"],
-                                            ),
-                                            transition: Transition.cupertino,
-                                          );
-                                        },
-                                        priceToBeWon: body[index]["gameID"]
-                                            ["imageUrl"],
-                                        title: body[index]["gameID"]["title"],
-                                        animation: StepTween(
-                                          begin: dashboardController
-                                                  .timeRemainingInSecsForGames[
-                                              index],
-                                          end: 0,
-                                        ).animate(
-                                          dashboardController
-                                              .gamesAnimationControllers[index]
-                                              .value,
-                                        ),
-
+                                    return DashboardHeroSession(
+                                      onPressed: () {
+                                        Get.to(
+                                          () => JackpotGamesMobilePortrait(
+                                            gameIndex: index,
+                                            gameData: body[index],
+                                            gameID: body[index]["gameID"]
+                                                ["_id"],
+                                          ),
+                                          transition: Transition.cupertino,
+                                        );
+                                      },
+                                      priceToBeWon: body[index]["gameID"]
+                                          ["imageUrl"],
+                                      title: body[index]["gameID"]["title"],
+                                      animation: StepTween(
+                                        begin: dashboardController
+                                            .timeRemainingInSecsForGames[index],
+                                        end: 0,
+                                      ).animate(
+                                        dashboardController
+                                            .gamesAnimationControllers[index]
+                                            .value,
+                                      ),
                                     );
                                   },
                                 ),

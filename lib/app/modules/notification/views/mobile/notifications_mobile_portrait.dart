@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:jekawin_mobile_flutter/app/modules/dashboard/controllers/dashboard_controller.dart';
 import 'package:jekawin_mobile_flutter/app/modules/notification/controllers/notification_controller.dart';
 import 'package:jekawin_mobile_flutter/app/modules/notification/models/notification_model.dart';
@@ -31,94 +32,147 @@ class NotificationMobilePortrait extends GetView<NotificationController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 16.0),
-          child: IconButton(
-            splashRadius: 24,
-            icon: SvgPicture.asset(
-              'assets/svgs/chevronLeft.svg',
-              color: const Color(0xff12121D),
-            ),
-            onPressed: () {
-              Get.back();
-            },
-          ),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(
-            left: 24.0,
-            right: 24.0,
-            top: 2.0,
-          ),
-          child: Column(
-            children: [
-              const Text(
-                'Notifications',
-                style: TextStyle(
-                  fontSize: 24,
-                  color: Color(0xff414249),
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            elevation: .4,
+            backgroundColor: Colors.white,
+            expandedHeight: 104.0,
+            leading: Padding(
+              padding: const EdgeInsets.only(left: 16.0),
+              child: IconButton(
+                splashRadius: 24,
+                icon: SvgPicture.asset(
+                  'assets/svgs/chevronLeft.svg',
+                  color: const Color(0xff12121D),
                 ),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              FutureBuilder<NotificationsModel?>(
-                future: controller.getNotifications(key),
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return Text(
-                        "Snapshot has error: ${snapshot.hasError.toString()}");
-                  } else if (snapshot.hasData) {
-                    var body = snapshot.data!;
-                    return body.body.notifications.isEmpty
-                        ? const Text(
-                            "No Notifications History",
-                          )
-                        : ListView.builder(
-                            reverse: false,
-                            shrinkWrap: true,
-                            physics: const BouncingScrollPhysics(),
-                            scrollDirection: Axis.vertical,
-                            itemCount: body.body.notifications.length,
-                            itemBuilder: (BuildContext context, int position) {
-                              dashboardController.unSeenNotification.value =
-                                  body.body.notifications[position].seen ==
-                                          false
-                                      ? true
-                                      : false;
-                              return notificationItem(
-                                message:
-                                    body.body.notifications[position].content,
-                                timeAgo: timeAgo(body
-                                    .body.notifications[position].createdAt),
-                                image: body.body.notifications[position].event
-                                            .title ==
-                                        "reward point"
-                                    ? 'assets/svgs/no_wi.png'
-                                    : 'assets/svgs/no_in.png',
-                              );
-                            },
-                          );
-                  }
-                  return const Center(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 24.0),
-                      child: CircularProgressIndicator(
-                        color: Color(0xffFE7A01),
-                        strokeWidth: 3,
-                      ),
-                    ),
-                  );
+                onPressed: () {
+                  Get.back();
                 },
               ),
-            ],
+            ),
+            stretch: true,
+            floating: true,
+            pinned: true,
+            flexibleSpace: FlexibleSpaceBar(
+              centerTitle: true,
+              titlePadding: const EdgeInsets.all(0),
+              collapseMode: CollapseMode.pin,
+              expandedTitleScale: 1,
+              title: Container(
+                padding: const EdgeInsets.only(
+                  bottom: 12,
+                ),
+                child: Text(
+                  "Notifications",
+                  style: GoogleFonts.mulish(
+                    fontWeight: FontWeight.normal, // light
+                    fontStyle: FontStyle.normal,
+                    color: Colors.black,
+                    fontSize: 24, // italic
+                  ),
+                ),
+              ),
+            ),
           ),
-        ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (_, int index) {
+                return SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 24.0, right: 24.0, top: 12, bottom: 12),
+                    child: Column(
+                      children: [
+                        FutureBuilder<NotificationsModel?>(
+                          future: controller.getNotifications(key),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) {
+                              return Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 104.0),
+                                  child: Text(
+                                      "Snapshot has error: ${snapshot.hasError.toString()}"),
+                                ),
+                              );
+                            } else if (snapshot.hasData) {
+                              var body = snapshot.data!;
+                              return body.body.notifications.isEmpty
+                                  ? const Text(
+                                      "No Notifications History",
+                                    )
+                                  : ListView.builder(
+                                      reverse: false,
+                                      shrinkWrap: true,
+                                      padding: EdgeInsets.zero,
+                                      physics: const BouncingScrollPhysics(),
+                                      scrollDirection: Axis.vertical,
+                                      itemCount: body.body.notifications.length,
+                                      itemBuilder:
+                                          (BuildContext context, int position) {
+                                        dashboardController
+                                            .unSeenNotification.value = body
+                                                    .body
+                                                    .notifications[position]
+                                                    .seen ==
+                                                false
+                                            ? true
+                                            : false;
+                                        return FadeIn(
+                                          duration:
+                                              const Duration(milliseconds: 200),
+                                          delay:
+                                              const Duration(milliseconds: 200),
+                                          child: notificationItem(
+                                            message: body
+                                                .body
+                                                .notifications[position]
+                                                .content,
+                                            timeAgo: timeAgo(body
+                                                .body
+                                                .notifications[position]
+                                                .createdAt),
+                                            image: body
+                                                        .body
+                                                        .notifications[position]
+                                                        .event
+                                                        .title ==
+                                                    "reward point"
+                                                ? 'assets/svgs/no_wi.png'
+                                                : body
+                                                            .body
+                                                            .notifications[
+                                                                position]
+                                                            .event
+                                                            .title ==
+                                                        "withdrawal"
+                                                    ? 'assets/svgs/no_ou.png'
+                                                    : 'assets/svgs/no_in.png',
+                                          ),
+                                        );
+                                      },
+                                    );
+                            }
+                            return const Center(
+                              child: Padding(
+                                padding: EdgeInsets.only(top: 104.0),
+                                child: CupertinoActivityIndicator(
+                                  color: Color(0xffFE7A01),
+                                  // strokeWidth: 3,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+              childCount: 1,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -142,19 +196,16 @@ class NotificationMobilePortrait extends GetView<NotificationController> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(12, 0, 8, 0),
-                child: SizedBox(
-                  height: 44,
-                  width: 44,
-                  child: Image.asset(
-                    image,
-                  ),
+              SizedBox(
+                height: 44,
+                width: 44,
+                child: Image.asset(
+                  image,
                 ),
               )
             ],
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: 16),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -162,7 +213,7 @@ class NotificationMobilePortrait extends GetView<NotificationController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(
-                    width: Get.width * .65,
+                    width: Get.width * .68,
                     child: Text(
                       message ?? "Message",
                       style: const TextStyle(

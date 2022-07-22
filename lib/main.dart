@@ -13,7 +13,6 @@ void main() async {
   await GetStorage.init();
   GetStorage().write('email', "");
   WidgetsFlutterBinding.ensureInitialized();
-  // DashboardController();
   await dotenv.load(fileName: 'dotenv');
   await setDi();
   SystemChrome.setPreferredOrientations(
@@ -47,7 +46,6 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.white,
         canvasColor: Colors.white,
       ),
-      // home: JekawinBottomTabs(tabIndex: 0,)
     );
   }
 }

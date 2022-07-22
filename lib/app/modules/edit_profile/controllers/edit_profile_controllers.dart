@@ -180,16 +180,25 @@ class EditProfileController extends GetxController {
 
   Future<void> upDateProfile(Key? k) async {
     isLoading.value = true;
-    var data = homeAddress.text == ""
+    var data = profilePictureUrl == "" && homeAddress.text == ""
         ? {
-            "profileUrl": profilePictureUrl,
             "gender": dropDownValue,
           }
-        : {
-            "profileUrl": profilePictureUrl,
-            "residentialAddress": homeAddress.text,
-            "gender": dropDownValue,
-          };
+        : homeAddress.text == ""
+            ? {
+                "profileUrl": profilePictureUrl,
+                "gender": dropDownValue,
+              }
+            : profilePictureUrl == ""
+                ? {
+                    "gender": dropDownValue,
+                    "residentialAddress": homeAddress.text,
+                  }
+                : {
+                    "profileUrl": profilePictureUrl,
+                    "residentialAddress": homeAddress.text,
+                    "gender": dropDownValue,
+                  };
 
     try {
       final updateRes = await gamesServiceImpl.updateProfile(data);
@@ -309,7 +318,9 @@ class EditProfileController extends GetxController {
     }
   }
 
-  Future<String> uploadFile(BuildContext context) async {
+  // Future<String>
+
+  uploadFile(BuildContext context) async {
     final file = basename(imageFile.value.path);
     extension = p.extension(imageFile.value.path);
 
@@ -320,19 +331,21 @@ class EditProfileController extends GetxController {
       context: context,
       extension: extension,
     );
-    update();
 
     profilePictureUrl = 'loading';
 
-    final urlDownload = await S3BucketService.getPresignedURLFromUnsigned(
+    final urlDownload = await S3BucketService.getPreSignedURLFromUnsigned(
       awsFolderPath: "",
     );
 
     profilePictureName = file;
     profilePictureUrl = urlDownload;
+
+    GetStorage().write('profileImage', urlDownload);
+
     if (kDebugMode) {
       print('profilePictureName ==> $profilePictureName');
-      print('profilePictureUrl ==> $profilePictureUrl');
+      print('Download-Link: $urlDownload');
     }
     return urlDownload;
   }

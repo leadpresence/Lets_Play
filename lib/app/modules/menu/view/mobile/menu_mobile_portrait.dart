@@ -19,55 +19,56 @@ class MenuMobilePortrait extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Text(
-                'Menu',
-                style: TextStyle(
-                  fontSize: 24,
-                  color: Color(0xff414249),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Text(
+                  'Menu',
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: Color(0xff414249),
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              ListView(
-                shrinkWrap: true,
-                children: [
-                  menuListTile(
-                    onTap: () => Get.to(
-                      () => const RewardPointsMobilePortrait(),
-                      transition: Transition.cupertino,
+                const SizedBox(
+                  height: 16,
+                ),
+                ListView(
+                  shrinkWrap: true,
+                  children: [
+                    menuListTile(
+                      onTap: () => Get.to(
+                        () => const RewardPointsMobilePortrait(),
+                        transition: Transition.cupertino,
+                      ),
+                      icon: 'assets/svgs/gift.svg',
+                      tileText: 'Reward Points',
                     ),
-                    icon: 'assets/svgs/gift.svg',
-                    tileText: 'Reward Points',
-                  ),
-                  menuListTile(
-                    onTap: () => Get.to(
-                      () => const RedeemPrizesMobilePortrait(),
-                      transition: Transition.cupertino,
+                    menuListTile(
+                      onTap: () => Get.to(
+                        () => const RedeemPrizesMobilePortrait(),
+                        transition: Transition.cupertino,
+                      ),
+                      icon: 'assets/svgs/gift.svg',
+                      tileText: 'Redeem Prizes',
                     ),
-                    icon: 'assets/svgs/gift.svg',
-                    tileText: 'Redeem Prizes',
-                  ),
-                  menuListTile(
-                    onTap: () => Get.to(
-                      () => const ReferralView(),
-                      transition: Transition.cupertino,
+                    menuListTile(
+                      onTap: () => Get.to(
+                        () => const ReferralView(),
+                        transition: Transition.cupertino,
+                      ),
+                      icon: 'assets/svgs/share_referral.svg',
+                      tileText: 'Referral',
                     ),
-                    icon: 'assets/svgs/share_referral.svg',
-                    tileText: 'Referral',
-                  ),
-                  menuListTile(
-                    onTap: () => clubController.getAllClubs(),
-
-                    icon: 'assets/svgs/share_referral.svg',
-                    tileText: 'Jekawin Club',
-                  )
-                ],
-              )
-            ],
+                    menuListTile(
+                      onTap: () => clubController.getAllClubs(),
+                      icon: 'assets/svgs/share_referral.svg',
+                      tileText: 'Jekawin Club',
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),

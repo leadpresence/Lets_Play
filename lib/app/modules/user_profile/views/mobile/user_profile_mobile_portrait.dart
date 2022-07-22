@@ -33,7 +33,7 @@ class UserProfileMobilePortrait extends StatelessWidget {
     var lastName = GetStorage().read("lastName");
     var phoneNumber = GetStorage().read("phoneNumber");
     var imageAvatar = GetStorage().read("profileImage");
-    var imageFile = GetStorage().read('rawImage') ?? File('');
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -91,10 +91,11 @@ class UserProfileMobilePortrait extends StatelessWidget {
                               CircleAvatar(
                                 radius: 36,
                                 backgroundColor: Colors.white10,
-                                child: imageFile == File('')
+                                child: imageAvatar == ''
                                     ? Stack(
                                         children: [
                                           Container(
+                                            width: Get.width,
                                             decoration: BoxDecoration(
                                               shape: BoxShape.circle,
                                               image: DecorationImage(
@@ -111,7 +112,7 @@ class UserProfileMobilePortrait extends StatelessWidget {
                                                 image: NetworkImage(
                                                   imageAvatar,
                                                 ),
-                                                fit: BoxFit.cover,
+                                                // fit: BoxFit.fill,
                                               ),
                                             ),
                                           ),
@@ -123,14 +124,13 @@ class UserProfileMobilePortrait extends StatelessWidget {
                                           )
                                         ],
                                       )
-                                    : SizedBox(
-                                        width: 96,
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(50),
-                                          child: Image.file(
-                                            imageFile,
-                                            fit: BoxFit.fill,
+                                    : ClipRRect(
+                                        borderRadius: BorderRadius.circular(50),
+                                        child: SizedBox(
+                                          width: Get.width,
+                                          child: Image.network(
+                                            imageAvatar,
+                                            fit: BoxFit.cover,
                                           ),
                                         ),
                                       ),
@@ -204,6 +204,7 @@ class UserProfileMobilePortrait extends StatelessWidget {
                   ),
                   child: ListView(
                     shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
                     children: [
                       userProfileCardItem(
                           onTap: () {
@@ -225,7 +226,7 @@ class UserProfileMobilePortrait extends StatelessWidget {
                       userProfileCardItem(
                           onTap: () {
                             Get.to(
-                                  () => const SelectBankView(),
+                              () => const SelectBankView(),
                               transition: Transition.cupertino,
                             );
                           },
@@ -242,19 +243,18 @@ class UserProfileMobilePortrait extends StatelessWidget {
                           },
                           text: "Set Transaction Pin",
                           description: "Set a pin for secured transactions",
-                          icon: 'assets/svgs/two_fa.svg'),
-
-
+                          icon: 'assets/svgs/secure_.svg'),
                       userProfileCardItem(
                           onTap: () {
                             Get.to(
-                                  () => QuestionsMobilePortrait(),
+                              () => QuestionsMobilePortrait(),
                               transition: Transition.cupertino,
                             );
                           },
                           text: "2FA Security Questions",
-                          description: "Set Security Question to secure and restore your account",
-                          icon: 'assets/svgs/security_questions.svg'),
+                          description:
+                              "Set Security Question to secure and restore your account",
+                          icon: 'assets/svgs/two_fa.svg'),
                       userProfileCardItem(
                           onTap: () {
                             Get.to(
@@ -322,18 +322,24 @@ class UserProfileMobilePortrait extends StatelessWidget {
                       ),
                     ),
                     const Gap(6),
-                    Wrap(
-                      children: [
-                        Text(
-                          description,
-                          overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.mulish(
-                            fontSize: 11,
-                            fontWeight: FontWeight.normal,
-                            color: const Color(0xff747B84),
+                    SizedBox(
+                      width: isFingerPrint == true
+                          ? Get.width * .4
+                          : Get.width * .6,
+                      child: Wrap(
+                        children: [
+                          Text(
+                            description,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.mulish(
+                              fontSize: 11,
+                              fontWeight: FontWeight.normal,
+                              color: const Color(0xff747B84),
+                            ),
+                            maxLines: 2,
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     )
                   ],
                 ),

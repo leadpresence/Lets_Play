@@ -8,17 +8,18 @@ class S3BucketService {
   static String url = '';
   static String result = '';
 
-  static Future<String> getPresignedURLFromUnsigned({
+  static Future<String> getPreSignedURLFromUnsigned({
     required String awsFolderPath,
   }) async {
     AwsS3PluginFlutter awsS3 = AwsS3PluginFlutter(
       awsFolderPath: awsFolderPath,
-      region: Regions.EU_WEST_1,
+      region: Regions.US_EAST_1,
       bucketName: 'jekawinusers',
       AWSSecret: "Jr27z7vajvhhRxRvfW7+VG/yjT86+FaJLhw5E7us",
       AWSAccess: 'AKIAZG3ZF6NYWY5MTI7L',
       fileNameWithExt: result,
     );
+    awsS3.getUploadStatus;
     return await awsS3.getPreSignedURLOfFile;
   }
 
@@ -29,29 +30,28 @@ class S3BucketService {
     context,
     required String extension,
   }) async {
-    if (result == null) {
-      String fileName =
-          "$number$extension\_${DateTime.now().millisecondsSinceEpoch}.$extension";
-      AwsS3PluginFlutter awsS3 = AwsS3PluginFlutter(
-        awsFolderPath: awsFolderPath,
-        file: file,
-        fileNameWithExt: fileName,
-        region: Regions.EU_WEST_1,
-        bucketName: 'jekawinusers',
-        AWSSecret: "Jr27z7vajvhhRxRvfW7+VG/yjT86+FaJLhw5E7us",
-        AWSAccess: 'AKIAZG3ZF6NYWY5MTI7L',
-      );
-      displayUploadDialog(awsS3, context);
+    print('I went through');
+    String fileName =
+        "$number$extension\_${DateTime.now().millisecondsSinceEpoch}.$extension";
+    AwsS3PluginFlutter awsS3 = AwsS3PluginFlutter(
+      awsFolderPath: awsFolderPath,
+      file: file,
+      fileNameWithExt: fileName,
+      region: Regions.US_EAST_1,
+      bucketName: 'jekawinusers',
+      AWSSecret: "Jr27z7vajvhhRxRvfW7+VG/yjT86+FaJLhw5E7us",
+      AWSAccess: 'AKIAZG3ZF6NYWY5MTI7L',
+    );
+    displayUploadDialog(awsS3, context);
+    try {
       try {
-        try {
-          result = await awsS3.uploadFile;
-          debugPrint("Result :'$result'.");
-        } on PlatformException {
-          debugPrint("Result :'$result'.");
-        }
-      } on PlatformException catch (e) {
-        debugPrint("Failed :'${e.message}'.");
+        result = await awsS3.uploadFile;
+        debugPrint("Result :'$result'.");
+      } on PlatformException {
+        debugPrint("Result :'$result'.");
       }
+    } on PlatformException catch (e) {
+      debugPrint("Failed :'${e.message}'.");
     }
     return url;
   }
