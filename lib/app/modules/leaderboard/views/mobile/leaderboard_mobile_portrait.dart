@@ -67,9 +67,9 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                             unselectedLabelColor: const Color(0xff333333),
                             labelColor: const Color(0xff333333),
                             indicatorSize: TabBarIndicatorSize.label,
-                            indicator: BoxDecoration(
+                            indicator: const BoxDecoration(
                               borderRadius: BorderRadius.only(topLeft: Radius.circular(15),bottomLeft:Radius.circular(15),topRight: Radius.circular(15),bottomRight: Radius.circular(15) ),
-                              color: const Color(0xffF4D37E),
+                              color:  Color(0xffF4D37E),
                             ),
                             unselectedLabelStyle: GoogleFonts.jost(
                               color: const Color(0xff333333),
