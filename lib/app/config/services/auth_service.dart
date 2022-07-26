@@ -8,7 +8,6 @@ import 'package:jekawin_mobile_flutter/app/config/exceptions/auth_exceptions.dar
 import 'package:jekawin_mobile_flutter/app/config/services/di/di_locator.dart';
 import 'package:jekawin_mobile_flutter/app/config/services/http/base_urls.dart';
 import 'package:jekawin_mobile_flutter/app/constants/app_error.dart';
-import 'package:jekawin_mobile_flutter/app/modules/edit_profile/models/update_profile_model.dart';
 import 'package:jekawin_mobile_flutter/app/modules/leaderboard/models/leader_board_response.dart';
 import 'package:jekawin_mobile_flutter/app/modules/signup/models/auth_response.dart';
 import 'package:jekawin_mobile_flutter/app/modules/signup/models/forget_password_response.dart';
@@ -537,11 +536,10 @@ class AuthServiceImpl extends AuthServiceDataSource {
   @override
   Future<LeaderBoardResponse> leaderBoard(String duration) async {
     var currentUserID = GetStorage().read('currentUserID');
-    Map<String,String>leaderBoardDuration ={"duration":duration};
-      var raw = await httpProvider.getHttp(
-          '${JekawinBaseUrls.leaderBoardBaseUrl}leaderBoard/?duration=$duration');
-      LeaderBoardResponse response = LeaderBoardResponse.fromMap(raw);
+    Map<String, String> leaderBoardDuration = {"duration": duration};
+    var raw = await httpProvider.getHttp(
+        '${JekawinBaseUrls.leaderBoardBaseUrl}leaderBoard/?duration=$duration');
+    LeaderBoardResponse response = LeaderBoardResponse.fromMap(raw);
     return response;
-
-}
+  }
 }
