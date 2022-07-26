@@ -20,6 +20,14 @@ class TextUtils {
     }
     return newNumber;
   }
+  String hideNumberPart(String number){
+    String marsk="****";
+    String newNumber = '';
+    newNumber = number.replaceRange(9, 13, marsk);
+    return newNumber;
+
+
+  }
 
   String shortDate(DateTime date) {
     final DateFormat formatter = DateFormat('yyyy-MM-dd');
