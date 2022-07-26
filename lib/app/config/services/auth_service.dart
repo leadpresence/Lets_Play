@@ -48,8 +48,10 @@ abstract class AuthServiceDataSource {
   Future<Either<AppError, String>> setPin(String pin, String confirmPin);
   Future<Either<AppError, String>> verifyPin(String pin);
 
-  Future<Either<AppError, String>> setSecurityQuestion(String question, String answer);
-  Future<Either<AppError, String>> verifySecurityQuestion(String question, String answer);
+  Future<Either<AppError, String>> setSecurityQuestion(
+      String question, String answer);
+  Future<Either<AppError, String>> verifySecurityQuestion(
+      String question, String answer);
 
   Future<Either<AppError, String>> signout();
   Future<LeaderBoardResponse> leaderBoard(String duration);
@@ -182,6 +184,8 @@ class AuthServiceImpl extends AuthServiceDataSource {
       GetStorage().write('currentUserID', res.body.user.id);
       GetStorage().write('email', res.body.user.email);
       GetStorage().write('isEmailVerified', res.body.user.isEmailVerified);
+      GetStorage().write('gender', res.body.user.gender);
+      GetStorage().write('homeAddress', res.body.user.residentialAddress);
 
       if (raw['success']) {
         return Right(res);
@@ -216,6 +220,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
       GetStorage().write('isEmailVerified', res.body.user.isEmailVerified);
       GetStorage().write('currentUserID', res.body.user.id);
       GetStorage().write('email', res.body.user.email);
+
       if (raw['success']) {
         return const Right("Login Successful");
       } else {
@@ -409,10 +414,14 @@ class AuthServiceImpl extends AuthServiceDataSource {
   Future<Either<AppError, String>> setPin(String pin, String confirmPin) async {
     Map<String, dynamic> payload = {'pin': pin, 'confirmPin': confirmPin};
     var currentUserID = GetStorage().read('currentUserID');
+    Map<String, dynamic> bearerToken = {
+      "Authorization": GetStorage().read('token')
+    };
 
     try {
       var raw = await httpProvider.putHttp(
-          '${JekawinBaseUrls.authBaseUrl}users/$currentUserID/transaction-pin',payload);
+          '${JekawinBaseUrls.authBaseUrl}users/$currentUserID/transaction-pin',
+          payload);
 
       PinSetResponse res = PinSetResponse.fromMap(raw);
       if (raw['success']) {
@@ -435,7 +444,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
   }
 
   @override
-  Future<Either<AppError, String>> verifyPin(String pin) async{
+  Future<Either<AppError, String>> verifyPin(String pin) async {
     Map<String, dynamic> payload = {'pin': pin};
     var currentUserID = GetStorage().read('currentUserID');
 
@@ -464,12 +473,14 @@ class AuthServiceImpl extends AuthServiceDataSource {
   }
 
   @override
-  Future<Either<AppError, String>> setSecurityQuestion(String question, String answer) async {
+  Future<Either<AppError, String>> setSecurityQuestion(
+      String question, String answer) async {
     Map<String, dynamic> payload = {'question': question, 'answer': answer};
     var currentUserID = GetStorage().read('currentUserID');
     try {
       var raw = await httpProvider.putHttp(
-          '${JekawinBaseUrls.authBaseUrl}users/$currentUserID/security-question',payload);
+          '${JekawinBaseUrls.authBaseUrl}users/$currentUserID/security-question',
+          payload);
 
       QuestionSetResponse res = QuestionSetResponse.fromMap(raw);
       if (raw['success']) {
@@ -491,7 +502,8 @@ class AuthServiceImpl extends AuthServiceDataSource {
   }
 
   @override
-  Future<Either<AppError, String>> verifySecurityQuestion(String question, String answer) async {
+  Future<Either<AppError, String>> verifySecurityQuestion(
+      String question, String answer) async {
     Map<String, dynamic> payload = {'question': question, 'answer': answer};
     var currentUserID = GetStorage().read('currentUserID');
 

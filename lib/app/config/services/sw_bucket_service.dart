@@ -1,24 +1,27 @@
 import 'dart:io';
 import 'package:aws_s3_plugin_flutter/aws_s3_plugin_flutter.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get/get.dart';
 
 class S3BucketService {
   static String url = '';
   static String result = '';
 
-  static Future<String> getPresignedURLFromUnsigned({
+  static Future<String> getPreSignedURLFromUnsigned({
     required String awsFolderPath,
   }) async {
     AwsS3PluginFlutter awsS3 = AwsS3PluginFlutter(
       awsFolderPath: awsFolderPath,
-      region: Regions.EU_WEST_1,
-      bucketName: dotenv.env['bucketName'],
-      AWSSecret: dotenv.env['secretAccessKey'],
-      AWSAccess: dotenv.env['accessKey'],
+      region: Regions.US_EAST_1,
+      bucketName: 'jekawinusers',
+      AWSSecret: "Jr27z7vajvhhRxRvfW7+VG/yjT86+FaJLhw5E7us",
+      AWSAccess: 'AKIAZG3ZF6NYWY5MTI7L',
       fileNameWithExt: result,
     );
+    awsS3.getUploadStatus;
     return await awsS3.getPreSignedURLOfFile;
   }
 
@@ -29,28 +32,34 @@ class S3BucketService {
     context,
     required String extension,
   }) async {
-    if (result == null) {
-      String fileName =
-          "$number$extension\_${DateTime.now().millisecondsSinceEpoch}.$extension";
-      AwsS3PluginFlutter awsS3 = AwsS3PluginFlutter(
-          awsFolderPath: awsFolderPath,
-          file: file,
-          fileNameWithExt: fileName,
-          region: Regions.EU_WEST_1,
-          bucketName: dotenv.env['bucketName'],
-          AWSSecret: dotenv.env['secretAccessKey'],
-          AWSAccess: dotenv.env['accessKey']);
-      displayUploadDialog(awsS3, context);
+    print('I went through');
+    String fileName =
+        "$extension\_${DateTime.now().millisecondsSinceEpoch}$extension";
+    AwsS3PluginFlutter awsS3 = AwsS3PluginFlutter(
+      awsFolderPath: awsFolderPath,
+      file: file,
+      fileNameWithExt: fileName,
+      region: Regions.US_EAST_1,
+      bucketName: 'jekawinusers',
+      AWSSecret: "Jr27z7vajvhhRxRvfW7+VG/yjT86+FaJLhw5E7us",
+      AWSAccess: 'AKIAZG3ZF6NYWY5MTI7L',
+    );
+    displayUploadDialog(awsS3, context);
+    Future.delayed(const Duration(seconds: 5), () {
+      BotToast.showText(
+          text: "Upload successful.\nClick on update profile to save changes.");
+      Get.back();
+    });
+
+    try {
       try {
-        try {
-          result = await awsS3.uploadFile;
-          debugPrint("Result :'$result'.");
-        } on PlatformException {
-          debugPrint("Result :'$result'.");
-        }
-      } on PlatformException catch (e) {
-        debugPrint("Failed :'${e.message}'.");
+        result = await awsS3.uploadFile;
+        debugPrint("Result :'$result'.");
+      } on PlatformException {
+        debugPrint("Result :'$result'.");
       }
+    } on PlatformException catch (e) {
+      debugPrint("Failed :'${e.message}'.");
     }
     return url;
   }
@@ -84,7 +93,7 @@ class S3BucketService {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Expanded(child: Text('Uploading...')),
+            const Text('Uploading... '),
             Text("${snapshot.data ?? 0}%"),
           ],
         ),

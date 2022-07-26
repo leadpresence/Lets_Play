@@ -67,42 +67,43 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
                 height: 24,
               ),
               Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 24.0),
-                  padding: const EdgeInsets.only(
-                    top: 20,
-                    bottom: 20,
-                    left: 20,
-                    right: 20,
-                  ),
-                  width: Get.width,
-                  decoration: BoxDecoration(
-                    color: const Color(0XFF9A77CF),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 6.0),
-                        child: SvgPicture.asset(
-                          'assets/svgs/note_that.svg',
-                          color: const Color(0XFFFFFFFF),
-                        ),
+                margin: const EdgeInsets.symmetric(horizontal: 24.0),
+                padding: const EdgeInsets.only(
+                  top: 20,
+                  bottom: 20,
+                  left: 20,
+                  right: 20,
+                ),
+                width: Get.width,
+                decoration: BoxDecoration(
+                  color: const Color(0XFF9A77CF),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 6.0),
+                      child: SvgPicture.asset(
+                        'assets/svgs/note_that.svg',
+                        color: const Color(0XFFFFFFFF),
                       ),
-                      const SizedBox(width: 12),
-                      SizedBox(
-                        width: Get.width * .7,
-                        child: Text(
-                          'Select 5 numbers from a range of 0 - 99 or auto generate the numbers',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Color(0XFFFFFFFF),
-                              fontSize: 16,
-                              height: 1.4),
-                        ),
-                      )
-                    ],
-                  )),
+                    ),
+                    const SizedBox(width: 12),
+                    SizedBox(
+                      width: Get.width * .7,
+                      child: const Text(
+                        'Select 5 numbers from a range of 0 - 99 or auto generate the numbers',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Color(0XFFFFFFFF),
+                            fontSize: 16,
+                            height: 1.4),
+                      ),
+                    )
+                  ],
+                ),
+              ),
               const SizedBox(
                 height: 24,
               ),
@@ -178,23 +179,28 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
                                               (random.nextInt(99)).toString();
                                           FocusScope.of(context).unfocus();
 
-                                          if (controller.pin1.text.length == 1) {
+                                          if (controller.pin1.text.length ==
+                                              1) {
                                             controller.pin1.text =
                                                 "0" + controller.pin1.text;
                                           }
-                                          if (controller.pin2.text.length == 1) {
+                                          if (controller.pin2.text.length ==
+                                              1) {
                                             controller.pin2.text =
                                                 "0" + controller.pin2.text;
                                           }
-                                          if (controller.pin3.text.length == 1) {
+                                          if (controller.pin3.text.length ==
+                                              1) {
                                             controller.pin3.text =
                                                 "0" + controller.pin3.text;
                                           }
-                                          if (controller.pin4.text.length == 1) {
+                                          if (controller.pin4.text.length ==
+                                              1) {
                                             controller.pin4.text =
                                                 "0" + controller.pin4.text;
                                           }
-                                          if (controller.pin5.text.length == 1) {
+                                          if (controller.pin5.text.length ==
+                                              1) {
                                             controller.pin5.text =
                                                 "0" + controller.pin5.text;
                                           }
@@ -261,7 +267,8 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
                                               ),
                                             ),
                                             inputFormatters: [
-                                              LengthLimitingTextInputFormatter(2),
+                                              LengthLimitingTextInputFormatter(
+                                                  2),
                                               FilteringTextInputFormatter
                                                   .digitsOnly,
                                             ],
@@ -313,7 +320,8 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
                                               ),
                                             ),
                                             inputFormatters: [
-                                              LengthLimitingTextInputFormatter(2),
+                                              LengthLimitingTextInputFormatter(
+                                                  2),
                                               FilteringTextInputFormatter
                                                   .digitsOnly,
                                             ],
@@ -366,7 +374,8 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
                                               ),
                                             ),
                                             inputFormatters: [
-                                              LengthLimitingTextInputFormatter(2),
+                                              LengthLimitingTextInputFormatter(
+                                                  2),
                                               FilteringTextInputFormatter
                                                   .digitsOnly,
                                             ],
@@ -419,7 +428,8 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
                                               ),
                                             ),
                                             inputFormatters: [
-                                              LengthLimitingTextInputFormatter(2),
+                                              LengthLimitingTextInputFormatter(
+                                                  2),
                                               FilteringTextInputFormatter
                                                   .digitsOnly,
                                             ],
@@ -432,7 +442,8 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
                                             controller: controller.pin5,
                                             onChanged: (value) {
                                               if (value.length == 2) {
-                                                FocusScope.of(context).unfocus();
+                                                FocusScope.of(context)
+                                                    .unfocus();
                                               } else if (value.length == 1) {
                                               } else {
                                                 FocusScope.of(context)
@@ -471,7 +482,8 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
                                               ),
                                             ),
                                             inputFormatters: [
-                                              LengthLimitingTextInputFormatter(2),
+                                              LengthLimitingTextInputFormatter(
+                                                  2),
                                               FilteringTextInputFormatter
                                                   .digitsOnly,
                                             ],
@@ -485,36 +497,37 @@ class JackpotGamesMobilePortrait extends StatelessWidget {
                                   ),
                                   CustomButton(
                                     buttonText: "Confirm",
-                                    onPressed: () =>
-                                        controller.pin1.text.trim().length +
-                                                    controller.pin2.text
-                                                        .trim()
-                                                        .length +
-                                                    controller.pin3.text
-                                                        .trim()
-                                                        .length +
-                                                    controller.pin4.text
-                                                        .trim()
-                                                        .length +
-                                                    controller.pin5.text
-                                                        .trim()
-                                                        .length <
-                                                10
-                                            ? {}
-                                            : Get.to(
-                                                () =>
-                                                    JackpotGamesDetailsMobilePortrait(
-                                                  gameIndex: gameIndex,
-                                                  gameId: gameID,
-                                                  gameCost: gameData["gameID"]
-                                                          ["price"]
-                                                      .toString(),
-                                                  numberOfGames: "1",
-                                                  ticketNumber:
-                                                      "${controller.pin1.text} ${controller.pin2.text} ${controller.pin3.text} ${controller.pin4.text} ${controller.pin5.text}",
-                                                ),
-                                                transition: Transition.cupertino,
-                                              ),
+                                    onPressed: () => controller.pin1.text
+                                                    .trim()
+                                                    .length +
+                                                controller.pin2.text
+                                                    .trim()
+                                                    .length +
+                                                controller.pin3.text
+                                                    .trim()
+                                                    .length +
+                                                controller.pin4.text
+                                                    .trim()
+                                                    .length +
+                                                controller.pin5.text
+                                                    .trim()
+                                                    .length <
+                                            10
+                                        ? {}
+                                        : Get.to(
+                                            () =>
+                                                JackpotGamesDetailsMobilePortrait(
+                                              gameIndex: gameIndex,
+                                              gameId: gameID,
+                                              gameCost: gameData["gameID"]
+                                                      ["price"]
+                                                  .toString(),
+                                              numberOfGames: "1",
+                                              ticketNumber:
+                                                  "${controller.pin1.text} ${controller.pin2.text} ${controller.pin3.text} ${controller.pin4.text} ${controller.pin5.text}",
+                                            ),
+                                            transition: Transition.cupertino,
+                                          ),
                                   ),
                                 ],
                               ),

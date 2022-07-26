@@ -1,35 +1,21 @@
-import 'package:intl/intl.dart';
+String timeAgo(DateTime fatchedDate) {
+  DateTime currentDate = DateTime.now();
 
-class TimeAgo {
-  static String timeAgoSinceDate(
-    String dateString, {
-    bool numericDates = true,
-  }) {
-    DateTime notificationDate =
-        DateFormat("yyyy-MM-dd ss:mm:HH").parse(dateString);
-    final date2 = DateTime.now();
-    final difference = date2.difference(notificationDate);
+  var different = currentDate.difference(fatchedDate);
 
-    if (difference.inDays > 8) {
-      return dateString;
-    } else if ((difference.inDays / 7).floor() >= 1) {
-      return (numericDates) ? '1w ago' : 'Last week';
-    } else if (difference.inDays >= 2) {
-      return '${difference.inDays} days ago';
-    } else if (difference.inDays >= 1) {
-      return (numericDates) ? '1d ago' : 'Yesterday';
-    } else if (difference.inHours >= 2) {
-      return '${difference.inHours} hrs ago';
-    } else if (difference.inHours >= 1) {
-      return (numericDates) ? '1h ago' : 'An hour ago';
-    } else if (difference.inMinutes >= 2) {
-      return '${difference.inMinutes} minutes ago';
-    } else if (difference.inMinutes >= 1) {
-      return (numericDates) ? '1m ago' : 'A minute ago';
-    } else if (difference.inSeconds >= 3) {
-      return '${difference.inSeconds} seconds ago';
-    } else {
-      return 'Just now';
-    }
-  }
+  if (different.inDays > 365)
+    return "${(different.inDays / 365).floor()} ${(different.inDays / 365).floor() == 1 ? "year" : "years"} ago";
+  if (different.inDays > 30)
+    return "${(different.inDays / 30).floor()} ${(different.inDays / 30).floor() == 1 ? "month" : "months"} ago";
+  if (different.inDays > 7)
+    return "${(different.inDays / 7).floor()} ${(different.inDays / 7).floor() == 1 ? "week" : "weeks"} ago";
+  if (different.inDays > 0)
+    return "${different.inDays} ${different.inDays == 1 ? "day" : "days"} ago";
+  if (different.inHours > 0)
+    return "${different.inHours} ${different.inHours == 1 ? "hour" : "hours"} ago";
+  if (different.inMinutes > 0)
+    return "${different.inMinutes} ${different.inMinutes == 1 ? "minute" : "minutes"} ago";
+  if (different.inMinutes == 0) return 'Just Now';
+
+  return fatchedDate.toString();
 }

@@ -107,7 +107,8 @@ class JekawinClubHome extends StatelessWidget {
                         membersBody.data.members[i].userId.id == currentUserID
                             ? memberCard(
                                 image: membersBody
-                                    .data.members[i].userId.profileUrl,
+                                    .data.members[i].userId.profileUrl
+                                    .split('?')[0],
                                 name: 'Me')
                             : const SizedBox(),
                     ],
@@ -146,7 +147,8 @@ class JekawinClubHome extends StatelessWidget {
                                     currentUserID
                                 ? memberCard(
                                     image: membersBody
-                                        .data.members[i].userId.profileUrl,
+                                        .data.members[i].userId.profileUrl
+                                        .split('?')[0],
                                     name: membersBody
                                         .data.members[i].userId.firstName,
                                   )

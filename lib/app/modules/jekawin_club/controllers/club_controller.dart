@@ -68,9 +68,9 @@ class ClubController extends GetxController {
           ),
           transition: Transition.cupertino,
         );
-        BotToast.showText(
-          text: "CLUB ID : $clubId_",
-        );
+        // BotToast.showText(
+        //   text: "CLUB ID : $clubId_",
+        // );
 
         return membersBody;
       } else if (response.statusCode == 400) {

@@ -13,6 +13,7 @@ import 'package:jekawin_mobile_flutter/app/modules/pin/views/set_pin_mobile_port
 import 'package:jekawin_mobile_flutter/app/modules/resetpassword/views/mobile/reset_password_mobile_potrait.dart';
 import 'package:jekawin_mobile_flutter/app/modules/security_question/views/mobile/question_mobile_portrait.dart';
 import 'package:jekawin_mobile_flutter/app/modules/user_profile/controllers/user_profile_cntroller.dart';
+import 'package:jekawin_mobile_flutter/app/services/local_storage.dart';
 import '../../../edit_profile/views/mobile/edit_profile_mobile_porttrait.dart';
 import '../../../jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
 import '../../../select_account/views/select_bank_view.dart';
@@ -26,13 +27,13 @@ class UserProfileMobilePortrait extends StatelessWidget {
   final DashboardController dashboardController =
       Get.put(DashboardController());
 
+  var firstName = GetStorage().read("firstName");
+  var lastName = GetStorage().read("lastName");
+  var phoneNumber = GetStorage().read("phoneNumber");
+  var imageAvatar = GetStorage().read("profileImage").split("?")[0];
+
   @override
   Widget build(BuildContext context) {
-    var firstName = GetStorage().read("firstName");
-    var lastName = GetStorage().read("lastName");
-    var phoneNumber = GetStorage().read("phoneNumber");
-    var imageAvatar = GetStorage().read("profileImage");
-    var imageFile = GetStorage().read('rawImage') ?? File('');
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -90,10 +91,11 @@ class UserProfileMobilePortrait extends StatelessWidget {
                               CircleAvatar(
                                 radius: 36,
                                 backgroundColor: Colors.white10,
-                                child: imageFile == File('')
+                                child: imageAvatar == ''
                                     ? Stack(
                                         children: [
                                           Container(
+                                            width: Get.width,
                                             decoration: BoxDecoration(
                                               shape: BoxShape.circle,
                                               image: DecorationImage(
@@ -110,7 +112,7 @@ class UserProfileMobilePortrait extends StatelessWidget {
                                                 image: NetworkImage(
                                                   imageAvatar,
                                                 ),
-                                                fit: BoxFit.cover,
+                                                // fit: BoxFit.fill,
                                               ),
                                             ),
                                           ),
@@ -122,14 +124,13 @@ class UserProfileMobilePortrait extends StatelessWidget {
                                           )
                                         ],
                                       )
-                                    : SizedBox(
-                                        width: 96,
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(50),
-                                          child: Image.file(
-                                            imageFile,
-                                            fit: BoxFit.fill,
+                                    : ClipRRect(
+                                        borderRadius: BorderRadius.circular(50),
+                                        child: SizedBox(
+                                          width: Get.width,
+                                          child: Image.network(
+                                            imageAvatar,
+                                            fit: BoxFit.cover,
                                           ),
                                         ),
                                       ),
@@ -203,6 +204,7 @@ class UserProfileMobilePortrait extends StatelessWidget {
                   ),
                   child: ListView(
                     shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
                     children: [
                       userProfileCardItem(
                           onTap: () {
@@ -224,7 +226,7 @@ class UserProfileMobilePortrait extends StatelessWidget {
                       userProfileCardItem(
                           onTap: () {
                             Get.to(
-                                  () => const SelectBankView(),
+                              () => const SelectBankView(),
                               transition: Transition.cupertino,
                             );
                           },
@@ -241,19 +243,18 @@ class UserProfileMobilePortrait extends StatelessWidget {
                           },
                           text: "Set Transaction Pin",
                           description: "Set a pin for secured transactions",
-                          icon: 'assets/svgs/two_fa.svg'),
-
-
+                          icon: 'assets/svgs/secure_.svg'),
                       userProfileCardItem(
                           onTap: () {
                             Get.to(
-                                  () => QuestionsMobilePortrait(),
+                              () => QuestionsMobilePortrait(),
                               transition: Transition.cupertino,
                             );
                           },
                           text: "2FA Security Questions",
-                          description: "Set Security Question to secure and restore your account",
-                          icon: 'assets/svgs/security_questions.svg'),
+                          description:
+                              "Set Security Question to secure and restore your account",
+                          icon: 'assets/svgs/two_fa.svg'),
                       userProfileCardItem(
                           onTap: () {
                             Get.to(
@@ -266,6 +267,7 @@ class UserProfileMobilePortrait extends StatelessWidget {
                           icon: 'assets/svgs/my_games.svg'),
                       userProfileCardItem(
                           onTap: () {
+                            LocalStorage.deleteToken();
                             GetStorage().write('email', "");
                             GetStorage().write('isEmailVerified', false);
                             walletController.balance.value = 0;
@@ -320,18 +322,24 @@ class UserProfileMobilePortrait extends StatelessWidget {
                       ),
                     ),
                     const Gap(6),
-                    Wrap(
-                      children: [
-                        Text(
-                          description,
-                          overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.mulish(
-                            fontSize: 11,
-                            fontWeight: FontWeight.normal,
-                            color: const Color(0xff747B84),
+                    SizedBox(
+                      width: isFingerPrint == true
+                          ? Get.width * .4
+                          : Get.width * .6,
+                      child: Wrap(
+                        children: [
+                          Text(
+                            description,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.mulish(
+                              fontSize: 11,
+                              fontWeight: FontWeight.normal,
+                              color: const Color(0xff747B84),
+                            ),
+                            maxLines: 2,
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     )
                   ],
                 ),

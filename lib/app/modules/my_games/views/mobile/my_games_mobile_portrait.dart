@@ -1,12 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:jekawin_mobile_flutter/app/widgets/fade_in_animations.dart';
-
 import '../../../../widgets/custom_text_field.dart';
-import '../../../../widgets/slide_in_animation.dart';
+import '../../../../widgets/fade_in_animations.dart';
 import '../../controller/my_games_controller.dart';
 import 'game_details.dart';
 
@@ -18,157 +17,197 @@ class MyGamesMobilePortrait extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 16.0),
-          child: IconButton(
-            splashRadius: 25,
-            icon: SvgPicture.asset(
-              'assets/svgs/chevronLeft.svg',
-              color: const Color(0xff12121D),
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            elevation: .4,
+            backgroundColor: Colors.white,
+            expandedHeight: 104.0,
+            leading: Padding(
+              padding: const EdgeInsets.only(left: 16.0),
+              child: IconButton(
+                splashRadius: 24,
+                icon: SvgPicture.asset(
+                  'assets/svgs/chevronLeft.svg',
+                  color: const Color(0xff12121D),
+                ),
+                onPressed: () {
+                  Get.back();
+                },
+              ),
             ),
-            onPressed: () {
-              Get.back();
-            },
-          ),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 24.0,
-            // vertical: 12.0,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              FadeIn(
-                duration: const Duration(milliseconds: 100),
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "My Games",
-                    style: GoogleFonts.mulish(
-                        fontWeight: FontWeight.normal, // light
-                        fontStyle: FontStyle.normal,
-                        color: Colors.black,
-                        fontSize: 24 // italic
-                        ),
+            stretch: true,
+            floating: true,
+            pinned: true,
+            flexibleSpace: FlexibleSpaceBar(
+              centerTitle: true,
+              titlePadding: const EdgeInsets.all(0),
+              collapseMode: CollapseMode.pin,
+              expandedTitleScale: 1,
+              title: Container(
+                padding: const EdgeInsets.only(
+                  bottom: 12,
+                ),
+                child: Text(
+                  "My Games",
+                  style: GoogleFonts.mulish(
+                    fontWeight: FontWeight.normal, // light
+                    fontStyle: FontStyle.normal,
+                    color: Colors.black,
+                    fontSize: 24, // italic
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 24,
-              ),
-              SizedBox(
-                height: 40,
-                child: CustomTextField(
-                  hintText: "Search games",
-                  textCapitalization: TextCapitalization.words,
-                  // textController: ,
-                  prefixIcon: 'assets/svgs/search.svg',
-                  keyboardType: TextInputType.text,
-                  onChanged: (v) {
-                    if (v.isNotEmpty) {}
-                  },
-                ),
-              ),
-              const Gap(16),
-              FutureBuilder<dynamic>(
-                future: controller.getAllPlayedGamesFunc(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return Text(
-                        "Snapshot has error: ${snapshot.hasError.toString()}");
-                  } else if (snapshot.hasData) {
-                    var body = snapshot.data!;
-                    return body.body.games.length < 1
-                        ? const Text(
-                            "No Games History",
-                          )
-                        : ListView.builder(
-                            reverse: true,
-                            shrinkWrap: true,
-                            physics: const BouncingScrollPhysics(),
-                            scrollDirection: Axis.vertical,
-                            itemCount: body.body.games.length,
-                            itemBuilder: (BuildContext context, int position) {
-                              return body.body.games[position].amount == null
-                                  ? const SizedBox()
-                                  : FadeIn(
-                                      duration:
-                                          const Duration(milliseconds: 200),
-                                      delay: const Duration(milliseconds: 200),
-                                      child: GestureDetector(
-                                        child: gameItem(
-                                          date: body
-                                              .body.games[position].createdAt
-                                              .toString(),
-                                          title: body.body.games[position]
-                                                      .gameId !=
-                                                  null
-                                              ? body.body.games[position]
-                                                  .gameId["title"]
-                                              : "",
-                                          amount: body.body.games[position]
-                                                      .amount ==
-                                                  null
-                                              ? ""
-                                              : body.body.games[position].amount
-                                                  .toString(),
-                                        ),
-                                        onTap: () {
-                                          Get.to(
-                                            () => GameDetailMobilePortrait(
+            ),
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (_, int index) {
+                return SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 24.0,
+                      right: 24.0,
+                      top: 12,
+                      bottom: 12,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        SizedBox(
+                          height: 40,
+                          child: CustomTextField(
+                            hintText: "Search games",
+                            textCapitalization: TextCapitalization.words,
+                            // textController: ,
+                            prefixIcon: 'assets/svgs/search.svg',
+                            keyboardType: TextInputType.text,
+                            onChanged: (v) {
+                              if (v.isNotEmpty) {}
+                            },
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        FutureBuilder<dynamic>(
+                          future: controller.getAllPlayedGamesFunc(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) {
+                              return Text(
+                                  "Snapshot has error: ${snapshot.hasError.toString()}");
+                            } else if (snapshot.hasData) {
+                              var body = snapshot.data!;
+                              return body.body.games.length < 1
+                                  ? const Text(
+                                      "No Games History",
+                                    )
+                                  : ListView.builder(
+                                      reverse: true,
+                                      shrinkWrap: true,
+                                      physics: const BouncingScrollPhysics(),
+                                      scrollDirection: Axis.vertical,
+                                      itemCount: body.body.games.length,
+                                      padding: EdgeInsets.zero,
+                                      itemBuilder:
+                                          (BuildContext context, int position) {
+                                        return
+                                            // body.body.games[position]
+                                            //           .amount ==
+                                            //       null
+                                            //   ?
+                                            // const SizedBox()
+                                            //   :
+                                            FadeIn(
+                                          duration:
+                                              const Duration(milliseconds: 200),
+                                          delay:
+                                              const Duration(milliseconds: 200),
+                                          child: GestureDetector(
+                                            child: gameItem(
                                               date: body.body.games[position]
                                                   .createdAt
                                                   .toString(),
-                                              gameCost: body
-                                                          .body
-                                                          .games[position]
-                                                          .amount ==
-                                                      null
-                                                  ? ""
-                                                  : body.body.games[position]
-                                                      .amount
-                                                      .toString(),
-                                              numberOfGames: body
-                                                  .body.games[position].duration
-                                                  .toString(),
-                                              ticketNumber: body
-                                                  .body.games[position].tickets,
                                               title: body.body.games[position]
                                                           .gameId !=
                                                       null
                                                   ? body.body.games[position]
                                                       .gameId["title"]
                                                   : "",
-                                              status: body
-                                                  .body.games[position].status,
+                                              amount: body.body.games[position]
+                                                          .amount ==
+                                                      null
+                                                  ? ""
+                                                  : body.body.games[position]
+                                                      .amount
+                                                      .toString(),
                                             ),
-                                          );
-                                        },
-                                      ),
+                                            onTap: () {
+                                              Get.to(
+                                                () => GameDetailMobilePortrait(
+                                                  date: body.body
+                                                      .games[position].createdAt
+                                                      .toString(),
+                                                  gameCost: body
+                                                              .body
+                                                              .games[position]
+                                                              .amount ==
+                                                          null
+                                                      ? ""
+                                                      : body
+                                                          .body
+                                                          .games[position]
+                                                          .amount
+                                                          .toString(),
+                                                  numberOfGames: body.body
+                                                      .games[position].duration
+                                                      .toString(),
+                                                  ticketNumber: body.body
+                                                      .games[position].tickets,
+                                                  title: body
+                                                              .body
+                                                              .games[position]
+                                                              .gameId !=
+                                                          null
+                                                      ? body
+                                                          .body
+                                                          .games[position]
+                                                          .gameId["title"]
+                                                      : "",
+                                                  status: body.body
+                                                      .games[position].status,
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        );
+                                      },
                                     );
-                            },
-                          );
-                  }
-                  return const Center(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 24.0),
-                      child: CircularProgressIndicator(
-                        color: Color(0xffFE7A01),
-                        strokeWidth: 3,
-                      ),
+                            }
+                            return const Center(
+                              child: Padding(
+                                padding: EdgeInsets.only(top: 104.0),
+                                child: CupertinoActivityIndicator(
+                                  color: Color(0xffFE7A01),
+                                  // strokeWidth: 3,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                        const Gap(16),
+                      ],
                     ),
-                  );
-                },
-              ),
-            ],
+                  ),
+                );
+              },
+              childCount: 1,
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

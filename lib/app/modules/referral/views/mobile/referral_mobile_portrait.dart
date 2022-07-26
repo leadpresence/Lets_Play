@@ -165,10 +165,11 @@ class ReferralMobilePortrait extends GetView<ReferralController> {
               height: Get.height * .35,
                 child: const Center(
                   child: Text(
-                    'No Referrals yet,\n invite friends to acquire points',
+                    'No Referrals yet.\n Invite friends to acquire points.',
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                       color: Color(0xff414249),
+                      height: 1.6,
                     ),
                     textAlign: TextAlign.center,
                   ),
