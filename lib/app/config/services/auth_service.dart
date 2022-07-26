@@ -8,7 +8,6 @@ import 'package:jekawin_mobile_flutter/app/config/exceptions/auth_exceptions.dar
 import 'package:jekawin_mobile_flutter/app/config/services/di/di_locator.dart';
 import 'package:jekawin_mobile_flutter/app/config/services/http/base_urls.dart';
 import 'package:jekawin_mobile_flutter/app/constants/app_error.dart';
-import 'package:jekawin_mobile_flutter/app/modules/edit_profile/models/update_profile_model.dart';
 import 'package:jekawin_mobile_flutter/app/modules/signup/models/auth_response.dart';
 import 'package:jekawin_mobile_flutter/app/modules/signup/models/forget_password_response.dart';
 import 'package:jekawin_mobile_flutter/app/modules/signup/models/forgot_password_otp_res.dart';
@@ -109,7 +108,8 @@ class AuthServiceImpl extends AuthServiceDataSource {
       GetStorage().write('firstName', res.body.user.firstName);
       GetStorage().write('lastName', res.body.user.lastName);
       GetStorage().write('phoneNumber', res.body.user.phone);
-      GetStorage().write('profileImage', res.body.user.profileUrl);
+      GetStorage()
+          .write('profileImage', res.body.user.profileUrl.split("?")[0]);
       GetStorage().write('referralCode', res.body.user.referralCode);
       GetStorage().write('token', res.body.token);
       GetStorage().write('currentUserID', res.body.user.id);
@@ -174,7 +174,8 @@ class AuthServiceImpl extends AuthServiceDataSource {
       // _userLocalDataSource.saveUser(res.body.user);
       GetStorage().write('firstName', res.body.user.firstName);
       GetStorage().write('lastName', res.body.user.lastName);
-      GetStorage().write('profileImage', res.body.user.profileUrl);
+      GetStorage()
+          .write('profileImage', res.body.user.profileUrl.split("?")[0]);
       GetStorage().write('phoneNumber', res.body.user.phone);
       GetStorage().write('token', res.body.token);
       GetStorage().write('referralCode', res.body.user.referralCode);
@@ -211,7 +212,8 @@ class AuthServiceImpl extends AuthServiceDataSource {
       // _userLocalDataSource.saveUser(res.body.user);
       GetStorage().write('firstName', res.body.user.firstName);
       GetStorage().write('lastName', res.body.user.lastName);
-      GetStorage().write('profileImage', res.body.user.profileUrl);
+      GetStorage()
+          .write('profileImage', res.body.user.profileUrl.split("?")[0]);
       GetStorage().write('phoneNumber', res.body.user.phone);
       GetStorage().write('token', res.body.token);
       GetStorage().write('referralCode', res.body.user.referralCode);
