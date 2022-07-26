@@ -213,7 +213,7 @@ class UserProfileMobilePortrait extends StatelessWidget {
                               transition: Transition.cupertino,
                             );
                           },
-                          text: "Change Password",
+                          text: "required",
                           description: "Make changes to your account",
                           icon: 'assets/svgs/change_password.svg'),
                       userProfileCardItem(
