@@ -603,7 +603,7 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                           ],
                         ),
                         Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             const Gap(80),
                             winners(
@@ -753,7 +753,7 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
   Widget winners(
       {required String position,
       bool showCrown = false,
-      required String? userImage}) {
+      required String userImage}) {
     return Stack(clipBehavior: Clip.none, children: [
       Positioned(
           child: Container(
@@ -776,9 +776,8 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
               shape: BoxShape.circle,
               color: Colors.white12,
               image: DecorationImage(
-                image: NetworkImage(userImage ??
-                    "https://images.unsplash.com/photo-1616098063625-65f32186e609?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"),
-                fit: BoxFit.fitHeight,
+                image: NetworkImage(userImage.split("?")[0] ),
+                fit: BoxFit.cover,
                 alignment: Alignment.center,
               ),
             ),
@@ -833,7 +832,7 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                   shape: BoxShape.circle,
                   color: Colors.white12,
                   image: DecorationImage(
-                    image: NetworkImage(userImage),
+                    image: NetworkImage(userImage.split("?")[0]),
                     fit: BoxFit.cover,
                     alignment: Alignment.topCenter,
                   ),
@@ -905,8 +904,8 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                           shape: BoxShape.circle,
                           color: Colors.white12,
                           image: DecorationImage(
-                            image: NetworkImage(item.imageUrl ),
-                            fit: BoxFit.fitHeight,
+                            image: NetworkImage(item.imageUrl.split("?")[0] ),
+                            fit: BoxFit.cover,
                             alignment: Alignment.center,
                           ),
                         ),
