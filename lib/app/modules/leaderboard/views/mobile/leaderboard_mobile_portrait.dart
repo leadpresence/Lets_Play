@@ -62,12 +62,13 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                         ),
                         const Gap(24),
                         TabBar(
+                          labelPadding: EdgeInsets.only(top: 10,left: 28,right: 28,bottom: 10),
                             physics: const NeverScrollableScrollPhysics(),
                             unselectedLabelColor: const Color(0xff333333),
                             labelColor: const Color(0xff333333),
                             indicatorSize: TabBarIndicatorSize.label,
                             indicator: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
+                              borderRadius: BorderRadius.only(topLeft: Radius.circular(15),bottomLeft:Radius.circular(15),topRight: Radius.circular(15),bottomRight: Radius.circular(15) ),
                               color: const Color(0xffF4D37E),
                             ),
                             unselectedLabelStyle: GoogleFonts.jost(
@@ -82,7 +83,7 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                               fontWeight: FontWeight.w500,
                               letterSpacing: .2,
                             ),
-                            padding: EdgeInsets.zero,
+                            padding: EdgeInsets.only(top: 10,left: 28,right: 28,bottom: 10),
                             tabs: const [
                               Text(
                                 'Today',
