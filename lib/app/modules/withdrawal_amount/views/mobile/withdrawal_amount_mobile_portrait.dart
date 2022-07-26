@@ -8,6 +8,7 @@ import 'package:jekawin_mobile_flutter/app/modules/withdrawal_amount/controllers
 
 import '../../../../widgets/custom_large_button.dart';
 import '../../../../widgets/custom_text_field.dart';
+import '../../../wallet_home/models/user_wallet_response.dart';
 
 class WithdrawalAmountMobilePortrait
     extends GetView<WithdrawalAmountController> {
@@ -32,7 +33,7 @@ class WithdrawalAmountMobilePortrait
                  Padding(
                    padding: const EdgeInsets.fromLTRB(20, 4, 20, 10),
 
-                   child: BankItem(showBin: false,bankItem: BankModel(accountNumber: "",id: "0",bankCode: "",bankName: "",country: "NGN", dateAdded: DateTime.now(),),),
+                   child: BankItem(showBin: false,bankItem: BankResponse(accountNumber: "",bankCode: "",bankName: "",),),
                  ),
 
                       const Gap(10),

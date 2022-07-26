@@ -64,7 +64,7 @@ class Body {
   String referralCode;
   String email;
   Wallet wallet;
-  List<dynamic> banks;
+  List<BankResponse> banks;
 
   factory Body.fromMap(Map<String, dynamic> json) => Body(
     id: json["_id"],
@@ -78,8 +78,10 @@ class Body {
     referralCode: json["referralCode"],
     email: json["email"],
     wallet: Wallet.fromMap(json["wallet"]),
-    banks: List<dynamic>.from(json["banks"].map((x) => x)),
-  );
+    // banks: List<dynamic>.from(json["banks"].map((x) => x)),
+    banks: List<BankResponse>.from(json["banks"].map((x) => BankResponse.fromMap(x))
+
+  ));
 
   Map<String, dynamic> toMap() => {
     "_id": id,
@@ -93,8 +95,9 @@ class Body {
     "referralCode": referralCode,
     "email": email,
     "wallet": wallet.toMap(),
-    "banks": List<dynamic>.from(banks.map((x) => x)),
-  };
+    // "banks": List<dynamic>.from(banks.map((x) => x)),
+    "banks":List<BankResponse>.from(banks.map((banks) => BankResponse.fromMap(banks.toMap()))
+    )};
 }
 
 class Wallet {
@@ -110,5 +113,34 @@ class Wallet {
 
   Map<String, dynamic> toMap() => {
     "balance": balance,
+  };
+}
+
+
+List<BankResponse> bankResponseFromMap(String str) => List<BankResponse>.from(json.decode(str).map((x) => BankResponse.fromMap(x)));
+
+String bankResponseToMap(List<BankResponse> data) => json.encode(List<dynamic>.from(data.map((x) => x.toMap())));
+
+class BankResponse {
+  BankResponse({
+    required this.bankName,
+    required this.accountNumber,
+    required this.bankCode,
+  });
+
+  String bankName;
+  String accountNumber;
+  String bankCode;
+
+  factory BankResponse.fromMap(Map<String, dynamic> json) => BankResponse(
+    bankName: json["bankName"],
+    accountNumber: json["accountNumber"],
+    bankCode: json["bankCode"],
+  );
+
+  Map<String, dynamic> toMap() => {
+    "bankName": bankName,
+    "accountNumber": accountNumber,
+    "bankCode": bankCode,
   };
 }

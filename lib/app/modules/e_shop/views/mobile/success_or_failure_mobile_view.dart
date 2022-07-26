@@ -6,10 +6,12 @@ import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
 
 class SuccessOrFailureMobileView extends StatelessWidget {
   final String msg;
+   bool success=true;
   final Widget className;
   SuccessOrFailureMobileView({
     Key? key,
     this.msg = 'Success',
+    this.success=true,
     required this.className,
   }) : super(key: key);
 
@@ -22,7 +24,7 @@ class SuccessOrFailureMobileView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SvgPicture.asset('assets/svgs/success_check.svg'),
+           success? SvgPicture.asset('assets/svgs/success_check.svg'):SvgPicture.asset('assets/svgs/fail.svg'),
             const SizedBox(
               height: 24,
             ),

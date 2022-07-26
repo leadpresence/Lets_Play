@@ -74,30 +74,37 @@ class AddBankMobilePortrait extends GetView<AddBankController> {
                   return Padding(
                     padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
                     child:
-                    DropdownButtonHideUnderline(
-                        child: DropdownButtonFormField<String>(
-                            value: snapshot.data?.first.name,
-                            validator: (val) {
-                              return controller.validateBank(val.toString());
-                            },
-                            hint: const Text("Select Bank"),
-                            icon: const Icon(Icons.keyboard_arrow_down),
-                            // Array list of items
-                            items: snapshot.data
-                                ?.map((bank) => DropdownMenuItem<String>(
+                        Flex(
+                          direction: Axis.horizontal,
+                          children: [
+                            Expanded(
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButtonFormField<String>(
+                                    value: snapshot.data?.first.name,
+                                    validator: (val) {
+                                      return controller.validateBank(val.toString());
+                                    },
+                                    hint: const Text("Select Bank"),
+                                    icon: const Icon(Icons.keyboard_arrow_down),
+                                    // Array list of items
+                                    items: snapshot.data
+                                        ?.map((bank) => DropdownMenuItem<String>(
                                       child: Text(bank.name),
                                       value: bank.name,
                                     ))
-                                .toList(),
-                            onChanged: (selectedValue) {
-                              controller.bankNameController.text = "";
-                              controller.accountNumberController.text = "";
-                              controller.selectedBankName.value = selectedValue.toString();
-                              var item = controller.bList.value.toList()
-                                   .firstWhere((bank) => bank.name == selectedValue.toString());
-                              controller.selectedBankCode.value = item.code.toString();
-                            }),
-                    ),
+                                        .toList(),
+                                    onChanged: (selectedValue) {
+                                      controller.bankNameController.text = "";
+                                      controller.accountNumberController.text = "";
+                                      controller.selectedBankName.value = selectedValue.toString();
+                                      var item = controller.bList.value.toList()
+                                          .firstWhere((bank) => bank.name == selectedValue.toString());
+                                      controller.selectedBankCode.value = item.code.toString();
+                                    }),
+                              ),
+                            ),
+                          ],
+                        )
                   );
                 }
               }

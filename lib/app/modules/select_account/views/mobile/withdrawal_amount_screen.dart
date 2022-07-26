@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:jekawin_mobile_flutter/app/modules/select_account/models/bank_model.dart';
 import 'package:jekawin_mobile_flutter/app/modules/select_account/views/mobile/select_bank_mobile_portrait.dart';
+import 'package:jekawin_mobile_flutter/app/modules/wallet_home/models/user_wallet_response.dart';
 
 import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../widgets/custom_large_button.dart';
@@ -26,7 +27,7 @@ class WithdrawalAmountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BankModel account = controller.utilsProvider.withdrawalAccount.value[0];
+    BankResponse account = controller.utilsProvider.withdrawalAccount.value[0];
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
@@ -6,8 +7,10 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jekawin_mobile_flutter/app/modules/leaderboard/controllers/leaderbooard_controller.dart';
+import 'package:jekawin_mobile_flutter/app/utils/helpers/text_helper.dart';
 import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../widgets/slide_in_animation.dart';
+import '../../models/leader_board_response.dart';
 
 class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
   @override
@@ -20,209 +23,731 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
 
   @override
   Widget build(BuildContext context) {
-    var showToday = controller.showDaily.value;
-    var showWeekly = controller.showWeekly.value;
-    var showMonthly = controller.showMonthly.value;
     return
-        // Obx(() =>
-        Scaffold(
-            backgroundColor: Colors.white,
-            body: SafeArea(
-                child: SingleChildScrollView(
-                    child: Padding(
-                        padding: const EdgeInsets.only(
-                          left: 24.0,
-                          right: 24.0,
-                          top: 2.0,
-                        ),
-                        child: Column(children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(left: 16.0),
-                                child: IconButton(
-                                  splashRadius: 24,
-                                  icon: SvgPicture.asset(
-                                    'assets/svgs/share.svg',
-                                    color: Color(0xff12121D),
-                                  ),
-                                  onPressed: () {},
+        DefaultTabController(
+      length: 3,
+      child: Scaffold(
+          backgroundColor: Colors.white,
+          body: SafeArea(
+              child: SingleChildScrollView(
+                  child: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 24.0,
+                        right: 24.0,
+                        top: 2.0,
+                      ),
+                      child: Column(children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: 16.0),
+                              child: IconButton(
+                                splashRadius: 24,
+                                icon: SvgPicture.asset(
+                                  'assets/svgs/share.svg',
+                                  color: Color(0xff12121D),
                                 ),
+                                onPressed: () {},
                               ),
-                            ],
-                          ),
-                          const Text(
-                            'Leaderboard',
-                            style: TextStyle(
-                              fontSize: 24,
-                              color: Color(0xff414249),
                             ),
+                          ],
+                        ),
+                        const Text(
+                          'Leaderboard',
+                          style: TextStyle(
+                            fontSize: 24,
+                            color: Color(0xff414249),
                           ),
-                          const Gap(24),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              // today chip
-                              Obx(
-                                () => GestureDetector(
-                                  child: Chip(
-                                    elevation: 0,
-                                    padding: const EdgeInsets.all(8),
-                                    backgroundColor: controller.showDaily.value
-                                        ? Color(0xffFE7A01).withOpacity(.2)
-                                        : Colors.white,
-                                    shadowColor: Colors.white,
-                                    //CircleAvatar
-                                    label: const Text(
-                                      'Today',
-                                      style: TextStyle(fontSize: 20),
-                                    ),
-                                    //Text
-                                  ),
-                                  onTap: () {
-                                    controller.toggleToday();
-                                  },
-                                ),
+                        ),
+                        const Gap(24),
+                        TabBar(
+                          labelPadding: EdgeInsets.only(top: 10,left: 28,right: 28,bottom: 10),
+                            physics: const NeverScrollableScrollPhysics(),
+                            unselectedLabelColor: const Color(0xff333333),
+                            labelColor: const Color(0xff333333),
+                            indicatorSize: TabBarIndicatorSize.label,
+                            indicator: BoxDecoration(
+                              borderRadius: BorderRadius.only(topLeft: Radius.circular(15),bottomLeft:Radius.circular(15),topRight: Radius.circular(15),bottomRight: Radius.circular(15) ),
+                              color: const Color(0xffF4D37E),
+                            ),
+                            unselectedLabelStyle: GoogleFonts.jost(
+                              color: const Color(0xff333333),
+                              fontSize: Get.width * .038,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: .2,
+                            ),
+                            labelStyle: GoogleFonts.jost(
+                              color: const Color(0xff333333),
+                              fontSize: Get.width * .038,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: .2,
+                            ),
+                            padding: EdgeInsets.only(top: 10,left: 28,right: 28,bottom: 10),
+                            tabs: const [
+                              Text(
+                                'Today',
+                                style: TextStyle(fontSize: 20),
                               ),
-                              // Week chip
-                              Obx(
-                                () => GestureDetector(
-                                  child: Chip(
-                                    elevation: 0,
-                                    padding: const EdgeInsets.all(8),
-                                    backgroundColor: controller.showWeekly.value
-                                        ? Color(0xffFE7A01).withOpacity(.3)
-                                        : Colors.white,
-                                    //CircleAvatar
-                                    label: const Text(
-                                      'Week',
-                                      style: TextStyle(fontSize: 20),
-                                    ),
-                                    //Text
-                                  ),
-                                  onTap: () {
-                                    controller.toggleWeek();
-                                  },
-                                ),
+                              Text(
+                                'Week',
+                                style: TextStyle(fontSize: 20),
                               ),
-                              //Month chip
-                              Obx(
-                                () => GestureDetector(
-                                  child: Chip(
-                                    elevation: 0,
-                                    padding: const EdgeInsets.all(8),
-                                    backgroundColor:
-                                        controller.showMonthly.value
-                                            ? Color(0xffFE7A01).withOpacity(.3)
-                                            : Colors.white,
-                                    //CircleAvatar
-                                    label: const Text(
-                                      'Month',
-                                      style: TextStyle(fontSize: 20),
-                                    ),
-                                    //Text
-                                  ),
-                                  onTap: () => controller.toggleMonthly(),
-                                ),
+                              Text(
+                                'Month',
+                                style: TextStyle(fontSize: 20),
                               ),
-                            ],
-                          ),
-                          // SizedBox(
-                          //   height: 50,
-                          // ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Gap(80),
-                                    winners(
-                                      position: '2',
-                                      userImage:
-                                          "https://media.istockphoto.com/photos/smiling-black-guy-using-smartphone-wearing-african-tshirt-picture-id1256457468?s=612x612",
-                                    ),
-                                    Gap(15),
-                                    Text("0903768****"),
-                                    Gap(4),
-                                    Text(
-                                      "1200 Rpt",
-                                      style: TextStyle(color: Colors.orange),
-                                    )
-                                  ]),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  firstWinners(
-                                    position: '1',
-                                    userImage:
-                                        "https://media.istockphoto.com/photos/smiling-black-guy-using-smartphone-wearing-african-tshirt-picture-id1256457468?s=612x612",
-                                  ),
-                                  Gap(105),
-                                  Text("0903768****"),
-                                  Gap(4),
-                                  Text(
-                                    "1200 Rpt",
-                                    style: TextStyle(color: Colors.orange),
-                                  )
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Gap(80),
-                                  winners(
-                                    position: '3',
-                                    userImage:
-                                        "https://media.istockphoto.com/photos/smiling-black-guy-using-smartphone-wearing-african-tshirt-picture-id1256457468?s=612x612",
-                                  ),
-                                  Gap(15),
-                                  Text("0903768****"),
-                                  Gap(4),
-                                  Text(
-                                    "1200 Rpt",
-                                    style: TextStyle(color: Colors.orange),
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-
-                          const Gap(20),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            physics: const BouncingScrollPhysics(),
-                            scrollDirection: Axis.vertical,
-                            itemCount: 13,
-                            itemBuilder: (BuildContext context, int position) {
-                              return referralItem();
-                            },
-                          ),
-                        ]))
-                    // ),
-                    )));
+                            ]),
+                        SizedBox(
+                          height: Get.height * 0.7,
+                          child: TabBarView(children: [
+                            todayHighPlayerList(),
+                            weekHighPlayerList(),
+                            monthHighPlayersList()
+                          ]),
+                        )
+                      ]))
+                  // ),
+                  ))),
+    );
   }
 
-  Widget todayHighPlayerList(bool showToday) {
+  Widget todayHighPlayerList() {
     return SlideInAnimation(
         duration: const Duration(milliseconds: 600),
         child: Column(
-          children: [],
+          children: [
+            FutureBuilder<LeaderBoardResponse?>(
+                future: controller.getLeaderBoard("week"),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: SizedBox(
+                        width: Get.width,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            top: 150.0,
+                          ),
+                          child: Text(
+                            snapshot.error.toString(),
+                            style: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 24,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    );
+                  } else if (snapshot.hasData) {
+                    List<ScoreItem>? players = snapshot.data?.data;
+                    // snapshot.data?.data=controller.playerScoreItem.value;
+                    if (players != null) {
+                      if (players.length > 1) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  const Gap(80),
+                                  winners(
+                                      position: '2',
+                                      userImage: players[1].imageUrl),
+                                  const Gap(15),
+                                  Text(
+                                      TextUtils().hideNumberPart(players[1].phone)),
+                                  const Gap(4),
+                                  Text(
+                                    players[1].score.toString() + " Rpt",
+                                    style: const TextStyle(color: Colors.orange),
+                                  )
+                                ]),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                firstWinners(
+                                    position: '1', userImage: players[0].imageUrl),
+                                const Gap(15),
+                                Text(TextUtils().hideNumberPart(players[0].phone)),
+                                const Gap(4),
+                                Text(
+                                  players[0].score.toString() + " Rpt",
+                                  style: TextStyle(color: Colors.orange),
+                                )
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Gap(80),
+                                winners(
+                                    position: '3', userImage: players[2].imageUrl),
+                                const Gap(15),
+                                Text(TextUtils().hideNumberPart(players[2].phone)),
+                                const Gap(4),
+                                Text(
+                                  players[2].score.toString() + " Rpt",
+                                  style: const TextStyle(color: Colors.orange),
+                                )
+                              ],
+                            )
+                          ],
+                        );
+                      }
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                const Gap(80),
+                                winners(position: '2', userImage: ""),
+                                const Gap(15),
+                                const Text("**********"),
+                                const Gap(4),
+                                const Text(
+                                  "0 Rpt",
+                                  style: TextStyle(color: Colors.orange),
+                                )
+                              ]),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              firstWinners(position: '1', userImage: ""),
+                              const Gap(105),
+                              const Text("*********"),
+                              const Text(
+                                "0 Rpt",
+                                style: TextStyle(color: Colors.orange),
+                              )
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Gap(80),
+                              winners(position: '3', userImage: ""),
+                              const Gap(15),
+                              const Text("*********"),
+                              const Gap(4),
+                              const Text(
+                                "0 Rpt",
+                                style: TextStyle(color: Colors.orange),
+                              )
+                            ],
+                          )
+                        ],
+                      );
+                    }
+                  }
+                  return const Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 32.0),
+                      child: CupertinoActivityIndicator(
+                        color: Colors.grey,
+                      ),
+                    ),
+                  );
+                }),
+
+            const Gap(20),
+            FutureBuilder<LeaderBoardResponse?>(
+                future: controller.getLeaderBoard("day"),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: SizedBox(
+                        width: Get.width,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            top: 150.0,
+                          ),
+                          child: Text(
+                            snapshot.error.toString(),
+                            style: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 24,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    );
+                  } else if (snapshot.hasData) {
+                    List<ScoreItem>? scores = snapshot.data?.data;
+                    // snapshot.data?.data=controller.playerScoreItem.value;
+                    debugPrint("SCORES ARE ${scores?.length.toString()}");
+                    if (scores != null) {
+                      if (scores.length > 1) {
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.vertical,
+                          itemCount: scores.length,
+                          itemBuilder: (BuildContext context, int position) {
+                            return playerItem(scores[position], position);
+                          },
+                        );
+                      }
+                      return Center(
+                        child: SizedBox(
+                          width: Get.width,
+                          child: const Padding(
+                            padding: EdgeInsets.only(
+                              top: 150.0,
+                            ),
+                            child: Text(
+                              "No Games scores History for \nthis period",
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 24,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+                  }
+                  return const Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 32.0),
+                      child: CupertinoActivityIndicator(
+                        color: Colors.grey,
+                      ),
+                    ),
+                  );
+                }),
+          ],
         ));
   }
 
   Widget weekHighPlayerList() {
     return Column(
-      children: [],
+      children: [
+        FutureBuilder<LeaderBoardResponse?>(
+            future: controller.getLeaderBoard("week"),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Center(
+                  child: SizedBox(
+                    width: Get.width,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        top: 150.0,
+                      ),
+                      child: Text(
+                        snapshot.error.toString(),
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 24,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                );
+              } else if (snapshot.hasData) {
+                List<ScoreItem>? players = snapshot.data?.data;
+                // snapshot.data?.data=controller.playerScoreItem.value;
+                if (players != null) {
+                  if (players.length > 1) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              const Gap(80),
+                              winners(
+                                  position: '2',
+                                  userImage: players[1].imageUrl),
+                              const Gap(15),
+                              Text(
+                                  TextUtils().hideNumberPart(players[1].phone)),
+                              const Gap(4),
+                              Text(
+                                players[1].score.toString() + " Rpt",
+                                style: const TextStyle(color: Colors.orange),
+                              )
+                            ]),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            firstWinners(
+                                position: '1', userImage: players[0].imageUrl),
+                            const Gap(15),
+                            Text(TextUtils().hideNumberPart(players[0].phone)),
+                            const Gap(4),
+                            Text(
+                              players[0].score.toString() + " Rpt",
+                              style: TextStyle(color: Colors.orange),
+                            )
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Gap(80),
+                            winners(
+                                position: '3', userImage: players[2].imageUrl),
+                            const Gap(15),
+                            Text(TextUtils().hideNumberPart(players[2].phone)),
+                            const Gap(4),
+                            Text(
+                              players[2].score.toString() + " Rpt",
+                              style: const TextStyle(color: Colors.orange),
+                            )
+                          ],
+                        )
+                      ],
+                    );
+                  }
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            const Gap(80),
+                            winners(position: '2', userImage: ""),
+                            const Gap(15),
+                            const Text("**********"),
+                            const Gap(4),
+                            const Text(
+                              "0 Rpt",
+                              style: TextStyle(color: Colors.orange),
+                            )
+                          ]),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          firstWinners(position: '1', userImage: ""),
+                          const Gap(105),
+                          const Text("*********"),
+                          const Text(
+                            "0 Rpt",
+                            style: TextStyle(color: Colors.orange),
+                          )
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Gap(80),
+                          winners(position: '3', userImage: ""),
+                          const Gap(15),
+                          const Text("*********"),
+                          const Gap(4),
+                          const Text(
+                            "0 Rpt",
+                            style: TextStyle(color: Colors.orange),
+                          )
+                        ],
+                      )
+                    ],
+                  );
+                }
+              }
+              return const Center(
+                child: Padding(
+                  padding: EdgeInsets.only(top: 32.0),
+                  child: CupertinoActivityIndicator(
+                    color: Colors.grey,
+                  ),
+                ),
+              );
+            }),
+        const Gap(20),
+        FutureBuilder<LeaderBoardResponse?>(
+            future: controller.getLeaderBoard("week"),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Center(
+                  child: SizedBox(
+                    width: Get.width,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        top: 150.0,
+                      ),
+                      child: Text(
+                        snapshot.error.toString(),
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 24,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                );
+              } else if (snapshot.hasData) {
+                List<ScoreItem>? scores = snapshot.data?.data;
+                // snapshot.data?.data=controller.playerScoreItem.value;
+                debugPrint("SCORES ARE ${scores?.length.toString()}");
+                if (scores != null) {
+                  if (scores.length > 1) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: const BouncingScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      itemCount: scores.length,
+                      itemBuilder: (BuildContext context, int position) {
+                        return playerItem(scores[position], position);
+                      },
+                    );
+                  }
+                  return Center(
+                    child: SizedBox(
+                      width: Get.width,
+                      child: const Padding(
+                        padding: EdgeInsets.only(
+                          top: 150.0,
+                        ),
+                        child: Text(
+                          "No Games scores History for \nthis period",
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 24,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  );
+                }
+              }
+              return const Center(
+                child: Padding(
+                  padding: EdgeInsets.only(top: 32.0),
+                  child: CupertinoActivityIndicator(
+                    color: Colors.grey,
+                  ),
+                ),
+              );
+            }),
+      ],
     );
   }
 
   Widget monthHighPlayersList() {
     return Column(
-      children: [],
+      children: [
+        FutureBuilder<LeaderBoardResponse?>(
+            future: controller.getLeaderBoard("month"),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Center(
+                  child: SizedBox(
+                    width: Get.width,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        top: 150.0,
+                      ),
+                      child: Text(
+                        snapshot.error.toString(),
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 24,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                );
+              } else if (snapshot.hasData) {
+                List<ScoreItem>? players = snapshot.data?.data;
+                if (players != null) {
+                  if (players.length > 1) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              const Gap(80),
+                              winners(
+                                  position: '2',
+                                  userImage: players[1].imageUrl),
+                              const Gap(15),
+                              Text(
+                                  TextUtils().hideNumberPart(players[1].phone)),
+                              const Gap(4),
+                              Text(
+                                players[1].score.toString() + " Rpt",
+                                style: const TextStyle(color: Colors.orange),
+                              )
+                            ]),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            firstWinners(
+                                position: '1', userImage: players[0].imageUrl),
+                            const Gap(105),
+                            Text(TextUtils().hideNumberPart(players[0].phone)),
+                            const Gap(4),
+                            Text(
+                              players[0].score.toString() + " Rpt",
+                              style:const TextStyle(color: Colors.orange),
+                            )
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Gap(80),
+                            winners(
+                                position: '3',
+                                userImage: players[2].imageUrl),
+                            const Gap(15),
+                            Text(TextUtils().hideNumberPart(players[2].phone)),
+                            const Gap(4),
+                            Text(
+                              players[2].score.toString() + " Rpt",
+                              style: const TextStyle(color: Colors.orange),
+                            )
+                          ],
+                        )
+                      ],
+                    );
+                  }
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            const Gap(80),
+                            winners(position: '2', userImage: ""),
+                            const Gap(15),
+                            const Text("**********"),
+                            const Gap(4),
+                            const Text(
+                              "0 Rpt",
+                              style: TextStyle(color: Colors.orange),
+                            )
+                          ]),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          firstWinners(position: '1', userImage: ""),
+                          const Gap(105),
+                          const Text("*********"),
+                          const Text(
+                            "0 Rpt",
+                            style: TextStyle(color: Colors.orange),
+                          )
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Gap(80),
+                          winners(position: '3', userImage: ""),
+                          const Gap(15),
+                          const Text("*********"),
+                          const Gap(4),
+                          const Text(
+                            "0 Rpt",
+                            style: TextStyle(color: Colors.orange),
+                          )
+                        ],
+                      )
+                    ],
+                  );
+                }
+              }
+              return const Center(
+                child: Padding(
+                  padding: EdgeInsets.only(top: 32.0),
+                  child: CupertinoActivityIndicator(
+                    color: Colors.grey,
+                  ),
+                ),
+              );
+            }),
+
+        const Gap(20),
+        FutureBuilder<LeaderBoardResponse?>(
+            future: controller.getLeaderBoard("month"),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Center(
+                  child: SizedBox(
+                    width: Get.width,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        top: 150.0,
+                      ),
+                      child: Text(
+                        snapshot.error.toString(),
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 24,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                );
+              } else if (snapshot.hasData) {
+                List<ScoreItem>? scores = snapshot.data?.data;
+                // snapshot.data?.data=controller.playerScoreItem.value;
+                if (scores != null) {
+                  if (scores.length > 1) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: const BouncingScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      itemCount: scores.length,
+                      itemBuilder: (BuildContext context, int position) {
+                        return playerItem(scores[position], position);
+                      },
+                    );
+                  }
+                  return Center(
+                    child: SizedBox(
+                      width: Get.width,
+                      child: const Padding(
+                        padding: EdgeInsets.only(
+                          top: 150.0,
+                        ),
+                        child: Text(
+                          "No Games scores History for \nthis period",
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 24,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  );
+                }
+              }
+              return const Center(
+                child: Padding(
+                  padding: EdgeInsets.only(top: 32.0),
+                  child: CupertinoActivityIndicator(
+                    color: Colors.grey,
+                  ),
+                ),
+              );
+            }),
+      ],
     );
   }
 
@@ -252,8 +777,8 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
               shape: BoxShape.circle,
               color: Colors.white12,
               image: DecorationImage(
-                image: NetworkImage(userImage),
-                fit: BoxFit.fitHeight,
+                image: NetworkImage(userImage.split("?")[0] ),
+                fit: BoxFit.cover,
                 alignment: Alignment.center,
               ),
             ),
@@ -280,7 +805,6 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
               ),
             ),
           )),
-
     ]);
   }
 
@@ -309,7 +833,7 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                   shape: BoxShape.circle,
                   color: Colors.white12,
                   image: DecorationImage(
-                    image: NetworkImage(userImage),
+                    image: NetworkImage(userImage.split("?")[0]),
                     fit: BoxFit.cover,
                     alignment: Alignment.topCenter,
                   ),
@@ -319,7 +843,7 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
           )),
       Positioned(
           top: 135,
-          left: 28,
+          left: 23,
           child: Container(
             height: 34,
             width: 34,
@@ -345,8 +869,7 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
     ]);
   }
 
-
-  Widget referralItem() {
+  Widget playerItem(ScoreItem item, int position) {
     return Container(
         padding: const EdgeInsets.all(12),
         margin: const EdgeInsets.fromLTRB(8, 9, 8, 8),
@@ -361,58 +884,62 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Column(children: [
-                    Text(
-                      "4",
-                      style: TextStyle(
-                        fontSize: 13,
-                        color:   Colors.black,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],),
-                  Column(children: [
-                    Container(
-                      height: 44,
-                      width: 44,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white12,
-                        image: DecorationImage(
-                          image: NetworkImage("https://images.unsplash.com/photo-1590339480061-4e9abd5bc0ae?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387"),
-                          fit: BoxFit.fitHeight,
-                          alignment: Alignment.center,
+                  Column(
+                    children: [
+                      Text(
+                        (position + 1).toString(),
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
-                    ),
-                  ],),
-                  Column(children: [
-                    Text(
-                      "0903768****",
-                      style: TextStyle(
-                        fontSize: 13,
-                        color:   Colors.black,
-                        fontWeight: FontWeight.w600,
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Container(
+                        height: 44,
+                        width: 44,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white12,
+                          image: DecorationImage(
+                            image: NetworkImage(item.imageUrl.split("?")[0] ),
+                            fit: BoxFit.cover,
+                            alignment: Alignment.center,
+                          ),
+                        ),
                       ),
-                    ),
-                  ],),
-                  Column(children: [
-                    Text(
-                      "856 Rpt",
-                      style: TextStyle(
-                        fontSize: 13,
-                        color: const Color(0xFFFE7A01).withOpacity(.7),
-                        fontWeight: FontWeight.w600,
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        TextUtils().hideNumberPart(item.phone),
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    ),
-                  ],),
-
-
-
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        item.score.toString() + " Rpt",
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: const Color(0xFFFE7A01).withOpacity(.7),
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
                 ]),
             const Gap(10),
           ],
         ));
   }
-
 }

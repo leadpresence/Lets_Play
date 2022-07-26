@@ -11,6 +11,7 @@ import '../../../../widgets/custom_large_button.dart';
 import '../../../../widgets/custom_otp_field.dart';
 import '../../../../widgets/custom_text_field.dart';
 import '../../../fund_wallet/views/mobile/fund_wallet_mobile_portrait.dart';
+import '../../../wallet_home/models/user_wallet_response.dart';
 import '../../controller/select_bank_controller.dart';
 import '../../models/bank_model.dart';
 
@@ -26,7 +27,7 @@ class WithdrawalConfirmation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BankModel account = controller.utilsProvider.withdrawalAccount.value[0];
+    BankResponse account = controller.utilsProvider.withdrawalAccount.value[0];
 
     return Scaffold(
       backgroundColor: Colors.white,

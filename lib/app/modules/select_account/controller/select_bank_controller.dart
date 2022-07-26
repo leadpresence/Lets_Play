@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:jekawin_mobile_flutter/app/modules/select_account/models/bank_model.dart';
 import 'package:jekawin_mobile_flutter/app/modules/select_account/views/mobile/withdrawal_amount_screen.dart';
+import 'package:jekawin_mobile_flutter/app/modules/wallet_home/models/user_wallet_response.dart';
 import 'package:jekawin_mobile_flutter/app/modules/wallet_home/models/withdrawalModel.dart';
 import '../../../config/services/di/di_locator.dart';
 import '../../../config/services/wallet_service.dart';
@@ -39,7 +40,7 @@ class SelectBankController extends GetxController {
     if (GetUtils.isBlank(pinController.text) == true) {
       BotToast.showText(text: "Pin can not be blank");
     } else {
-      BankModel withdrawalAccount = utilsProvider.withdrawalAccount.value[0];
+      BankResponse withdrawalAccount = utilsProvider.withdrawalAccount.value[0];
       var email = GetStorage().read('email');
 
       WithdrawalModel data = WithdrawalModel(
@@ -87,7 +88,7 @@ class SelectBankController extends GetxController {
     );
   }
 
-  setWithdrawalAccount(BankModel account) {
+  setWithdrawalAccount(BankResponse account) {
     utilsProvider.withdrawalAccount.value.clear();
     utilsProvider.withdrawalAccount.value.add(account);
     Get.to(() => WithdrawalAmountScreen());
