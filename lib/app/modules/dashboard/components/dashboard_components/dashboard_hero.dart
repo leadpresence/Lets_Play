@@ -190,7 +190,7 @@ class DashboardHeroSession extends StatelessWidget {
                               child: Container(
                                 width: 200,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(16),
+                                  borderRadius: BorderRadius.circular(8),
                                   image: DecorationImage(
                                     // colorFilter: const ColorFilter.mode(
                                     //   Colors.black45,
@@ -481,7 +481,7 @@ class DashboardHeroSessionUI extends StatelessWidget {
                               child: Container(
                                 width: 200,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(16),
+                                  borderRadius: BorderRadius.circular(8),
                                   image: DecorationImage(
                                     // colorFilter: const ColorFilter.mode(
                                     //   Colors.black45,

@@ -22,7 +22,7 @@ class EditProfileMobilePortrait extends GetView {
   var firstName = GetStorage().read("firstName");
   var lastName = GetStorage().read("lastName");
   var phoneNumber = GetStorage().read("phoneNumber");
-  var imageAvatar = GetStorage().read("profileImage");
+  var imageAvatar = GetStorage().read("profileImage").split("?")[0];
   var email = GetStorage().read('email');
   var homeAddress = GetStorage().read("homeAddress");
   var gender = GetStorage().read('gender');
@@ -41,6 +41,8 @@ class EditProfileMobilePortrait extends GetView {
         email ?? controller.emailTextController.text;
     controller.dropDownValue = gender ?? controller.dropDownValue;
     controller.homeAddress.text = homeAddress ?? controller.homeAddress.text;
+
+
 
     return Scaffold(
       backgroundColor: Colors.white,

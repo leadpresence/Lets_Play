@@ -32,8 +32,7 @@ class DashboardMobilePortrait extends StatelessWidget {
       Get.put(DashboardController());
   final UserLocalDataSourceImpl user = Get.find();
   final WalletHomeController walletController = Get.put(WalletHomeController());
-
-  var imageAvatar = GetStorage().read("profileImage");
+  String imageAvatar = GetStorage().read("profileImage").split("?")[0];
   var email = GetStorage().read('email');
   var firstName = GetStorage().read("firstName");
   @override
@@ -73,17 +72,24 @@ class DashboardMobilePortrait extends StatelessWidget {
                               child: imageAvatar == ''
                                   ? SvgPicture.asset(
                                       'assets/svgs/user_icon.svg')
-                                  : ClipRRect(
-                                    borderRadius:
-                                        BorderRadius.circular(50),
-                                    child: SizedBox(
-                                      width: Get.width,
-                                      child: Image.network(
-                                        imageAvatar,
-                                        fit: BoxFit.cover,
-                                      ),
+                                  : Stack(
+                                      alignment: AlignmentDirectional.center,
+                                      children: [
+                                        SvgPicture.asset(
+                                            'assets/svgs/user_icon.svg'),
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                          child: SizedBox(
+                                            width: Get.width,
+                                            child: Image.network(
+                                              imageAvatar,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
                             ),
                             const SizedBox(
                               width: 6,
@@ -102,11 +108,13 @@ class DashboardMobilePortrait extends StatelessWidget {
                         onTap: () {
                           Get.to(
                             () => NotificationMobilePortrait(),
-                            transition: Transition.fadeIn,
+                            transition: Transition.rightToLeft,
                           );
                         },
                         child: SvgPicture.asset(
-                          'assets/svgs/clarity_notification-outline-badged.svg',
+                          dashboardController.unSeenNotification.value == true
+                              ? 'assets/svgs/clarity_notification-outline-badged.svg'
+                              : 'assets/svgs/clarity_notification.svg',
                         ),
                       ),
                     ],
@@ -115,6 +123,7 @@ class DashboardMobilePortrait extends StatelessWidget {
                 const SizedBox(
                   height: 24,
                 ),
+
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 18.0),
                   child: FutureBuilder<UserWalletModel?>(

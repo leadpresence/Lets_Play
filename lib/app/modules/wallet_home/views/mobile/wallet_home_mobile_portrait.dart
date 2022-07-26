@@ -35,7 +35,7 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
           padding: const EdgeInsets.only(
             left: 18.0,
             right: 18.0,
-            top: 14.0,
+            top: 18.0,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,7 +61,7 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                     if (snapshot.hasError) {
                       return Container(
                         padding: const EdgeInsets.only(
-                          top: 18,
+                          top: 24,
                           bottom: 12,
                           left: 16,
                           right: 16,

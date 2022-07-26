@@ -27,13 +27,13 @@ class UserProfileMobilePortrait extends StatelessWidget {
   final DashboardController dashboardController =
       Get.put(DashboardController());
 
+  var firstName = GetStorage().read("firstName");
+  var lastName = GetStorage().read("lastName");
+  var phoneNumber = GetStorage().read("phoneNumber");
+  var imageAvatar = GetStorage().read("profileImage").split("?")[0];
+
   @override
   Widget build(BuildContext context) {
-    var firstName = GetStorage().read("firstName");
-    var lastName = GetStorage().read("lastName");
-    var phoneNumber = GetStorage().read("phoneNumber");
-    var imageAvatar = GetStorage().read("profileImage");
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

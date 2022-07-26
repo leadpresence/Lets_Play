@@ -120,4 +120,22 @@ class GamesServiceImpl {
       throw handleError(e);
     }
   }
+
+  Future<Response> notificationDetail(nId) async {
+    var currentUserID = GetStorage().read('currentUserID');
+
+    try {
+      Response response = await service.request(
+        '${JekawinBaseUrls.authBaseUrl}users/$currentUserID/notifications/$nId',
+        method: 'Get',
+      );
+      if (kDebugMode) {
+        print(
+            "This is the response status from the notificationDetail API: \n ${response.data}");
+      }
+      return response;
+    } on DioError catch (e) {
+      throw handleError(e);
+    }
+  }
 }

@@ -43,7 +43,7 @@ dependencies:
   flutter_switch: ^0.3.2
   webview_flutter: ^3.0.4
   modal_bottom_sheet:
-  aws_s3_plugin_flutter:
+  aws_s3_plugin_flutter: ^0.0.5
 
 dev_dependencies:
   flutter_test:

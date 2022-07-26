@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'package:aws_s3_plugin_flutter/aws_s3_plugin_flutter.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get/get.dart';
 
 class S3BucketService {
   static String url = '';
@@ -32,7 +34,7 @@ class S3BucketService {
   }) async {
     print('I went through');
     String fileName =
-        "$number$extension\_${DateTime.now().millisecondsSinceEpoch}.$extension";
+        "$extension\_${DateTime.now().millisecondsSinceEpoch}$extension";
     AwsS3PluginFlutter awsS3 = AwsS3PluginFlutter(
       awsFolderPath: awsFolderPath,
       file: file,
@@ -43,6 +45,12 @@ class S3BucketService {
       AWSAccess: 'AKIAZG3ZF6NYWY5MTI7L',
     );
     displayUploadDialog(awsS3, context);
+    Future.delayed(const Duration(seconds: 5), () {
+      BotToast.showText(
+          text: "Upload successful.\nClick on update profile to save changes.");
+      Get.back();
+    });
+
     try {
       try {
         result = await awsS3.uploadFile;
@@ -85,7 +93,7 @@ class S3BucketService {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Expanded(child: Text('Uploading...')),
+            const Text('Uploading... '),
             Text("${snapshot.data ?? 0}%"),
           ],
         ),
