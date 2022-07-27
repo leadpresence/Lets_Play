@@ -4,7 +4,6 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:jekawin_mobile_flutter/app/constants/asset_paths.dart';
-import 'package:jekawin_mobile_flutter/app/modules/edit_profile/controllers/edit_profile_controllers.dart';
 import 'package:jekawin_mobile_flutter/app/modules/edit_profile/views/mobile/edit_profile_mobile_porttrait.dart';
 import 'package:jekawin_mobile_flutter/app/modules/fund_wallet/controllers/fund_wallet_controller.dart';
 import '../../../../config/themes/app_theme_constants.dart';
