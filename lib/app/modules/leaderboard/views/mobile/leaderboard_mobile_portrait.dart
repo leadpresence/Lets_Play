@@ -23,8 +23,7 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
 
   @override
   Widget build(BuildContext context) {
-    return
-        DefaultTabController(
+    return DefaultTabController(
       length: 3,
       child: Scaffold(
           backgroundColor: Colors.white,
@@ -62,41 +61,57 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                         ),
                         const Gap(24),
                         TabBar(
-                          labelPadding: EdgeInsets.only(top: 10,left: 28,right: 28,bottom: 10),
-                            physics: const NeverScrollableScrollPhysics(),
-                            unselectedLabelColor: const Color(0xff333333),
-                            labelColor: const Color(0xff333333),
+                            unselectedLabelColor: Colors.orangeAccent,
                             indicatorSize: TabBarIndicatorSize.label,
-                            indicator: const BoxDecoration(
-                              borderRadius: BorderRadius.only(topLeft: Radius.circular(15),bottomLeft:Radius.circular(15),topRight: Radius.circular(15),bottomRight: Radius.circular(15) ),
-                              color:  Color(0xffF4D37E),
-                            ),
-                            unselectedLabelStyle: GoogleFonts.jost(
-                              color: const Color(0xff333333),
-                              fontSize: Get.width * .038,
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: .2,
-                            ),
-                            labelStyle: GoogleFonts.jost(
-                              color: const Color(0xff333333),
-                              fontSize: Get.width * .038,
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: .2,
-                            ),
-                            padding: EdgeInsets.only(top: 10,left: 28,right: 28,bottom: 10),
-                            tabs: const [
-                              Text(
-                                'Today',
-                                style: TextStyle(fontSize: 20),
-                              ),
-                              Text(
-                                'Week',
-                                style: TextStyle(fontSize: 20),
-                              ),
-                              Text(
-                                'Month',
-                                style: TextStyle(fontSize: 20),
-                              ),
+                            indicator: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                color: Colors.orangeAccent.shade100),
+                            tabs: [
+                              Tab(
+                                  child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                          border: Border.all(
+                                              color: Colors.orange.shade100,
+                                              width: 1)),
+                                      child: const Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          'Today',
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                      ))),
+                              Tab(
+                                  child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                          border: Border.all(
+                                              color: Colors.orange.shade100,
+                                              width: 1)),
+                                      child: const Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          'Week',
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                      ))),
+                              Tab(
+                                  child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                          border: Border.all(
+                                              color: Colors.orange.shade100,
+                                              width: 1)),
+                                      child: const Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          'Month',
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                      ))),
                             ]),
                         SizedBox(
                           height: Get.height * 0.7,
@@ -157,21 +172,24 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                                       position: '2',
                                       userImage: players[1].imageUrl),
                                   const Gap(15),
-                                  Text(
-                                      TextUtils().hideNumberPart(players[1].phone)),
+                                  Text(TextUtils()
+                                      .hideNumberPart(players[1].phone)),
                                   const Gap(4),
                                   Text(
                                     players[1].score.toString() + " Rpt",
-                                    style: const TextStyle(color: Colors.orange),
+                                    style:
+                                        const TextStyle(color: Colors.orange),
                                   )
                                 ]),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 firstWinners(
-                                    position: '1', userImage: players[0].imageUrl),
+                                    position: '1',
+                                    userImage: players[0].imageUrl),
                                 const Gap(15),
-                                Text(TextUtils().hideNumberPart(players[0].phone)),
+                                Text(TextUtils()
+                                    .hideNumberPart(players[0].phone)),
                                 const Gap(4),
                                 Text(
                                   players[0].score.toString() + " Rpt",
@@ -184,9 +202,11 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                               children: [
                                 const Gap(80),
                                 winners(
-                                    position: '3', userImage: players[2].imageUrl),
+                                    position: '3',
+                                    userImage: players[2].imageUrl),
                                 const Gap(15),
-                                Text(TextUtils().hideNumberPart(players[2].phone)),
+                                Text(TextUtils()
+                                    .hideNumberPart(players[2].phone)),
                                 const Gap(4),
                                 Text(
                                   players[2].score.toString() + " Rpt",
@@ -200,48 +220,7 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                const Gap(80),
-                                winners(position: '2', userImage: ""),
-                                const Gap(15),
-                                const Text("**********"),
-                                const Gap(4),
-                                const Text(
-                                  "0 Rpt",
-                                  style: TextStyle(color: Colors.orange),
-                                )
-                              ]),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              firstWinners(position: '1', userImage: ""),
-                              const Gap(105),
-                              const Text("*********"),
-                              const Text(
-                                "0 Rpt",
-                                style: TextStyle(color: Colors.orange),
-                              )
-                            ],
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Gap(80),
-                              winners(position: '3', userImage: ""),
-                              const Gap(15),
-                              const Text("*********"),
-                              const Gap(4),
-                              const Text(
-                                "0 Rpt",
-                                style: TextStyle(color: Colors.orange),
-                              )
-                            ],
-                          )
-                        ],
+                        children: const [SizedBox()],
                       );
                     }
                   }
@@ -254,7 +233,6 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                     ),
                   );
                 }),
-
             const Gap(20),
             FutureBuilder<LeaderBoardResponse?>(
                 future: controller.getLeaderBoard("day"),
@@ -413,48 +391,7 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            const Gap(80),
-                            winners(position: '2', userImage: ""),
-                            const Gap(15),
-                            const Text("**********"),
-                            const Gap(4),
-                            const Text(
-                              "0 Rpt",
-                              style: TextStyle(color: Colors.orange),
-                            )
-                          ]),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          firstWinners(position: '1', userImage: ""),
-                          const Gap(105),
-                          const Text("*********"),
-                          const Text(
-                            "0 Rpt",
-                            style: TextStyle(color: Colors.orange),
-                          )
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Gap(80),
-                          winners(position: '3', userImage: ""),
-                          const Gap(15),
-                          const Text("*********"),
-                          const Gap(4),
-                          const Text(
-                            "0 Rpt",
-                            style: TextStyle(color: Colors.orange),
-                          )
-                        ],
-                      )
-                    ],
+                    children: const [SizedBox()],
                   );
                 }
               }
@@ -599,7 +536,7 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                             const Gap(4),
                             Text(
                               players[0].score.toString() + " Rpt",
-                              style:const TextStyle(color: Colors.orange),
+                              style: const TextStyle(color: Colors.orange),
                             )
                           ],
                         ),
@@ -608,8 +545,7 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                           children: [
                             const Gap(80),
                             winners(
-                                position: '3',
-                                userImage: players[2].imageUrl),
+                                position: '3', userImage: players[2].imageUrl),
                             const Gap(15),
                             Text(TextUtils().hideNumberPart(players[2].phone)),
                             const Gap(4),
@@ -625,48 +561,7 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            const Gap(80),
-                            winners(position: '2', userImage: ""),
-                            const Gap(15),
-                            const Text("**********"),
-                            const Gap(4),
-                            const Text(
-                              "0 Rpt",
-                              style: TextStyle(color: Colors.orange),
-                            )
-                          ]),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          firstWinners(position: '1', userImage: ""),
-                          const Gap(105),
-                          const Text("*********"),
-                          const Text(
-                            "0 Rpt",
-                            style: TextStyle(color: Colors.orange),
-                          )
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Gap(80),
-                          winners(position: '3', userImage: ""),
-                          const Gap(15),
-                          const Text("*********"),
-                          const Gap(4),
-                          const Text(
-                            "0 Rpt",
-                            style: TextStyle(color: Colors.orange),
-                          )
-                        ],
-                      )
-                    ],
+                    children: const [SizedBox()],
                   );
                 }
               }
@@ -679,7 +574,6 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                 ),
               );
             }),
-
         const Gap(20),
         FutureBuilder<LeaderBoardResponse?>(
             future: controller.getLeaderBoard("month"),
@@ -777,7 +671,7 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
               shape: BoxShape.circle,
               color: Colors.white12,
               image: DecorationImage(
-                image: NetworkImage(userImage.split("?")[0] ),
+                image: NetworkImage(userImage.split("?")[0]),
                 fit: BoxFit.cover,
                 alignment: Alignment.center,
               ),
@@ -905,7 +799,7 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                           shape: BoxShape.circle,
                           color: Colors.white12,
                           image: DecorationImage(
-                            image: NetworkImage(item.imageUrl.split("?")[0] ),
+                            image: NetworkImage(item.imageUrl.split("?")[0]),
                             fit: BoxFit.cover,
                             alignment: Alignment.center,
                           ),
