@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:jekawin_mobile_flutter/app/modules/add_bank_acccount/views/add_bank_view.dart';
 import 'package:jekawin_mobile_flutter/app/modules/select_account/controller/select_bank_controller.dart';
+import 'package:jekawin_mobile_flutter/app/modules/select_account/views/mobile/withdrawal_amount_screen.dart';
 import 'package:jekawin_mobile_flutter/app/modules/wallet_home/models/user_wallet_response.dart';
 
 import '../../../../config/themes/app_theme_constants.dart';
@@ -31,7 +32,6 @@ class SelectBankMobilePortrait extends GetView {
       height: 30,
     );
     return
-        // Obx(() =>
         Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -119,11 +119,15 @@ class SelectBankMobilePortrait extends GetView {
                             controller.setWithdrawalAccount(
                               controller.savedBanksList.value[position],
                             );
+                            Get.to(() => WithdrawalAmountScreen());
                           },
                           child: BankItem(
-                            showBin: true,
-                            bankItem: controller.savedBanksList.value[position],
-                          ),
+                              showBin: true,
+                              bankItem:
+                                  controller.savedBanksList.value[position],
+                              deleteAccount: controller.setDeletableAccount(
+                                  controller.savedBanksList.value[position],
+                                  context)),
                         );
                       },
                     );
@@ -141,15 +145,16 @@ class SelectBankMobilePortrait extends GetView {
 //Todo @felix create needed para meters for this class
 class BankItem extends StatelessWidget {
   var showBin = false;
+  dynamic deleteAccount;
   final BankResponse bankItem;
 
-  BankItem({Key? key, required this.showBin, required this.bankItem})
+  BankItem(
+      {Key? key, required this.showBin, required this.bankItem, deleteAccount})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
-    screenHeight(BuildContext context) => MediaQuery.of(context).size.height;
 
     final Widget binIcon = SvgPicture.asset(
       bin,
@@ -180,7 +185,8 @@ class BankItem extends StatelessWidget {
                   SizedBox(
                     child: Text(
                       bankItem.bankName,
-                      style: TextStyle(fontWeight: FontWeight.normal, fontSize: 14),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.normal, fontSize: 14),
                     ),
                     width: screenWidth(context) / 2,
                   ),
@@ -188,7 +194,8 @@ class BankItem extends StatelessWidget {
                   //account number
                   SizedBox(
                     child: Text(bankItem.accountNumber,
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 12),
                         overflow: TextOverflow.ellipsis),
                     width: screenWidth(context) / 2,
                   ),
@@ -197,9 +204,9 @@ class BankItem extends StatelessWidget {
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+                    children: const [
                       SizedBox(
-                        child: const Text(
+                        child: Text(
                           "__",
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -210,11 +217,10 @@ class BankItem extends StatelessWidget {
               ),
             ],
           ),
-
           showBin
               ? GestureDetector(
                   child: binIcon,
-                  onTap: () {},
+                  onTap: () => deleteAccount,
                 )
               : const SizedBox()
         ],
