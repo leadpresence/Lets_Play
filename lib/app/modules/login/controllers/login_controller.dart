@@ -67,7 +67,7 @@ class LoginController extends GetxController {
     userData.fold(
       (l) {
         BotToast.showText(
-          text: l,
+          text: l.message,
         );
         isLoading.value = false;
       },

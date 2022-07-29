@@ -90,6 +90,8 @@ class WithdrawalConfirmation extends StatelessWidget {
               ),
               const Gap(40),
               CustomOtpField(
+                obscureText: true,
+
                 pinController: controller.pinController,
                 key: key,
                 onComplete: () {

@@ -52,6 +52,7 @@ class SignupVerificationMP extends GetView<SignUpVerificationController> {
                   phoneNumber: controller.phoneNumber.value,
                 ),
                 CustomOtpField(
+                  obscureText: true,
                   pinController: controller.signUpOtpController,
                   key: key,
                   onComplete: () {
