@@ -26,7 +26,6 @@ class SignUpVerificationController extends GetxController
 
   setOtp(String otpPin) {
     pin.value = otpPin;
-    // pin.value = prospectIsProvider.getOtp();
   }
 
   Future<void> completeSignUp(Key? key) async {
@@ -69,7 +68,6 @@ class SignUpVerificationController extends GetxController
     startTimer();
     phoneNumber.value = utilsController.getPhoneNumber();
     prospectId.value = utilsController.getProspectId();
-
     super.onInit();
   }
 

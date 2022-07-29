@@ -1,13 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:jekawin_mobile_flutter/app/modules/select_account/models/bank_model.dart';
 import 'package:jekawin_mobile_flutter/app/modules/select_account/views/mobile/select_bank_mobile_portrait.dart';
 import 'package:jekawin_mobile_flutter/app/modules/wallet_home/models/user_wallet_response.dart';
-
 import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../widgets/custom_large_button.dart';
 import '../../../../widgets/custom_text_field.dart';
@@ -57,8 +53,7 @@ class WithdrawalAmountScreen extends StatelessWidget {
                 child: Column(children: [
                   SlideInAnimation(
                     duration: const Duration(milliseconds: 600),
-                    child:                    BankItem(showBin: false, bankItem: account),
-
+                    child:  BankItem(showBin: false, bankItem: account),
                   ),
                   const Gap(20),
                   GestureDetector(
@@ -79,17 +74,13 @@ class WithdrawalAmountScreen extends StatelessWidget {
                     child:
                     SlideInAnimation(
                       duration: const Duration(milliseconds: 600),
-                      child:                CustomTextField(
+                      child:     CustomTextField(
                         textController: controller.amountController,
                         keyboardType: TextInputType.number,
                         hintText: "Enter Amount",
-                        onChanged: (v) {
-
-                        },
+                        onChanged: (v) {},
                       ),
                     ),
-
-
                   ),
                   Obx(
                    ()=> Padding(
@@ -108,14 +99,13 @@ class WithdrawalAmountScreen extends StatelessWidget {
 
                     SlideInAnimation(
                       duration: const Duration(milliseconds: 600),
-                      child:                  CustomButton(
+                      child:   CustomButton(
                         buttonText: "Continue",
                         onPressed: () {
                           controller.fundFormValidator();
                         },
                       ),
                     ),
-
                   ),
                 ]))));
   }

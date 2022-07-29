@@ -31,6 +31,8 @@ abstract class AuthServiceDataSource {
 
   Future<Either<AppError, String>> verifySignUpOtp(String otp);
 
+  Future<Either<AppError, String>> login(String mobile, String password);
+
   Future<Either<String, UserSignupResponse>> signIn(
       String mobile, String password);
 
@@ -104,6 +106,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
       var raw = await httpProvider.postHttp(
           '${JekawinBaseUrls.authBaseUrl}verify-signup-otp', payload);
       UserSignupResponse res = UserSignupResponse.fromMap(raw);
+      // _userLocalDataSource.saveUser(res.body.user);
       GetStorage().write('firstName', res.body.user.firstName);
       GetStorage().write('lastName', res.body.user.lastName);
       GetStorage().write('phoneNumber', res.body.user.phone);
@@ -112,7 +115,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
       GetStorage().write('referralCode', res.body.user.referralCode);
       GetStorage().write('token', res.body.token);
       GetStorage().write('currentUserID', res.body.user.id);
-      GetStorage().write('email', res.body.user.email);
+      GetStorage().write('email', '');
 
       if (raw['success']) {
         if (kDebugMode) {
@@ -169,6 +172,49 @@ class AuthServiceImpl extends AuthServiceDataSource {
     try {
       var raw = await httpProvider.postHttp(
           '${JekawinBaseUrls.authBaseUrl}signin', payload);
+
+      if (raw['success']) {
+        UserSignupResponse res = UserSignupResponse.fromMap(raw);
+        // _userLocalDataSource.saveUser(res.body.user);
+        GetStorage().write('firstName', res.body.user.firstName);
+        GetStorage().write('lastName', res.body.user.lastName);
+        GetStorage()
+            .write('profileImage', res.body.user.profileUrl.split("?")[0]);
+        GetStorage().write('phoneNumber', res.body.user.phone);
+        GetStorage().write('token', res.body.token);
+        GetStorage().write('referralCode', res.body.user.referralCode);
+        GetStorage().write('isEmailVerified', res.body.user.isEmailVerified);
+        GetStorage().write('currentUserID', res.body.user.id);
+        GetStorage().write('email', res.body.user.email);
+        GetStorage().write('isEmailVerified', res.body.user.isEmailVerified);
+        GetStorage().write('gender', res.body.user.gender);
+        GetStorage().write('homeAddress', res.body.user.residentialAddress);
+
+      if (raw['success']) {
+        return Right(res);
+      } else {
+        return Left(
+            AppError(errorType: AppErrorType.network, message: raw['message']));
+      }
+    } on NetworkException catch (e) {
+      return const Left(AppError(errorType: AppErrorType.network, message: "Something went wrong. \nCheck phone/password & connection \nand try again "));
+    } on SocketException catch (e) {
+      return const Left(AppError(errorType: AppErrorType.network, message: "Something went wrong check connection and try again "));
+
+    } on AuthException catch (e) {
+      return const Left(AppError(errorType: AppErrorType.network, message: "Something went wrong check connection and try again "));
+    } on Exception {
+      return const Left(AppError(errorType: AppErrorType.network, message: "Something went wrong check connection and try again "));
+
+    }
+  }
+
+  @override
+  Future<Either<AppError, String>> login(String mobile, String password) async {
+    Map<String, dynamic> payload = {'phone': mobile, 'password': password};
+    try {
+      var raw = await httpProvider.postHttp(
+          '${JekawinBaseUrls.authBaseUrl}signin', payload);
       UserSignupResponse res = UserSignupResponse.fromMap(raw);
       // _userLocalDataSource.saveUser(res.body.user);
       GetStorage().write('firstName', res.body.user.firstName);
@@ -181,23 +227,22 @@ class AuthServiceImpl extends AuthServiceDataSource {
       GetStorage().write('isEmailVerified', res.body.user.isEmailVerified);
       GetStorage().write('currentUserID', res.body.user.id);
       GetStorage().write('email', res.body.user.email);
-      GetStorage().write('isEmailVerified', res.body.user.isEmailVerified);
-      GetStorage().write('gender', res.body.user.gender);
-      GetStorage().write('homeAddress', res.body.user.residentialAddress);
 
       if (raw['success']) {
-        return Right(res);
+        return const Right("Login Successful");
       } else {
-        return Left(raw['message']);
+        return Left(
+            AppError(errorType: AppErrorType.network, message: raw['message']));
       }
     } on NetworkException catch (e) {
-      return const Left("Something went wrong check connection and try again");
+      return Left(
+          AppError(errorType: AppErrorType.network, message: e.message));
     } on SocketException catch (e) {
-      return const Left("Something went wrong check connection and try again");
-    } on AuthException catch (e) {
-      return Left(e.message);
+      return Left(
+          AppError(errorType: AppErrorType.network, message: e.message));
     } on Exception {
-      return const Left("Something went wrong signing you in and try again");
+      return const Left(
+          AppError(errorType: AppErrorType.api, message: "An error occurred"));
     }
   }
 

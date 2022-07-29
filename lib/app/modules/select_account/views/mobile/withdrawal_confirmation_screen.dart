@@ -90,18 +90,27 @@ class WithdrawalConfirmation extends StatelessWidget {
               ),
               const Gap(40),
               CustomOtpField(
+                obscureText: true,
+
                 pinController: controller.pinController,
                 key: key,
                 onComplete: () {
-                  // controller.setOtp(controller.signUpOtpController.text);
+                  controller.clearErrorPin();
                 },
               ),
+              Obx(() => Padding(
+                    padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+                    child: Text(
+                      controller.errorPinMessage.value,
+                      style: errorTextStyle,
+                    ),
+                  )),
               const Gap(5),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
                   Text(
-                    "Enter one time password to continue withdrawal request.",
+                    "Enter your transaction pin to continue withdrawal request.",
                     style: TextStyle(
                         fontWeight: FontWeight.w300, // light
                         fontStyle: FontStyle.normal,
@@ -112,16 +121,16 @@ class WithdrawalConfirmation extends StatelessWidget {
                 ],
               ),
               const Gap(25),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(24, 4, 24, 10),
-                child: CustomButton(
-                  isLoading: controller.isLoading.value,
-                  buttonText: "Continue",
-                  onPressed: () {
-                    controller.withdrawalFormValidator();
-                  },
-                ),
-              ),
+              Obx(() => Padding(
+                    padding: const EdgeInsets.fromLTRB(24, 4, 24, 10),
+                    child: CustomButton(
+                      isLoading: controller.isLoading.value,
+                      buttonText: "Continue",
+                      onPressed: () {
+                        controller.pinFormValidator();
+                      },
+                    ),
+                  )),
               const Gap(40),
             ],
           ),

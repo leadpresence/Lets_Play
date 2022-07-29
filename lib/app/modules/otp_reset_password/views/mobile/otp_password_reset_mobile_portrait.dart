@@ -51,6 +51,7 @@ class OtpPasswordResetMP extends GetView<OtpResetPasswordController> {
                   phoneNumber: phoneNumber,
                 ),
                 CustomOtpField(
+                  obscureText: true,
                   key: key,
                   pinController: controller.otpController,
                   onComplete: () {
