@@ -17,7 +17,7 @@ class JekawinClubHome extends StatelessWidget {
   Widget build(BuildContext context) {
     var currentUserID = GetStorage().read("currentUserID");
     var size = MediaQuery.of(context).size;
-    final double itemHeight = (size.height - kToolbarHeight - 24) / 3;
+    final double itemHeight = (size.height - kToolbarHeight - 24) / 2.9;
     final double itemWidth = size.width / 2;
     return Scaffold(
       backgroundColor: Colors.white,

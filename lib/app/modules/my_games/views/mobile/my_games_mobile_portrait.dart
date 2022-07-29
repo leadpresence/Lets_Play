@@ -114,76 +114,94 @@ class MyGamesMobilePortrait extends StatelessWidget {
                                       padding: EdgeInsets.zero,
                                       itemBuilder:
                                           (BuildContext context, int position) {
-                                        return
-                                            // body.body.games[position]
-                                            //           .amount ==
-                                            //       null
-                                            //   ?
-                                            // const SizedBox()
-                                            //   :
-                                            FadeIn(
-                                          duration:
-                                              const Duration(milliseconds: 200),
-                                          delay:
-                                              const Duration(milliseconds: 200),
-                                          child: GestureDetector(
-                                            child: gameItem(
-                                              date: body.body.games[position]
-                                                  .createdAt
-                                                  .toString(),
-                                              title: body.body.games[position]
-                                                          .gameId !=
-                                                      null
-                                                  ? body.body.games[position]
-                                                      .gameId["title"]
-                                                  : "",
-                                              amount: body.body.games[position]
-                                                          .amount ==
-                                                      null
-                                                  ? ""
-                                                  : body.body.games[position]
-                                                      .amount
-                                                      .toString(),
-                                            ),
-                                            onTap: () {
-                                              Get.to(
-                                                () => GameDetailMobilePortrait(
-                                                  date: body.body
-                                                      .games[position].createdAt
-                                                      .toString(),
-                                                  gameCost: body
-                                                              .body
-                                                              .games[position]
-                                                              .amount ==
-                                                          null
-                                                      ? ""
-                                                      : body
-                                                          .body
-                                                          .games[position]
-                                                          .amount
-                                                          .toString(),
-                                                  numberOfGames: body.body
-                                                      .games[position].duration
-                                                      .toString(),
-                                                  ticketNumber: body.body
-                                                      .games[position].tickets,
-                                                  title: body
-                                                              .body
-                                                              .games[position]
-                                                              .gameId !=
-                                                          null
-                                                      ? body
-                                                          .body
-                                                          .games[position]
-                                                          .gameId["title"]
-                                                      : "",
-                                                  status: body.body
-                                                      .games[position].status,
+                                        return body.body.games[position]
+                                                    .amount ==
+                                                null
+                                            ? const SizedBox()
+                                            : FadeIn(
+                                                duration: const Duration(
+                                                    milliseconds: 200),
+                                                delay: const Duration(
+                                                    milliseconds: 200),
+                                                child: GestureDetector(
+                                                  child: gameItem(
+                                                    date: body
+                                                        .body
+                                                        .games[position]
+                                                        .createdAt
+                                                        .toString(),
+                                                    title: body
+                                                                .body
+                                                                .games[position]
+                                                                .gameId !=
+                                                            null
+                                                        ? body
+                                                            .body
+                                                            .games[position]
+                                                            .gameId["title"]
+                                                        : "",
+                                                    amount: body
+                                                                .body
+                                                                .games[position]
+                                                                .amount ==
+                                                            null
+                                                        ? ""
+                                                        : body
+                                                            .body
+                                                            .games[position]
+                                                            .amount
+                                                            .toString(),
+                                                  ),
+                                                  onTap: () {
+                                                    Get.to(
+                                                      () =>
+                                                          GameDetailMobilePortrait(
+                                                        date: body
+                                                            .body
+                                                            .games[position]
+                                                            .createdAt
+                                                            .toString(),
+                                                        gameCost: body
+                                                                    .body
+                                                                    .games[
+                                                                        position]
+                                                                    .amount ==
+                                                                null
+                                                            ? ""
+                                                            : body
+                                                                .body
+                                                                .games[position]
+                                                                .amount
+                                                                .toString(),
+                                                        numberOfGames: body
+                                                            .body
+                                                            .games[position]
+                                                            .duration
+                                                            .toString(),
+                                                        ticketNumber: body
+                                                            .body
+                                                            .games[position]
+                                                            .tickets,
+                                                        title: body
+                                                                    .body
+                                                                    .games[
+                                                                        position]
+                                                                    .gameId !=
+                                                                null
+                                                            ? body
+                                                                .body
+                                                                .games[position]
+                                                                .gameId["title"]
+                                                            : "",
+                                                        status: body
+                                                            .body
+                                                            .games[position]
+                                                            .status,
+                                                      ),
+                                                    );
+                                                  },
                                                 ),
                                               );
-                                            },
-                                          ),
-                                        );
                                       },
                                     );
                             }

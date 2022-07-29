@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jekawin_mobile_flutter/app/modules/leaderboard/controllers/leaderbooard_controller.dart';
 import 'package:jekawin_mobile_flutter/app/utils/helpers/text_helper.dart';
@@ -40,12 +38,12 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(left: 16.0),
+                              padding: const EdgeInsets.only(left: 16.0),
                               child: IconButton(
                                 splashRadius: 24,
                                 icon: SvgPicture.asset(
                                   'assets/svgs/share.svg',
-                                  color: Color(0xff12121D),
+                                  color: const Color(0xff12121D),
                                 ),
                                 onPressed: () {},
                               ),
@@ -193,7 +191,7 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                                 const Gap(4),
                                 Text(
                                   players[0].score.toString() + " Rpt",
-                                  style: TextStyle(color: Colors.orange),
+                                  style: const TextStyle(color: Colors.orange),
                                 )
                               ],
                             ),
@@ -366,7 +364,7 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                             const Gap(4),
                             Text(
                               players[0].score.toString() + " Rpt",
-                              style: TextStyle(color: Colors.orange),
+                              style: const TextStyle(color: Colors.orange),
                             )
                           ],
                         ),

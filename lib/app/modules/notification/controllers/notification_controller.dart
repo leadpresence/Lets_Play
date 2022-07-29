@@ -55,10 +55,6 @@ class NotificationController extends GetxController {
       }
       return detailResponseData;
     } catch (e) {
-      print(e.toString());
-      BotToast.showText(
-        text: "An error occurred. Please try again. $e",
-      );
       isLoading.value = false;
     }
     return detailResponseData;

@@ -33,7 +33,7 @@ abstract class AuthServiceDataSource {
 
   Future<Either<AppError, String>> login(String mobile, String password);
 
-  Future<Either<AppError, UserSignupResponse>> signIn(
+  Future<Either<String, UserSignupResponse>> signIn(
       String mobile, String password);
 
   Future<Either<AppError, String>> resendSignUpResetOtp(String phoneNumber);
@@ -166,16 +166,14 @@ class AuthServiceImpl extends AuthServiceDataSource {
   }
 
   @override
-  Future<Either<AppError, UserSignupResponse>> signIn(
+  Future<Either<String, UserSignupResponse>> signIn(
       String mobile, String password) async {
     Map<String, dynamic> payload = {'phone': mobile, 'password': password};
     try {
       var raw = await httpProvider.postHttp(
           '${JekawinBaseUrls.authBaseUrl}signin', payload);
-
       if (raw['success']) {
         UserSignupResponse res = UserSignupResponse.fromMap(raw);
-        // _userLocalDataSource.saveUser(res.body.user);
         GetStorage().write('firstName', res.body.user.firstName);
         GetStorage().write('lastName', res.body.user.lastName);
         GetStorage()
@@ -189,22 +187,18 @@ class AuthServiceImpl extends AuthServiceDataSource {
         GetStorage().write('isEmailVerified', res.body.user.isEmailVerified);
         GetStorage().write('gender', res.body.user.gender);
         GetStorage().write('homeAddress', res.body.user.residentialAddress);
-
         return Right(res);
       } else {
-        return Left(
-            AppError(errorType: AppErrorType.network, message: raw['message']));
+        return Left(raw['message']);
       }
     } on NetworkException catch (e) {
-      return const Left(AppError(errorType: AppErrorType.network, message: "Something went wrong. \nCheck phone/password & connection \nand try again "));
+      return const Left("Something went wrong check connection and try again");
     } on SocketException catch (e) {
-      return const Left(AppError(errorType: AppErrorType.network, message: "Something went wrong check connection and try again "));
-
+      return const Left("Something went wrong check connection and try again");
     } on AuthException catch (e) {
-      return const Left(AppError(errorType: AppErrorType.network, message: "Something went wrong check connection and try again "));
+      return Left(e.message);
     } on Exception {
-      return const Left(AppError(errorType: AppErrorType.network, message: "Something went wrong check connection and try again "));
-
+      return const Left("Something went wrong signing you in and try again");
     }
   }
 

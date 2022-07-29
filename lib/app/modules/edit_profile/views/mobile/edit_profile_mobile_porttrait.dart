@@ -42,8 +42,6 @@ class EditProfileMobilePortrait extends GetView {
     controller.dropDownValue = gender ?? controller.dropDownValue;
     controller.homeAddress.text = homeAddress ?? controller.homeAddress.text;
 
-
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -67,7 +65,7 @@ class EditProfileMobilePortrait extends GetView {
         child: Obx(
           () => Form(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+              padding: const EdgeInsets.fromLTRB(24, 0, 24, 48),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
