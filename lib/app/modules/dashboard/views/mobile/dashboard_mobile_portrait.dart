@@ -123,7 +123,6 @@ class DashboardMobilePortrait extends StatelessWidget {
                 const SizedBox(
                   height: 24,
                 ),
-
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 18.0),
                   child: FutureBuilder<UserWalletModel?>(
@@ -138,7 +137,9 @@ class DashboardMobilePortrait extends StatelessWidget {
                             right: 16,
                           ),
                           width: Get.width,
-                          height: Get.height * .19,
+                                   height: Get.height < 700
+                                ? Get.height * .23
+                                : Get.height * .19,
                           decoration: BoxDecoration(
                             color: const Color(0XFF543884),
                             borderRadius: BorderRadius.circular(20),
@@ -203,7 +204,9 @@ class DashboardMobilePortrait extends StatelessWidget {
                               right: 16,
                             ),
                             width: Get.width,
-                            height: Get.height * .19,
+                            height: Get.height < 700
+                                ? Get.height * .23
+                                : Get.height * .19,
                             decoration: BoxDecoration(
                               color: const Color(0XFF543884),
                               borderRadius: BorderRadius.circular(20),
@@ -301,7 +304,9 @@ class DashboardMobilePortrait extends StatelessWidget {
                           right: 16,
                         ),
                         width: Get.width,
-                        height: Get.height * .19,
+                                   height: Get.height < 700
+                                ? Get.height * .23
+                                : Get.height * .19,
                         decoration: BoxDecoration(
                           color: const Color(0XFF543884),
                           borderRadius: BorderRadius.circular(20),

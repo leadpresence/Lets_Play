@@ -56,7 +56,7 @@ class RewardPointsMobilePortrait extends StatelessWidget {
                   right: 16,
                 ),
                 width: Get.width,
-                height: Get.height * .19,
+                height: Get.height < 700 ? Get.height * .23 : Get.height * .19,
                 decoration: BoxDecoration(
                   color: const Color(0XFF543884),
                   borderRadius: BorderRadius.circular(20),
@@ -158,8 +158,9 @@ class RewardPointsMobilePortrait extends StatelessWidget {
                       child: Text(
                         'No Transaction History',
                         style: TextStyle(
-                          fontSize: 24,
+                          fontSize: 16,
                           color: Color(0xff414249),
+                          height: 1.6,
                         ),
                         textAlign: TextAlign.center,
                       ),

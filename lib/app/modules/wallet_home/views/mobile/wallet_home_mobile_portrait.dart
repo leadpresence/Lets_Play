@@ -67,7 +67,9 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                           right: 16,
                         ),
                         width: Get.width,
-                        height: Get.height * .19,
+                        height: Get.height < 700
+                            ? Get.height * .23
+                            : Get.height * .19,
                         decoration: BoxDecoration(
                           color: const Color(0XFF543884),
                           borderRadius: BorderRadius.circular(20),
@@ -150,8 +152,7 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                           ],
                         ),
                       );
-                    }
-                    else if (snapshot.hasData) {
+                    } else if (snapshot.hasData) {
                       UserWalletModel? walletData = snapshot.data;
                       if (walletData != null) {
                         return Container(
@@ -162,13 +163,14 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                             right: 16,
                           ),
                           width: Get.width,
-                          height: Get.height * .19,
+                          height: Get.height < 700
+                              ? Get.height * .23
+                              : Get.height * .19,
                           decoration: BoxDecoration(
                             color: const Color(0XFF543884),
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          child: 
-                          Column(
+                          child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Row(
@@ -262,7 +264,9 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                         right: 16,
                       ),
                       width: Get.width,
-                      height: Get.height * .19,
+                      height: Get.height < 700
+                          ? Get.height * .23
+                          : Get.height * .19,
                       decoration: BoxDecoration(
                         color: const Color(0XFF543884),
                         borderRadius: BorderRadius.circular(20),
@@ -355,9 +359,9 @@ class WalletHomeMobilePortrait extends GetView<WalletHomeController> {
                             shrinkWrap: true,
                             itemCount: listOftrxns.length,
                             itemBuilder: (BuildContext context, int position) {
-                          return transactionItem(
-                            listOftrxns[position],
-                          );
+                              return transactionItem(
+                                listOftrxns[position],
+                              );
                             },
                           ),
                         );

@@ -313,7 +313,7 @@ class StartTrueFalseGameMobilePortrait extends StatelessWidget {
         return AlertDialog(
           backgroundColor: Colors.transparent,
           content: Container(
-            height: Get.height * .44,
+            height: 400,
             width: Get.width * .9,
             decoration: BoxDecoration(
               color: Colors.white,
@@ -355,9 +355,9 @@ class StartTrueFalseGameMobilePortrait extends StatelessWidget {
                         controller.currentPage.value == 4
                             ? controller.totalRewardPoints.value == 0
                                 ? Get.offAll(() => TryAgainView(
-                          totalPoints:
-                          controller.totalRewardPoints.value,
-                        ))
+                                      totalPoints:
+                                          controller.totalRewardPoints.value,
+                                    ))
                                 : Get.offAll(
                                     () => CongratulationsView(
                                       totalPoints:

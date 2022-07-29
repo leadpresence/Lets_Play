@@ -186,7 +186,7 @@ class EditProfileController extends GetxController {
           }
         : homeAddress.text == ""
             ? {
-                "profileUrl": profilePictureUrl,
+                "profileUrl": profilePictureUrl.split("?")[0],
                 "gender": dropDownValue,
               }
             : profilePictureUrl == ""
@@ -195,7 +195,7 @@ class EditProfileController extends GetxController {
                     "residentialAddress": homeAddress.text,
                   }
                 : {
-                    "profileUrl": profilePictureUrl,
+                    "profileUrl": profilePictureUrl.split("?")[0],
                     "residentialAddress": homeAddress.text,
                     "gender": dropDownValue,
                   };
