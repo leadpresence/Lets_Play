@@ -31,7 +31,7 @@ abstract class AuthServiceDataSource {
 
   Future<Either<AppError, String>> verifySignUpOtp(String otp);
 
-  Future<Either<AppError, String>> login(String mobile, String password);
+  Future<String> login(String mobile, String password);
 
   Future<Either<String, UserSignupResponse>> signIn(
       String mobile, String password);
@@ -72,6 +72,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
       'lastName': body.lastName,
       'phone': body.phone,
       'password': body.password,
+      'referralCode': body.referralCode,
       'agreement': body.agreement,
     };
     try {
@@ -168,6 +169,8 @@ class AuthServiceImpl extends AuthServiceDataSource {
   @override
   Future<Either<String, UserSignupResponse>> signIn(
       String mobile, String password) async {
+    var msg = "";
+
     Map<String, dynamic> payload = {'phone': mobile, 'password': password};
     try {
       var raw = await httpProvider.postHttp(
@@ -189,25 +192,27 @@ class AuthServiceImpl extends AuthServiceDataSource {
         GetStorage().write('homeAddress', res.body.user.residentialAddress);
         return Right(res);
       } else {
+        msg = raw['message'];
         return Left(raw['message']);
       }
     } on NetworkException catch (e) {
-      return const Left("Something went wrong check connection and try again");
+      return  Left(msg+" Something went wrong check connection and try again");
     } on SocketException catch (e) {
-      return const Left("Something went wrong check connection and try again");
+      return  Left(msg +" Something went wrong check connection and try again");
     } on AuthException catch (e) {
-      return Left(e.message);
+      return Left( msg + e.message);
     } on Exception {
-      return const Left("Something went wrong signing you in and try again");
+      return  Left(msg +" Something went wrong signing you in and try again");
     }
   }
 
   @override
-  Future<Either<AppError, String>> login(String mobile, String password) async {
+  Future<String>  login(String mobile, String password) async {
     Map<String, dynamic> payload = {'phone': mobile, 'password': password};
-    try {
-      var raw = await httpProvider.postHttp(
+
+    var raw = await httpProvider.postHttp(
           '${JekawinBaseUrls.authBaseUrl}signin', payload);
+    if(raw['success']){
       UserSignupResponse res = UserSignupResponse.fromMap(raw);
       // _userLocalDataSource.saveUser(res.body.user);
       GetStorage().write('firstName', res.body.user.firstName);
@@ -221,22 +226,9 @@ class AuthServiceImpl extends AuthServiceDataSource {
       GetStorage().write('currentUserID', res.body.user.id);
       GetStorage().write('email', res.body.user.email);
 
-      if (raw['success']) {
-        return const Right("Login Successful");
-      } else {
-        return Left(
-            AppError(errorType: AppErrorType.network, message: raw['message']));
-      }
-    } on NetworkException catch (e) {
-      return Left(
-          AppError(errorType: AppErrorType.network, message: e.message));
-    } on SocketException catch (e) {
-      return Left(
-          AppError(errorType: AppErrorType.network, message: e.message));
-    } on Exception {
-      return const Left(
-          AppError(errorType: AppErrorType.api, message: "An error occurred"));
+      return "Successful";
     }
+    return raw['message'];
   }
 
   @override

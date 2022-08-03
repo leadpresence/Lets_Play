@@ -53,7 +53,7 @@ class WithdrawalAmountScreen extends StatelessWidget {
                 child: Column(children: [
                   SlideInAnimation(
                     duration: const Duration(milliseconds: 600),
-                    child:  BankItem(showBin: false, bankItem: account),
+                    child:  BankItem(showBin: false, bankItem: account,selectAccount: null,deleteAccount: null,),
                   ),
                   const Gap(20),
                   GestureDetector(

@@ -7,9 +7,11 @@ import 'package:jekawin_mobile_flutter/app/modules/add_bank_acccount/views/add_b
 import 'package:jekawin_mobile_flutter/app/modules/select_account/controller/select_bank_controller.dart';
 import 'package:jekawin_mobile_flutter/app/modules/select_account/views/mobile/withdrawal_amount_screen.dart';
 import 'package:jekawin_mobile_flutter/app/modules/wallet_home/models/user_wallet_response.dart';
+import 'package:jekawin_mobile_flutter/app/widgets/custom_medium_button.dart';
 
 import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../constants/asset_paths.dart';
+import '../../../../widgets/custom_large_button.dart';
 import '../../../../widgets/slide_in_animation.dart';
 import '../../models/bank_model.dart';
 
@@ -31,8 +33,7 @@ class SelectBankMobilePortrait extends GetView {
       width: 30,
       height: 30,
     );
-    return
-        Scaffold(
+    return Scaffold(
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
@@ -108,27 +109,35 @@ class SelectBankMobilePortrait extends GetView {
                   ],
                 ),
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 8),
-                child: GetX<SelectBankController>(
+                child:
+    // FutureBuilder<UserWalletModel?>(
+    // future: controller.getUserWallet(),
+    // builder: (context, snapshot) {
+    // if (snapshot.hasError) {}
+    //
+    // }),
+
+                GetX<SelectBankController>(
                   builder: (controller) {
                     return ListView.builder(
                       shrinkWrap: true,
                       itemCount: controller.savedBanksList.value.length,
                       itemBuilder: (BuildContext context, int position) {
-                        return GestureDetector(
-                          onTap: () {
-                            controller.setWithdrawalAccount(
-                              controller.savedBanksList.value[position],
-                            );
-                            Get.to(() => WithdrawalAmountScreen());
-                          },
-                          child: BankItem(
-                              showBin: true,
-                              bankItem:
+                        return BankItem(
+                            showBin: true,
+                            selectAccount: () {
+                              controller.setWithdrawalAccount(
+                                controller.savedBanksList.value[position],
+                              );
+                              Get.to(() => WithdrawalAmountScreen());
+                            },
+                            bankItem: controller.savedBanksList.value[position],
+                            deleteAccount: () {
+                              controller.setDeletableAccount(
                                   controller.savedBanksList.value[position],
-                              deleteAccount: controller.setDeletableAccount(
-                                  controller.savedBanksList.value[position],
-                                  context)),
-                        );
+                                  context);
+                              showAlert(context);
+                            });
                       },
                     );
                   },
@@ -140,16 +149,47 @@ class SelectBankMobilePortrait extends GetView {
       ),
     );
   }
+
+  showAlert(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Delete Saved Account"),
+            content: const Text(
+                "You will delete this account from the list of your withdrawal accounts"),
+            actions: [
+              OutlinedButton(
+                  onPressed: () {
+                    controller.deleteBanksList.value.clear();
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("Cancel")),
+              ElevatedButton(
+                style:  ElevatedButton.styleFrom(
+          primary: Colors.orange
+          ),
+                  onPressed: () {
+                    controller.deleteSavedAccount(context);
+                  },
+                  child: const Text("Continue"))
+            ],
+          );
+        });
+  }
 }
 
 //Todo @felix create needed para meters for this class
 class BankItem extends StatelessWidget {
-  var showBin = false;
-  dynamic deleteAccount;
+  final deleteAccount, selectAccount, showBin;
   final BankResponse bankItem;
 
-  BankItem(
-      {Key? key, required this.showBin, required this.bankItem, deleteAccount})
+  const BankItem(
+      {Key? key,
+      this.showBin = false,
+      required this.bankItem,
+      this.deleteAccount,
+      this.selectAccount})
       : super(key: key);
 
   @override
@@ -174,53 +214,60 @@ class BankItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            children: [
-              bankIcon,
-              const Gap(16),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  //bank name
-                  SizedBox(
-                    child: Text(
-                      bankItem.bankName,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.normal, fontSize: 14),
-                    ),
-                    width: screenWidth(context) / 2,
-                  ),
-                  const Gap(8),
-                  //account number
-                  SizedBox(
-                    child: Text(bankItem.accountNumber,
+          GestureDetector(
+            onTap: selectAccount,
+            child: Row(
+              children: [
+                bankIcon,
+                const Gap(16),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    //account name
+                    SizedBox(
+                      child: Text(
+                        bankItem.accountName,
+                        overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 12),
-                        overflow: TextOverflow.ellipsis),
-                    width: screenWidth(context) / 2,
-                  ),
-                  const Gap(8),
-                  //Name
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
+                            fontWeight: FontWeight.bold, fontSize: 14),
+                      ),
+                      width: screenWidth(context) / 2,
+                    ),
+                    const Gap(8),
+                    //account number
+                    SizedBox(
+                      child: Text(bankItem.accountNumber,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 12),
+                          overflow: TextOverflow.ellipsis),
+                      width: screenWidth(context) / 2,
+                    ),
+                    const Gap(8),
+                    //Name
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children:  [
                       SizedBox(
                         child: Text(
-                          "__",
+                          bankItem.bankName,
                           overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.normal, fontSize: 12),
                         ),
+                        width: screenWidth(context) / 2,
                       ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
           showBin
               ? GestureDetector(
                   child: binIcon,
-                  onTap: () => deleteAccount,
+                  onTap: deleteAccount,
                 )
               : const SizedBox()
         ],

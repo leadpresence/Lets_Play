@@ -86,7 +86,8 @@ class AddBankController extends GetxController {
     var accountNumber = accountNumberController.text.toString();
     var bankCode = selectedBankCode.value.toString();
     var bankName = selectedBankName.value.toString();
-    final response = await walletService.addBank(bankName,accountNumber,bankCode);
+    var accountName = bankNameController.value.text;
+    final response = await walletService.addBank(accountName,bankName,accountNumber,bankCode);
     response.fold((l) {
       Get.to(() => SuccessOrFailureMobileView(
         msg: l.message,

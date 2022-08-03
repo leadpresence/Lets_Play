@@ -58,6 +58,7 @@ class LoginController extends GetxController {
     }
   }
 
+
   Future<void> login(Key? k) async {
     isLoading.value = true;
     var phoneNumber = TextUtils()
@@ -67,7 +68,7 @@ class LoginController extends GetxController {
     userData.fold(
       (l) {
         BotToast.showText(
-          text: l,
+          text: "Wrong Credentials ,try again!",
         );
         isLoading.value = false;
       },

@@ -152,11 +152,11 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                         ),
                       ),
                     );
+
                   } else if (snapshot.hasData) {
                     List<ScoreItem>? players = snapshot.data?.data;
-                    // snapshot.data?.data=controller.playerScoreItem.value;
                     if (players != null) {
-                      if (players.length > 1) {
+                      if (players.length > 0) {
                         return Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           mainAxisSize: MainAxisSize.max,
@@ -259,7 +259,7 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                     // snapshot.data?.data=controller.playerScoreItem.value;
                     debugPrint("SCORES ARE ${scores?.length.toString()}");
                     if (scores != null) {
-                      if (scores.length > 1) {
+                      if (scores.length > 0) {
                         return ListView.builder(
                           shrinkWrap: true,
                           physics: const BouncingScrollPhysics(),
@@ -330,7 +330,6 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                 );
               } else if (snapshot.hasData) {
                 List<ScoreItem>? players = snapshot.data?.data;
-                // snapshot.data?.data=controller.playerScoreItem.value;
                 if (players != null) {
                   if (players.length > 1) {
                     return Row(
@@ -502,7 +501,7 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
               } else if (snapshot.hasData) {
                 List<ScoreItem>? players = snapshot.data?.data;
                 if (players != null) {
-                  if (players.length > 1) {
+                  if (players.length >1) {
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       mainAxisSize: MainAxisSize.max,
@@ -599,7 +598,7 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                 List<ScoreItem>? scores = snapshot.data?.data;
                 // snapshot.data?.data=controller.playerScoreItem.value;
                 if (scores != null) {
-                  if (scores.length > 1) {
+                  if (scores.length > 0) {
                     return ListView.builder(
                       shrinkWrap: true,
                       physics: const BouncingScrollPhysics(),

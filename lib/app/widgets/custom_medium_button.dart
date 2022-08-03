@@ -1,17 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import '../config/colors.dart';
 
 class CustomMediumButton extends StatelessWidget {
-  final onPressed, hasIcon, buttonText, hasBorder, width, fontSize, icon;
+  final onPressed,
+      hasIcon,
+      buttonText,
+      hasBorder,
+      width,
+      fontSize,
+      icon,
+      isLoading;
 
-  final Color buttonColor, buttonTextColor,borderColor,iconColor;
+  final Color buttonColor, buttonTextColor, borderColor, iconColor;
+
   const CustomMediumButton({
     Key? key,
     this.onPressed,
     this.hasIcon = false,
     this.buttonText = "Button Text",
     this.hasBorder = false,
+    this.isLoading = false,
     this.buttonColor = const Color(0xFFFE7A01),
     this.iconColor = const Color(0xffff543884),
     this.buttonTextColor = const Color(0xffffffff),
@@ -42,7 +54,7 @@ class CustomMediumButton extends StatelessWidget {
             // splashFactory: NoSplash.splashFactory,
             shape: RoundedRectangleBorder(
               side: hasBorder
-                  ?   BorderSide(color: borderColor, width: 1)
+                  ? BorderSide(color: borderColor, width: 1)
                   : BorderSide.none,
               borderRadius: BorderRadius.circular(36),
             ),
@@ -52,8 +64,8 @@ class CustomMediumButton extends StatelessWidget {
             children: [
               hasIcon
                   ? SvgPicture.asset(
-                     icon?? 'assets/svgs/clarity_shopping-cart-line.svg',
-                      color: iconColor ,
+                      icon ?? 'assets/svgs/clarity_shopping-cart-line.svg',
+                      color: iconColor,
                     )
                   : const SizedBox(),
               hasIcon
@@ -61,15 +73,23 @@ class CustomMediumButton extends StatelessWidget {
                       width: 12,
                     )
                   : const SizedBox(),
-              Text(
-                buttonText,
-                style: TextStyle(
-                  color: buttonTextColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: fontSize ?? 14,
-                  overflow: TextOverflow.fade
-                ),
-              )
+              isLoading
+                  ? const SizedBox(
+                      height: 16,
+                      width: 16,
+                      child: CircularProgressIndicator(
+                        color: white,
+                        strokeWidth: 1.5,
+                      ),
+                    )
+                  : Text(
+                      buttonText,
+                      style: TextStyle(
+                          color: buttonTextColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: fontSize ?? 14,
+                          overflow: TextOverflow.fade),
+                    )
             ],
           ),
         ),

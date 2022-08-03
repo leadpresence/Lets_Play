@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:jekawin_mobile_flutter/app/modules/select_account/models/bank_model.dart';
+import 'package:jekawin_mobile_flutter/app/modules/select_account/views/mobile/select_bank_mobile_portrait.dart';
 import 'package:jekawin_mobile_flutter/app/modules/select_account/views/mobile/withdrawal_amount_screen.dart';
 import 'package:jekawin_mobile_flutter/app/modules/wallet_home/models/user_wallet_response.dart';
 import 'package:jekawin_mobile_flutter/app/modules/wallet_home/models/withdrawalModel.dart';
@@ -25,8 +26,9 @@ class SelectBankController extends GetxController {
 
   final signUpOtpController = TextEditingController();
 
-  Rx<List<dynamic>> savedBanksList = Rx<List<dynamic>>([]);
-  Rx<List<dynamic>> deleteBanksList = Rx<List<dynamic>>([]);
+  // Rx<List<dynamic>> savedBanksList = Rx<List<dynamic>>([]);
+  Rx<List<BankResponse>> savedBanksList = Rx<List<BankResponse>>([]);
+  Rx<List<BankResponse>> deleteBanksList = Rx<List<BankResponse>>([]);
   RxString errAmountMessage = "".obs;
   RxString errorPinMessage = "".obs;
 
@@ -55,11 +57,9 @@ class SelectBankController extends GetxController {
     }
   }
 
-  setDeletableAccount(dynamic bank, context) {
+  setDeletableAccount(BankResponse bank, context) {
+    deleteBanksList.value.clear();
     deleteBanksList.value.add(bank);
-    // Todo
-    //show dialog and perform account deletion -> deleteSavedAccount(dynamic bank) when user agrees
-    // showDialog(context: context, builder: builder)
   }
 
   Future<void> getUserWallet() async {
@@ -85,15 +85,42 @@ class SelectBankController extends GetxController {
     });
   }
 
-  Future<void> deleteSavedAccount(dynamic bank) async {}
+  Future<void> deleteSavedAccount(dynamic context) async {
+    isLoading.value = true;
+    var bank = deleteBanksList.value.first;
+    debugPrint("bank-value::${bank.bankName}");
+    final result = await walletService.removeBank(bank.accountNumber);
+    result.fold((l) {
+      BotToast.showText(text: l.message);
+      isLoading.value = false;
+    }, (r) {
+      isLoading.value = false;
+      Navigator.of(context).pop();
+      navigateToSignUpSuccessful();
+    });
+
+  }
 
   void navigateToSignUpSuccessful() {
     Get.to(
       () => SuccessOrFailureMobileView(
-        msg: 'Withdrawal successful',
+        msg: 'Account deleted successfully',
         className: JekawinBottomTabs(
           tabIndex: 2,
           isGuestUser: true,
+        ),
+      ),
+      transition: Transition.cupertino,
+    );
+  }
+
+  void navigateToDeleteSuccessful() {
+    Get.to(
+      () => SuccessOrFailureMobileView(
+        msg: 'Account Deleted successfully',
+        className: JekawinBottomTabs(
+          tabIndex: 2,
+          isGuestUser: false,
         ),
       ),
       transition: Transition.cupertino,
@@ -129,6 +156,7 @@ class SelectBankController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    savedBanksList.value.clear();
     getUserWallet();
     balance.value = GetStorage().read('walletBalance');
   }

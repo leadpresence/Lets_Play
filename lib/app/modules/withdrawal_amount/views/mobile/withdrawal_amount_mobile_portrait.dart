@@ -33,7 +33,7 @@ class WithdrawalAmountMobilePortrait
                  Padding(
                    padding: const EdgeInsets.fromLTRB(20, 4, 20, 10),
 
-                   child: BankItem(showBin: false,bankItem: BankResponse(accountNumber: "",bankCode: "",bankName: "",),),
+                   child: BankItem(showBin: false,bankItem: BankResponse(accountName:"",accountNumber: "",bankCode: "",bankName: "",),selectAccount: null,deleteAccount: null,),
                  ),
 
                       const Gap(10),

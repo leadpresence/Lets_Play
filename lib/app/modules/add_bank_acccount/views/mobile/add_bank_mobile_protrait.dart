@@ -149,7 +149,8 @@ class AddBankMobilePortrait extends GetView<AddBankController> {
                 textController: controller.bankNameController,
                 onChanged: (v) {
                   if (v.isNotEmpty) {
-                    controller.clearErrorBankName();
+
+                    // controller.clearErrorBankName();
                   }
                 })),
         Padding(

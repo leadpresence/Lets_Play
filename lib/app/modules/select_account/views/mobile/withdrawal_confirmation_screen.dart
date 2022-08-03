@@ -72,7 +72,7 @@ class WithdrawalConfirmation extends StatelessWidget {
                   )
                 ],
               ),
-              BankItem(showBin: false, bankItem: account),
+              BankItem(showBin: false, bankItem: account,selectAccount: null,deleteAccount: null,),
               const Gap(10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

@@ -124,22 +124,26 @@ String bankResponseToMap(List<BankResponse> data) => json.encode(List<dynamic>.f
 class BankResponse {
   BankResponse({
     required this.bankName,
+    required this.accountName,
     required this.accountNumber,
     required this.bankCode,
   });
 
   String bankName;
+  String accountName;
   String accountNumber;
   String bankCode;
 
   factory BankResponse.fromMap(Map<String, dynamic> json) => BankResponse(
     bankName: json["bankName"],
+    accountName: json["accountName"],
     accountNumber: json["accountNumber"],
     bankCode: json["bankCode"],
   );
 
   Map<String, dynamic> toMap() => {
     "bankName": bankName,
+    "accountName": accountName,
     "accountNumber": accountNumber,
     "bankCode": bankCode,
   };

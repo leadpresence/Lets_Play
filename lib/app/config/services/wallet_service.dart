@@ -8,6 +8,7 @@ import '../../constants/app_error.dart';
 import '../../constants/network_exceptions.dart';
 import '../../modules/add_bank_acccount/models/account_name_response.dart';
 import '../../modules/add_bank_acccount/models/bank_response_model.dart';
+import '../../modules/select_account/models/delete_account_response.dart';
 import '../../modules/wallet_home/models/all_wallet_transactions.dart';
 import '../../modules/fund_wallet/models/payment_link_response.dart';
 import '../../modules/wallet_home/models/user_wallet_response.dart';
@@ -41,7 +42,9 @@ abstract class WalletDataSource {
       String amount, String email, String processor);
 
   Future<Either<AppError, String>> addBank(
-      String bankName, String accountNumber, String bankCode);
+  String accountName,String bankName, String accountNumber, String bankCode);
+Future<Either<AppError, String>> removeBank(
+       String accountNumber);
 
   Future<Either<AppError, String>> withdrawToBank(
       WithdrawalModel withdrawalData);
@@ -61,17 +64,18 @@ class WalletServiceImpl extends WalletDataSource {
 
   @override
   Future<Either<AppError, String>> addBank(
-      String bankName, String accountNumber, String bankCode) async {
+      String accountName,String bankName, String accountNumber, String bankCode) async {
     Map<String, dynamic> payload = {
+      "accountName": accountName,
       "accountNumber": accountNumber,
       "bankName": bankName,
-      "bankCode": bankCode,
+      "bankCode": bankCode
     };
     String walletId = GetStorage().read('walletId');
     utilsProvider.walletId.value = walletId;
     try {
       var raw = await httpProvider.postHttp(
-          '${JekawinBaseUrls.walletBaseUrl}wallets/$walletId/add-bank',
+          '${JekawinBaseUrls.walletBaseUrl}wallets/add-bank',
           payload);
       if (raw['success']) {
         return const Right("Account saved successfully");
@@ -338,7 +342,34 @@ class WalletServiceImpl extends WalletDataSource {
         await httpProvider.getHttp('${JekawinBaseUrls.walletBaseUrl}banks');
     BanksResponseModel res = BanksResponseModel.fromMap(raw);
     utilsProvider.banks.value.addAll(res.body.data);
-
     return res.body.data;
+  }
+
+  @override
+  Future<Either<AppError, String>> removeBank(String accountNumber) async{
+    Map<String, String> payload = {"accountNumber": accountNumber};
+    String walletId =      GetStorage().read('walletId');
+    try {
+      var raw = await httpProvider.putHttp(
+          '${JekawinBaseUrls.authBaseUrl}wallets/remove-bank',
+          payload);
+      if (raw['success']) {
+        DeleteAccountResponse res = DeleteAccountResponse.fromMap(raw);
+
+        return Right(raw['message']);
+      } else {
+        return Left(
+            AppError(errorType: AppErrorType.network, message: raw['message']));
+      }
+    } on NetworkException catch (e) {
+      return Left(
+          AppError(errorType: AppErrorType.network, message: e.message));
+    } on SocketException catch (e) {
+      return Left(
+          AppError(errorType: AppErrorType.network, message: e.message));
+    } on Exception {
+      return const Left(
+          AppError(errorType: AppErrorType.api, message: "An error occurred"));
+    }
   }
 }

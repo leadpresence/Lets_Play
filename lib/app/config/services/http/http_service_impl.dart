@@ -75,6 +75,7 @@ class HttpServiceImpl extends HttpService {
       }
 
       if (e.response?.statusCode == 401) {
+        throw NetworkException(e.message);
 
       }
       if (e.response?.statusCode == 407) {
@@ -119,22 +120,12 @@ class HttpServiceImpl extends HttpService {
       );
     } on DioError catch (e) {
       if (e.response?.statusCode == 401) {
-        throw const AuthException('Invalid credentials');
+        throw const AuthException('Invalid token and credentials');
       }
-
-
-      if (dotenv.get('APP_DEBUG') == 'true') {
-        getLogger()
-            .e('HttpService: Failed to POST ${e.response?.data['message']}');
-      }
-
-      if (dotenv.get('APP_DEBUG') == 'true') {
-        debugPrint('Http response data is: ${e.message}');
-      }
-
-      // return e.response?.data;
+      getLogger().e('HttpService: Failed to POST ${e.message}');
+      debugPrint('Http response data is: ${e.response?.data}');
       throw NetworkException(e.response?.data != null
-          ? e.response?.data['message'] ?? e.message
+          ? e.response?.data[0]?? e.message
           : e.message);
     }
 
@@ -142,6 +133,27 @@ class HttpServiceImpl extends HttpService {
     if (dotenv.get('APP_DEBUG') == 'true') {
       getLogger().d('Received Response: $response');
     }
+
+    //
+    //   if (dotenv.get('APP_DEBUG') == 'true') {
+    //   //   getLogger()
+    //   //       .e('HttpService: Failed to POST ${e.response?.data['message'].toString()}');
+    //   }
+    //
+    //   if (dotenv.get('APP_DEBUG') == 'true') {
+    //     debugPrint('Http response data is: ${e.message}');
+    //   }
+    //
+    //   // return e.response?.data;
+    //   throw NetworkException(e.response?.data != null
+    //       ? e.response?.data['message'] ?? e.message
+    //       : e.message);
+    // }
+    //
+    // network_utils.checkForNetworkExceptions(response);
+    // if (dotenv.get('APP_DEBUG') == 'true') {
+    //   getLogger().d('Received Response: $response');
+    // }
 
     return response.data;
     // return network_utils.decodeResponseBodyToJson(response.data);
@@ -170,7 +182,6 @@ class HttpServiceImpl extends HttpService {
       );
     } on DioError catch (e) {
       if (e.response?.statusCode == 401) {
-        // _navigationService.clearStackAndShow(Routes.signinViewRoute);
         throw const AuthException('Invalid token and credentials');
       }
       getLogger().e('HttpService: Failed to PUT ${e.message}');
@@ -186,8 +197,6 @@ class HttpServiceImpl extends HttpService {
     }
 
     return response.data;
-
-    // return network_utils.decodeResponseBodyToJson(response.data);
   }
 
   @override
@@ -211,7 +220,6 @@ class HttpServiceImpl extends HttpService {
       );
     } on DioError catch (e) {
       if (e.response?.statusCode == 401) {
-        // _navigationService.clearStackAndShow(Routes.signinViewRoute);
         throw const AuthException('Invalid token and credentials');
       }
       getLogger().e(
