@@ -72,6 +72,16 @@ class SelectBankController extends GetxController {
     });
   }
 
+  Future<List<BankResponse>?> getUserSavedAccount() async {
+    List<BankResponse> userSavedAccounts = await walletService.savedBanks();
+    try {
+      return userSavedAccounts;
+    } catch (e) {
+      print("Error retrieving saved banks");
+    }
+    return [];
+  }
+
   Future<void> performWithdrawal(WithdrawalModel data) async {
     isLoading.value = true;
 
@@ -157,6 +167,7 @@ class SelectBankController extends GetxController {
   void onInit() {
     super.onInit();
     savedBanksList.value.clear();
+    getUserSavedAccount();
     getUserWallet();
     balance.value = GetStorage().read('walletBalance');
   }
