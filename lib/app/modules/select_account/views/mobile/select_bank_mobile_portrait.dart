@@ -147,36 +147,11 @@ class SelectBankMobilePortrait extends GetView {
                             Center(
                               child: CupertinoActivityIndicator(
                                 radius: 12.0,
-                                color: Colors.white,
+                                color: Colors.orange,
                               ),
                             ),
                           ]));
                     }),
-                // GetX<SelectBankController>(
-                //   builder: (controller) {
-                //     return ListView.builder(
-                //       shrinkWrap: true,
-                //       itemCount: controller.savedBanksList.value.length,
-                //       itemBuilder: (BuildContext context, int position) {
-                //         return BankItem(
-                //             showBin: true,
-                //             selectAccount: () {
-                //               controller.setWithdrawalAccount(
-                //                 controller.savedBanksList.value[position],
-                //               );
-                //               Get.to(() => WithdrawalAmountScreen());
-                //             },
-                //             bankItem: controller.savedBanksList.value[position],
-                //             deleteAccount: () {
-                //               controller.setDeletableAccount(
-                //                   controller.savedBanksList.value[position],
-                //                   context);
-                //               showAlert(context);
-                //             });
-                //       },
-                //     );
-                //   },
-                // ),
               ),
             ),
           ],
@@ -194,6 +169,21 @@ class SelectBankMobilePortrait extends GetView {
             content: const Text(
                 "You will delete this account from the list of your withdrawal accounts"),
             actions: [
+              controller.isLoading.value
+                  ? SizedBox(
+                      height: 25,
+                      width: 25,
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            Center(
+                              child: CupertinoActivityIndicator(
+                                radius: 12.0,
+                                color: Colors.orange,
+                              ),
+                            ),
+                          ]))
+                  : const SizedBox(),
               OutlinedButton(
                   onPressed: () {
                     controller.deleteBanksList.value.clear();

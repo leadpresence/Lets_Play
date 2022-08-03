@@ -72,7 +72,7 @@ class AddBankMobilePortrait extends GetView<AddBankController> {
                 List<Bank>? banks = snapshot.data;
                 if (banks != null) {
                   return Padding(
-                    padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
                     child:
                         Flex(
                           direction: Axis.horizontal,
