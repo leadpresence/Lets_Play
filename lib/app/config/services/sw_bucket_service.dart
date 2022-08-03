@@ -45,11 +45,6 @@ class S3BucketService {
       AWSAccess: 'AKIAZG3ZF6NYWY5MTI7L',
     );
     displayUploadDialog(awsS3, context);
-    Future.delayed(const Duration(seconds: 5), () {
-      BotToast.showText(
-          text: "Upload successful.\nClick on update profile to save changes.");
-      Get.back();
-    });
 
     try {
       try {
@@ -58,6 +53,12 @@ class S3BucketService {
       } on PlatformException {
         debugPrint("Result :'$result'.");
       }
+      Future.delayed(const Duration(seconds: 5), () {
+        BotToast.showText(
+            text:
+                "Upload successful.\nClick on update profile to save changes.");
+        Get.back();
+      });
     } on PlatformException catch (e) {
       debugPrint("Failed :'${e.message}'.");
     }
