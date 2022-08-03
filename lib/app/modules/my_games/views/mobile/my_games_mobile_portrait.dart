@@ -82,140 +82,250 @@ class MyGamesMobilePortrait extends StatelessWidget {
                           child: CustomTextField(
                             hintText: "Search games",
                             textCapitalization: TextCapitalization.words,
-                            // textController: ,
+                            textController: controller.searchController,
                             prefixIcon: 'assets/svgs/search.svg',
                             keyboardType: TextInputType.text,
                             onChanged: (v) {
-                              if (v.isNotEmpty) {}
+                              if (v.isNotEmpty) {
+                                controller.filterSearchResults(
+                                    controller.searchController.text);
+                              }
                             },
                           ),
                         ),
                         const SizedBox(
                           height: 16,
                         ),
-                        FutureBuilder<dynamic>(
-                          future: controller.getAllPlayedGamesFunc(),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasError) {
-                              return Text(
-                                  "Snapshot has error: ${snapshot.hasError.toString()}");
-                            } else if (snapshot.hasData) {
-                              var body = snapshot.data!;
-                              return body.body.games.length < 1
-                                  ? const Text(
-                                      "No Games History",
-                                    )
-                                  : ListView.builder(
-                                      reverse: true,
-                                      shrinkWrap: true,
-                                      physics: const BouncingScrollPhysics(),
-                                      scrollDirection: Axis.vertical,
-                                      itemCount: body.body.games.length,
-                                      padding: EdgeInsets.zero,
-                                      itemBuilder:
-                                          (BuildContext context, int position) {
-                                        return body.body.games[position]
-                                                    .amount ==
-                                                null
-                                            ? const SizedBox()
-                                            : FadeIn(
-                                                duration: const Duration(
-                                                    milliseconds: 200),
-                                                delay: const Duration(
-                                                    milliseconds: 200),
-                                                child: GestureDetector(
-                                                  child: gameItem(
-                                                    date: body
-                                                        .body
-                                                        .games[position]
-                                                        .createdAt
-                                                        .toString(),
-                                                    title: body
-                                                                .body
-                                                                .games[position]
-                                                                .gameId !=
-                                                            null
-                                                        ? body
-                                                            .body
-                                                            .games[position]
-                                                            .gameId["title"]
-                                                        : "",
-                                                    amount: body
-                                                                .body
-                                                                .games[position]
-                                                                .amount ==
-                                                            null
-                                                        ? ""
-                                                        : body
-                                                            .body
-                                                            .games[position]
-                                                            .amount
-                                                            .toString(),
-                                                  ),
-                                                  onTap: () {
-                                                    Get.to(
-                                                      () =>
-                                                          GameDetailMobilePortrait(
-                                                        date: body
-                                                            .body
-                                                            .games[position]
-                                                            .createdAt
-                                                            .toString(),
-                                                        gameCost: body
-                                                                    .body
-                                                                    .games[
-                                                                        position]
-                                                                    .amount ==
-                                                                null
-                                                            ? ""
-                                                            : body
-                                                                .body
-                                                                .games[position]
-                                                                .amount
-                                                                .toString(),
-                                                        numberOfGames: body
-                                                            .body
-                                                            .games[position]
-                                                            .duration
-                                                            .toString(),
-                                                        ticketNumber: body
-                                                            .body
-                                                            .games[position]
-                                                            .tickets,
-                                                        title: body
-                                                                    .body
-                                                                    .games[
-                                                                        position]
-                                                                    .gameId !=
-                                                                null
-                                                            ? body
-                                                                .body
-                                                                .games[position]
-                                                                .gameId["title"]
-                                                            : "",
-                                                        status: body
-                                                            .body
-                                                            .games[position]
-                                                            .status,
+                        controller.searchedGamesData.isEmpty
+                            ? FutureBuilder<dynamic>(
+                                future: controller.getAllPlayedGamesFunc(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasError) {
+                                    return Text(
+                                        "Snapshot has error: ${snapshot.hasError.toString()}");
+                                  } else if (snapshot.hasData) {
+                                    var body = snapshot.data!;
+                                    return body.body.games.length < 1
+                                        ? const Text(
+                                            "No Games History",
+                                          )
+                                        : ListView.builder(
+                                            reverse: true,
+                                            shrinkWrap: true,
+                                            physics:
+                                                const BouncingScrollPhysics(),
+                                            scrollDirection: Axis.vertical,
+                                            itemCount: body.body.games.length,
+                                            padding: EdgeInsets.zero,
+                                            itemBuilder: (BuildContext context,
+                                                int position) {
+                                              return body.body.games[position]
+                                                          .amount ==
+                                                      null
+                                                  ? const SizedBox()
+                                                  : FadeIn(
+                                                      duration: const Duration(
+                                                          milliseconds: 200),
+                                                      delay: const Duration(
+                                                          milliseconds: 200),
+                                                      child: GestureDetector(
+                                                        child: gameItem(
+                                                          date: body
+                                                              .body
+                                                              .games[position]
+                                                              .createdAt
+                                                              .toString(),
+                                                          title: body
+                                                                      .body
+                                                                      .games[
+                                                                          position]
+                                                                      .gameId !=
+                                                                  null
+                                                              ? body
+                                                                  .body
+                                                                  .games[
+                                                                      position]
+                                                                  .gameId["title"]
+                                                              : "",
+                                                          amount: body
+                                                                      .body
+                                                                      .games[
+                                                                          position]
+                                                                      .amount ==
+                                                                  null
+                                                              ? ""
+                                                              : body
+                                                                  .body
+                                                                  .games[
+                                                                      position]
+                                                                  .amount
+                                                                  .toString(),
+                                                        ),
+                                                        onTap: () {
+                                                          Get.to(
+                                                            () =>
+                                                                GameDetailMobilePortrait(
+                                                              date: body
+                                                                  .body
+                                                                  .games[
+                                                                      position]
+                                                                  .createdAt
+                                                                  .toString(),
+                                                              gameCost: body
+                                                                          .body
+                                                                          .games[
+                                                                              position]
+                                                                          .amount ==
+                                                                      null
+                                                                  ? ""
+                                                                  : body
+                                                                      .body
+                                                                      .games[
+                                                                          position]
+                                                                      .amount
+                                                                      .toString(),
+                                                              numberOfGames: body
+                                                                  .body
+                                                                  .games[
+                                                                      position]
+                                                                  .duration
+                                                                  .toString(),
+                                                              ticketNumber: body
+                                                                  .body
+                                                                  .games[
+                                                                      position]
+                                                                  .tickets,
+                                                              title: body
+                                                                          .body
+                                                                          .games[
+                                                                              position]
+                                                                          .gameId !=
+                                                                      null
+                                                                  ? body
+                                                                      .body
+                                                                      .games[
+                                                                          position]
+                                                                      .gameId["title"]
+                                                                  : "",
+                                                              status: body
+                                                                  .body
+                                                                  .games[
+                                                                      position]
+                                                                  .status,
+                                                            ),
+                                                          );
+                                                        },
                                                       ),
                                                     );
-                                                  },
+                                            },
+                                          );
+                                  }
+                                  return const Center(
+                                    child: Padding(
+                                      padding: EdgeInsets.only(top: 104.0),
+                                      child: CupertinoActivityIndicator(
+                                        color: Color(0xffFE7A01),
+                                        // strokeWidth: 3,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              )
+                            : ListView.builder(
+                                reverse: true,
+                                shrinkWrap: true,
+                                physics: const BouncingScrollPhysics(),
+                                scrollDirection: Axis.vertical,
+                                itemCount: controller.searchedGamesData.length,
+                                padding: EdgeInsets.zero,
+                                itemBuilder:
+                                    (BuildContext context, int position) {
+                                  return controller.searchedGamesData[position]
+                                              .amount ==
+                                          null
+                                      ? const SizedBox()
+                                      : FadeIn(
+                                          duration:
+                                              const Duration(milliseconds: 200),
+                                          delay:
+                                              const Duration(milliseconds: 200),
+                                          child: GestureDetector(
+                                            child: gameItem(
+                                              date: controller
+                                                  .searchedGamesData[position]
+                                                  .createdAt
+                                                  .toString(),
+                                              title: controller
+                                                          .searchedGamesData[
+                                                              position]
+                                                          .gameId !=
+                                                      null
+                                                  ? controller
+                                                      .searchedGamesData[
+                                                          position]
+                                                      .gameId["title"]
+                                                  : "",
+                                              amount: controller
+                                                          .searchedGamesData[
+                                                              position]
+                                                          .amount ==
+                                                      null
+                                                  ? ""
+                                                  : controller
+                                                      .searchedGamesData[
+                                                          position]
+                                                      .amount
+                                                      .toString(),
+                                            ),
+                                            onTap: () {
+                                              Get.to(
+                                                () => GameDetailMobilePortrait(
+                                                  date: controller
+                                                      .searchedGamesData[
+                                                          position]
+                                                      .createdAt
+                                                      .toString(),
+                                                  gameCost: controller
+                                                              .searchedGamesData[
+                                                                  position]
+                                                              .amount ==
+                                                          null
+                                                      ? ""
+                                                      : controller
+                                                          .searchedGamesData[
+                                                              position]
+                                                          .amount
+                                                          .toString(),
+                                                  numberOfGames: controller
+                                                      .searchedGamesData[
+                                                          position]
+                                                      .duration
+                                                      .toString(),
+                                                  ticketNumber: controller
+                                                      .searchedGamesData[
+                                                          position]
+                                                      .tickets,
+                                                  title: controller
+                                                              .searchedGamesData[
+                                                                  position]
+                                                              .gameId !=
+                                                          null
+                                                      ? controller
+                                                          .searchedGamesData[
+                                                              position]
+                                                          .gameId["title"]
+                                                      : "",
+                                                  status: controller
+                                                      .searchedGamesData[
+                                                          position]
+                                                      .status,
                                                 ),
                                               );
-                                      },
-                                    );
-                            }
-                            return const Center(
-                              child: Padding(
-                                padding: EdgeInsets.only(top: 104.0),
-                                child: CupertinoActivityIndicator(
-                                  color: Color(0xffFE7A01),
-                                  // strokeWidth: 3,
-                                ),
+                                            },
+                                          ),
+                                        );
+                                },
                               ),
-                            );
-                          },
-                        ),
                         const Gap(16),
                       ],
                     ),

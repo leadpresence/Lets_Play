@@ -10,10 +10,7 @@ import '../../../../config/data/local/user_local_impl.dart';
 import '../../../dashboard/components/dashboard_components/dashboard_hero.dart';
 import '../../../dashboard/components/dashboard_components/dashboard_instant_games.dart';
 import '../../../dashboard/controllers/dashboard_controller.dart';
-import '../../../dashboard/models/jackpot_game_model.dart';
-import '../../../jackpot_games/views/mobile/jackpot_games_mobile_portrait.dart';
 import '../../../signup/controllers/sign_up_controller.dart';
-import '../../../true_or_false/views/true_or_false_view.dart';
 
 class GuestDashboardMobilePortrait extends StatelessWidget {
   GuestDashboardMobilePortrait({
@@ -162,7 +159,13 @@ class GuestDashboardMobilePortrait extends StatelessWidget {
                 ),
                 SizedBox(
                   child: DashboardInstantGames(
-                    onTap: () {
+                    trueFalseOnTap: () {
+                      Get.to(
+                        () => const LoginView(),
+                        transition: Transition.cupertino,
+                      );
+                    },
+                    doubleDoubleOnTap: () {
                       Get.to(
                         () => const LoginView(),
                         transition: Transition.cupertino,

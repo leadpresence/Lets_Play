@@ -668,7 +668,7 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
               shape: BoxShape.circle,
               color: Colors.white12,
               image: DecorationImage(
-                image: NetworkImage(userImage.split("?")[0]),
+                image: NetworkImage(userImage),
                 fit: BoxFit.cover,
                 alignment: Alignment.center,
               ),
@@ -724,7 +724,7 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                   shape: BoxShape.circle,
                   color: Colors.white12,
                   image: DecorationImage(
-                    image: NetworkImage(userImage.split("?")[0]),
+                    image: NetworkImage(userImage),
                     fit: BoxFit.cover,
                     alignment: Alignment.topCenter,
                   ),
@@ -796,7 +796,7 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                           shape: BoxShape.circle,
                           color: Colors.white12,
                           image: DecorationImage(
-                            image: NetworkImage(item.imageUrl.split("?")[0]),
+                            image: NetworkImage(item.imageUrl),
                             fit: BoxFit.cover,
                             alignment: Alignment.center,
                           ),

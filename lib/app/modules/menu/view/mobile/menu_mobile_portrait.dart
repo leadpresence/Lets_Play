@@ -19,7 +19,10 @@ class MenuMobilePortrait extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 24.0,
+            vertical: 18.0,
+          ),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -39,7 +42,7 @@ class MenuMobilePortrait extends StatelessWidget {
                   children: [
                     menuListTile(
                       onTap: () => Get.to(
-                        () => const RewardPointsMobilePortrait(),
+                        () => RewardPointsMobilePortrait(),
                         transition: Transition.cupertino,
                       ),
                       icon: 'assets/svgs/gift.svg',

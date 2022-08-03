@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:jekawin_mobile_flutter/app/modules/reward_points/views/mobile/input_transaction_pin_mobile_portrait.dart';
-
 import '../../../../widgets/custom_large_button.dart';
 import '../../../../widgets/custom_text_field.dart';
+import '../../controllers/reward_points_controller.dart';
 
 class ShareRewardPointsMobilePortrait extends StatelessWidget {
-  const ShareRewardPointsMobilePortrait({Key? key}) : super(key: key);
+  ShareRewardPointsMobilePortrait({Key? key}) : super(key: key);
+
+  final RewardPointsController controller = Get.put(RewardPointsController());
 
   @override
   Widget build(BuildContext context) {
@@ -30,45 +31,110 @@ class ShareRewardPointsMobilePortrait extends StatelessWidget {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 24.0,
-            vertical: 12.0,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Text(
-                'Share Reward Points',
-                style: TextStyle(
-                  fontSize: 24,
-                  color: Color(0xff414249),
+      body: Obx(
+        () => SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 24.0,
+              vertical: 12.0,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Text(
+                  'Share Reward Points',
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: Color(0xff414249),
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 60,
-              ),
-              const CustomTextField(
-                hintText: "Amount of points",
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              const CustomTextField(
-                hintText: "Receiver's phone Number",
-              ),
-              const SizedBox(
-                height: 32,
-              ),
-              CustomButton(
-                buttonText: "Send",
-                onPressed: () => Get.to(
-                  () => InputTransactionPinMobilePortrait(),
-                  transition: Transition.cupertino,
+                const SizedBox(
+                  height: 60,
                 ),
-              ),
-            ],
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomTextField(
+                      hintText: "Amount of points",
+                      textController: controller.amountOfPointsTextController,
+                      keyboardType: TextInputType.number,
+                      textInputAction: TextInputAction.next,
+                      onChanged: (val) {
+                        controller.clearAmountOfPointsFieldError();
+                      },
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(
+                        controller.amountOfPointsFieldError.value == ''
+                            ? 0
+                            : 8.0,
+                      ),
+                      child: Text(
+                        controller.amountOfPointsFieldError.value,
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.deepOrange,
+                          fontWeight: FontWeight.normal,
+                          letterSpacing: .2,
+                          height:
+                              controller.amountOfPointsFieldError.value == ''
+                                  ? 0
+                                  : 1,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: controller.amountOfPointsFieldError.value == ''
+                      ? 24.0
+                      : 16.0,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomTextField(
+                      hintText: "Receiver's phone Number",
+                      textController: controller.receiverPhoneTextController,
+                      keyboardType: TextInputType.number,
+                      textInputAction: TextInputAction.next,
+                      onChanged: (val) {
+                        controller.clearReceiverPhoneFieldError();
+                      },
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(
+                        controller.receiverPhoneFieldError.value == ''
+                            ? 0
+                            : 8.0,
+                      ),
+                      child: Text(
+                        controller.receiverPhoneFieldError.value,
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.deepOrange,
+                          fontWeight: FontWeight.normal,
+                          letterSpacing: .2,
+                          height: controller.receiverPhoneFieldError.value == ''
+                              ? 0
+                              : 1,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: controller.receiverPhoneFieldError.value == ''
+                      ? 32.0
+                      : 24.0,
+                ),
+                CustomButton(
+                  isLoading: controller.isLoading.value,
+                  buttonText: "Send",
+                  onPressed: () => controller.shareRewardPointsValidation(key),
+                ),
+              ],
+            ),
           ),
         ),
       ),
