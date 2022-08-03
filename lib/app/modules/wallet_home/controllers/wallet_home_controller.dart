@@ -42,7 +42,7 @@ class WalletHomeController extends GetxController {
     try {
       return userWallet;
     } catch (e) {
-      print("Error retrieving Balance");
+      print("Error retrieving Wallet");
     }
     return null;
   }

@@ -1,4 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
@@ -109,39 +110,73 @@ class SelectBankMobilePortrait extends GetView {
                   ],
                 ),
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 8),
-                child:
-    // FutureBuilder<UserWalletModel?>(
-    // future: controller.getUserWallet(),
-    // builder: (context, snapshot) {
-    // if (snapshot.hasError) {}
-    //
-    // }),
-
-                GetX<SelectBankController>(
-                  builder: (controller) {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: controller.savedBanksList.value.length,
-                      itemBuilder: (BuildContext context, int position) {
-                        return BankItem(
-                            showBin: true,
-                            selectAccount: () {
-                              controller.setWithdrawalAccount(
-                                controller.savedBanksList.value[position],
-                              );
-                              Get.to(() => WithdrawalAmountScreen());
+                child: FutureBuilder<List<BankResponse>?>(
+                    future: controller.getUserSavedAccount(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return const SizedBox();
+                      } else if (snapshot.hasData) {
+                        List<BankResponse>? accounts = snapshot.data;
+                        if (accounts != null) {
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: accounts.length,
+                            itemBuilder: (BuildContext context, int position) {
+                              return BankItem(
+                                  showBin: true,
+                                  selectAccount: () {
+                                    controller.setWithdrawalAccount(
+                                      accounts[position],
+                                    );
+                                    Get.to(() => WithdrawalAmountScreen());
+                                  },
+                                  bankItem: accounts[position],
+                                  deleteAccount: () {
+                                    controller.setDeletableAccount(
+                                        accounts[position], context);
+                                    showAlert(context);
+                                  });
                             },
-                            bankItem: controller.savedBanksList.value[position],
-                            deleteAccount: () {
-                              controller.setDeletableAccount(
-                                  controller.savedBanksList.value[position],
-                                  context);
-                              showAlert(context);
-                            });
-                      },
-                    );
-                  },
-                ),
+                          );
+                        }
+                      }
+                      return SizedBox(
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: const [
+                            Center(
+                              child: CupertinoActivityIndicator(
+                                radius: 12.0,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ]));
+                    }),
+                // GetX<SelectBankController>(
+                //   builder: (controller) {
+                //     return ListView.builder(
+                //       shrinkWrap: true,
+                //       itemCount: controller.savedBanksList.value.length,
+                //       itemBuilder: (BuildContext context, int position) {
+                //         return BankItem(
+                //             showBin: true,
+                //             selectAccount: () {
+                //               controller.setWithdrawalAccount(
+                //                 controller.savedBanksList.value[position],
+                //               );
+                //               Get.to(() => WithdrawalAmountScreen());
+                //             },
+                //             bankItem: controller.savedBanksList.value[position],
+                //             deleteAccount: () {
+                //               controller.setDeletableAccount(
+                //                   controller.savedBanksList.value[position],
+                //                   context);
+                //               showAlert(context);
+                //             });
+                //       },
+                //     );
+                //   },
+                // ),
               ),
             ),
           ],
@@ -166,9 +201,7 @@ class SelectBankMobilePortrait extends GetView {
                   },
                   child: const Text("Cancel")),
               ElevatedButton(
-                style:  ElevatedButton.styleFrom(
-          primary: Colors.orange
-          ),
+                  style: ElevatedButton.styleFrom(primary: Colors.orange),
                   onPressed: () {
                     controller.deleteSavedAccount(context);
                   },
@@ -247,16 +280,16 @@ class BankItem extends StatelessWidget {
                     Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children:  [
-                      SizedBox(
-                        child: Text(
-                          bankItem.bankName,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.normal, fontSize: 12),
+                      children: [
+                        SizedBox(
+                          child: Text(
+                            bankItem.bankName,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.normal, fontSize: 12),
+                          ),
+                          width: screenWidth(context) / 2,
                         ),
-                        width: screenWidth(context) / 2,
-                      ),
                       ],
                     ),
                   ],

@@ -32,7 +32,7 @@ abstract class WalletDataSource {
 
   Future<List<TransactionsModel>> allWalletTransactions();
 
-  Future<Either<AppError, String>> banks();
+  Future<List<BankResponse>> savedBanks();
 
   Future<List<Bank>> getBanks();
 
@@ -96,29 +96,24 @@ class WalletServiceImpl extends WalletDataSource {
   }
 
   @override
-  Future<Either<AppError, String>> banks() async {
-    try {
-      var raw =
-          await httpProvider.getHttp('${JekawinBaseUrls.walletBaseUrl}banks');
-      BanksResponseModel res = BanksResponseModel.fromMap(raw);
+  Future<UserWalletModel> userWalletAsync() async {
+    String userId = GetStorage().read('currentUserID');
+    var raw = await httpProvider
+        .getHttp('${JekawinBaseUrls.walletBaseUrl}wallets/$userId');
+    UserWalletModel res = UserWalletModel.fromMap(raw);
+    return res;
+  }
 
-      if (raw['success']) {
-        utilsProvider.banks.value.addAll(res.body.data);
-        return Right(raw['message']);
-      } else {
-        return Left(
-            AppError(errorType: AppErrorType.network, message: raw['message']));
-      }
-    } on NetworkException catch (e) {
-      return Left(
-          AppError(errorType: AppErrorType.network, message: e.message));
-    } on SocketException catch (e) {
-      return Left(
-          AppError(errorType: AppErrorType.network, message: e.message));
-    } on Exception {
-      return const Left(
-          AppError(errorType: AppErrorType.api, message: "An error occurred"));
-    }
+  @override
+  Future<List<BankResponse>> savedBanks() async {
+    var currentUserID = GetStorage().read('currentUserID');
+
+    var raw = await httpProvider
+        .getHttp('${JekawinBaseUrls.walletBaseUrl}wallets/$currentUserID');
+
+    UserWalletModel res = UserWalletModel.fromMap(raw);
+
+    return res.body.banks;
   }
 
   @override
@@ -189,7 +184,6 @@ class WalletServiceImpl extends WalletDataSource {
       UserWalletModel res = UserWalletModel.fromMap(raw);
       GetStorage().write('walletBalance', res.body.wallet.balance);
       GetStorage().write('walletId', res.body.id);
-      // GetStorage().write('wins', res.body.wins);
       GetStorage().write('rewardPoints', res.body.rewardPoint);
 
       if (res.body.banks.isNotEmpty) {
@@ -318,14 +312,7 @@ class WalletServiceImpl extends WalletDataSource {
     return res.body;
   }
 
-  @override
-  Future<UserWalletModel> userWalletAsync() async {
-    String userId = GetStorage().read('currentUserID');
-    var raw = await httpProvider
-        .getHttp('${JekawinBaseUrls.walletBaseUrl}wallets/$userId');
-    UserWalletModel res = UserWalletModel.fromMap(raw);
-    return res;
-  }
+
 
   @override
   Future<String> userRewardPoint() async {
