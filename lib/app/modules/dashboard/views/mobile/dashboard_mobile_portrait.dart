@@ -21,6 +21,7 @@ import '../../../wallet_home/models/user_wallet_response.dart';
 import '../../components/dashboard_components/dashboard_hero.dart';
 import '../../components/dashboard_components/dashboard_instant_games.dart';
 import '../../models/jackpot_game_model.dart';
+import '../../models/unread_notifications_response_model.dart';
 
 class DashboardMobilePortrait extends StatelessWidget {
   DashboardMobilePortrait({
@@ -50,8 +51,8 @@ class DashboardMobilePortrait extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(
-                    left: 24.0,
-                    right: 24.0,
+                    left: 18.0,
+                    right: 18.0,
                     // top: 24.0,
                   ),
                   child: Row(
@@ -111,10 +112,36 @@ class DashboardMobilePortrait extends StatelessWidget {
                             transition: Transition.rightToLeft,
                           );
                         },
-                        child: SvgPicture.asset(
-                          dashboardController.unSeenNotification.value == true
-                              ? 'assets/svgs/clarity_notification-outline-badged.svg'
-                              : 'assets/svgs/clarity_notification.svg',
+                        child: SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: Center(
+                            child: FutureBuilder<
+                                UnreadNotificationsResponseModel?>(
+                              future:
+                                  dashboardController.unreadNotifications(key),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasError) {
+                                  return SvgPicture.asset(
+                                    'assets/svgs/clarity_notification.svg',
+                                  );
+                                } else if (snapshot.hasData) {
+                                  UnreadNotificationsResponseModel? body =
+                                      snapshot.data!;
+                                  return body.data!.unreadNotificationCount == 0
+                                      ? SvgPicture.asset(
+                                          'assets/svgs/clarity_notification.svg',
+                                        )
+                                      : SvgPicture.asset(
+                                          'assets/svgs/clarity_notification-outline-badged.svg',
+                                        );
+                                }
+                                return SvgPicture.asset(
+                                  'assets/svgs/clarity_notification.svg',
+                                );
+                              },
+                            ),
+                          ),
                         ),
                       ),
                     ],
@@ -137,9 +164,9 @@ class DashboardMobilePortrait extends StatelessWidget {
                             right: 16,
                           ),
                           width: Get.width,
-                                   height: Get.height < 700
-                                ? Get.height * .23
-                                : Get.height * .19,
+                          height: Get.height < 700
+                              ? Get.height * .23
+                              : Get.height * .19,
                           decoration: BoxDecoration(
                             color: const Color(0XFF543884),
                             borderRadius: BorderRadius.circular(20),
@@ -304,9 +331,9 @@ class DashboardMobilePortrait extends StatelessWidget {
                           right: 16,
                         ),
                         width: Get.width,
-                                   height: Get.height < 700
-                                ? Get.height * .23
-                                : Get.height * .19,
+                        height: Get.height < 700
+                            ? Get.height * .23
+                            : Get.height * .19,
                         decoration: BoxDecoration(
                           color: const Color(0XFF543884),
                           borderRadius: BorderRadius.circular(20),
@@ -522,7 +549,7 @@ class DashboardMobilePortrait extends StatelessWidget {
                                 ),
                               )
                             : const Text(
-                                "No True or False Games Available",
+                                "No Jackpot Games Available",
                               );
                       }
                       return const SizedBox(
@@ -536,7 +563,8 @@ class DashboardMobilePortrait extends StatelessWidget {
                   height: 40,
                 ),
                 DashboardInstantGames(
-                  onTap: () => Get.to(() => const TrueOrFalseView()),
+                  trueFalseOnTap: () => Get.to(() => const TrueOrFalseView()),
+                  doubleDoubleOnTap: () {},
                 ),
                 const SizedBox(
                   height: 12,

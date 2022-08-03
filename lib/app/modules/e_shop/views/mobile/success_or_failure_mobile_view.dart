@@ -28,13 +28,17 @@ class SuccessOrFailureMobileView extends StatelessWidget {
             const SizedBox(
               height: 24,
             ),
-            Text(
-              msg,
-              style: const TextStyle(
-                fontSize: 18,
-                color: Color(0xFF4E4B66),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Text(
+                msg,
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: Color(0xFF4E4B66),
+                  height: 1.6,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
             ),
             const SizedBox(
               height: 32,

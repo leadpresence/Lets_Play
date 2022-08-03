@@ -174,8 +174,7 @@ class NotificationMobilePortrait extends GetView<NotificationController> {
                                                               position]
                                                           .seen ==
                                                       false
-                                                  ? const Color(0xffFE7A01)
-                                                      .withOpacity(.04)
+                                                  ? const Color(0XFFFFF7EC)
                                                   : Colors.transparent,
                                               message: body
                                                   .body
@@ -239,10 +238,10 @@ class NotificationMobilePortrait extends GetView<NotificationController> {
     color,
   }) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-      margin: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+      padding: const EdgeInsets.all(12),
+      margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(8),
         color: color,
       ),
       child: Row(
@@ -266,22 +265,17 @@ class NotificationMobilePortrait extends GetView<NotificationController> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: Get.width * .68,
-                    child: Text(
-                      message ?? "Message",
-                      style: const TextStyle(
-                        fontSize: 13,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w200,
-                        height: 1.5,
-                      ),
-                    ),
+              SizedBox(
+                width: Get.width * .65,
+                child: Text(
+                  message ?? "Message",
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w200,
+                    height: 1.5,
                   ),
-                ],
+                ),
               ),
               const SizedBox(height: 12),
               Row(

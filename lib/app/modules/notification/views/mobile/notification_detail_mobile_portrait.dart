@@ -71,7 +71,7 @@ class NotificationDetailsMobilePortrait extends StatelessWidget {
                     width: Get.width,
                     decoration: BoxDecoration(
                       color: const Color(0XFFFFF7EC),
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(16),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,8 +94,8 @@ class NotificationDetailsMobilePortrait extends StatelessWidget {
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 color: Color(0XFF414249),
-                                fontWeight: FontWeight.normal,
-                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 18,
                                 letterSpacing: -.2,
                                 height: 1.4,
                               ),
@@ -106,38 +106,11 @@ class NotificationDetailsMobilePortrait extends StatelessWidget {
                         Row(
                           children: [
                             const Text(
-                              'Amount:',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Color(0XFF414249),
-                                fontSize: 16,
-                                height: 1.4,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 12,
-                            ),
-                            Text(
-                              "",
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                color: Color(0XFF414249),
-                                fontSize: 14,
-                                height: 1.4,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 12),
-                        Row(
-                          children: [
-                            const Text(
                               'Date:',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Color(0XFF414249),
-                                fontSize: 16,
+                                fontSize: 14,
                                 height: 1.4,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -168,7 +141,7 @@ class NotificationDetailsMobilePortrait extends StatelessWidget {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Color(0XFF414249),
-                                fontSize: 16,
+                                fontSize: 14,
                                 height: 1.4,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -187,6 +160,38 @@ class NotificationDetailsMobilePortrait extends StatelessWidget {
                                 color: Color(0XFF414249),
                                 fontSize: 14,
                                 height: 1.4,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Message:',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Color(0XFF414249),
+                                fontSize: 14,
+                                height: 1.4,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 12,
+                            ),
+                            SizedBox(
+                              width: Get.width * .6,
+                              child: Text(
+                                body.body.notification.content,
+                                textAlign: TextAlign.start,
+                                style: const TextStyle(
+                                  color: Color(0XFF414249),
+                                  fontSize: 14,
+                                  height: 1.4,
+                                ),
                               ),
                             ),
                           ],

@@ -180,13 +180,14 @@ class EditProfileController extends GetxController {
 
   Future<void> upDateProfile(Key? k) async {
     isLoading.value = true;
+    GetStorage().write('profileImage', profilePictureUrl);
     var data = profilePictureUrl == "" && homeAddress.text == ""
         ? {
             "gender": dropDownValue,
           }
         : homeAddress.text == ""
             ? {
-                "profileUrl": profilePictureUrl.split("?")[0],
+                "profileUrl": profilePictureUrl,
                 "gender": dropDownValue,
               }
             : profilePictureUrl == ""
@@ -195,7 +196,7 @@ class EditProfileController extends GetxController {
                     "residentialAddress": homeAddress.text,
                   }
                 : {
-                    "profileUrl": profilePictureUrl.split("?")[0],
+                    "profileUrl": profilePictureUrl,
                     "residentialAddress": homeAddress.text,
                     "gender": dropDownValue,
                   };
@@ -339,12 +340,10 @@ class EditProfileController extends GetxController {
     );
 
     profilePictureName = file;
-    profilePictureUrl = urlDownload;
-
-    GetStorage().write('profileImage', urlDownload);
+    profilePictureUrl = urlDownload.split("?")[0];
 
     if (kDebugMode) {
-      print('profilePictureName ==> $profilePictureName');
+      print('profilePictureUrl ==> $profilePictureUrl');
       print('Download-Link: $urlDownload');
     }
     return urlDownload;

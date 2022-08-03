@@ -6,10 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jekawin_mobile_flutter/app/config/services/games_service.dart';
 import '../models/jackpot_game_model.dart';
+import '../models/unread_notifications_response_model.dart';
 
 class DashboardController extends GetxController
     with SingleGetTickerProviderMixin {
-  late PageController pageController;
+  PageController pageController = PageController(initialPage: 0);
   final GamesServiceImpl gamesService = Get.put(GamesServiceImpl());
 
   Rx<bool> unSeenNotification = false.obs;
@@ -17,13 +18,13 @@ class DashboardController extends GetxController
   late List<Body>? indexList = <Body>[];
   late List<Duration>? gamesDurations = <Duration>[];
   late List<DateTime>? endDates = <DateTime>[];
-  var _timer;
-  var body;
+  var _timer, body;
   int _currentPage = 0, totalGamesLength = 0;
 
   late List<Rx<AnimationController>> gamesAnimationControllers = [];
   RxInt days = 0.obs, hours = 0.obs, minutes = 0.obs, seconds = 0.obs;
   RxList<int> timeRemainingInSecsForGames = <int>[].obs;
+  UnreadNotificationsResponseModel? unreadNotificationsResponseData;
 
   getAllJackpotGames() async {
     timeRemainingInSecsForGames.clear();
@@ -52,12 +53,12 @@ class DashboardController extends GetxController
         if (kDebugMode) {
           print(
               'Response.statusCode != 200: \n${JackpotGameResponse.fromJson(response.data).message}');
-          BotToast.showSimpleNotification(
-            title: JackpotGameResponse.fromJson(response.data)
-                .message
-                .toString()
-                .trim(),
-          );
+          // BotToast.showSimpleNotification(
+          //   title: JackpotGameResponse.fromJson(response.data)
+          //       .message
+          //       .toString()
+          //       .trim(),
+          // );
         }
         return body;
       }
@@ -111,6 +112,22 @@ class DashboardController extends GetxController
     }
   }
 
+  Future<UnreadNotificationsResponseModel?> unreadNotifications(Key? k) async {
+    try {
+      final res = await gamesService.unreadNotifications();
+      if (res.statusCode == 200 || res.statusCode == 201) {
+        unreadNotificationsResponseData =
+            UnreadNotificationsResponseModel.fromJson(res.data);
+        return unreadNotificationsResponseData;
+      }
+    } catch (e) {
+      BotToast.showText(
+        text: "An error occurred. Please try again. $e",
+      );
+    }
+    return null;
+  }
+
   @override
   void onInit() {
     indexList;
@@ -118,7 +135,6 @@ class DashboardController extends GetxController
     totalGamesLength = 0;
     endDates;
     timeRemainingInSecsForGames;
-    pageController = PageController(initialPage: 0);
     gamesDurations;
     // getAllJackpotGames();
     _timer = Timer.periodic(
