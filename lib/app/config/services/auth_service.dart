@@ -112,7 +112,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
       GetStorage().write('lastName', res.body.user.lastName);
       GetStorage().write('phoneNumber', res.body.user.phone);
       GetStorage()
-          .write('profileImage', res.body.user.profileUrl.split("?")[0]);
+          .write('profileImage', res.body.user.profileUrl);
       GetStorage().write('referralCode', res.body.user.referralCode);
       GetStorage().write('token', res.body.token);
       GetStorage().write('currentUserID', res.body.user.id);
@@ -180,7 +180,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
         GetStorage().write('firstName', res.body.user.firstName);
         GetStorage().write('lastName', res.body.user.lastName);
         GetStorage()
-            .write('profileImage', res.body.user.profileUrl.split("?")[0]);
+            .write('profileImage', res.body.user.profileUrl);
         GetStorage().write('phoneNumber', res.body.user.phone);
         GetStorage().write('token', res.body.token);
         GetStorage().write('referralCode', res.body.user.referralCode);
@@ -218,7 +218,7 @@ class AuthServiceImpl extends AuthServiceDataSource {
       GetStorage().write('firstName', res.body.user.firstName);
       GetStorage().write('lastName', res.body.user.lastName);
       GetStorage()
-          .write('profileImage', res.body.user.profileUrl.split("?")[0]);
+          .write('profileImage', res.body.user.profileUrl);
       GetStorage().write('phoneNumber', res.body.user.phone);
       GetStorage().write('token', res.body.token);
       GetStorage().write('referralCode', res.body.user.referralCode);

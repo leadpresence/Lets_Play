@@ -123,7 +123,6 @@ class GamesServiceImpl {
 
   Future<Response> notificationDetail(nId) async {
     var currentUserID = GetStorage().read('currentUserID');
-
     try {
       Response response = await service.request(
         '${JekawinBaseUrls.authBaseUrl}users/$currentUserID/notifications/$nId',
@@ -132,6 +131,91 @@ class GamesServiceImpl {
       if (kDebugMode) {
         print(
             "This is the response status from the notificationDetail API: \n ${response.data}");
+      }
+      return response;
+    } on DioError catch (e) {
+      throw handleError(e);
+    }
+  }
+
+  Future<Response> rewardPointsHistory() async {
+    try {
+      Response response = await service.request(
+        '${JekawinBaseUrls.authBaseUrl}reward-points',
+        method: 'Get',
+      );
+      if (kDebugMode) {
+        print(
+            "This is the response status from the rewardPointsHistory API: \n ${response.data}");
+      }
+      return response;
+    } on DioError catch (e) {
+      throw handleError(e);
+    }
+  }
+
+  Future<Response> shareRewardPoints(body) async {
+    try {
+      Response response = await service.request(
+        '${JekawinBaseUrls.authBaseUrl}reward-points',
+        method: 'Post',
+        body: body,
+      );
+      if (kDebugMode) {
+        print(
+            "This is the response status from the shareRewardPoints API: \n ${response.data}");
+      }
+      return response;
+    } on DioError catch (e) {
+      throw handleError(e);
+    }
+  }
+
+  Future<Response> validateShareRewardPointsData(body) async {
+    try {
+      Response response = await service.request(
+        '${JekawinBaseUrls.authBaseUrl}reward-points/validate-share-reward-point-data',
+        method: 'Post',
+        body: body,
+      );
+      if (kDebugMode) {
+        print(
+            "This is the response status from the validateShareRewardPointsData API: \n ${response.data}");
+      }
+      return response;
+    } on DioError catch (e) {
+      throw handleError(e);
+    }
+  }
+
+  Future<Response> verifyTransactionPin(body) async {
+    var userID = GetStorage().read('currentUserID');
+    try {
+      Response response = await service.request(
+        '${JekawinBaseUrls.authBaseUrl}users/$userID/verify-transaction-pin',
+        method: 'Post',
+        body: body,
+      );
+      if (kDebugMode) {
+        print(
+            "This is the response status from the verifyTransactionPin API: \n ${response.data}");
+      }
+      return response;
+    } on DioError catch (e) {
+      throw handleError(e);
+    }
+  }
+
+  Future<Response> unreadNotifications() async {
+    var userID = GetStorage().read('currentUserID');
+    try {
+      Response response = await service.request(
+        '${JekawinBaseUrls.authBaseUrl}users/$userID/unread-notifications',
+        method: 'Get',
+      );
+      if (kDebugMode) {
+        print(
+            "This is the response status from the unreadNotifications API: \n ${response.data}");
       }
       return response;
     } on DioError catch (e) {
