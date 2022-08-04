@@ -105,7 +105,7 @@ class MyGamesMobilePortrait extends StatelessWidget {
                                         "Snapshot has error: ${snapshot.hasError.toString()}");
                                   } else if (snapshot.hasData) {
                                     var body = snapshot.data!;
-                                    return body.body.games.length < 1
+                                    return body.body.games.length == 0
                                         ? const Text(
                                             "No Games History",
                                           )

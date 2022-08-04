@@ -169,7 +169,6 @@ class RewardPointsController extends GetxController {
       final res = await gamesServiceImpl.verifyTransactionPin(body);
       if (res.statusCode == 200 || res.statusCode == 201) {
         shareRewardPoints(k);
-        isLoading.value = false;
       } else {
         pinError.value = res.data["message"];
         if (res.data["message"]['name'] == 'TokenExpiredError') {
