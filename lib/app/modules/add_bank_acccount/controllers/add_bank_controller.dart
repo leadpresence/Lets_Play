@@ -83,18 +83,23 @@ class AddBankController extends GetxController {
   }
 
   Future<void> addBankDetails(Key? key) async {
+    isLoading.value= true;
     var accountNumber = accountNumberController.text.toString();
     var bankCode = selectedBankCode.value.toString();
     var bankName = selectedBankName.value.toString();
     var accountName = bankNameController.value.text;
     final response = await walletService.addBank(accountName,bankName,accountNumber,bankCode);
     response.fold((l) {
+      isLoading.value= false;
+
       Get.to(() => SuccessOrFailureMobileView(
         msg: l.message,
         success: false,
         className: const SelectBankView(),
       ));
     }, (r) {
+      isLoading.value= false;
+
       Get.to(() => const SelectBankView());
     });
   }
