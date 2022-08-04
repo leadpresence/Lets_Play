@@ -167,7 +167,7 @@ class SelectBankMobilePortrait extends GetView {
           return AlertDialog(
             title: const Text("Delete Saved Account"),
             content: const Text(
-                "You will delete this account from the list of your withdrawal accounts"),
+                "Do you want to delete this account from the list of your withdrawal accounts. ?"),
             actions: [
               controller.isLoading.value
                   ? SizedBox(

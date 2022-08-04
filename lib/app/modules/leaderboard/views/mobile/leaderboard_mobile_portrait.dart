@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -45,7 +46,9 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                                   'assets/svgs/share.svg',
                                   color: const Color(0xff12121D),
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  BotToast.showText(text: "You can't share data at this time");
+                                },
                               ),
                             ),
                           ],
@@ -155,7 +158,7 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                   } else if (snapshot.hasData) {
                     List<ScoreItem>? players = snapshot.data?.data;
                     if (players != null) {
-                      if (players.length >1) {
+                      if (players.length > 1) {
                         return Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           mainAxisSize: MainAxisSize.max,
@@ -165,22 +168,24 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   const Gap(80),
-                              winners(
-                                              position: '2',
-                                              userImage: players.length > 1
-                                                  ? players[1].imageUrl
-                                                  : ""),
+                                  winners(
+                                      position: '2',
+                                      userImage: players.length > 1
+                                          ? players[1].imageUrl
+                                          : ""),
                                   const Gap(15),
-                                          Text(
-                          players.length > 1?
-                                              TextUtils().hideNumberPart(players[1].phone):""),
+                                  Text(players.length > 1
+                                      ? TextUtils()
+                                          .hideNumberPart(players[1].phone)
+                                      : ""),
                                   const Gap(4),
                                   Text(
-                                            players.length > 1
-                                                ? players[1].score.toString() + " Rpt"
-                                                : "0 Rpt",
-                                            style: const TextStyle(color: Colors.orange),
-                                          )
+                                    players.length > 1
+                                        ? players[1].score.toString() + " Rpt"
+                                        : "0 Rpt",
+                                    style:
+                                        const TextStyle(color: Colors.orange),
+                                  )
                                 ]),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -188,7 +193,7 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                                 firstWinners(
                                     position: '1',
                                     userImage: players[0].imageUrl),
-                                Gap(Get.height*0.13),
+                                Gap(Get.height * 0.13),
                                 Text(TextUtils()
                                     .hideNumberPart(players[0].phone)),
                                 const Gap(4),
@@ -198,28 +203,29 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                                 )
                               ],
                             ),
-                         Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        const Gap(80),
-                                        winners(
-                                            position: '3',
-                                            userImage: players.length > 2
-                                                ? players[2].imageUrl
-                                                : ""),
-                                        const Gap(15),
-                                        Text(players.length > 2
-                                            ? TextUtils().hideNumberPart(players[2].phone)
-                                            : ""),
-                                        const Gap(4),
-                                        Text(
-                                          players.length > 2
-                                              ? players[2].score.toString() + " Rpt"
-                                              : " 0 Rpt",
-                                          style: const TextStyle(color: Colors.orange),
-                                        )
-                                      ],
-                                    )
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Gap(80),
+                                winners(
+                                    position: '3',
+                                    userImage: players.length > 2
+                                        ? players[2].imageUrl
+                                        : ""),
+                                const Gap(15),
+                                Text(players.length > 2
+                                    ? TextUtils()
+                                        .hideNumberPart(players[2].phone)
+                                    : ""),
+                                const Gap(4),
+                                Text(
+                                  players.length > 2
+                                      ? players[2].score.toString() + " Rpt"
+                                      : " 0 Rpt",
+                                  style: const TextStyle(color: Colors.orange),
+                                )
+                              ],
+                            )
                           ],
                         );
                       }
@@ -371,7 +377,7 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                           children: [
                             firstWinners(
                                 position: '1', userImage: players[0].imageUrl),
-                             Gap(Get.height*0.13),
+                            Gap(Get.height * 0.13),
                             Text(TextUtils().hideNumberPart(players[0].phone)),
                             const Gap(4),
                             Text(
@@ -552,7 +558,7 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
                           children: [
                             firstWinners(
                                 position: '1', userImage: players[0].imageUrl),
-                            Gap(Get.height*0.13),
+                            Gap(Get.height * 0.13),
                             Text(TextUtils().hideNumberPart(players[0].phone)),
                             const Gap(4),
                             Text(
