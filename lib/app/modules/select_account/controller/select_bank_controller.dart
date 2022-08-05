@@ -91,7 +91,7 @@ class SelectBankController extends GetxController {
       isLoading.value = false;
     }, (r) {
       isLoading.value = false;
-      navigateToSignUpSuccessful();
+      navigateToWithdrawalSuccessful();
     });
   }
 
@@ -106,15 +106,15 @@ class SelectBankController extends GetxController {
     }, (r) {
       isLoading.value = false;
       Navigator.of(context).pop();
-      navigateToSignUpSuccessful();
+      navigateToDeleteSuccessful();
     });
 
   }
 
-  void navigateToSignUpSuccessful() {
+  void navigateToDeleteSuccessful() {
     Get.to(
       () => SuccessOrFailureMobileView(
-        msg: 'Account deleted successfully',
+        msg: 'Account deleted successfully.',
         className: JekawinBottomTabs(
           tabIndex: 2,
           isGuestUser: true,
@@ -124,10 +124,10 @@ class SelectBankController extends GetxController {
     );
   }
 
-  void navigateToDeleteSuccessful() {
+  void navigateToWithdrawalSuccessful() {
     Get.to(
       () => SuccessOrFailureMobileView(
-        msg: 'Account Deleted successfully',
+        msg: 'Withdrawal is being processed.',
         className: JekawinBottomTabs(
           tabIndex: 2,
           isGuestUser: false,
