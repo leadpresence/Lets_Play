@@ -47,7 +47,7 @@ class TrueOrFalseMobilePortrait extends StatelessWidget {
               child: CustomButton(
                 buttonText: "Start Game",
                 onPressed: () {
-                  Get.to(() => StartTrueFalseGameMobilePortrait());
+                  Get.off(() => StartTrueFalseGameMobilePortrait());
                 },
               ),
             ),
@@ -55,5 +55,18 @@ class TrueOrFalseMobilePortrait extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class TrueOrFalseMobileSplashController extends GetxController {
+  // var token = GetStorage().read('token');
+
+  @override
+  void onInit() {
+    Future.delayed(
+      const Duration(seconds: 2),
+      () => Get.off(() => StartTrueFalseGameMobilePortrait()),
+    );
+    super.onInit();
   }
 }

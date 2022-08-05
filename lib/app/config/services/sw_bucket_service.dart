@@ -9,6 +9,11 @@ import 'package:get/get.dart';
 class S3BucketService {
   static String url = '';
   static String result = '';
+  static String bucketName = 'jekawinusers';
+  static String AWSSecret = "Jr27z7vajvhhRxRvfW7+VG/yjT86+FaJLhw5E7us";
+  static String AWSAccess = 'AKIAZG3ZF6NYWY5MTI7L';
+  static String successMessage =
+      "Upload successful.\nClick on update profile to save changes.";
 
   static Future<String> getPreSignedURLFromUnsigned({
     required String awsFolderPath,
@@ -16,9 +21,9 @@ class S3BucketService {
     AwsS3PluginFlutter awsS3 = AwsS3PluginFlutter(
       awsFolderPath: awsFolderPath,
       region: Regions.US_EAST_1,
-      bucketName: 'jekawinusers',
-      AWSSecret: "Jr27z7vajvhhRxRvfW7+VG/yjT86+FaJLhw5E7us",
-      AWSAccess: 'AKIAZG3ZF6NYWY5MTI7L',
+      bucketName: bucketName,
+      AWSSecret: AWSSecret,
+      AWSAccess: AWSAccess,
       fileNameWithExt: result,
     );
     awsS3.getUploadStatus;
@@ -29,48 +34,42 @@ class S3BucketService {
     required File file,
     required String awsFolderPath,
     required int number,
-    context,
+    required BuildContext context,
     required String extension,
   }) async {
-    print('I went through');
-    String fileName =
-        "$extension\_${DateTime.now().millisecondsSinceEpoch}$extension";
+    String fileName = "${DateTime.now().millisecondsSinceEpoch}$extension";
     AwsS3PluginFlutter awsS3 = AwsS3PluginFlutter(
       awsFolderPath: awsFolderPath,
       file: file,
       fileNameWithExt: fileName,
       region: Regions.US_EAST_1,
-      bucketName: 'jekawinusers',
-      AWSSecret: "Jr27z7vajvhhRxRvfW7+VG/yjT86+FaJLhw5E7us",
-      AWSAccess: 'AKIAZG3ZF6NYWY5MTI7L',
+      bucketName: bucketName,
+      AWSSecret: AWSSecret,
+      AWSAccess: AWSAccess,
     );
     displayUploadDialog(awsS3, context);
-    Future.delayed(const Duration(seconds: 5), () {
-      BotToast.showText(
-          text: "Upload successful.\nClick on update profile to save changes.");
+
+    result = await awsS3.uploadFile;
+    Future.delayed(const Duration(seconds: 1), () {
+      BotToast.showText(text: successMessage);
       Get.back();
     });
-
-    try {
-      try {
-        result = await awsS3.uploadFile;
-        debugPrint("Result :'$result'.");
-      } on PlatformException {
-        debugPrint("Result :'$result'.");
-      }
-    } on PlatformException catch (e) {
-      debugPrint("Failed :'${e.message}'.");
-    }
     return url;
   }
 
-  static Future displayUploadDialog(AwsS3PluginFlutter awsS3, context) {
+  static Future displayUploadDialog(
+    AwsS3PluginFlutter awsS3,
+    BuildContext context,
+  ) {
     return showDialog(
       context: context,
       barrierDismissible: true,
       builder: (context) => StreamBuilder(
         stream: awsS3.getUploadStatus,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
+        builder: (
+          BuildContext context,
+          AsyncSnapshot snapshot,
+        ) {
           return buildFileUploadDialog(snapshot, context);
         },
       ),
@@ -78,14 +77,17 @@ class S3BucketService {
   }
 
   static AlertDialog buildFileUploadDialog(
-      AsyncSnapshot snapshot, BuildContext context) {
+    AsyncSnapshot snapshot,
+    BuildContext context,
+  ) {
     return AlertDialog(
       title: Container(
         padding: const EdgeInsets.all(6),
         child: LinearProgressIndicator(
           value: (snapshot.data != null) ? snapshot.data / 100 : 0,
-          valueColor:
-              AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColorDark),
+          valueColor: AlwaysStoppedAnimation<Color>(
+            Theme.of(context).primaryColorDark,
+          ),
         ),
       ),
       content: Padding(

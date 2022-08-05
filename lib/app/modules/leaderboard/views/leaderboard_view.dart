@@ -10,13 +10,14 @@ class LeaderBoardView extends GetView<LeaderBoardController> {
   @override
   Widget build(BuildContext context) {
     return ScreenTypeLayout.builder(
-        mobile: (_) => OrientationLayoutBuilder(
-              portrait: (_) => LeaderBoardMobilePortrait(),
-              landscape: (_) => LeaderBoardMobilePortrait(),
-            ),
-        tablet: (_) => OrientationLayoutBuilder(
-              portrait: (_) => LeaderBoardMobilePortrait(),
-              landscape: (_) => LeaderBoardMobilePortrait(),
-            ));
+      mobile: (_) => OrientationLayoutBuilder(
+        portrait: (_) => LeaderBoardMobilePortrait(),
+        landscape: (_) => LeaderBoardMobilePortrait(),
+      ),
+      tablet: (_) => OrientationLayoutBuilder(
+        portrait: (_) => LeaderBoardMobilePortrait(),
+        landscape: (_) => LeaderBoardMobilePortrait(),
+      ),
+    );
   }
 }

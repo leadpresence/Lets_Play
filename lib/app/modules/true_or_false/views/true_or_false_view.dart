@@ -13,7 +13,7 @@ class TrueOrFalseView extends GetView<ReferralController> {
   Widget build(BuildContext context) {
     return ScreenTypeLayout.builder(
       mobile: (_) => OrientationLayoutBuilder(
-        portrait: (_) => StartTrueFalseGameMobilePortrait(),
+        portrait: (_) => const TrueOrFalseMobilePortrait(),
         landscape: (_) => const TrueOrFalseMobilePortrait(),
       ),
       tablet: (_) => OrientationLayoutBuilder(

@@ -128,6 +128,7 @@ class UserProfileMobilePortrait extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(50),
                                         child: SizedBox(
                                           width: Get.width,
+                                          height: Get.height,
                                           child: Image.network(
                                             imageAvatar,
                                             fit: BoxFit.cover,
@@ -166,16 +167,17 @@ class UserProfileMobilePortrait extends StatelessWidget {
                             onTap: () {
                               Get.to(
                                 () => EditProfileMobilePortrait(),
-                                transition: Transition.cupertino,
+
                               );
                             },
-                            child: Column(
-                              children: [
-                                SvgPicture.asset(
+                            child: SizedBox(
+                         height: 44,
+                              width: 44,
+                              child: Center(
+                                child: SvgPicture.asset(
                                   'assets/svgs/ic_outline-mode-edit-outline.svg',
                                 ),
-                                const Gap(12),
-                              ],
+                              ),
                             ),
                           )
                         ],

@@ -85,7 +85,7 @@ class CustomButton extends StatelessWidget {
               side: hasBorder
                   ? BorderSide(color: borderColor, width: 1)
                   : BorderSide.none,
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(12),
             ),
           ),
           child: Row(
