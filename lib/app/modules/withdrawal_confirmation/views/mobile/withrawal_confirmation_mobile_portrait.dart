@@ -91,28 +91,28 @@ class WithdrawalConfirmationMobilePortrait
               ],
             ),
             const Gap(25),
-            Padding(
+            Obx(
+                  () => Padding(
               padding: const EdgeInsets.all(2.0),
               child: CustomButton(
+                isLoading:controller.isLoading.value ,
                 hasIcon: false,
                 buttonText: 'Confirm withdrawal',
                 onPressed: () {
                controller.validatePin();
                 },
               ),
-            ),
+            )),
             const Gap(10),
-            Obx(
-              () => SizedBox(
-                child: controller.isLoading.value
-                    ? const Center(
-                        child: CircularProgressIndicator(
-                          color: Colors.orange,
-                        ),
-                      )
-                    : Container(),
-              ),
-            )
+            // SizedBox(
+            //     child: controller.isLoading.value
+            //         ? const Center(
+            //             child: CircularProgressIndicator(
+            //               color: Colors.orange,
+            //             ),
+            //           )
+            //         : Container(),
+            //   ),
           ],
         ),
       ),

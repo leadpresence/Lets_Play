@@ -31,11 +31,16 @@ class WithdrawalConfirmationController extends GetxController {
   void onClose() {}
 
   Future<void> validatePin() async {
+    isLoading.value=true;
     var userPin = pinController.text.toString();
     var pinValidation = await authService.verifyPin(userPin);
+
     pinValidation.fold((l) {
+      isLoading.value=false;
       BotToast.showText(text: "Error verifying pin, try again "+ l.message);
+      pinController.text="";
     }, (r) {
+      isLoading.value=false;
       Get.to(
         () => SuccessOrFailureMobileView(
           msg: "Your request is being processed",
@@ -45,6 +50,7 @@ class WithdrawalConfirmationController extends GetxController {
         ),
         transition: Transition.cupertino,
       );
+      pinController.text="";
     });
   }
 }
