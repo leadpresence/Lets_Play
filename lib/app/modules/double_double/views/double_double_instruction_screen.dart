@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-
-import '../../widgets/custom_large_button.dart';
+import '../../../widgets/custom_large_button.dart';
 import 'double_double_mobile_portrait.dart';
 
 class DoubleDoubleInstruction extends StatelessWidget {
@@ -18,7 +17,7 @@ class DoubleDoubleInstruction extends StatelessWidget {
           Align(
             alignment: Alignment.centerLeft,
             child: Padding(
-              padding: const EdgeInsets.only(left: 16.0, top: 52.0),
+              padding: const EdgeInsets.only(left: 12.0, top: 36.0),
               child: IconButton(
                 splashRadius: 25,
                 icon: SvgPicture.asset(
@@ -88,7 +87,7 @@ class DoubleDoubleInstruction extends StatelessWidget {
               // isLoading: controller.isLoading.value,
               height: 40.0,
               onPressed: () {
-                Get.to(() => DoubleDoubleMobilePortrait());
+                Get.to(() => const DoubleDoubleMobilePortrait());
               },
               buttonText: 'Okay',
               buttonColor: const Color(0xFFFE7A01),

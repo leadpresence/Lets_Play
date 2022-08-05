@@ -23,7 +23,7 @@ class DoubleDoubleMobilePortrait extends StatelessWidget {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 16.0, top: 52.0),
+                  padding: const EdgeInsets.only(left: 12.0, top: 36.0),
                   child: IconButton(
                     splashRadius: 25,
                     icon: SvgPicture.asset(

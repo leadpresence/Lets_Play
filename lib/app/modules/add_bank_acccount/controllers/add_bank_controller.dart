@@ -14,6 +14,7 @@ import '../../withdrawal_amount/views/withdrawal_amount_view.dart';
 class AddBankController extends GetxController {
   @override
   void onInit() {
+    super.onInit();
     getBanks();
   }
 
@@ -34,7 +35,15 @@ class AddBankController extends GetxController {
 
   var banksList = [""].obs;
   Rx<List<Bank>> bList = Rx<List<Bank>>([]);
-  Rx<List<DropdownMenuItem<String>>> bDropDownItemsList = Rx<List<DropdownMenuItem<String>>>([DropdownMenuItem(child: Text("Select Bank"), value: "Select Bank")]);
+  Rx<List<DropdownMenuItem<String>>> bDropDownItemsList =
+      Rx<List<DropdownMenuItem<String>>>(
+    [
+      const DropdownMenuItem(
+        child: Text("Select Bank"),
+        value: "Select Bank",
+      ),
+    ],
+  );
 
   void clearErrorCardHolderName() => errorCardHolderNameMessage.value = '';
 
@@ -51,8 +60,9 @@ class AddBankController extends GetxController {
       addBankDetails(key);
     }
   }
-  String? validateBank(String value){
-    if(value=="Select Bank"){
+
+  String? validateBank(String value) {
+    if (value == "Select Bank") {
       return "Select Bank";
     }
     return null;
@@ -60,58 +70,47 @@ class AddBankController extends GetxController {
 
   Future<List<Bank>> getBanks() async {
     List<Bank> banks = await walletService.getBanks();
-    try{
+    try {
       bList.value.addAll(banks);
       return banks;
-
-    }catch(e){
+    } catch (e) {
       BotToast.showText(text: "Error occurred retrieving all banks");
     }
 
     return [];
   }
 
-
-  Future<void> getAccountName(String accountNumber,String bankCode )async {
-    final bank = await walletService.resolveAccountNumber(accountNumber,bankCode);
+  Future<void> getAccountName(String accountNumber, String bankCode) async {
+    final bank =
+        await walletService.resolveAccountNumber(accountNumber, bankCode);
     bank.fold((l) {
-      BotToast.showText(text: "Error occurred fetching Account name,please try again");
+      BotToast.showText(
+          text: "Error occurred fetching Account name,please try again");
     }, (r) {
       // BotToast.showText(text: r.toString());
-      bankNameController.text =r.toString();
+      bankNameController.text = r.toString();
     });
   }
 
   Future<void> addBankDetails(Key? key) async {
-    isLoading.value= true;
+    isLoading.value = true;
     var accountNumber = accountNumberController.text.toString();
     var bankCode = selectedBankCode.value.toString();
     var bankName = selectedBankName.value.toString();
     var accountName = bankNameController.value.text;
-    final response = await walletService.addBank(accountName,bankName,accountNumber,bankCode);
+    final response = await walletService.addBank(
+        accountName, bankName, accountNumber, bankCode);
     response.fold((l) {
-      isLoading.value= false;
+      isLoading.value = false;
 
       Get.to(() => SuccessOrFailureMobileView(
-        msg: l.message,
-        success: false,
-        className: const SelectBankView(),
-      ));
+            msg: l.message,
+            success: false,
+            className: const SelectBankView(),
+          ));
     }, (r) {
-      isLoading.value= false;
-
+      isLoading.value = false;
       Get.to(() => const SelectBankView());
     });
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void dispose() {}
-
-  @override
-  void onClose() {}
 }

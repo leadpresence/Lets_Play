@@ -23,66 +23,62 @@ import 'package:path/path.dart';
 class EditProfileController extends GetxController {
   final AuthServiceImpl authService = Get.find<AuthServiceImpl>();
   final GamesServiceImpl gamesServiceImpl = Get.put(GamesServiceImpl());
-  final editFormKey = GlobalKey<FormState>();
-  var emailTextController = TextEditingController();
-  final emailOTPCode = TextEditingController();
-  final homeAddress = TextEditingController();
+  final GlobalKey editFormKey = GlobalKey<FormState>();
+
+  final TextEditingController emailOTPCode = TextEditingController();
+  final TextEditingController homeAddress = TextEditingController();
+
+  var emailTextController;
 
   final FocusNode searchTextField = FocusNode();
-  final utilsProvider = UtilsController();
+  final UtilsController utilsProvider = UtilsController();
 
-  var genders = [
+  List<String> genders = [
     'Female',
     'Male',
   ];
 
   String dropDownValue = 'Male';
 
-  RxString avatarUrl = "".obs;
-  RxString emailErrorMessage = "".obs;
+  RxString avatarUrl = "".obs, emailErrorMessage = "".obs;
   Rx<bool> isLoading = false.obs;
 
-  var extension;
   Rx<bool> isRawImageAssigned = false.obs;
   Rx<File> imageFile = File('').obs;
+
+  Rx<String> imageLoading = "".obs;
+  Rx<String> imageName = ''.obs;
+
   String profilePictureUrl = '';
   String profilePictureName = '';
   String base64Image = '';
-  Rx<String> imageLoading = "".obs;
-  Rx<String> imageName = ''.obs;
+
+  var extension;
 
   @override
   void onInit() {
     avatarUrl.value = GetStorage().read('profileImage');
     searchTextField.requestFocus();
-    emailTextController.text = utilsProvider.getEmail();
     emailTextController = TextEditingController(text: utilsProvider.getEmail());
     super.onInit();
   }
 
   void clearErrorEmail() => emailErrorMessage.value = '';
 
-  editProfileFormValidator(Key? k) {
-    if ((GetUtils.isBlank(emailTextController.text)) == true) {
-      return emailErrorMessage.value = 'Email Address field cannot be blank';
-    } else if (!GetUtils.isEmail(emailTextController.text)) {
-      return emailErrorMessage.value = 'Invalid Email Address';
-    } else {
-      upDateProfile(k);
-    }
+  void navigateToVerifyOTP(Key? k) {
+    Get.back();
+    utilsProvider.setEmail(emailTextController.text);
+    emailTextController.text = utilsProvider.getEmail();
+    Get.to(
+      () => EmailOTPVerification(
+        email: emailTextController.text,
+      ),
+      transition: Transition.cupertino,
+    );
+    isLoading.value = false;
   }
 
-  emailValidator(Key? k) {
-    if ((GetUtils.isBlank(emailTextController.text)) == true) {
-      return emailErrorMessage.value = 'Email Address field cannot be blank';
-    } else if (!GetUtils.isEmail(emailTextController.text)) {
-      return emailErrorMessage.value = 'Invalid Email Address';
-    } else {
-      showAddEmailAlertDialog(k);
-    }
-  }
-
-  showAddEmailAlertDialog(Key? k) {
+  void showAddEmailAlertDialog(Key? k) {
     showDialog(
       context: Get.context!,
       builder: (BuildContext context) {
@@ -178,6 +174,55 @@ class EditProfileController extends GetxController {
     );
   }
 
+  void navigateToDashboard(Key? k) {
+    Get.to(
+      () => SuccessOrFailureMobileView(
+        msg: 'Email Successfully Added',
+        className: EditProfileMobilePortrait(),
+      ),
+      transition: Transition.cupertino,
+    );
+
+    isLoading.value = false;
+  }
+
+  void pickImage(ImageSource source, BuildContext context) async {
+    final pickedFile = await ImagePicker().getImage(source: source);
+    if (pickedFile != null) {
+      imageFile.value = File(pickedFile.path);
+
+      GetStorage().write('rawImage', imageFile.value);
+
+      isRawImageAssigned.value = true;
+      List<int> imageBytes = imageFile.value.readAsBytesSync();
+      base64Image = base64Encode(imageBytes);
+      await uploadFile(context);
+      refresh();
+    }
+  }
+
+  String editProfileFormValidator(Key? k) {
+    if ((GetUtils.isBlank(emailTextController.text)) == true) {
+      return emailErrorMessage.value = 'Email Address field cannot be blank';
+    } else if (!GetUtils.isEmail(emailTextController.text)) {
+      return emailErrorMessage.value = 'Invalid Email Address';
+    } else {
+      upDateProfile(k);
+    }
+    return "";
+  }
+
+  String emailValidator(Key? k) {
+    if ((GetUtils.isBlank(emailTextController.text)) == true) {
+      return emailErrorMessage.value = 'Email Address field cannot be blank';
+    } else if (!GetUtils.isEmail(emailTextController.text)) {
+      return emailErrorMessage.value = 'Invalid Email Address';
+    } else {
+      showAddEmailAlertDialog(k);
+    }
+    return "";
+  }
+
   Future<void> upDateProfile(Key? k) async {
     isLoading.value = true;
     GetStorage().write('profileImage', profilePictureUrl);
@@ -261,19 +306,6 @@ class EditProfileController extends GetxController {
     );
   }
 
-  navigateToVerifyOTP(Key? k) {
-    Get.back();
-    utilsProvider.setEmail(emailTextController.text);
-    emailTextController.text = utilsProvider.getEmail();
-    Get.to(
-      () => EmailOTPVerification(
-        email: emailTextController.text,
-      ),
-      transition: Transition.cupertino,
-    );
-    isLoading.value = false;
-  }
-
   Future<void> verifyEmailOTP(Key? k) async {
     isLoading.value = true;
     final userData = await authService.verifyEmailOtp(emailOTPCode.text);
@@ -291,40 +323,9 @@ class EditProfileController extends GetxController {
     );
   }
 
-  navigateToDashboard(Key? k) {
-    Get.to(
-      () => SuccessOrFailureMobileView(
-        msg: 'Email Successfully Added',
-        className: EditProfileMobilePortrait(),
-      ),
-      transition: Transition.cupertino,
-    );
-
-    isLoading.value = false;
-  }
-
-  void pickImage(ImageSource source, BuildContext context) async {
-    final pickedFile = await ImagePicker().getImage(source: source);
-    if (pickedFile != null) {
-      imageLoading.value = 'image_loading';
-      imageFile.value = File(pickedFile.path);
-
-      GetStorage().write('rawImage', imageFile.value);
-
-      isRawImageAssigned.value = true;
-      List<int> imageBytes = imageFile.value.readAsBytesSync();
-      base64Image = base64Encode(imageBytes);
-      await uploadFile(context);
-      refresh();
-    }
-  }
-
-  // Future<String>
-
-  uploadFile(BuildContext context) async {
+  Future<String> uploadFile(BuildContext context) async {
     final file = basename(imageFile.value.path);
     extension = p.extension(imageFile.value.path);
-
     await S3BucketService.uploadImage(
       file: imageFile.value,
       awsFolderPath: "",
@@ -332,8 +333,6 @@ class EditProfileController extends GetxController {
       context: context,
       extension: extension,
     );
-
-    profilePictureUrl = 'loading';
 
     final urlDownload = await S3BucketService.getPreSignedURLFromUnsigned(
       awsFolderPath: "",

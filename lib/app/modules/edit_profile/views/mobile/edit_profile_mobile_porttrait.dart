@@ -113,6 +113,7 @@ class EditProfileMobilePortrait extends GetView {
                               borderRadius: BorderRadius.circular(50),
                               child: SizedBox(
                                 width: Get.width,
+                                height: Get.height,
                                 child: Image.network(
                                   imageAvatar,
                                   fit: BoxFit.cover,
@@ -136,12 +137,12 @@ class EditProfileMobilePortrait extends GetView {
                             context: context,
                             builder: (builder) {
                               return Container(
-                                height: 164.0,
+                                height: 172.0,
                                 decoration: const BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(12),
-                                    topLeft: Radius.circular(12),
+                                    topRight: Radius.circular(24),
+                                    topLeft: Radius.circular(24),
                                   ),
                                 ),
                                 child: Padding(
@@ -156,7 +157,7 @@ class EditProfileMobilePortrait extends GetView {
                                           height: 5,
                                           width: 52,
                                           decoration: BoxDecoration(
-                                            color: Colors.grey.shade700,
+                                            color: Colors.grey.shade500,
                                             borderRadius:
                                                 BorderRadius.circular(16),
                                           ),
@@ -192,8 +193,9 @@ class EditProfileMobilePortrait extends GetView {
                                               const Text(
                                                 "Camera",
                                                 style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 12),
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 14,
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -227,8 +229,9 @@ class EditProfileMobilePortrait extends GetView {
                                               const Text(
                                                 "Gallery",
                                                 style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 12),
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 14,
+                                                ),
                                               ),
                                             ],
                                           ),

@@ -56,7 +56,7 @@ class SetPinController extends GetxController
 
       Get.to(() => SuccessOrFailureMobileView(
             msg: "Transaction pin set successful",
-            className: UserProfileView(),
+            className: const UserProfileView(),
           ));
       transition:
       Transition.cupertino;

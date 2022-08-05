@@ -8,8 +8,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:jekawin_mobile_flutter/app/modules/dashboard/controllers/dashboard_controller.dart';
 import 'package:jekawin_mobile_flutter/app/modules/notification/views/mobile/notifications_mobile_portrait.dart';
 import '../../../../config/data/local/user_local_impl.dart';
-import '../../../../double_double/views/double_double_splash_screen.dart';
 import '../../../../widgets/custom_medium_button.dart';
+import '../../../double_double/views/double_double_splash_screen.dart';
 import '../../../edit_profile/views/mobile/edit_profile_mobile_porttrait.dart';
 import '../../../fund_wallet/views/fund_wallet_view.dart';
 import '../../../jackpot_games/views/mobile/jackpot_games_mobile_portrait.dart';
@@ -78,12 +78,14 @@ class DashboardMobilePortrait extends StatelessWidget {
                                       alignment: AlignmentDirectional.center,
                                       children: [
                                         SvgPicture.asset(
-                                            'assets/svgs/user_icon.svg'),
+                                          'assets/svgs/user_icon.svg',
+                                        ),
                                         ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(50),
                                           child: SizedBox(
                                             width: Get.width,
+                                            height: Get.height,
                                             child: Image.network(
                                               imageAvatar,
                                               fit: BoxFit.cover,

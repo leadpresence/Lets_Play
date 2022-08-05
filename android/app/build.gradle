@@ -51,11 +51,22 @@ android {
         ndkVersion "24.0.8215888"
     }
 
+    signingConfigs {
+        debug {
+            keyAlias 'andriodKey'
+            keyPassword "Teeymix95"
+            storeFile file('myKey.jks')
+            storePassword "Teeymix95"
+        }
+    }
+
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
+            shrinkResources false
+            minifyEnabled false
         }
     }
 
