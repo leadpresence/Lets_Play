@@ -48,6 +48,8 @@ class SignUpController extends GetxController {
     } else if (agreementCheck.value != true) {
       BotToast.showText(text: "Agree to Jekawin Terms & Conditions");
     } else {
+      GetStorage().write('homeAddress', '');
+      GetStorage().write('gender', '');
       signUp(k);
     }
   }

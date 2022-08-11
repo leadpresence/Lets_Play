@@ -57,6 +57,7 @@ class EmailOTPVerification extends StatelessWidget {
                   email: email,
                 ),
                 CustomOtpField(
+                  obscureText: false,
                   length: 5,
                   pinController: editProfileController.emailOTPCode,
                   key: key,

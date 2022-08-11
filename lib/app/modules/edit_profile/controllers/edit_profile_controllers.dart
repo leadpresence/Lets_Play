@@ -27,8 +27,7 @@ class EditProfileController extends GetxController {
 
   final TextEditingController emailOTPCode = TextEditingController();
   final TextEditingController homeAddress = TextEditingController();
-
-  var emailTextController;
+  TextEditingController emailTextController = TextEditingController();
 
   final FocusNode searchTextField = FocusNode();
   final UtilsController utilsProvider = UtilsController();
@@ -225,7 +224,9 @@ class EditProfileController extends GetxController {
 
   Future<void> upDateProfile(Key? k) async {
     isLoading.value = true;
-    GetStorage().write('profileImage', profilePictureUrl);
+    if (profilePictureUrl != "") {
+      GetStorage().write('profileImage', profilePictureUrl);
+    }
     var data = profilePictureUrl == "" && homeAddress.text == ""
         ? {
             "gender": dropDownValue,
