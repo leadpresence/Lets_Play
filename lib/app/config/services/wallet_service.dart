@@ -3,6 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:jekawin_mobile_flutter/app/modules/fund_wallet/models/payment_processor_model.dart';
+import 'package:jekawin_mobile_flutter/app/modules/select_account/models/withdrawal_response.dart';
 import 'package:jekawin_mobile_flutter/app/modules/wallet_home/models/transaction_model.dart';
 import '../../constants/app_error.dart';
 import '../../constants/network_exceptions.dart';
@@ -46,7 +47,7 @@ abstract class WalletDataSource {
 Future<Either<AppError, String>> removeBank(
        String accountNumber);
 
-  Future<Either<AppError, String>> withdrawToBank(
+  Future<Either<AppError, WithdrawalResponse>> withdrawToBank(
       WithdrawalModel withdrawalData);
 
   Future<Either<AppError, String>> resolveAccountNumber(
@@ -214,7 +215,7 @@ class WalletServiceImpl extends WalletDataSource {
   }
 
   @override
-  Future<Either<AppError, String>> withdrawToBank(
+  Future<Either<AppError, WithdrawalResponse>> withdrawToBank(
       WithdrawalModel withdrawalData) async {
     Map<String, dynamic> payload = {
       'amount': withdrawalData.amount,
@@ -225,8 +226,11 @@ class WalletServiceImpl extends WalletDataSource {
     try {
       var raw = await httpProvider.postHttp(
           '${JekawinBaseUrls.walletBaseUrl}withdraw-to-bank', payload);
+
+      WithdrawalResponse res = WithdrawalResponse.fromMap(raw);
+
       if (raw['success']) {
-        return const Right("Withdrawal successful");
+        return  Right(res);
       } else {
         return Left(
             AppError(errorType: AppErrorType.network, message: raw['message']));
@@ -242,6 +246,8 @@ class WalletServiceImpl extends WalletDataSource {
           AppError(errorType: AppErrorType.api, message: "An error occurred"));
     }
   }
+
+
 
   @override
   Future<Either<AppError, String>> paymentLink(
