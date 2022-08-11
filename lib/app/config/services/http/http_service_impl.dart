@@ -65,6 +65,7 @@ class HttpServiceImpl extends HttpService {
         ),
       );
     } on DioError catch (e) {
+
       if (dotenv.get('APP_DEBUG') == 'true') {
         getLogger().e(
             'HttpService: Failed to GET $fullRoute: Error message: ${e.message}');
@@ -74,7 +75,10 @@ class HttpServiceImpl extends HttpService {
         debugPrint('Http response data is: ${e.response?.data}');
       }
 
-      if (e.response?.statusCode == 401) {
+      if (e.response?.statusCode == 400) {
+        throw NetworkException(e.response?.statusMessage??"");
+
+      }  if (e.response?.statusCode == 401) {
         throw NetworkException(e.message);
 
       }
@@ -125,8 +129,8 @@ class HttpServiceImpl extends HttpService {
       getLogger().e('HttpService: Failed to POST ${e.message}');
       debugPrint('Http response data is: ${e.response?.data}');
       throw NetworkException(e.response?.data != null
-          ? e.response?.data[0]?? e.message
-          : e.message);
+          ? e.response?.data[0]?? "${e.response?.data['message']}"
+          :"${e.response?.data['message']}");
     }
 
     network_utils.checkForNetworkExceptions(response);
