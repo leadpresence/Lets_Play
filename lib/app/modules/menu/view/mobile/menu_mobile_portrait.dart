@@ -50,7 +50,7 @@ class MenuMobilePortrait extends StatelessWidget {
                     ),
                     menuListTile(
                       onTap: () => Get.to(
-                        () => const RedeemPrizesMobilePortrait(),
+                        () => RedeemPrizesMobilePortrait(),
                         transition: Transition.cupertino,
                       ),
                       icon: 'assets/svgs/gift.svg',

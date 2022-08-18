@@ -19,8 +19,6 @@ class NotificationController extends GetxController {
       if (updateRes.statusCode == 200 || updateRes.statusCode == 201) {
         isLoading.value = false;
       } else {
-        print(
-            'Response.statusCode != 200: \n${NotificationsModel.fromJson(updateRes.data).message}');
         BotToast.showSimpleNotification(
           title: NotificationsModel.fromJson(updateRes.data).toString(),
         );
@@ -28,14 +26,12 @@ class NotificationController extends GetxController {
       }
       return responseData;
     } catch (e) {
-      print(e.toString());
       BotToast.showText(
         text: "An error occurred. Please try again. $e",
       );
       isLoading.value = false;
     }
     return responseData;
-    // return body;
   }
 
   Future<NotificationDetailModel?> getNotificationDetail(Key? k, nId) async {

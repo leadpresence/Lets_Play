@@ -102,7 +102,6 @@ class AddBankController extends GetxController {
         accountName, bankName, accountNumber, bankCode);
     response.fold((l) {
       isLoading.value = false;
-
       Get.to(() => SuccessOrFailureMobileView(
             msg: l.message,
             success: false,
