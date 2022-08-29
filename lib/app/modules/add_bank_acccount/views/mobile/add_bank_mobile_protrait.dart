@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:jekawin_mobile_flutter/app/modules/add_bank_acccount/controllers/add_bank_controller.dart';
@@ -21,6 +21,23 @@ class AddBankMobilePortrait extends GetView<AddBankController> {
 
     // Initial Selected Value
     return Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.white,
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 16.0),
+            child: IconButton(
+              splashRadius: 24,
+              icon: SvgPicture.asset(
+                'assets/svgs/chevronLeft.svg',
+                color: const Color(0xff12121D),
+              ),
+              onPressed: () {
+                Get.back();
+              },
+            ),
+          ),
+        ),
         body: SingleChildScrollView(
             child: Form(
       key: controller.addBankFormKey,
