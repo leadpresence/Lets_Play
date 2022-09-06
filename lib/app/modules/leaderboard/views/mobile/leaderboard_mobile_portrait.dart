@@ -9,6 +9,7 @@ import 'package:jekawin_mobile_flutter/app/modules/leaderboard/controllers/leade
 import 'package:jekawin_mobile_flutter/app/utils/helpers/text_helper.dart';
 import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../widgets/slide_in_animation.dart';
+import '../../../e_shop/views/mobile/e_shop_saved_items_mobile_portrait.dart';
 import '../../models/leader_board_response.dart';
 
 class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
