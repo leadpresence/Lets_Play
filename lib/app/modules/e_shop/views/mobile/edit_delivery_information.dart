@@ -1,15 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:jekawin_mobile_flutter/app/modules/e_shop/views/mobile/e_shop_make_payment.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import '../../../../config/themes/app_theme_constants.dart';
-import '../../../../widgets/custom_large_button.dart';
 import '../../../../widgets/fade_in_animations.dart';
 import '../../controllers/e_shop_controller.dart';
 
