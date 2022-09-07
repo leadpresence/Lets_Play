@@ -201,7 +201,7 @@ class EShopMobilePortrait extends GetView<EShopController> {
                                   height: 15,
                                 ),
                                 onPressed: () {
-                                  Get.to(() => MyCart(),
+                                  Get.to(() => EShopSavedItemsMobileView(),
                                       transition: Transition.fadeIn);
                                 },
                               ),
