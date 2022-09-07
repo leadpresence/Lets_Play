@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,25 +18,6 @@ class MyCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(
-          left: 24.0,
-          right: 24.0,
-          bottom: 24.0,
-          top: 8.0,
-        ),
-        child: Expanded(
-          child: CustomButton(
-            onPressed: () {
-              Get.to(
-                () => EShopMakePaymentMobileView(),
-                transition: Transition.cupertino,
-              );
-            },
-            buttonText: 'Checkout',
-          ),
-        ),
-      ),
       backgroundColor: Colors.white,
       body: RefreshIndicator(
         color: const Color(0xFFFE7A01),
@@ -109,13 +91,16 @@ class MyCart extends StatelessWidget {
                                   child: Padding(
                                     padding: const EdgeInsets.only(top: 104.0),
                                     child: Text(
-                                        "Snapshot has error: ${snapshot.hasError.toString()}"),
+                                      "Snapshot has error: ${snapshot.hasError.toString()}",
+                                    ),
                                   ),
                                 );
                               } else if (snapshot.hasData) {
                                 MyCartModel? data = snapshot.data!;
                                 return data.body!.carts!.isEmpty
-                                    ? SizedBox(
+                                    ? Container(
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 12.0),
                                         height: Get.height * .7,
                                         child: Column(
                                           mainAxisAlignment:
@@ -173,63 +158,116 @@ class MyCart extends StatelessWidget {
                                                     milliseconds: 200),
                                                 child: InkWell(
                                                   onTap: () => {},
-                                                  child: cartItem(
-                                                    color:
-                                                        const Color(0XFFFFF7EC),
-                                                    message: data.body!
-                                                        .carts![position].title,
-                                                    timeAgo: data.body!
-                                                        .carts![position].amount
-                                                        .toString(),
-                                                    image: data.body!
-                                                        .carts![position].image,
-                                                    quantity: data
-                                                        .body!
-                                                        .carts![position]
-                                                        .quantity
-                                                        .toString(),
-                                                    onTapRemove: () {
-                                                      eShopController
-                                                              .quantity.value =
-                                                          data
-                                                              .body!
-                                                              .carts![position]
-                                                              .quantity
-                                                              .toString();
-                                                      eShopController.updateType
-                                                          .value = 'Remove';
-                                                      eShopController
-                                                          .updateItemQuantityInCart(
-                                                              id: data
+                                                  child: Slidable(
+                                                    key: const ValueKey(0),
+                                                    endActionPane: ActionPane(
+                                                      motion:
+                                                          const ScrollMotion(),
+                                                      dismissible:
+                                                          DismissiblePane(
+                                                        onDismissed: () {
+                                                          eShopController
+                                                              .removeFromCart(
+                                                            data
+                                                                .body!
+                                                                .carts![
+                                                                    position]
+                                                                .id,
+                                                          );
+                                                        },
+                                                      ),
+                                                      children: [
+                                                        SlidableAction(
+                                                          onPressed: (val) {
+                                                            eShopController
+                                                                .removeFromCart(
+                                                              data
                                                                   .body!
                                                                   .carts![
                                                                       position]
-                                                                  .id);
-                                                    },
-                                                    onTapAdd: () {
-                                                      eShopController
-                                                              .quantity.value =
-                                                          data
-                                                              .body!
-                                                              .carts![position]
-                                                              .quantity
-                                                              .toString();
-                                                      eShopController.updateType
-                                                          .value = 'Add';
-                                                      eShopController
-                                                          .updateItemQuantityInCart(
-                                                              id: data
-                                                                  .body!
-                                                                  .carts![
-                                                                      position]
-                                                                  .id);
-                                                    },
-                                                    onHeartPressed: () =>
+                                                                  .id,
+                                                            );
+                                                          },
+                                                          backgroundColor:
+                                                              Colors
+                                                                  .red.shade600,
+                                                          foregroundColor:
+                                                              Colors.white,
+                                                          icon: Icons.delete,
+                                                          label: 'Delete',
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    child: cartItem(
+                                                      color: const Color(
+                                                          0XFFFFF7EC),
+                                                      message: data
+                                                          .body!
+                                                          .carts![position]
+                                                          .title,
+                                                      timeAgo: data
+                                                          .body!
+                                                          .carts![position]
+                                                          .amount
+                                                          .toString(),
+                                                      image: data
+                                                          .body!
+                                                          .carts![position]
+                                                          .image,
+                                                      quantity: data
+                                                          .body!
+                                                          .carts![position]
+                                                          .quantity
+                                                          .toString(),
+                                                      onTapRemove: () {
+                                                        eShopController.quantity
+                                                                .value =
+                                                            data
+                                                                .body!
+                                                                .carts![
+                                                                    position]
+                                                                .quantity
+                                                                .toString();
                                                         eShopController
-                                                            .addToWishList(
-                                                      key,
-                                                      productId: data.body!
-                                                          .carts![position].product,
+                                                            .updateType
+                                                            .value = 'Remove';
+                                                        eShopController
+                                                            .updateItemQuantityInCart(
+                                                                id: data
+                                                                    .body!
+                                                                    .carts![
+                                                                        position]
+                                                                    .id);
+                                                      },
+                                                      onTapAdd: () {
+                                                        eShopController.quantity
+                                                                .value =
+                                                            data
+                                                                .body!
+                                                                .carts![
+                                                                    position]
+                                                                .quantity
+                                                                .toString();
+                                                        eShopController
+                                                            .updateType
+                                                            .value = 'Add';
+                                                        eShopController
+                                                            .updateItemQuantityInCart(
+                                                                id: data
+                                                                    .body!
+                                                                    .carts![
+                                                                        position]
+                                                                    .id);
+                                                      },
+                                                      onHeartPressed: () =>
+                                                          eShopController
+                                                              .addToWishList(
+                                                        key,
+                                                        productId: data
+                                                            .body!
+                                                            .carts![position]
+                                                            .product,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -261,6 +299,27 @@ class MyCart extends StatelessWidget {
                                                   ),
                                                 )
                                               ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 12.0,
+                                              right: 12.0,
+                                              bottom: 24.0,
+                                              top: 60.0,
+                                            ),
+                                            child: Expanded(
+                                              child: CustomButton(
+                                                onPressed: () {
+                                                  Get.to(
+                                                    () =>
+                                                        EShopMakePaymentMobileView(),
+                                                    transition:
+                                                        Transition.cupertino,
+                                                  );
+                                                },
+                                                buttonText: 'Checkout',
+                                              ),
                                             ),
                                           ),
                                         ],
