@@ -37,7 +37,7 @@ class MyGamesController extends GetxController {
       }
     } catch (e) {
       if (kDebugMode) {
-        print(e.toString());
+     
       }
     }
     return body;

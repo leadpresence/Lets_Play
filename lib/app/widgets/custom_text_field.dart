@@ -17,7 +17,7 @@ class CustomTextField extends StatefulWidget {
     this.width,
     this.keyboardType = TextInputType.text,
     this.hintText = '',
-    this.maxLength=600,
+    this.maxLength = 600,
     this.isPasswordField = false,
     this.errorText = '',
     this.onSaved,
@@ -83,7 +83,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
       width: widget.width ?? Get.width,
       child: TextFormField(
         maxLength: widget.maxLength,
-
         readOnly: widget.readOnly,
         focusNode: _focusNode,
         textInputAction: widget.textInputAction,
@@ -113,12 +112,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
           prefixIcon: widget.prefixIcon == ''
               ? null
               : Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SvgPicture.asset(
-                  widget.prefixIcon,
-                  color: Colors.black,
+                  padding: const EdgeInsets.all(8.0),
+                  child: SvgPicture.asset(
+                    widget.prefixIcon,
+                    color: Colors.black,
+                  ),
                 ),
-              ),
           suffixIcon: widget.suffixIcon == ''
               ? null
               : GestureDetector(
@@ -146,9 +145,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
               fontWeight:
                   _focusNode.hasFocus ? FontWeight.w600 : FontWeight.w600),
           hintStyle: TextStyle(
-              fontSize: 12,
-              color: Colors.black26.withOpacity(.45),
-              fontWeight: FontWeight.w500),
+            fontSize: 12,
+            color: Colors.black26.withOpacity(.45),
+            fontWeight: FontWeight.w500,
+          ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),
             borderSide: const BorderSide(
@@ -159,7 +159,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),
             borderSide: BorderSide(
-              color: Colors.black26.withOpacity(.3),
+              color: Colors.black26.withOpacity(.2),
               width: 1,
             ),
           ),

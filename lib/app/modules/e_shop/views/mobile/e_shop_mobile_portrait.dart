@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:jekawin_mobile_flutter/app/modules/e_shop/controllers/e_shop_controller.dart';
+import 'package:jekawin_mobile_flutter/app/modules/e_shop/models/e_shop_default_page_model.dart';
 import 'package:jekawin_mobile_flutter/app/modules/e_shop/views/mobile/e_shop_details_mobile_portrait.dart';
+import 'package:jekawin_mobile_flutter/app/modules/e_shop/views/mobile/search_product.dart';
 import '../widgets/category_circle_avatar.dart';
+import './my_cart.dart';
+import 'e_shop_saved_items_mobile_portrait.dart';
 
 class EShopMobilePortrait extends GetView<EShopController> {
-  const EShopMobilePortrait({Key? key}) : super(key: key);
+  EShopMobilePortrait({Key? key}) : super(key: key);
+
+  final EShopController eShopController = Get.put(EShopController());
 
   @override
   Widget build(BuildContext context) {
@@ -15,227 +21,395 @@ class EShopMobilePortrait extends GetView<EShopController> {
     final double itemWidth = size.width / 2;
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Stack(
-        children: [
-          ListView(
-            shrinkWrap: true,
-            physics: const ScrollPhysics(),
-            padding: EdgeInsets.zero,
-            children: [
-              const SizedBox(
-                height: 124.0,
-              ),
-              SizedBox(
-                height: 100,
+      body: FutureBuilder<EShopHomeModel?>(
+        future: eShopController.getEShopDefaultPageController(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Center(
+              child: SizedBox(
                 width: Get.width,
-                child: ListView.builder(
-                  // itemCount: upcomingMovies.length,
-                  itemCount: 4,
-                  // controller: pageController2,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    top: 150.0,
                   ),
-                  scrollDirection: Axis.horizontal,
+                  child: Text(
+                    snapshot.error.toString(),
+                    style: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 24,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            );
+          } else if (snapshot.hasData) {
+            EShopHomeModel? eShopHomeData = snapshot.data;
+            return Stack(
+              children: [
+                ListView(
+                  shrinkWrap: true,
                   physics: const ScrollPhysics(),
-                  // allowImplicitScrolling: true,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Row(
+                  padding: EdgeInsets.zero,
+                  children: [
+                    const SizedBox(
+                      height: 124.0,
+                    ),
+                    SizedBox(
+                      height: 100,
+                      width: Get.width,
+                      child: ListView.builder(
+                        // itemCount: upcomingMovies.length,
+                        itemCount: eShopHomeData!.data!.categories!.length,
+                        // controller: pageController2,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                        ),
+                        scrollDirection: Axis.horizontal,
+                        physics: const ScrollPhysics(),
+                        // allowImplicitScrolling: true,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Row(
+                            children: [
+                              for (int i = 0;
+                                  i < eShopHomeData!.data!.categories!.length;
+                                  i++)
+                                InkWell(
+                                  splashColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () {
+                                    // Get.to(MovieDetail(
+                                    //   data: upcomingMovies[index],
+                                    // ));
+                                  },
+                                  child: categoryCircleAvatar(context,
+                                      image: eShopHomeData!
+                                          .data!.categories![i].imageUrl
+                                          .split("s3")[0],
+                                      category: eShopHomeData!
+                                          .data!.categories![i].title),
+                                ),
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 24.0,
+                        right: 24.0,
+                        top: 20.0,
+                      ),
+                      child: Text(
+                        eShopHomeData!.data!.defaultCategoryTitle,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w200,
+                          color: Color(0XFF212224),
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                    GridView.count(
+                      childAspectRatio: (itemWidth / itemHeight),
+                      controller: ScrollController(keepScrollOffset: false),
+                      shrinkWrap: true,
+                      semanticChildCount:
+                          eShopHomeData!.data!.categories!.length,
+                      scrollDirection: Axis.vertical,
+                      crossAxisCount: 2,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12.0,
+                        vertical: 8.0,
+                      ),
                       children: [
-                        InkWell(
-                          splashColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () {
-                            // Get.to(MovieDetail(
-                            //   data: upcomingMovies[index],
-                            // ));
+                        for (int i = 0;
+                            i < eShopHomeData!.data!.products!.length;
+                            i++)
+                          newCollectionsCard(
+                            context,
+                            image: eShopHomeData!.data!.products![i].images![0],
+                            itemAmount:
+                                "₦ ${eShopHomeData!.data!.products![i].price.toString()}",
+                            itemName: eShopHomeData!.data!.products![i].title,
+                            onTap: () => Get.to(
+                              () => EShopDetailsMobilePortrait(
+                                productDetail:
+                                    eShopHomeData!.data!.products![i],
+                              ),
+                              transition: Transition.cupertino,
+                            ),
+                            onHeartTap: () => eShopController.addToWishList(
+                              key,
+                              productId: eShopHomeData!.data!.products![i].id,
+                            ),
+                          ),
+                      ],
+                    ),
+                  ],
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12.0,
+                    vertical: 8.0,
+                  ),
+                  decoration: const BoxDecoration(
+                    color: Color(0xffFE7A01),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(42),
+                      bottomRight: Radius.circular(42),
+                    ),
+                  ),
+                  height: 108,
+                  width: Get.width,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 36.0,
+                      right: 12.0,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          splashRadius: 24,
+                          padding: EdgeInsets.zero,
+                          icon: SvgPicture.asset(
+                            'assets/svgs/bx_search-alt.svg',
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            Get.to(
+                              () => SearchProductMobilePortrait(),
+                              transition: Transition.fadeIn,
+                            );
                           },
-                          child: categoryCircleAvatar(context,
-                              image:
-                                  'https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/61/959583/2.jpg?6604',
-                              category: 'Popular'),
                         ),
-                        InkWell(
-                          splashColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () {
-                            // Get.to(MovieDetail(
-                            //   data: upcomingMovies[index],
-                            // ));
-                          },
-                          child: categoryCircleAvatar(context,
-                              image:
-                                  'https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/30/169556/1.jpg?6684',
-                              category: 'Most Recent'),
-                        ),
-                        InkWell(
-                          splashColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () {
-                            // Get.to(MovieDetail(
-                            //   data: upcomingMovies[index],
-                            // ));
-                          },
-                          child: categoryCircleAvatar(context,
-                              image:
-                                  'https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/34/682796/1.jpg?1168',
-                              category: 'Ladies'),
-                        ),
-                        InkWell(
-                          splashColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () {
-                            // Get.to(MovieDetail(
-                            //   data: upcomingMovies[index],
-                            // ));
-                          },
-                          child: categoryCircleAvatar(context,
-                              image:
-                                  'https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/96/161326/1.jpg?6433',
-                              category: 'Babies'),
+                        Row(
+                          children: [
+                            Container(
+                              height: 26,
+                              width: 26,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(4)),
+                              child: IconButton(
+                                color: Colors.white,
+                                splashRadius: 24,
+                                padding: EdgeInsets.zero,
+                                icon: SvgPicture.asset(
+                                  'assets/svgs/heart_fill.svg',
+                                  height: 15,
+                                ),
+                                onPressed: () {
+                                  Get.to(() => MyCart(),
+                                      transition: Transition.fadeIn);
+                                },
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Container(
+                              height: 26,
+                              width: 26,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(4)),
+                              child: IconButton(
+                                color: Colors.white,
+                                splashRadius: 24,
+                                padding: EdgeInsets.zero,
+                                icon: SvgPicture.asset(
+                                  'assets/svgs/clarity_shopping-cart-line.svg',
+                                  color: const Color(0xffFE7A01),
+                                  height: 18,
+                                ),
+                                onPressed: () {
+                                  Get.to(() => MyCart(),
+                                      transition: Transition.fadeIn);
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       ],
-                    );
-                  },
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(
-                  left: 24.0,
-                  right: 24.0,
-                  top: 20.0,
-                ),
-                child: Text(
-                  'New collections',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w200,
-                    color: Color(0XFF212224),
-                    fontSize: 20,
+                    ),
                   ),
                 ),
-              ),
-              GridView.count(
-                childAspectRatio: (itemWidth / itemHeight),
-                controller: ScrollController(keepScrollOffset: false),
+              ],
+            );
+          }
+          return Stack(
+            children: [
+              ListView(
                 shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                crossAxisCount: 2,
+                physics: const ScrollPhysics(),
+                padding: EdgeInsets.zero,
+                children: [
+                  const SizedBox(
+                    height: 124.0,
+                  ),
+                  SizedBox(
+                    height: 100,
+                    width: Get.width,
+                    child: ListView.builder(
+                      // itemCount: upcomingMovies.length,
+                      itemCount: 2,
+                      // controller: pageController2,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                      ),
+                      scrollDirection: Axis.horizontal,
+                      physics: const ScrollPhysics(),
+                      // allowImplicitScrolling: true,
+                      itemBuilder: (BuildContext context, int index) {
+                        return InkWell(
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () {},
+                          child: categoryCircleAvatar(
+                            context,
+                            image:
+                                "https://jekawin/s3_image_upload_hoodie-grey.jpeg",
+                            category: '',
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 24.0,
+                      right: 24.0,
+                      top: 20.0,
+                    ),
+                    child: Container(
+                      width: 200,
+                      color: Colors.black.withOpacity(.04),
+                      child: const Text(
+                        'some text',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w200,
+                          color: Colors.transparent,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ),
+                  GridView.count(
+                    childAspectRatio: (itemWidth / itemHeight),
+                    controller: ScrollController(keepScrollOffset: false),
+                    shrinkWrap: true,
+                    semanticChildCount: 2,
+                    scrollDirection: Axis.vertical,
+                    crossAxisCount: 2,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12.0,
+                      vertical: 8.0,
+                    ),
+                    children: [
+                      for (int i = 0; i < 2; i++)
+                        defaultCollectionCard(
+                          context,
+                          image: '',
+                          itemAmount: "",
+                          itemName: "",
+                          onTap: () => {},
+                        ),
+                    ],
+                  ),
+                ],
+              ),
+              Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 12.0,
                   vertical: 8.0,
                 ),
-                children: [
-                  // snapshot.data!.map(
-                  //   (savedMovie) {
-                  //     return
-                  newCollectionsCard(
-                    context,
-                    image:
-                        'https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/43/320107/1.jpg?3064',
-                    itemAmount: '₦ 50.99',
-                    itemName: 'Short Black',
+                decoration: const BoxDecoration(
+                  color: Color(0xffFE7A01),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(42),
+                    bottomRight: Radius.circular(42),
                   ),
-                  newCollectionsCard(
-                    context,
-                    image:
-                        'https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/40/268383/1.jpg?6317',
-                    itemAmount: '₦ 250.99',
-                    itemName: 'Wine Evening Gown',
+                ),
+                height: 108,
+                width: Get.width,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    top: 36.0,
+                    right: 12.0,
                   ),
-                  newCollectionsCard(
-                    context,
-                    image:
-                        'https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/12/523583/1.jpg?4633',
-                    itemAmount: '₦ 43.99',
-                    itemName: 'Short White',
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        splashRadius: 24,
+                        padding: EdgeInsets.zero,
+                        icon: SvgPicture.asset(
+                          'assets/svgs/bx_search-alt.svg',
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          Get.to(() => SearchProductMobilePortrait(),
+                              transition: Transition.fadeIn);
+                        },
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            height: 26,
+                            width: 26,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(4)),
+                            child: IconButton(
+                              color: Colors.white,
+                              splashRadius: 24,
+                              padding: EdgeInsets.zero,
+                              icon: SvgPicture.asset(
+                                'assets/svgs/heart_fill.svg',
+                                height: 15,
+                              ),
+                              onPressed: () {
+                                Get.to(() => EShopSavedItemsMobileView(),
+                                    transition: Transition.fadeIn);
+                              },
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Container(
+                            height: 26,
+                            width: 26,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(4)),
+                            child: IconButton(
+                              color: Colors.white,
+                              splashRadius: 24,
+                              padding: EdgeInsets.zero,
+                              icon: SvgPicture.asset(
+                                'assets/svgs/clarity_shopping-cart-line.svg',
+                                color: const Color(0xffFE7A01),
+                                height: 18,
+                              ),
+                              onPressed: () {
+                                Get.to(() => MyCart(),
+                                    transition: Transition.fadeIn);
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  newCollectionsCard(
-                    context,
-                    image:
-                        'https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/82/528996/1.jpg?7513',
-                    itemAmount: '₦ 250.99',
-                    itemName: 'Long Evening Gown',
-                  ),
-                  newCollectionsCard(
-                    context,
-                    image:
-                        'https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/38/790838/1.jpg?2626',
-                    itemAmount: '₦ 73.91',
-                    itemName: 'Jelly Slick black',
-                  ),
-                  newCollectionsCard(
-                    context,
-                    image:
-                        'https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/37/268383/1.jpg?9312',
-                    itemAmount: '₦ 134.99',
-                    itemName: 'Wedding Evening Gown',
-                  ),
-                  newCollectionsCard(
-                    context,
-                    image:
-                        'https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/93/3927501/1.jpg?7126',
-                    itemAmount: '₦ 25.99',
-                    itemName: 'Long Evening Gown',
-                  ),
-                  newCollectionsCard(
-                    context,
-                    image:
-                        'https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/70/444056/1.jpg?1654',
-                    itemAmount: '₦ 85.99',
-                    itemName: 'Sandy Still Blue',
-                  ),
-                  newCollectionsCard(
-                    context,
-                    image:
-                        'https://ng.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/88/531276/1.jpg?7571',
-                    itemAmount: '₦ 25.99',
-                    itemName: 'Short Evening Gown',
-                  ),
-                ],
-                //   },
-                // ).toList(),
+                ),
               ),
             ],
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 12.0,
-              vertical: 8.0,
-            ),
-            decoration: const BoxDecoration(
-              color: Colors.orange,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(42),
-                bottomRight: Radius.circular(42),
-              ),
-            ),
-            height: 98,
-            width: Get.width,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                IconButton(
-                  splashRadius: 24,
-                  padding: EdgeInsets.zero,
-                  icon: SvgPicture.asset(
-                    'assets/svgs/bx_search-alt.svg',
-                    color: Colors.white,
-                  ),
-                  onPressed: () {},
-                ),
-                IconButton(
-                  splashRadius: 24,
-                  padding: EdgeInsets.zero,
-                  icon: SvgPicture.asset(
-                    'assets/svgs/clarity_shopping-cart-line.svg',
-                    color: Colors.white,
-                  ),
-                  onPressed: () {},
-                ),
-              ],
-            ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
@@ -245,16 +419,11 @@ class EShopMobilePortrait extends GetView<EShopController> {
     image,
     itemName,
     itemAmount,
+    onTap,
+    onHeartTap,
   }) {
     return GestureDetector(
-      onTap: () => Get.to(
-        () => EShopDetailsMobilePortrait(
-          image: image,
-          itemName: itemName,
-          itemAmount: itemAmount,
-        ),
-        transition: Transition.cupertino,
-      ),
+      onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.only(
           left: 12,
@@ -313,8 +482,11 @@ class EShopMobilePortrait extends GetView<EShopController> {
                     fontSize: 14,
                   ),
                 ),
-                SvgPicture.asset(
-                  'assets/svgs/Group.svg',
+                InkWell(
+                  onTap: onHeartTap,
+                  child: SvgPicture.asset(
+                    'assets/svgs/Group.svg',
+                  ),
                 ),
               ],
             ),
@@ -326,6 +498,77 @@ class EShopMobilePortrait extends GetView<EShopController> {
               style: const TextStyle(
                 fontSize: 12,
                 color: Color(0XFF212224),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  defaultCollectionCard(
+    context, {
+    image,
+    itemName,
+    itemAmount,
+    onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.only(
+          left: 12,
+          right: 12,
+          bottom: 12,
+          top: 12,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height * .232,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    color: Colors.black.withOpacity(.04),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  color: Colors.black.withOpacity(.04),
+                  child: const Text(
+                    'some text',
+                    style: TextStyle(
+                      color: Colors.transparent,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+                SvgPicture.asset(
+                  'assets/svgs/Group.svg',
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 3,
+            ),
+            Container(
+              color: Colors.black.withOpacity(.04),
+              child: const Text(
+                'some text',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.transparent,
+                ),
               ),
             ),
           ],

@@ -155,7 +155,7 @@ class JackpotGamesController extends GetxController {
     } catch (e) {
       isLoading.value = false;
       if (kDebugMode) {
-        print(e.toString());
+     
       }
     }
   }

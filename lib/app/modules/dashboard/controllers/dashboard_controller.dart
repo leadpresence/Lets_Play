@@ -64,7 +64,7 @@ class DashboardController extends GetxController
       }
     } catch (e) {
       if (kDebugMode) {
-        print(e.toString());
+     
       }
     }
     return body;

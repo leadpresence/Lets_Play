@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:jekawin_mobile_flutter/app/modules/jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
 
 class SuccessOrFailureMobileView extends StatelessWidget {

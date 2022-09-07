@@ -48,19 +48,24 @@ borderLageButton(String text, Function onpressed, BuildContext context) =>
 
 class CustomButton extends StatelessWidget {
   final onPressed, hasIcon, buttonText, hasBorder, height, isLoading;
-
+  final double fontSize, borderRadius;
   final Color buttonColor, buttonTextColor, borderColor;
+  final Color? shadowColor, onPrimary;
   const CustomButton({
     Key? key,
     this.onPressed,
     this.hasIcon = false,
     this.buttonText = "Button Text",
+    this.fontSize = 14,
+    this.borderRadius = 12,
     this.hasBorder = false,
     this.buttonColor = const Color(0xFFFE7A01),
     this.buttonTextColor = const Color(0xffffffff),
     this.height,
     this.isLoading = false,
     this.borderColor = const Color(0xff543884),
+    this.shadowColor,
+    this.onPrimary,
   }) : super(key: key);
 
   @override
@@ -76,8 +81,8 @@ class CustomButton extends StatelessWidget {
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
             primary: buttonColor,
-            shadowColor: Colors.white,
-            onPrimary: Colors.white,
+            shadowColor: shadowColor ?? Colors.white,
+            onPrimary: onPrimary ?? Colors.white,
             onSurface: Colors.white,
             elevation: 0,
             splashFactory: NoSplash.splashFactory,
@@ -85,7 +90,7 @@ class CustomButton extends StatelessWidget {
               side: hasBorder
                   ? BorderSide(color: borderColor, width: 1)
                   : BorderSide.none,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(borderRadius),
             ),
           ),
           child: Row(
@@ -116,8 +121,9 @@ class CustomButton extends StatelessWidget {
                       style: GoogleFonts.mulish(
                         color: buttonTextColor,
                         fontWeight: FontWeight.bold,
+                        fontSize: fontSize,
                       ),
-                    )
+                    ),
             ],
           ),
         ),
