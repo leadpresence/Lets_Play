@@ -16,6 +16,7 @@ class WalletHomeController extends GetxController {
   var balance = 0.obs;
   var rewardPoints = 0.obs;
   var wins = 0.obs;
+  UserWalletModel? walletBody;
   Rx<List<TransactionsModel>> transactions = Rx<List<TransactionsModel>>([]);
 
   var trnxsList = <TransactionsModel>[].obs;
@@ -40,6 +41,7 @@ class WalletHomeController extends GetxController {
   Future<UserWalletModel?> getWalletAsync() async {
     UserWalletModel userWallet = await walletService.userWalletAsync();
     try {
+      walletBody = userWallet;
       return userWallet;
     } catch (e) {
       print("Error retrieving Wallet");

@@ -50,6 +50,7 @@ class CustomButton extends StatelessWidget {
   final onPressed, hasIcon, buttonText, hasBorder, height, isLoading;
   final double fontSize, borderRadius;
   final Color buttonColor, buttonTextColor, borderColor;
+  final Color? shadowColor, onPrimary;
   const CustomButton({
     Key? key,
     this.onPressed,
@@ -63,6 +64,8 @@ class CustomButton extends StatelessWidget {
     this.height,
     this.isLoading = false,
     this.borderColor = const Color(0xff543884),
+    this.shadowColor,
+    this.onPrimary,
   }) : super(key: key);
 
   @override
@@ -78,8 +81,8 @@ class CustomButton extends StatelessWidget {
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
             primary: buttonColor,
-            shadowColor: Colors.white,
-            onPrimary: Colors.white,
+            shadowColor: shadowColor ?? Colors.white,
+            onPrimary: onPrimary ?? Colors.white,
             onSurface: Colors.white,
             elevation: 0,
             splashFactory: NoSplash.splashFactory,

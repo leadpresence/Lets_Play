@@ -189,6 +189,8 @@ class JackpotGamesDetailsMobilePortrait extends StatelessWidget {
                                 ],
                               ),
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 mainAxisSize: MainAxisSize
                                     .min, // To make the card compact
                                 children: [
@@ -219,7 +221,12 @@ class JackpotGamesDetailsMobilePortrait extends StatelessWidget {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 16.0),
                                     child: Text(
-                                        'You\'ll be deducted ₦$gameCost for this operation'),
+                                      'You\'ll be deducted ₦$gameCost for this operation',
+                                      style: const TextStyle(
+                                        height: 1.8,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
                                   ),
                                   const SizedBox(height: 24.0),
                                   Obx(

@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -8,13 +9,8 @@ import '../../../fund_wallet/controllers/fund_wallet_controller.dart';
 import '../../../jekawin_bottom_tabs/views/jakawin_bottom_tabs.dart';
 
 class EShopDebitCardPaymentMobileView extends StatelessWidget {
-  final String image, itemName, itemAmount;
-  EShopDebitCardPaymentMobileView(this.image, this.itemName, this.itemAmount,
-      {Key? key})
-      : super(key: key);
-
+  EShopDebitCardPaymentMobileView({Key? key}) : super(key: key);
   final FundWalletController controller = Get.put(FundWalletController());
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,6 +45,7 @@ class EShopDebitCardPaymentMobileView extends StatelessWidget {
                     left: 24.0,
                     right: 12.0,
                     bottom: 12.0,
+                    top: 16.0,
                   ),
                   child: Text(
                     'Pay With',
@@ -94,9 +91,9 @@ class EShopDebitCardPaymentMobileView extends StatelessWidget {
                                   Icons.check_circle,
                                   color: Colors.green,
                                 )
-                              : const Icon(
+                              : Icon(
                                   Icons.check_circle,
-                                  color: Colors.grey,
+                                  color: Colors.grey.shade300,
                                 )
                         ],
                       ),
@@ -136,9 +133,9 @@ class EShopDebitCardPaymentMobileView extends StatelessWidget {
                                   Icons.check_circle,
                                   color: Colors.green,
                                 )
-                              : const Icon(
+                              : Icon(
                                   Icons.check_circle,
-                                  color: Colors.grey,
+                                  color: Colors.grey.shade300,
                                 )
                         ],
                       ),
@@ -153,13 +150,8 @@ class EShopDebitCardPaymentMobileView extends StatelessWidget {
                   child: CustomButton(
                     hasIcon: false,
                     buttonText: 'Continue',
-                    onPressed: () => Get.to(
-                      () =>  SuccessOrFailureMobileView(
-                        msg: 'Your order was successful',
-                        className: JekawinBottomTabs(
-                          tabIndex: 3,
-                        ),
-                      ),
+                    onPressed: () => BotToast.showText(
+                      text: 'Coming soon',
                     ),
                   ),
                 ),

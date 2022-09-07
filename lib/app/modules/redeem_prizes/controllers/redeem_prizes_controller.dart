@@ -85,7 +85,6 @@ class RedeemPrizesController extends GetxController {
       checkDelivery.value = false;
       selectedDeliveryOption = 'pick up';
     }
-
     update();
   }
 

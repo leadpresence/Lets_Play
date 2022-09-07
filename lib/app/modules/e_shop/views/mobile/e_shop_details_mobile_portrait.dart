@@ -4,21 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:jekawin_mobile_flutter/app/modules/e_shop/controllers/e_shop_controller.dart';
-import 'package:jekawin_mobile_flutter/app/modules/e_shop/views/mobile/e_shop_make_payment.dart';
+import 'package:jekawin_mobile_flutter/app/modules/e_shop/views/mobile/my_cart.dart';
 import 'package:jekawin_mobile_flutter/app/widgets/custom_large_button.dart';
-
 import '../../controllers/e_shop_details_controller.dart';
+import '../../models/e_shop_default_page_model.dart';
 
 class EShopDetailsMobilePortrait extends GetView<EShopController> {
   final EShopController eShopController = Get.put(EShopController());
   final EShopDetailsController eShopDetailsController =
       Get.put(EShopDetailsController());
-  final String image, itemAmount, itemName;
+  final productDetail;
   // ignore: use_key_in_widget_constructors
   EShopDetailsMobilePortrait({
-    required this.image,
-    required this.itemAmount,
-    required this.itemName,
+    required this.productDetail,
   });
 
   @override
@@ -33,18 +31,11 @@ class EShopDetailsMobilePortrait extends GetView<EShopController> {
                 child: PageView(
                   controller: eShopController.controller,
                   children: [
-                    Image.network(
-                      image,
-                      fit: BoxFit.cover,
-                    ),
-                    Image.network(
-                      image,
-                      fit: BoxFit.cover,
-                    ),
-                    Image.network(
-                      image,
-                      fit: BoxFit.cover,
-                    ),
+                    for (int i = 0; i < productDetail!.images!.length; i++)
+                      Image.network(
+                        productDetail!.images![i],
+                        fit: BoxFit.cover,
+                      ),
                   ],
                 ),
               ),
@@ -53,26 +44,16 @@ class EShopDetailsMobilePortrait extends GetView<EShopController> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Obx(
-                      () => CircleAvatar(
-                        backgroundColor: controller.color1.value,
-                        radius: Get.height >= 799 ? 3 : 2,
+                    for (int i = 0; i < productDetail!.images!.length; i++)
+                      Obx(
+                        () => Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                          child: CircleAvatar(
+                            backgroundColor: controller.color1.value,
+                            radius: Get.height >= 799 ? 3 : 2,
+                          ),
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 7),
-                    Obx(
-                      () => CircleAvatar(
-                        backgroundColor: controller.color2.value,
-                        radius: Get.height >= 799 ? 3 : 2,
-                      ),
-                    ),
-                    const SizedBox(width: 7),
-                    Obx(
-                      () => CircleAvatar(
-                        backgroundColor: controller.color3.value,
-                        radius: Get.height >= 799 ? 3 : 2,
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -97,6 +78,13 @@ class EShopDetailsMobilePortrait extends GetView<EShopController> {
                   ),
                   onPressed: () {
                     Get.back();
+                    Future.delayed(
+                      const Duration(seconds: 1),
+                      () => {
+                        eShopController.buttonText.value = "Add to cart",
+                        eShopController.isSuccess.value = false,
+                      },
+                    );
                   },
                 ),
                 IconButton(
@@ -105,7 +93,10 @@ class EShopDetailsMobilePortrait extends GetView<EShopController> {
                     'assets/svgs/Group.svg',
                     color: const Color(0xff12121D),
                   ),
-                  onPressed: () {},
+                  onPressed: () => eShopController.addToWishList(
+                    key,
+                    productId: productDetail!.id,
+                  ),
                 ),
               ],
             ),
@@ -131,46 +122,46 @@ class EShopDetailsMobilePortrait extends GetView<EShopController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            SvgPicture.asset('assets/svgs/star_.svg'),
-                            const SizedBox(
-                              width: 4,
-                            ),
-                            SvgPicture.asset('assets/svgs/star_.svg'),
-                            const SizedBox(
-                              width: 4,
-                            ),
-                            SvgPicture.asset('assets/svgs/star_.svg'),
-                            const SizedBox(
-                              width: 4,
-                            ),
-                            SvgPicture.asset('assets/svgs/star_.svg'),
-                            const SizedBox(
-                              width: 4,
-                            ),
-                            SvgPicture.asset(
-                              'assets/svgs/star_.svg',
-                              color: const Color(0xffDADEE3),
-                            ),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            const Text('4.0'),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        // Row(
+                        //   children: [
+                        //     SvgPicture.asset('assets/svgs/star_.svg'),
+                        //     const SizedBox(
+                        //       width: 4,
+                        //     ),
+                        //     SvgPicture.asset('assets/svgs/star_.svg'),
+                        //     const SizedBox(
+                        //       width: 4,
+                        //     ),
+                        //     SvgPicture.asset('assets/svgs/star_.svg'),
+                        //     const SizedBox(
+                        //       width: 4,
+                        //     ),
+                        //     SvgPicture.asset('assets/svgs/star_.svg'),
+                        //     const SizedBox(
+                        //       width: 4,
+                        //     ),
+                        //     SvgPicture.asset(
+                        //       'assets/svgs/star_.svg',
+                        //       color: const Color(0xffDADEE3),
+                        //     ),
+                        //     const SizedBox(
+                        //       width: 8,
+                        //     ),
+                        //     const Text('4.0'),
+                        //   ],
+                        // ),
+                        // const SizedBox(
+                        //   height: 10,
+                        // ),
                         Text(
-                          itemName,
+                          productDetail!.title,
                           style: const TextStyle(fontSize: 18),
                         ),
                         const SizedBox(
                           height: 16,
                         ),
                         Text(
-                          itemAmount,
+                          "₦ ${productDetail!.price.toString()}",
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -181,61 +172,64 @@ class EShopDetailsMobilePortrait extends GetView<EShopController> {
                     ),
                   ),
                   SizedBox(
-                    height: 48,
+                    height: 44,
                     child: GetBuilder<EShopDetailsController>(
                       init: EShopDetailsController(),
                       builder: (context) => ListView.builder(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
-                        itemCount: eShopDetailsController.sizes.length,
+                        itemCount: productDetail!.sizes!.length,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
-                          return Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: InkWell(
-                              onTap: () {
-                                eShopDetailsController.changeSize(
-                                    eShopDetailsController.sizes[index]);
-                                if (kDebugMode) {
-                                  print(
-                                      eShopDetailsController.currentSize.value);
-                                }
-                              },
-                              child: DottedBorder(
-                                color:
-                                    eShopDetailsController.currentSize.value ==
-                                            eShopDetailsController.sizes[index]
-                                        ? const Color(0XFFFE7A01)
-                                        : const Color(0xff747B84),
-                                borderType: BorderType.RRect,
-                                dashPattern:
-                                    eShopDetailsController.currentSize.value ==
-                                            eShopDetailsController.sizes[index]
-                                        ? const [500, 500]
-                                        : const [4, 4],
-                                radius: const Radius.circular(8),
-                                strokeWidth:
-                                    eShopDetailsController.currentSize.value ==
-                                            eShopDetailsController.sizes[index]
-                                        ? 1.5
-                                        : 1.2,
-                                child: SizedBox(
-                                  height: 44,
-                                  width: 64,
-                                  child: Center(
-                                    child: Text(
-                                      eShopDetailsController.sizes[index],
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        color: eShopDetailsController
-                                                    .currentSize.value ==
-                                                eShopDetailsController
-                                                    .sizes[index]
-                                            ? const Color(0XFFFE7A01)
-                                            : const Color(0xff747B84),
-                                        fontWeight: FontWeight.bold,
+                          eShopDetailsController.currentSize.value =
+                              productDetail!.sizes![0];
+                          return Obx(
+                            () => Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: InkWell(
+                                onTap: () {
+                                  eShopDetailsController.currentSize.value =
+                                      productDetail!.sizes![index];
+                                  if (kDebugMode) {
+                                    print(eShopDetailsController
+                                        .currentSize.value);
+                                  }
+                                },
+                                child: DottedBorder(
+                                  color: eShopDetailsController
+                                              .currentSize.value ==
+                                          productDetail!.sizes![index]
+                                      ? const Color(0XFFFE7A01)
+                                      : const Color(0xff747B84),
+                                  borderType: BorderType.RRect,
+                                  dashPattern: eShopDetailsController
+                                              .currentSize.value ==
+                                          productDetail!.sizes![index]
+                                      ? const [500, 500]
+                                      : const [4, 4],
+                                  radius: const Radius.circular(8),
+                                  strokeWidth: eShopDetailsController
+                                              .currentSize.value ==
+                                          productDetail!.sizes![index]
+                                      ? .8
+                                      : .8,
+                                  child: SizedBox(
+                                    height: 44,
+                                    width: 52,
+                                    child: Center(
+                                      child: Text(
+                                        productDetail!.sizes![index],
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          color: eShopDetailsController
+                                                      .currentSize.value ==
+                                                  productDetail!.sizes![index]
+                                              ? const Color(0XFFFE7A01)
+                                              : const Color(0xff747B84),
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -255,20 +249,60 @@ class EShopDetailsMobilePortrait extends GetView<EShopController> {
                     ),
                     child: Column(
                       children: [
-                        CustomButton(
-                          hasIcon: true,
-                          buttonText: 'Add to cart',
-                          onPressed: () => Get.to(
-                            () => EShopMakePaymentMobileView(
-                              image,
-                              itemName,
-                              itemAmount,
-                            ),
+                        Obx(
+                          () => CustomButton(
+                            shadowColor: eShopController.isSuccess.value == true
+                                ? Colors.black
+                                : Colors.white,
+                            onPrimary: eShopController.isSuccess.value == true
+                                ? Colors.black
+                                : Colors.white,
+                            buttonColor: eShopController.isSuccess.value == true
+                                ? Colors.white
+                                : const Color(0xFFFE7A01),
+                            hasBorder: eShopController.isSuccess.value == true
+                                ? true
+                                : false,
+                            borderColor: eShopController.isSuccess.value == true
+                                ? const Color(0xFFFE7A01)
+                                : Colors.white,
+                            hasIcon: eShopController.isSuccess.value == true
+                                ? false
+                                : eShopController.isLoading.value == false
+                                    ? true
+                                    : false,
+                            buttonTextColor:
+                                eShopController.isSuccess.value == true
+                                    ? const Color(0xFFFE7A01)
+                                    : Colors.white,
+                            isLoading: eShopController.isLoading.value,
+                            buttonText: eShopController.buttonText.value,
+                            onPressed: eShopController.isSuccess.value == true
+                                ? () {
+                                    Get.off(() => MyCart(),
+                                        transition: Transition.fadeIn);
+                                    Future.delayed(
+                                      const Duration(seconds: 1),
+                                      () => {
+                                        eShopController.buttonText.value =
+                                            "Add to cart",
+                                        eShopController.isSuccess.value = false,
+                                      },
+                                    );
+                                  }
+                                : () {
+                                    controller.addToCart(
+                                      quantity: 1,
+                                      productId: productDetail!.id,
+                                      currentSize: eShopDetailsController
+                                          .currentSize.value,
+                                    );
+                                  },
                           ),
                         )
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
