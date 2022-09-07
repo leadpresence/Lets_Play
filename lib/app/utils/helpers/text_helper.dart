@@ -20,13 +20,19 @@ class TextUtils {
     }
     return newNumber;
   }
-  String hideNumberPart(String number){
-    String marsk="****";
+
+  String hideNumberPart(String number) {
+    String marsk = "****";
     String newNumber = '';
-    newNumber = number.replaceRange(9, 13, marsk);
+    if (number.length == 13) {
+      newNumber = number.replaceRange(9, 13, marsk);
+    } else if(number.length>13){
+      newNumber = number.replaceRange(9, 13, marsk);
+    }
+    else {
+      newNumber = number;
+    }
     return newNumber;
-
-
   }
 
   String shortDate(DateTime date) {
@@ -55,8 +61,4 @@ class TextUtils {
   Object safeBool(Bool? text) {
     return (text != null) ? text : false;
   }
-
-
 }
-
-
