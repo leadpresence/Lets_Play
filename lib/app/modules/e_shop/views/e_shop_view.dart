@@ -18,15 +18,15 @@ class EShopView extends GetView<EShopController> {
   Widget build(BuildContext context) {
     return ScreenTypeLayout.builder(
       mobile: (_) => OrientationLayoutBuilder(
-        portrait: (_) => const EShopMobilePortrait(),
+        portrait: (_) => EShopMobilePortrait(),
         landscape: (_) =>
-            const EShopMobilePortrait(), // replace with landscape view for mobile
+            EShopMobilePortrait(), // replace with landscape view for mobile
       ),
       tablet: (_) => OrientationLayoutBuilder(
         portrait: (_) =>
-            const EShopMobilePortrait(), // replace with portrait view for tablet
+            EShopMobilePortrait(), // replace with portrait view for tablet
         landscape: (_) =>
-            const EShopMobilePortrait(), // replace with landscape view for tablet
+            EShopMobilePortrait(), // replace with landscape view for tablet
       ),
     );
   }

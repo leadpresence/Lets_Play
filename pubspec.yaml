@@ -44,11 +44,12 @@ dependencies:
   webview_flutter: ^3.0.4
   modal_bottom_sheet:
   aws_s3_plugin_flutter: ^0.0.5
+  flutter_slidable:
 
   #fire_base
-  cloud_firestore: ^3.4.4
-  firebase_core: ^1.20.1
-  firebase_messaging: ^12.0.2
+#  cloud_firestore: ^3.4.4
+#  firebase_core: ^1.20.1
+#  firebase_messaging: ^12.0.2
 
 dev_dependencies:
   flutter_test:

@@ -2,15 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:jekawin_mobile_flutter/app/modules/leaderboard/models/leader_board_response.dart';
 import '../../../config/services/auth_service.dart';
-
-import '../../../config/services/di/di_locator.dart';
 import '../../../utils/helpers/text_helper.dart';
-import '../models/FansMdel.dart';
+// import '../models/FansMdel.dart';
 
 class LeaderBoardController extends GetxController {
   final AuthServiceImpl authService = Get.find<AuthServiceImpl>();
 
-  RxList<FanxtarsModel> fans = RxList<FanxtarsModel>([]);
+  // RxList<FanxtarsModel> fans = RxList<FanxtarsModel>([]);
   final favFormKey = GlobalKey<FormState>();
 
   final fName = TextEditingController();
@@ -71,13 +69,13 @@ class LeaderBoardController extends GetxController {
     super.onInit();
     getLeaderBoard("day");
     showDaily.value = true;
-    fans.bindStream(getFans());
+    // fans.bindStream(getFans());
   }
 
   @override
   void onReady() {
     super.onReady();
-    fans.bindStream(getFans());
+    // fans.bindStream(getFans());
   }
 
   Future<LeaderBoardResponse?> getLeaderBoard(String duration) async {
@@ -96,13 +94,13 @@ class LeaderBoardController extends GetxController {
   @override
   void onClose() {}
 
-  Stream<List<FanxtarsModel>> getFans() {
-    var result = firebaseFirestore.collection(collectionPath).snapshots().map(
-        (query) => query.docs
-            .map((fans) => FanxtarsModel.fromMap(fans.data()))
-            .toList());
-    return result;
-  }
+  // Stream<List<FanxtarsModel>> getFans() {
+  //   var result = firebaseFirestore.collection(collectionPath).snapshots().map(
+  //       (query) => query.docs
+  //           .map((fans) => FanxtarsModel.fromMap(fans.data()))
+  //           .toList());
+  //   return result;
+  // }
 
   favFormValidator(Key? k) {
     if ((GetUtils.isBlank(fName.text)) == true) {
@@ -135,20 +133,19 @@ class LeaderBoardController extends GetxController {
     var favorite = fFavorite.text.toString();
     var city = fCity.text.toString();
     var dateJoined = fDateJoined.text.toString();
-    firebaseFirestore
-        .collection(collectionPath)
-        .add(FanxtarsModel(
-                name: name,
-                phone: phone,
-                age: age,
-                favorite: favorite,
-                city: city,
-                dateJoined: dateJoined)
-            .toMap())
-        .then((value) {
-      print("User Added");
-    }).catchError((error) => print("Failed to add favorites: $error"));
-    ;
+    // firebaseFirestore
+    //     .collection(collectionPath)
+    //     .add(FanxtarsModel(
+    //             name: name,
+    //             phone: phone,
+    //             age: age,
+    //             favorite: favorite,
+    //             city: city,
+    //             dateJoined: dateJoined)
+    //         .toMap())
+    //     .then((value) {
+    //   print("User Added");
+    // }).catchError((error) => print("Failed to add favorites: $error"));
 
     isLoading.value = false;
   }

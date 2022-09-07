@@ -50,7 +50,7 @@ class ClubController extends GetxController {
       }
     } catch (e) {
       if (kDebugMode) {
-        print(e.toString());
+     
       }
     }
     return body;
@@ -96,7 +96,7 @@ class ClubController extends GetxController {
       }
     } catch (e) {
       if (kDebugMode) {
-        print(e.toString());
+     
       }
     }
     return body;

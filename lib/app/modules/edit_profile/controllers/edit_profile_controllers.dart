@@ -278,7 +278,7 @@ class EditProfileController extends GetxController {
       }
     } catch (e) {
       if (kDebugMode) {
-        print(e.toString());
+     
         BotToast.showText(
           text: "An error occurred. Please try again. $e",
         );

@@ -29,7 +29,6 @@ Widget categoryCircleAvatar(
             child: Container(
               height: 48,
               width: 48,
-
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.white12,
@@ -53,7 +52,7 @@ Widget categoryCircleAvatar(
             style: GoogleFonts.mulish(
               color: Colors.black,
               fontWeight: FontWeight.normal,
-              fontSize: 8.5,
+              fontSize: 9,
               letterSpacing: -.2,
             ),
             textAlign: TextAlign.start,
