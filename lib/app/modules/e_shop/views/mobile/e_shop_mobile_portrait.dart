@@ -7,6 +7,7 @@ import 'package:jekawin_mobile_flutter/app/modules/e_shop/views/mobile/e_shop_de
 import 'package:jekawin_mobile_flutter/app/modules/e_shop/views/mobile/search_product.dart';
 import '../widgets/category_circle_avatar.dart';
 import './my_cart.dart';
+import 'e_shop_saved_items_mobile_portrait.dart';
 
 class EShopMobilePortrait extends GetView<EShopController> {
   EShopMobilePortrait({Key? key}) : super(key: key);
@@ -286,7 +287,7 @@ class EShopMobilePortrait extends GetView<EShopController> {
                       width: 200,
                       color: Colors.black.withOpacity(.04),
                       child: const Text(
-                        'ukbliliob',
+                        'some text',
                         style: TextStyle(
                           fontWeight: FontWeight.w200,
                           color: Colors.transparent,
@@ -371,7 +372,7 @@ class EShopMobilePortrait extends GetView<EShopController> {
                                 height: 15,
                               ),
                               onPressed: () {
-                                Get.to(() => MyCart(),
+                                Get.to(() => EShopSavedItemsMobileView(),
                                     transition: Transition.fadeIn);
                               },
                             ),
@@ -545,7 +546,7 @@ class EShopMobilePortrait extends GetView<EShopController> {
                 Container(
                   color: Colors.black.withOpacity(.04),
                   child: const Text(
-                    'na;s fk;alskd',
+                    'some text',
                     style: TextStyle(
                       color: Colors.transparent,
                       fontSize: 14,
@@ -563,7 +564,7 @@ class EShopMobilePortrait extends GetView<EShopController> {
             Container(
               color: Colors.black.withOpacity(.04),
               child: const Text(
-                'uoyejkiuro',
+                'some text',
                 style: TextStyle(
                   fontSize: 12,
                   color: Colors.transparent,

@@ -1,10 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
 import '../../../../widgets/custom_medium_button.dart';
 
 class EShopSavedItemsMobileView extends StatelessWidget {
@@ -103,7 +100,7 @@ class SingleSavedItems extends StatelessWidget {
         top: 12,
       ),
       child: SizedBox(
-        width: screenWidth(context)/16,// * 0.08,
+        width: screenWidth(context) / 16, // * 0.08,
         child: Row(
           children: [
             Column(
@@ -113,14 +110,13 @@ class SingleSavedItems extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.orange.withOpacity(.15),
-
                   ),
-                  width:  MediaQuery.of(context).size.width/3.3,
-                  height: MediaQuery.of(context).size.height/8,
-                  margin: EdgeInsets.all(10),
+                  width: MediaQuery.of(context).size.width / 3.3,
+                  height: MediaQuery.of(context).size.height / 8,
+                  margin: const EdgeInsets.all(10),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
-                    child: Image(
+                    child: const Image(
                       fit: BoxFit.contain,
                       image: NetworkImage(
                         'https://images.unsplash.com/photo-1559828707-3f2a972b6943?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=465&q=80',
@@ -128,7 +124,6 @@ class SingleSavedItems extends StatelessWidget {
                     ),
                   ),
                 ),
-
               ],
             ),
             const Gap(20),
@@ -136,25 +131,23 @@ class SingleSavedItems extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                        SizedBox(
-                          child: Text(
-                            productname,
-                            overflow: TextOverflow.ellipsis,
-                            style:
-                                const TextStyle(fontSize: 16, color: Colors.black),
-                          ),
-                          width: screenWidth(context) / 2,
-                        ),
+                  SizedBox(
+                    child: Text(
+                      productname,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontSize: 16, color: Colors.black),
+                    ),
+                    width: screenWidth(context) / 2,
+                  ),
                   const Gap(10),
-                      SizedBox(
-                        child: Text(
-                          "₦ " + price,
-                          overflow: TextOverflow.ellipsis,
-                          style:
-                              const TextStyle(fontSize: 16, color: Colors.black),
-                        ),
-                        width: screenWidth(context) / 2,
-                      ),
+                  SizedBox(
+                    child: Text(
+                      "₦ " + price,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontSize: 16, color: Colors.black),
+                    ),
+                    width: screenWidth(context) / 2,
+                  ),
                   const Gap(15),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
