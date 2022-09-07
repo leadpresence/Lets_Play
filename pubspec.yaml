@@ -44,6 +44,7 @@ dependencies:
   webview_flutter: ^3.0.4
   modal_bottom_sheet:
   aws_s3_plugin_flutter: ^0.0.5
+  flutter_slidable:
 
   #fire_base
 #  cloud_firestore: ^3.4.4

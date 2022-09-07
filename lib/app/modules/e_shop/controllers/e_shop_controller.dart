@@ -203,6 +203,24 @@ class EShopController extends GetxController {
     }
   }
 
+  Future<void> removeFromCart(id) async {
+    try {
+      final updateRes = await service.removeItemFromCartAPICall(id: id);
+      if (updateRes.statusCode == 200 || updateRes.statusCode == 201) {
+        isLoading.value = false;
+        Get.back();
+        Get.to(() => MyCart(), transition: Transition.fadeIn);
+      } else {
+        BotToast.showSimpleNotification(
+          title: updateRes.data['message'].toString(),
+        );
+        isLoading.value = false;
+      }
+    } catch (e) {
+      isLoading.value = false;
+    }
+  }
+
   void placeOrder(Key? k, {prizeId}) async {
     isLoading.value = true;
     var body = {
