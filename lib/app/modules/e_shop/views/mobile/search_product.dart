@@ -64,7 +64,7 @@ class SearchProductMobilePortrait extends GetView<EShopController> {
                       ),
                       children: [
                         const SizedBox(
-                          height: 154.0,
+                          height: 172.0,
                         ),
                         for (int i = 0;
                             i < eShopController.searchProductData!.data!.length;
@@ -109,11 +109,11 @@ class SearchProductMobilePortrait extends GetView<EShopController> {
                   bottomRight: Radius.circular(42),
                 ),
               ),
-              height: 132,
+              height: 150,
               width: Get.width,
               child: Padding(
                 padding: const EdgeInsets.only(
-                  top: 24.0,
+                  top: 38.0,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -223,7 +223,7 @@ class SearchProductExplicitViewMobilePortrait extends GetView<EShopController> {
               physics: const ScrollPhysics(),
               children: [
                 const SizedBox(
-                  height: 108.0,
+                  height: 124.0,
                 ),
                 GridView.count(
                   childAspectRatio: (itemWidth / itemHeight),
@@ -279,11 +279,11 @@ class SearchProductExplicitViewMobilePortrait extends GetView<EShopController> {
                 bottomRight: Radius.circular(42),
               ),
             ),
-            height: 132,
+            height: 150,
             width: Get.width,
             child: Padding(
               padding: const EdgeInsets.only(
-                top: 24.0,
+                top: 38.0,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

@@ -18,7 +18,7 @@ class EShopSavedItemsMobileView extends StatelessWidget {
       body: Stack(
         children: [
           ListView.builder(
-              padding: const EdgeInsets.fromLTRB(0, 100, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 164, 0, 0),
               itemCount: 15,
               shrinkWrap: true,
               physics: const BouncingScrollPhysics(),
@@ -42,56 +42,77 @@ class EShopSavedItemsMobileView extends StatelessWidget {
                 bottomRight: Radius.circular(42),
               ),
             ),
-            height: 108,
+            height: 150,
             width: Get.width,
             child: Padding(
               padding: const EdgeInsets.only(
-                top: 36.0,
-                right: 12.0,
+                top: 38.0,
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   IconButton(
                     splashRadius: 24,
-                    padding: EdgeInsets.zero,
                     icon: SvgPicture.asset(
-                      'assets/svgs/bx_search-alt.svg',
+                      'assets/svgs/chevronLeft.svg',
                       color: Colors.white,
                     ),
                     onPressed: () {
-                      Get.to(() => SearchProductMobilePortrait(),
-                          transition: Transition.fadeIn);
+                      Get.back();
                     },
                   ),
-                  Text(
-                    "Saved Items",
-                    style: GoogleFonts.mulish(
-                      fontWeight: FontWeight.w600, // light
-                      fontStyle: FontStyle.normal,
-                      color: Colors.white,
-                      fontSize: 20, // italic
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 4.0,
+                      right: 12.0,
                     ),
-                  ),
-                  Container(
-                    height: 26,
-                    width: 26,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(4)),
-                    child: IconButton(
-                      color: Colors.white,
-                      splashRadius: 24,
-                      padding: EdgeInsets.zero,
-                      icon: SvgPicture.asset(
-                        'assets/svgs/clarity_shopping-cart-line.svg',
-                        color: const Color(0xffFE7A01),
-                        height: 18,
-                      ),
-                      onPressed: () {
-                        Get.to(() => MyCart(), transition: Transition.fadeIn);
-                      },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          splashRadius: 24,
+                          padding: EdgeInsets.zero,
+                          icon: SvgPicture.asset(
+                            'assets/svgs/bx_search-alt.svg',
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            Get.to(() => SearchProductMobilePortrait(),
+                                transition: Transition.fadeIn);
+                          },
+                        ),
+                        Text(
+                          "Saved Items",
+                          style: GoogleFonts.mulish(
+                            fontWeight: FontWeight.w600, // light
+                            fontStyle: FontStyle.normal,
+                            color: Colors.white,
+                            fontSize: 20, // italic
+                          ),
+                        ),
+                        Container(
+                          height: 26,
+                          width: 26,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(4)),
+                          child: IconButton(
+                            color: Colors.white,
+                            splashRadius: 24,
+                            padding: EdgeInsets.zero,
+                            icon: SvgPicture.asset(
+                              'assets/svgs/clarity_shopping-cart-line.svg',
+                              color: const Color(0xffFE7A01),
+                              height: 18,
+                            ),
+                            onPressed: () {
+                              Get.to(() => MyCart(),
+                                  transition: Transition.fadeIn);
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
