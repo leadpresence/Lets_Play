@@ -10,6 +10,7 @@ class CustomMediumButton extends StatelessWidget {
       hasIcon,
       buttonText,
       hasBorder,
+      itsBorderRadius,
       width,
       fontSize,
       icon,
@@ -23,6 +24,7 @@ class CustomMediumButton extends StatelessWidget {
     this.hasIcon = false,
     this.buttonText = "Button Text",
     this.hasBorder = false,
+    this.itsBorderRadius,
     this.isLoading = false,
     this.buttonColor = const Color(0xFFFE7A01),
     this.iconColor = const Color(0xffff543884),
@@ -56,7 +58,7 @@ class CustomMediumButton extends StatelessWidget {
               side: hasBorder
                   ? BorderSide(color: borderColor, width: 1)
                   : BorderSide.none,
-              borderRadius: BorderRadius.circular(36),
+              borderRadius: BorderRadius.circular(itsBorderRadius??36.0),
             ),
           ),
           child: Row(

@@ -1,9 +1,16 @@
 import 'dart:async';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
+import '../../../config/services/e_shop_service.dart';
+import '../models/WishListModel.dart';
+
 class EShopController extends GetxController {
+
+  final EshopServiceImpl eShopService = Get.find<EshopServiceImpl>();
+
   Rx<Color> color1 = const Color(0xFFDADEE3).obs,
       color2 = const Color(0xFFDADEE3).obs,
       color3 = const Color(0xFFDADEE3).obs;
@@ -66,6 +73,19 @@ class EShopController extends GetxController {
     //     );
     //   },
     // );
+  }
+
+
+
+
+  Future<List<WishList>> getProductWishList() async {
+    List<WishList> wishList = await eShopService.getWishList();
+    try {
+      return wishList;
+    } catch (e) {
+      BotToast.showText(text: "Error occurred retrieving saved products");
+    }
+    return [];
   }
 
   @override

@@ -3,37 +3,102 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
+import 'package:jekawin_mobile_flutter/app/modules/e_shop/controllers/e_shop_controller.dart';
+import 'package:jekawin_mobile_flutter/app/modules/e_shop/models/WishListModel.dart';
+import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../widgets/custom_medium_button.dart';
 
 class EShopSavedItemsMobileView extends StatelessWidget {
-  const EShopSavedItemsMobileView({Key? key}) : super(key: key);
+  EShopSavedItemsMobileView({Key? key, this.themeData, this.customAppTheme})
+      : super(key: key);
+
+  final ThemeData? themeData;
+  final CustomAppTheme? customAppTheme;
+  final EShopController controller = Get.put(EShopController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
         body: Padding(
-            padding: const EdgeInsets.fromLTRB(18, 0, 18, 0),
+            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
             child: Stack(children: [
-              // List of savedItems
-              //Todo felix implement a Future builder when api is integrated here
+              FutureBuilder<List<WishList>>(
+                  future: controller.getProductWishList(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      Center(
+                        child: SizedBox(
+                          width: Get.width,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              top: 150.0,
+                            ),
+                            child: Text(
+                              snapshot.error.toString(),
+                              style: const TextStyle(
+                                color: Colors.grey,
+                                fontSize: 24,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                      );
+                    } else if (snapshot.hasData) {
+                      List<WishList>? wishlist = snapshot.data;
+                      if (wishlist != null) {
+                        if (wishlist.length > 1) {
+                          return Expanded(
+                            child: ListView.builder(
+                                padding:
+                                    const EdgeInsets.fromLTRB(18, 120, 18, 0),
+                                itemCount: wishlist.length,
+                                shrinkWrap: true,
+                                physics: const BouncingScrollPhysics(),
+                                scrollDirection: Axis.vertical,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return
+                                    // Text("Postion item @${index}");
 
-              ListView.builder(
-                  padding: const EdgeInsets.fromLTRB(0, 100, 0, 0),
-                  itemCount: 15,
-                  shrinkWrap: true,
-                  physics: const BouncingScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  itemBuilder: (BuildContext context, int index) {
-                    return SingleSavedItems(key,
-                        productname: "Beach Gown",
-                        price: "20,000",
-                        onRemove: () {},
-                        image: null);
+                                    SingleSavedItems(
+                                    key,
+                                    wishlist[index],
+                                    onRemove: () {},
+                                  );
+                                }),
+                          );
+                        }
+                        return Center(
+                          child: SizedBox(
+                            width: Get.width,
+                            child: const Padding(
+                              padding: EdgeInsets.only(
+                                top: 150.0,
+                              ),
+                              child: Text(
+                                "Your have not saved any item",
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 24,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                    }
+                    return const Center(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 32.0),
+                        child: CupertinoActivityIndicator(
+                          // strokeWidth: 1,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    );
                   }),
-
               Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 12.0,
@@ -85,11 +150,10 @@ class EShopSavedItemsMobileView extends StatelessWidget {
 }
 
 class SingleSavedItems extends StatelessWidget {
-  final productname, price, image, onRemove;
+  final onRemove;
+  WishList wishes;
 
-  const SingleSavedItems(Key? key,
-      {this.productname, this.price, this.image, this.onRemove})
-      : super(key: key);
+  SingleSavedItems(Key? key, this.wishes, {this.onRemove}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +167,7 @@ class SingleSavedItems extends StatelessWidget {
         top: 12,
       ),
       child: SizedBox(
-        width: screenWidth(context)/16,// * 0.08,
+        width: screenWidth(context) / 16, // * 0.08,
         child: Row(
           children: [
             Column(
@@ -113,22 +177,18 @@ class SingleSavedItems extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.orange.withOpacity(.15),
-
                   ),
-                  width:  MediaQuery.of(context).size.width/3.3,
-                  height: MediaQuery.of(context).size.height/8,
+                  width: MediaQuery.of(context).size.width / 3.3,
+                  height: MediaQuery.of(context).size.height / 8,
                   margin: EdgeInsets.all(10),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image(
                       fit: BoxFit.contain,
-                      image: NetworkImage(
-                        'https://images.unsplash.com/photo-1559828707-3f2a972b6943?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=465&q=80',
-                      ),
+                      image: NetworkImage(wishes.image),
                     ),
                   ),
                 ),
-
               ],
             ),
             const Gap(20),
@@ -136,25 +196,23 @@ class SingleSavedItems extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                        SizedBox(
-                          child: Text(
-                            productname,
-                            overflow: TextOverflow.ellipsis,
-                            style:
-                                const TextStyle(fontSize: 16, color: Colors.black),
-                          ),
-                          width: screenWidth(context) / 2,
-                        ),
+                  SizedBox(
+                    child: Text(
+                      wishes.title,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontSize: 16, color: Colors.black),
+                    ),
+                    width: screenWidth(context) / 2,
+                  ),
                   const Gap(10),
-                      SizedBox(
-                        child: Text(
-                          "₦ " + price,
-                          overflow: TextOverflow.ellipsis,
-                          style:
-                              const TextStyle(fontSize: 16, color: Colors.black),
-                        ),
-                        width: screenWidth(context) / 2,
-                      ),
+                  SizedBox(
+                    child: Text(
+                      "₦ " + wishes.amount.toString(),
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontSize: 16, color: Colors.black),
+                    ),
+                    width: Get.width * 0.5,
+                  ),
                   const Gap(15),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -172,19 +230,22 @@ class SingleSavedItems extends StatelessWidget {
                                   fontWeight: FontWeight.bold),
                               overflow: TextOverflow.ellipsis,
                             ),
-                            width: screenWidth(context) / 2,
+                            width: Get.width * 0.5,
                           ),
                         ),
                       ),
-                      //buttons
-                      //
-                      CustomMediumButton(
-                        onPressed: () {},
-                        width: Get.width * .20,
-                        fontSize: 12.0,
-                        buttonText: 'Buy now',
-                        buttonColor: Colors.orange,
-                        buttonTextColor: Colors.white,
+                  //     //buttons
+                  //     //
+                      Expanded(
+                        child: CustomMediumButton(
+                          onPressed: () {},
+                          width: Get.width * .020,
+                          fontSize: 12.0,
+                          buttonText: 'Buy now',
+                          itsBorderRadius: 15.0,
+                          buttonColor: Colors.orange,
+                          buttonTextColor: Colors.white,
+                        ),
                       ),
                     ],
                   ),
