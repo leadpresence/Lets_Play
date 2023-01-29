@@ -165,7 +165,8 @@ class LoginMobilePortrait extends GetView<LoginController> {
                     width: Get.width,
                     child: SlideInAnimation(
                       duration: const Duration(milliseconds: 750),
-                      child: Row(
+                      child:
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(

@@ -4,7 +4,6 @@ import '../../../services/base_service.dart';
 
 class EShopService {
   BaseService service = BaseService();
-
   Future<Response> getAllCategoriesAPICall() async {
     try {
       Response response = await service.request('categories', method: 'Get');

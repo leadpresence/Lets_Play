@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "859780120722",
+    "project_id": "jekawin-37cf4",
+    "storage_bucket": "jekawin-37cf4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:859780120722:android:6d5b2995480f37fe79264b",
+        "android_client_info": {
+          "package_name": "com.example.jekawin_mobile_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "859780120722-20r68e56jai06q29njms9pi79v0d1tp8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5tK9-rQBimvdESW6DLt6tr9VoQek9s_c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "859780120722-20r68e56jai06q29njms9pi79v0d1tp8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -334,7 +334,6 @@ class EditProfileController extends GetxController {
       context: context,
       extension: extension,
     );
-
     final urlDownload = await S3BucketService.getPreSignedURLFromUnsigned(
       awsFolderPath: "",
     );

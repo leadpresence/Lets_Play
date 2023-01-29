@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:jekawin_mobile_flutter/app/modules/e_shop/models/WishListModel.dart';
 
 import '../../services/base_service.dart';
@@ -10,7 +9,6 @@ import 'http/http_services.dart';
 
 abstract class EshopService {
   Future<List<WishList>> getWishList();
-
 }
 
 class EshopServiceImpl extends EshopService {

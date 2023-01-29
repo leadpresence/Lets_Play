@@ -7,7 +7,7 @@ class TextUtils {
 
   String stripFirstZeroAddCountryCode(
       {required String number, String? code = '+234'}) {
-    /// this function could me made to do a lot if things
+    /// this function could me made to do a lot of things
     ///  Like check various user entries but that can be done on th ui
     ///  this will only take a number that start with zero and replace
     ///  with the country code.

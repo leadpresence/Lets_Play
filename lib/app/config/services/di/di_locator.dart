@@ -1,23 +1,16 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:hive/hive.dart';
 import 'package:jekawin_mobile_flutter/app/config/services/e_shop_service.dart';
 import 'package:jekawin_mobile_flutter/app/config/services/subscriber_service.dart';
 import 'package:jekawin_mobile_flutter/app/config/services/wallet_service.dart';
-import 'package:jekawin_mobile_flutter/app/modules/referral/models/ReferralResponse.dart';
 import 'package:jekawin_mobile_flutter/app/modules/wallet_home/models/transaction_model.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../../../../init_db.dart';
 import '../../../modules/add_bank_acccount/models/bank_response_model.dart';
-import '../../../modules/fund_wallet/models/payment_processor_model.dart';
-import '../../../modules/select_account/models/bank_model.dart';
 import '../../../modules/wallet_home/models/user_wallet_response.dart';
 import '../../data/local/user_local_impl.dart';
 import '../auth_service.dart';
@@ -88,7 +81,6 @@ class UtilsController extends GetxController {
 
 //order matters here
 Future<void> setDi() async {
-  await Firebase.initializeApp();
   Directory appDocDir = dotenv.get('APP_DEBUG') == 'true'
       ? Directory.current
       : await getApplicationDocumentsDirectory();
@@ -104,7 +96,3 @@ Future<void> setDi() async {
   Get.put(SubscriberServiceImpl());
 }
 
-const collectionPath="Fanxtars2022";
-final Future<FirebaseApp> initialization = Firebase.initializeApp();
-FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-FirebaseMessaging fcm = FirebaseMessaging.instance;

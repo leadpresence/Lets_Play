@@ -9,7 +9,8 @@ import '../../dashboard/views/mobile/dashboard_mobile_portrait.dart';
 import '../../menu/view/mobile/menu_mobile_portrait.dart';
 import '../../wallet_home/views/wallet_home_view.dart';
 
-class JekawinBottomTabs extends StatefulWidget {
+class
+JekawinBottomTabs extends StatefulWidget {
   final int tabIndex;
   final bool isGuestUser;
   JekawinBottomTabs({
@@ -26,7 +27,6 @@ class JekawinBottomTabs extends StatefulWidget {
 
 class _JekawinBottomTabsState extends State<JekawinBottomTabs> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-
   int _currentIndex = 0;
   final List<Map<String, dynamic>> _children = [];
 
@@ -61,11 +61,13 @@ class _JekawinBottomTabsState extends State<JekawinBottomTabs> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: const Color(0xFFFAFAFB),
-      bottomNavigationBar: Theme(
+      bottomNavigationBar:
+      Theme(
         data: ThemeData(
           splashColor: Colors.transparent,
         ),
-        child: BottomNavigationBar(
+        child:
+        BottomNavigationBar(
           selectedItemColor: const Color(0xFFFE7A01),
           unselectedItemColor: const Color(0xff747B84),
           onTap: (int index) {

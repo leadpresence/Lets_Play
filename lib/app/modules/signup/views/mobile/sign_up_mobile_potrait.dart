@@ -186,7 +186,8 @@ class SignupMobilePortrait extends GetView<SignUpController> {
                   Gap(Get.height * 0.0056),
                   SlideInAnimation(
                     duration: const Duration(milliseconds: 750),
-                    child: SizedBox(
+                    child:
+                    SizedBox(
                         width: screenWidth(context),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),

@@ -9,7 +9,6 @@ import 'package:jekawin_mobile_flutter/app/modules/leaderboard/controllers/leade
 import 'package:jekawin_mobile_flutter/app/utils/helpers/text_helper.dart';
 import '../../../../config/themes/app_theme_constants.dart';
 import '../../../../widgets/slide_in_animation.dart';
-import '../../../e_shop/views/mobile/e_shop_saved_items_mobile_portrait.dart';
 import '../../models/leader_board_response.dart';
 
 class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
@@ -25,11 +24,13 @@ class LeaderBoardMobilePortrait extends GetView<LeaderBoardController> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
-      child: Scaffold(
+      child:
+      Scaffold(
           backgroundColor: Colors.white,
           body: SafeArea(
               child: SingleChildScrollView(
-                  child: Padding(
+                  child:
+                  Padding(
                       padding: const EdgeInsets.only(
                         left: 24.0,
                         right: 24.0,

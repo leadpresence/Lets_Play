@@ -18,7 +18,8 @@ class BaseService {
       },
       connectTimeout: 60 * 1000,
       receiveTimeout: 60 * 1000))
-    ..interceptors.add(LoggingInterceptor());
+    ..interceptors.add(LoggingInterceptor()
+    );
 
   Future<Response> request(
     String url, {
