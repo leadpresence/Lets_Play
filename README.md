@@ -1,6 +1,6 @@
-# jekawin_mobile_flutter
+# LetsPlay_mobile
 
-Jekawin Mobile Application.
+LetsPlay_mobile Mobile Application.
 
 ## Getting Started
 
